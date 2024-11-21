@@ -27,7 +27,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: app_const.TOTAL_WHITE,
       extendBody: true,
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(20),
@@ -36,13 +36,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             OutlinedButton(
-              style: OutlinedButton.styleFrom(foregroundColor: Colors.white, backgroundColor: app_const.BRIGHT_RED, side: const BorderSide(width: 1, color: app_const.LIGHT_RED)),
+              style: OutlinedButton.styleFrom(foregroundColor: app_const.TOTAL_WHITE, backgroundColor: app_const.BRIGHT_RED, side: const BorderSide(width: 1, color: app_const.LIGHT_RED)),
               onPressed: () {
                 _welcomeBloc.frontEndUtils.localDataUtils.saveIsInitBootToPrefs(false);
                 Navigator.popUntil(context, (Route route) => route.isFirst);
                 Navigator.pushReplacementNamed(context, app_const.TYPE_SELECTION_SCREEN_PAGE_ROUTE_NAME);
               },
-              child: const app_widgets.MyText("Let's start!", style: TextStyle(color: Colors.white, fontSize: 19)),
+              child: const app_widgets.MyText("Let's start!", style: TextStyle(color: app_const.TOTAL_WHITE, fontSize: 19)),
             ).animate(delay: 2300.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad)
           ],
         ),

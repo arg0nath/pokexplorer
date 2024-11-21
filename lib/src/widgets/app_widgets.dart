@@ -160,7 +160,7 @@ class DialogProgressPokeball extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           decoration: BoxDecoration(
               border: Border.all(color: app_const.DIALOG_BORDER_COLOR, width: app_const.DIALOG_BORDER_WIDTH),
-              color: Colors.white,
+              color: app_const.TOTAL_WHITE,
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(app_const.DIALOG_PADDING),
               boxShadow: const <BoxShadow>[BoxShadow(color: Colors.black26, blurRadius: 10.0, offset: Offset(0.0, 10.0))]),
@@ -286,7 +286,7 @@ class _AboutMeDialogState extends State<AboutMeDialog> {
         // height: app_vars.logicalHeight * 0.85,
         decoration: BoxDecoration(
             border: Border.all(color: app_const.DIALOG_BORDER_COLOR, width: app_const.DIALOG_BORDER_WIDTH),
-            color: Colors.white,
+            color: app_const.TOTAL_WHITE,
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(app_const.DIALOG_PADDING),
             boxShadow: const <BoxShadow>[BoxShadow(color: Colors.black26, blurRadius: 10.0, offset: Offset(0.0, 10.0))]),
@@ -308,9 +308,9 @@ class _AboutMeDialogState extends State<AboutMeDialog> {
           const SizedBox(height: 20),
           OutlinedButton(
             onPressed: () async => app_utils.sendContactEmail(),
-            style:
-                OutlinedButton.styleFrom(foregroundColor: Colors.white, backgroundColor: app_const.MORE_VIBRANT_TURQUOISE, side: const BorderSide(width: 1, color: app_const.MORE_VIBRANT_TURQUOISE)),
-            child: const MyText('Contact me', style: TextStyle(color: Colors.white, fontSize: 18)),
+            style: OutlinedButton.styleFrom(
+                foregroundColor: app_const.TOTAL_WHITE, backgroundColor: app_const.MORE_VIBRANT_TURQUOISE, side: const BorderSide(width: 1, color: app_const.MORE_VIBRANT_TURQUOISE)),
+            child: const MyText('Contact me', style: TextStyle(color: app_const.TOTAL_WHITE, fontSize: 18)),
           ),
           const SizedBox(height: 20),
         ]),

@@ -51,6 +51,8 @@ const PERCENT_HIGH_COLOR = Colors.greenAccent;
 const PERCENT_MEDIUM_COLOR = Colors.orangeAccent;
 const PERCENT_LOW_COLOR = Colors.redAccent;
 
+const Color TOTAL_WHITE = Color(0xFFFFFFFF);
+
 //Text Styling
 
 const Color PRIMARY_TEXT_COLOR = Color(0xff4e4e4e);
@@ -58,7 +60,7 @@ const Color SECONDARY_TEXT_COLOR = Color(0xFF9E9E9E);
 const Color TOAST_BACKGROUND_COLOR = Colors.blueGrey;
 const double DIALOG_PADDING = 16.0;
 const double DIALOG_BORDER_WIDTH = 4.0;
-const Color DIALOG_BORDER_COLOR = Colors.white;
+const Color DIALOG_BORDER_COLOR = TOTAL_WHITE;
 
 //dot scoll
 const Color PAGE_INDICATOR_INACTIVATE_DOT_COLOR = Color(0xFFBDBDBD);
@@ -67,7 +69,7 @@ const Color PAGE_INDICATOR_ACTIVATE_DOT_COLOR = Colors.red;
 //customNetworkImage customization
 const double NETWORK_IMAGE_BORDER_RADIUS = 80.0;
 const double NETWORK_IMAGE_NO_BORDER_RADIUS = 0.0;
-const Color NETWORK_IMAGE_PLACEHOLDER_COLOR = Colors.white;
+const Color NETWORK_IMAGE_PLACEHOLDER_COLOR = TOTAL_WHITE;
 const double NETWORK_IMAGE_PLACEHOLDER_WIDTH = 1.0;
 
 //welcome

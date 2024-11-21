@@ -97,7 +97,7 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
         theme: ThemeData(
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
-          bottomAppBarTheme: const BottomAppBarTheme(elevation: 0, color: Colors.white, shadowColor: Colors.transparent, surfaceTintColor: Colors.transparent),
+          bottomAppBarTheme: const BottomAppBarTheme(elevation: 0, color: app_const.TOTAL_WHITE, shadowColor: Colors.transparent, surfaceTintColor: Colors.transparent),
           scrollbarTheme:
               ScrollbarThemeData(thickness: WidgetStateProperty.all(app_const.SCROLLBAR_THICKNESS), radius: app_const.SCROLLBAR_RADIUS, thumbColor: WidgetStateProperty.all(app_const.SCROLLBAR_COLOR)),
           primaryTextTheme: const TextTheme(titleLarge: TextStyle(color: app_const.PRIMARY_TEXT_COLOR)),

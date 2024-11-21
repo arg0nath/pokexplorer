@@ -62,7 +62,7 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
         await _onWillPop();
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: app_const.TOTAL_WHITE,
         body: BlocConsumer<TypeDetailsBloc, TypeDetailsState>(
           listener: (context, state) async {
             if (state.typeDetailsStatus == TypeDetailsStatus.readyToNavigateToPokemonDetails) {
@@ -265,11 +265,11 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
                         style: const TextStyle(color: app_const.PRIMARY_TEXT_COLOR, fontFamily: app_const.MAIN_FONT_FAMILY),
                         controller: textEditingController,
                         decoration: InputDecoration(
-                            fillColor: Colors.white,
+                            fillColor: app_const.TOTAL_WHITE,
                             filled: true,
-                            focusedBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: Colors.white), borderRadius: BorderRadius.circular(15)),
-                            border: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: Colors.white), borderRadius: BorderRadius.circular(15)),
-                            enabledBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: Colors.white), borderRadius: BorderRadius.circular(15)),
+                            focusedBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: app_const.TOTAL_WHITE), borderRadius: BorderRadius.circular(15)),
+                            border: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: app_const.TOTAL_WHITE), borderRadius: BorderRadius.circular(15)),
+                            enabledBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: app_const.TOTAL_WHITE), borderRadius: BorderRadius.circular(15)),
                             hintStyle: const TextStyle(color: app_const.SECONDARY_TEXT_COLOR, fontFamily: app_const.MAIN_FONT_FAMILY),
                             hintText: 'Search for a Pokémon',
                             suffixIcon: IconButton(

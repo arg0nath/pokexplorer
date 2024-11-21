@@ -31,7 +31,7 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
       appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          backgroundColor: Colors.white,
+          backgroundColor: app_const.TOTAL_WHITE,
           scrolledUnderElevation: 0,
           leading: const SizedBox.shrink(),
           actions: [
@@ -52,12 +52,12 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
             OutlinedButton(
                 style: OutlinedButton.styleFrom(backgroundColor: app_const.BRIGHT_RED, side: const BorderSide(width: 1, color: app_const.LIGHT_RED)),
                 onPressed: () => _typeSelectionBloc.add(const ProceedToTypeDetailsScreenEvent()),
-                child: const app_widgets.MyText('Next', style: TextStyle(color: Colors.white, fontSize: 19)))
+                child: const app_widgets.MyText('Next', style: TextStyle(color: app_const.TOTAL_WHITE, fontSize: 19)))
           ],
         ),
       ),
       extendBody: true,
-      backgroundColor: Colors.white,
+      backgroundColor: app_const.TOTAL_WHITE,
       body: BlocConsumer<TypeSelectionBloc, TypeSelectionState>(
         listener: (context, state) async {
           if (state.typeSelectionStatus == TypeSelectionStatus.readyToProceedToTypeDetailsScreen) {

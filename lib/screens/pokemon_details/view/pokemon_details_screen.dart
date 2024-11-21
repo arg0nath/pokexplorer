@@ -124,7 +124,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                   child: Container(
                     decoration: const BoxDecoration(
                       boxShadow: [BoxShadow(color: Color(0xFFB4B4B4), blurRadius: 30, spreadRadius: 2, offset: Offset(0, -4))],
-                      color: Colors.white,
+                      color: app_const.TOTAL_WHITE,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30),
@@ -136,7 +136,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
-                            color: Colors.white,
+                            color: app_const.TOTAL_WHITE,
                             width: app_vars.logicalWidth * 0.2,
                             child: const Icon(
                               Icons.info_outline_rounded,
@@ -150,7 +150,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                 Container(
                   height: 40,
                   width: app_vars.logicalWidth,
-                  color: Colors.white,
+                  color: app_const.TOTAL_WHITE,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     physics: const AlwaysScrollableScrollPhysics(),
@@ -163,7 +163,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                 Expanded(
                   flex: 1,
                   child: Container(
-                    color: Colors.white,
+                    color: app_const.TOTAL_WHITE,
                     width: app_vars.logicalWidth,
                     child: Row(
                       children: [
@@ -185,7 +185,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
                   flex: 3,
                   child: Center(
                     child: Container(
-                      color: Colors.white,
+                      color: app_const.TOTAL_WHITE,
                       alignment: Alignment.center,
                       padding: EdgeInsets.symmetric(horizontal: app_vars.logicalWidth * 0.1),
                       child: Column(

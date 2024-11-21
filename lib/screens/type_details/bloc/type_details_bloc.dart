@@ -91,8 +91,9 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
       emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.searchingPokemon));
       searchedPokemonList.clear();
       if (event.value.isNotEmpty) {
+        final wordToSearch = event.value.trim();
         try {
-          final searchedPokemon = await frontEndUtils.loadPokemonByName(name: event.value);
+          final searchedPokemon = await frontEndUtils.loadPokemonByName(name: wordToSearch);
           if (searchedPokemon.types.any((element) => selectedTypeName == element.name)) {
             //search in specific category
             searchedPokemonList.add(searchedPokemon);

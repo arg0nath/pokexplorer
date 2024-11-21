@@ -74,7 +74,11 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
                   barrierDismissible: false,
                   context: context,
                   barrierColor: const Color(0x73A3A3A3),
-                  builder: (BuildContext context) => const app_widgets.DialogProgressPokeball(hardBackEnabled: false).animate().fade(duration: 100.ms).scale());
+                  builder: (BuildContext context) => BlocBuilder<TypeDetailsBloc, TypeDetailsState>(
+                        builder: (context, state) {
+                          return app_widgets.DialogProgressPokeball(loadedPokemonLength: _typeDetailsBloc.finalPokemonList.length + 1, hardBackEnabled: false);
+                        },
+                      ).animate().fade(duration: 100.ms).scale());
             } else if (state.typeDetailsStatus == TypeDetailsStatus.pokemonsLoaded) {
               Navigator.pop(context); //close loading dialog
             }

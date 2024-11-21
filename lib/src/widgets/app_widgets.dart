@@ -144,15 +144,21 @@ class PokeballBackground extends StatelessWidget {
   }
 }
 
-class DialogProgressPokeball extends StatelessWidget {
-  const DialogProgressPokeball({super.key, required this.hardBackEnabled});
+class DialogProgressPokeball extends StatefulWidget {
+  const DialogProgressPokeball({super.key, required this.hardBackEnabled, required this.loadedPokemonLength});
 
   final bool hardBackEnabled;
+  final int loadedPokemonLength;
 
+  @override
+  State<DialogProgressPokeball> createState() => _DialogProgressPokeballState();
+}
+
+class _DialogProgressPokeballState extends State<DialogProgressPokeball> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: hardBackEnabled,
+      canPop: widget.hardBackEnabled,
       child: Center(
         child: Container(
           width: app_vars.logicalWidth * 0.54,
@@ -169,10 +175,10 @@ class DialogProgressPokeball extends StatelessWidget {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              const Expanded(
+              Expanded(
                   flex: 1,
                   child: MyText(
-                    'Collecting Pokémon...',
+                    'Collecting ${widget.loadedPokemonLength}/${app_const.TYPE_DETAILS_POKEMON_PAGE_SIZE} Pokémon...',
                   )),
               Expanded(flex: 2, child: Center(child: Lottie.asset(app_const.LOADING_POKEBALL_LOTTIE, height: 200, width: 200, repeat: true, reverse: true, fit: BoxFit.contain))),
             ],

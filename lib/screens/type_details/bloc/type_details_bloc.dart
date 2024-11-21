@@ -31,10 +31,12 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
       final int itemCount = selectedTypePokemonPreviewList.length;
       try {
         for (int i = 0; i < (itemCount < fetchLimit ? itemCount : fetchLimit); i++) {
+          emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.loadingOnePokemon));
+
           final tmpPokemon = await frontEndUtils.loadPokemonByName(name: selectedTypePokemonPreviewList[i].name.toLowerCase());
           finalPokemonList.add(tmpPokemon);
+          emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.onePokemonLoaded));
         }
-
         emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.pokemonsLoaded));
       } catch (e) {
         emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.pokemonsLoadedFailed));

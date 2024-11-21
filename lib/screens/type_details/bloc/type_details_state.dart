@@ -4,6 +4,8 @@ enum TypeDetailsStatus {
   typeDetailsNotLoaded,
 
   loadingPokemons,
+  loadingOnePokemon,
+  onePokemonLoaded,
   pokemonsLoaded,
   pokemonsLoadedFailed,
 

@@ -178,7 +178,7 @@ class _DialogProgressPokeballState extends State<DialogProgressPokeball> {
               Expanded(
                   flex: 1,
                   child: MyText(
-                    'Collecting ${widget.loadedPokemonLength}/${app_const.TYPE_DETAILS_POKEMON_PAGE_SIZE} Pokémon...',
+                    'Loading ${widget.loadedPokemonLength}/${app_const.TYPE_DETAILS_POKEMON_PAGE_SIZE} Pokémon...',
                   )),
               Expanded(flex: 2, child: Center(child: Lottie.asset(app_const.LOADING_POKEBALL_LOTTIE, height: 200, width: 200, repeat: true, reverse: true, fit: BoxFit.contain))),
             ],

@@ -169,7 +169,11 @@ class DialogProgressPokeball extends StatelessWidget {
               child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              const Expanded(flex: 1, child: DefaultTextStyle(style: TextStyle(fontSize: 17, color: app_const.SECONDARY_TEXT_COLOR), child: Text('Collecting Pokémon...'))),
+              const Expanded(
+                  flex: 1,
+                  child: MyText(
+                    'Collecting Pokémon...',
+                  )),
               Expanded(flex: 2, child: Center(child: Lottie.asset(app_const.LOADING_POKEBALL_LOTTIE, height: 200, width: 200, repeat: true, reverse: true, fit: BoxFit.contain))),
             ],
           )),

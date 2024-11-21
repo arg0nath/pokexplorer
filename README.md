@@ -1,3 +1,5 @@
+![official_pokemon_logo-svg](https://github.com/user-attachments/assets/260be2ac-73ac-4439-b144-177d59f11779)
+
 # Pokéxplorer
 **Developed by**: Vasileios Makris (vamakris07@gmail.com)
 

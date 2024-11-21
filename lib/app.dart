@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokexplorer/screens/type_selection/bloc/type_selection_bloc.dart';
@@ -40,9 +41,9 @@ class PokexplorerApp extends StatefulWidget {
     frontEndUtils = FrontendUtils();
     app_vars.routeObserver.setFrontEndUtils(frontEndUtils);
 
-    typeDetailsBloc = TypeDetailsBloc(frontEndUtils: frontEndUtils);
     welcomeBloc = WelcomeBloc(frontEndUtils: frontEndUtils);
     typeSelectionBloc = TypeSelectionBloc(frontEndUtils: frontEndUtils);
+    typeDetailsBloc = TypeDetailsBloc(frontEndUtils: frontEndUtils);
     pokemonDetailsBloc = PokemonDetailsBloc(frontEndUtils: frontEndUtils);
 
     // #endregion
@@ -52,10 +53,10 @@ class PokexplorerApp extends StatefulWidget {
   late final FrontendUtils frontEndUtils;
   late final BackendUtils backEndUtils;
 
+  late final WelcomeBloc welcomeBloc;
   late final TypeSelectionBloc typeSelectionBloc;
   late final TypeDetailsBloc typeDetailsBloc;
   late final PokemonDetailsBloc pokemonDetailsBloc;
-  late final WelcomeBloc welcomeBloc;
   // #endregion
   @override
   State<PokexplorerApp> createState() => _PokexplorerAppState();
@@ -71,6 +72,8 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
 
   @override
   void initState() {
+    app_vars.devicePixelRatio = PlatformDispatcher.instance.implicitView!.devicePixelRatio;
+    app_vars.deviceScreenWidth = PlatformDispatcher.instance.implicitView!.physicalSize.width;
     initBoot = localDataUtils.loadIsInitBootFromPrefs();
     _initialHomePage = initBoot ? const WelcomeScreen() : const TypeSelectionScreen();
     super.initState();

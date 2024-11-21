@@ -145,10 +145,16 @@ class PokeballBackground extends StatelessWidget {
 }
 
 class DialogProgressPokeball extends StatefulWidget {
-  const DialogProgressPokeball({super.key, required this.hardBackEnabled, required this.loadedPokemonLength});
+  const DialogProgressPokeball({
+    super.key,
+    required this.hardBackEnabled,
+    required this.loadedPokemonLength,
+    required this.totalPokemonLength,
+  });
 
   final bool hardBackEnabled;
   final int loadedPokemonLength;
+  final int totalPokemonLength;
 
   @override
   State<DialogProgressPokeball> createState() => _DialogProgressPokeballState();
@@ -178,7 +184,7 @@ class _DialogProgressPokeballState extends State<DialogProgressPokeball> {
               Expanded(
                   flex: 1,
                   child: MyText(
-                    'Loading ${widget.loadedPokemonLength}/${app_const.TYPE_DETAILS_POKEMON_PAGE_SIZE} Pokémon...',
+                    'Loading ${widget.loadedPokemonLength}/${widget.totalPokemonLength} Pokémon...',
                   )),
               Expanded(flex: 2, child: Center(child: Lottie.asset(app_const.LOADING_POKEBALL_LOTTIE, height: 200, width: 200, repeat: true, reverse: true, fit: BoxFit.contain))),
             ],

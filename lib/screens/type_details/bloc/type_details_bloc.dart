@@ -29,12 +29,15 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
 
       final int fetchLimit = app_const.TYPE_DETAILS_POKEMON_PAGE_SIZE;
       final int itemCount = selectedTypePokemonPreviewList.length;
+      final int loopEndIndex = itemCount < fetchLimit ? itemCount : fetchLimit;
+      totalIndexForDialog = loopEndIndex;
       try {
-        for (int i = 0; i < (itemCount < fetchLimit ? itemCount : fetchLimit); i++) {
-          emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.loadingOnePokemon));
+        for (int i = 0; i < (loopEndIndex); i++) {
+          emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.loadingOnePokemon)); //only for dialog refrsh purpuse
 
           final tmpPokemon = await frontEndUtils.loadPokemonByName(name: selectedTypePokemonPreviewList[i].name.toLowerCase());
           finalPokemonList.add(tmpPokemon);
+          currentIndexForDialog = i + 1;
           emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.onePokemonLoaded));
         }
         emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.pokemonsLoaded));
@@ -116,6 +119,8 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
   List<app_models.PokemonPreview> selectedTypePokemonPreviewList = [];
   app_models.Pokemon selectedPokemon = app_models.Pokemon.empty();
   List<app_models.Pokemon> finalPokemonList = <app_models.Pokemon>[];
+  int currentIndexForDialog = 1;
+  int totalIndexForDialog = 0;
 
   List<app_models.Pokemon> searchedPokemonList = <app_models.Pokemon>[];
 
@@ -125,5 +130,7 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
     selectedTypePokemonPreviewList.clear();
     finalPokemonList.clear();
     searchedPokemonList.clear();
+    currentIndexForDialog = 1;
+    totalIndexForDialog = 0;
   }
 }

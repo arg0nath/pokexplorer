@@ -76,7 +76,11 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
                   barrierColor: const Color(0x73A3A3A3),
                   builder: (BuildContext context) => BlocBuilder<TypeDetailsBloc, TypeDetailsState>(
                         builder: (context, state) {
-                          return app_widgets.DialogProgressPokeball(loadedPokemonLength: _typeDetailsBloc.finalPokemonList.length + 1, hardBackEnabled: false);
+                          return app_widgets.DialogProgressPokeball(
+                            loadedPokemonLength: _typeDetailsBloc.currentIndexForDialog,
+                            totalPokemonLength: _typeDetailsBloc.totalIndexForDialog,
+                            hardBackEnabled: false,
+                          );
                         },
                       ).animate().fade(duration: 100.ms).scale());
             } else if (state.typeDetailsStatus == TypeDetailsStatus.pokemonsLoaded) {

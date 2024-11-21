@@ -4,7 +4,7 @@ description: "A Flutter-based project for interview purposes - Android only"
 # Prevent accidental publishing to pub.dev.
 publish_to: 'none'
 
-version: 1.0.005+10005
+version: 1.0.001+10001
 
 environment:
   sdk: ^3.5.4

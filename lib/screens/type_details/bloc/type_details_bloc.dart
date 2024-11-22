@@ -52,13 +52,12 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
       }
       emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.loadingMorePokemons));
 
-      if (state.typeDetailsStatus != TypeDetailsStatus.loadingMorePokemons) {
-        return Future<void>.value();
-      }
-
       int tmpStartIndex = finalPokemonList.length; // start where i stop in the previous event emiission
 
       for (int i = tmpStartIndex; i < tmpStartIndex + app_const.TYPE_DETAILS_POKEMON_PAGE_SIZE; i++) {
+        if (state.typeDetailsStatus != TypeDetailsStatus.loadingMorePokemons) {
+          return Future<void>.value();
+        }
         if (i < selectedTypePokemonPreviewList.length) {
           final tmpPokemon = await frontEndUtils.loadPokemonByName(name: selectedTypePokemonPreviewList[i].name.toLowerCase());
 

@@ -79,21 +79,20 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
                 height: app_vars.logicalHeight,
                 padding: EdgeInsets.only(bottom: app_vars.logicalHeight * 0.1),
                 child: GridView.builder(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.all(10),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 16 / 9,
-                    mainAxisSpacing: 10.0,
-                  ),
-                  itemCount: _typeSelectionBloc.availableTypes.length,
-                  itemBuilder: (context, index) {
-                    return MyTypeCard(index: index, onTap: () => _typeSelectionBloc.add(SelectTypeEvent(type: _typeSelectionBloc.availableTypes[index])), typeSelectionBloc: _typeSelectionBloc)
-                        .animate()
-                        .fade(duration: 300.ms, curve: Curves.easeOutQuad)
-                        .scale();
-                  },
-                ),
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(10),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 16 / 9,
+                      mainAxisSpacing: 10.0,
+                    ),
+                    itemCount: _typeSelectionBloc.availableTypes.length,
+                    itemBuilder: (context, index) {
+                      return MyTypeCard(index: index, onTap: () => _typeSelectionBloc.add(SelectTypeEvent(type: _typeSelectionBloc.availableTypes[index])), typeSelectionBloc: _typeSelectionBloc)
+                          .animate()
+                          .fade(duration: 300.ms, curve: Curves.easeOutQuad)
+                          .scale();
+                    }),
               ),
             ],
           );

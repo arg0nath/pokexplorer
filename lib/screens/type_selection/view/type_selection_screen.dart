@@ -88,45 +88,71 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
                   ),
                   itemCount: _typeSelectionBloc.availableTypes.length,
                   itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () => _typeSelectionBloc.add(SelectTypeEvent(type: _typeSelectionBloc.availableTypes[index])),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                              bottom: 7,
-                              right: app_vars.logicalWidth * 0.06,
-                              child: (_typeSelectionBloc.availableTypes[index].isSelected)
-                                  ? const Icon(Icons.check_circle_outline_rounded, color: app_const.BRIGHT_RED)
-                                  : const Icon(Icons.circle_outlined, color: Color(0xFFEEEEEE))),
-                          Center(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(Radius.circular(20)),
-                                  border: Border.all(color: _typeSelectionBloc.availableTypes[index].isSelected ? app_const.BRIGHT_RED : const Color(0xFFEEEEEE))),
-                              padding: const EdgeInsets.all(10),
-                              width: app_vars.logicalWidth * 0.4,
-                              child: Center(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Expanded(flex: 2, child: Image.asset(_typeSelectionBloc.availableTypes[index].icon)),
-                                    const SizedBox(height: 5),
-                                    Flexible(flex: 1, child: app_widgets.MyText(_typeSelectionBloc.availableTypes[index].name)),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ).animate().fade(duration: 300.ms, curve: Curves.easeOutQuad).scale();
+                    return MyTypeCard(index: index, onTap: () => _typeSelectionBloc.add(SelectTypeEvent(type: _typeSelectionBloc.availableTypes[index])), typeSelectionBloc: _typeSelectionBloc)
+                        .animate()
+                        .fade(duration: 300.ms, curve: Curves.easeOutQuad)
+                        .scale();
                   },
                 ),
               ),
             ],
           );
         },
+      ),
+    );
+  }
+}
+
+class MyTypeCard extends StatefulWidget {
+  const MyTypeCard({
+    super.key,
+    required TypeSelectionBloc typeSelectionBloc,
+    required this.onTap,
+    required this.index,
+  }) : _typeSelectionBloc = typeSelectionBloc;
+
+  final TypeSelectionBloc _typeSelectionBloc;
+  final int index;
+  final VoidCallback onTap;
+
+  @override
+  State<MyTypeCard> createState() => _MyTypeCardState();
+}
+
+class _MyTypeCardState extends State<MyTypeCard> {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: widget.onTap,
+      child: Stack(
+        children: [
+          Positioned(
+              bottom: 7,
+              right: app_vars.logicalWidth * 0.06,
+              child: (widget._typeSelectionBloc.availableTypes[widget.index].isSelected)
+                  ? const Icon(Icons.check_circle_outline_rounded, color: app_const.BRIGHT_RED)
+                  : const Icon(Icons.circle_outlined, color: Color(0xFFEEEEEE))),
+          Center(
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  border: Border.all(color: widget._typeSelectionBloc.availableTypes[widget.index].isSelected ? app_const.BRIGHT_RED : const Color(0xFFEEEEEE))),
+              padding: const EdgeInsets.all(10),
+              width: app_vars.logicalWidth * 0.4,
+              child: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(flex: 2, child: Image.asset(widget._typeSelectionBloc.availableTypes[widget.index].icon)),
+                    const SizedBox(height: 5),
+                    Flexible(flex: 1, child: app_widgets.MyText(widget._typeSelectionBloc.availableTypes[widget.index].name)),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

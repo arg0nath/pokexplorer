@@ -59,14 +59,25 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
     });
 
     on<ProceedToTypeDetailsScreenEvent>((ProceedToTypeDetailsScreenEvent event, Emitter<TypeSelectionState> emit) async {
-      if (selectedPokemonType.name.isNotEmpty) {
-        emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.proceedingToTypeDetailsScreen));
-        frontEndUtils.saveSelectedTypeName(selectedPokemonType.name.toLowerCase());
-        emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.readyToProceedToTypeDetailsScreen));
-      } else {
-        emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.proceedingToTypeDetailsScreeFailure));
+      if (selectedPokemonType.name.isEmpty) {
+        emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.failingproceedingToTypeDetailsScreen));
         emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.readyToProceedToTypeDetailsScreenNoSelection));
+        return;
       }
+
+      emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.proceedingToTypeDetailsScreen));
+      frontEndUtils.saveSelectedTypeName(selectedPokemonType.name.toLowerCase());
+
+      final dynamic result = await frontEndUtils.loadTypeDetails(type: selectedPokemonType.name.toLowerCase());
+
+      if (result is app_models.MyError) {
+        app_utils.myLog(app_const.LOG_ERROR, 'Error loading Pokémon details: ${result.name}');
+        emit(TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.proceedingToTypeDetailsScreeFailed, errorMessage: result.name));
+        return;
+      }
+
+      selectedPokemonTypeDetails = result as app_models.PokemonTypeDetails;
+      emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.readyToProceedToTypeDetailsScreen));
     });
 
     on<ShowInfoDialogEvent>((ShowInfoDialogEvent event, Emitter<TypeSelectionState> emit) async {
@@ -80,9 +91,11 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
 
   List<app_models.PokemonType> availableTypes = [];
   app_models.PokemonType selectedPokemonType = app_models.PokemonType.empty();
+  app_models.PokemonTypeDetails selectedPokemonTypeDetails = app_models.PokemonTypeDetails.empty();
 
   void initializeVariables() {
     availableTypes.clear();
     selectedPokemonType = app_models.PokemonType.empty();
+    selectedPokemonTypeDetails = app_models.PokemonTypeDetails.empty();
   }
 }

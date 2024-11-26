@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:pokexplorer/src/variables/app_variables.dart';
 import 'package:pokexplorer/src/widgets/app_widgets.dart' as app_widgets;
 import 'package:toastification/toastification.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -60,11 +61,11 @@ Future<void> loadPrefs(FrontendUtils frontEndUtils) async {
   return Future<void>.value();
 }
 
-/* String extractPokemonImageUrl(String url) {
+String extractPokemonImageUrl(String url) {
   final id = url.split('/').where((segment) => segment.isNotEmpty).last; // the last parameter of the url is the id of the pokemon so
-  return 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$id.png'; // ! this mufk takes (267ms) too long.... so keep I'll for the details
-  // return 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png'; // this on takes only 70ms
-} */
+
+  return 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png'; // this on takes only 70ms
+}
 
 List<Color> gradientFromType(String type) {
   List<Color> gradList = [app_const.GRADIENT_BASE];
@@ -121,7 +122,12 @@ ToastificationItem myToast(BuildContext context, String msg) {
   toastification.dismissAll();
   return toastification.show(
     icon: Image.asset(app_const.POKEBALL_PNG, width: 20, height: 20),
-    title: app_widgets.MyText(msg),
+    title: Container(
+        width: logicalWidth * 0.9,
+        child: app_widgets.MyText(
+          msg,
+          maxLines: 3,
+        )),
     closeOnClick: false,
     context: context,
     pauseOnHover: false,

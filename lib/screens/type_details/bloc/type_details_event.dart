@@ -8,12 +8,12 @@ abstract class TypeDetailsEvent extends Equatable {
 }
 
 class LoadTypeDetailsPokemonsEvent extends TypeDetailsEvent {
-  const LoadTypeDetailsPokemonsEvent({required this.typeName});
+  const LoadTypeDetailsPokemonsEvent({required this.typeDetails});
 
-  final String typeName;
+  final app_models.PokemonTypeDetails typeDetails;
 
   @override
-  List<Object> get props => <Object>[typeName];
+  List<Object> get props => <Object>[typeDetails];
 }
 
 class LoadMoreTypeDetailsPokemonsEvent extends TypeDetailsEvent {
@@ -24,11 +24,11 @@ class LoadMoreTypeDetailsPokemonsEvent extends TypeDetailsEvent {
 }
 
 class NavigateToPokemonDetailsEvent extends TypeDetailsEvent {
-  const NavigateToPokemonDetailsEvent({required this.pokemon});
+  const NavigateToPokemonDetailsEvent({required this.pokemonPreview});
 
-  final app_models.Pokemon pokemon;
+  final app_models.PokemonPreview pokemonPreview;
   @override
-  List<Object> get props => <Object>[pokemon];
+  List<Object> get props => <Object>[pokemonPreview];
 }
 
 ///`value` is the pokemon name

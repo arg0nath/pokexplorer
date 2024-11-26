@@ -4,15 +4,15 @@ enum TypeDetailsStatus {
   typeDetailsNotLoaded,
 
   loadingPokemons,
-  loadingOnePokemon,
-  onePokemonLoaded,
+
   pokemonsLoaded,
-  pokemonsLoadedFailed,
 
   loadingMorePokemons,
   morePokemonsLoaded,
+  morePokemonsLoadedFailed,
 
   navigatingToPokemonDetails,
+  navigatingToPokemonDetailsFailed,
   readyToNavigateToPokemonDetails,
 
   searchingPokemon,
@@ -25,10 +25,16 @@ enum TypeDetailsStatus {
 }
 
 class TypeDetailsState extends Equatable {
-  const TypeDetailsState({required this.typeDetailsStatus});
+  const TypeDetailsState({
+    required this.typeDetailsStatus,
+    this.errorMessage,
+    this.searchedPokemonPreviewList = const [],
+  });
 
   final TypeDetailsStatus typeDetailsStatus;
+  final List<app_models.PokemonPreview> searchedPokemonPreviewList;
+  final String? errorMessage;
 
   @override
-  List<Object> get props => <Object>[typeDetailsStatus];
+  List<Object?> get props => <Object?>[typeDetailsStatus, searchedPokemonPreviewList, errorMessage];
 }

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 import '../../../src/models/app_models.dart' as app_models;
 import '../../../src/utilities/app_utils.dart' as app_utils;
@@ -15,67 +16,83 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
 
     on<LoadTypeDetailsPokemonsEvent>((LoadTypeDetailsPokemonsEvent event, Emitter<TypeDetailsState> emit) async {
       emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.loadingPokemons));
+
       await app_utils.loadPrefs(frontEndUtils);
-      //init vars
       initializeVariables();
+      selectedTypeName = frontEndUtils.loadSelectedTypeName();
 
-      selectedTypeName = event.typeName.toLowerCase();
-
-      final selectedPokemonTypeDetails = await frontEndUtils.loadTypeDetails(type: selectedTypeName);
-
-      // for for debug test only // ? for (var i = 0; i < 24; i++) {selectedTypePokemonPreviewList.add(selectedPokemonTypeDetails.pokemon[i]);}
-
-      selectedTypePokemonPreviewList = List.from(selectedPokemonTypeDetails.pokemon);
+      selectedPokemonTypeDetails = event.typeDetails;
+      allPokemonList = List.from(selectedPokemonTypeDetails.pokemon);
 
       final int fetchLimit = app_const.TYPE_DETAILS_POKEMON_PAGE_SIZE;
-      final int itemCount = selectedTypePokemonPreviewList.length;
+      final int itemCount = selectedPokemonTypeDetails.pokemon.length;
       final int loopEndIndex = itemCount < fetchLimit ? itemCount : fetchLimit;
-      totalIndexForDialog = loopEndIndex;
-      try {
-        for (int i = 0; i < (loopEndIndex); i++) {
-          emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.loadingOnePokemon)); //only for dialog refrsh purpuse
 
-          final tmpPokemon = await frontEndUtils.loadPokemonByName(name: selectedTypePokemonPreviewList[i].name.toLowerCase());
-          finalPokemonList.add(tmpPokemon);
-          currentIndexForDialog = i + 1;
-          emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.onePokemonLoaded));
-        }
-        emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.pokemonsLoaded));
-      } catch (e) {
-        emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.pokemonsLoadedFailed));
+      for (int i = 0; i < loopEndIndex; i++) {
+        selectedTypePokemonPreviewList.add(selectedPokemonTypeDetails.pokemon[i]);
       }
+
+      emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.pokemonsLoaded));
     });
 
     on<LoadMoreTypeDetailsPokemonsEvent>((LoadMoreTypeDetailsPokemonsEvent event, Emitter<TypeDetailsState> emit) async {
       if (state.typeDetailsStatus == TypeDetailsStatus.loadingMorePokemons) {
-        return; //prevent re\emitting
+        return; // rrevent re-emitting
       }
+
       emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.loadingMorePokemons));
 
-      int tmpStartIndex = finalPokemonList.length; // start where i stop in the previous event emiission
+      int tmpStartIndex = selectedTypePokemonPreviewList.length; // start where I left
 
-      for (int i = tmpStartIndex; i < tmpStartIndex + app_const.TYPE_DETAILS_POKEMON_PAGE_SIZE; i++) {
-        if (state.typeDetailsStatus != TypeDetailsStatus.loadingMorePokemons) {
-          return Future<void>.value();
-        }
-        if (i < selectedTypePokemonPreviewList.length) {
-          final tmpPokemon = await frontEndUtils.loadPokemonByName(name: selectedTypePokemonPreviewList[i].name.toLowerCase());
+      bool hasInternetAccess = await InternetConnection().hasInternetAccess;
 
-          if (!finalPokemonList.any((element) => element.id == tmpPokemon.id)) {
-            finalPokemonList.add(tmpPokemon);
+      try {
+        for (int i = tmpStartIndex; i < tmpStartIndex + app_const.TYPE_DETAILS_POKEMON_PAGE_SIZE; i++) {
+          if (!hasInternetAccess) {
+            emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.morePokemonsLoadedFailed, errorMessage: 'Unable to load images. Please check your internet connection and refresh'));
+            return;
           }
-        } else {
-          break; // eo list
-        }
-      }
+          if (state.typeDetailsStatus != TypeDetailsStatus.loadingMorePokemons) {
+            return Future<void>.value();
+          }
 
-      emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.morePokemonsLoaded));
+          if (i < selectedPokemonTypeDetails.pokemon.length) {
+            if (!selectedTypePokemonPreviewList.any((pokemonPreview) {
+              return pokemonPreview.name == selectedPokemonTypeDetails.pokemon[i].name;
+            })) {
+              await Future.delayed(Duration(milliseconds: 20)).then((value) {
+                selectedTypePokemonPreviewList.add(selectedPokemonTypeDetails.pokemon[i]);
+              });
+            }
+          } else {
+            break;
+          }
+        }
+
+        emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.morePokemonsLoaded));
+      } catch (e) {
+        app_utils.myLog(app_const.LOG_ERROR, 'Error loading more Pokémon: $e');
+
+        emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.morePokemonsLoadedFailed));
+      }
     });
 
     on<NavigateToPokemonDetailsEvent>((NavigateToPokemonDetailsEvent event, Emitter<TypeDetailsState> emit) async {
-      selectedPokemon = app_models.Pokemon.empty();
-      selectedPokemon = event.pokemon;
+      selectedPokemonPreview = app_models.PokemonPreview.empty();
+      selectedPokemonPreview = event.pokemonPreview;
+      if (await InternetConnection().hasInternetAccess) {}
+
       emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.navigatingToPokemonDetails));
+
+      final dynamic result = await frontEndUtils.loadPokemonByName(name: selectedPokemonPreview.name);
+
+      if (result is app_models.MyError) {
+        app_utils.myLog(app_const.LOG_ERROR, 'Error loading Pokémon details: ${result.name}');
+        emit(TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.navigatingToPokemonDetailsFailed, errorMessage: result.name));
+        return;
+      }
+
+      selectedPokemon = result as app_models.Pokemon;
 
       emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.readyToNavigateToPokemonDetails));
     });
@@ -88,25 +105,33 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
 
     on<SearchPokemonEvent>((SearchPokemonEvent event, Emitter<TypeDetailsState> emit) async {
       emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.searchingPokemon));
-      searchedPokemonList.clear();
+
+      searchedPokemonPreviewList.clear();
+
       if (event.value.isNotEmpty) {
-        final wordToSearch = event.value.trim();
+        final wordToSearch = event.value.trim().toLowerCase();
+
         try {
-          final searchedPokemon = await frontEndUtils.loadPokemonByName(name: wordToSearch);
-          if (searchedPokemon.types.any((element) => selectedTypeName == element.name)) {
-            //search in specific category
-            searchedPokemonList.add(searchedPokemon);
+          for (final pokemonPreview in allPokemonList) {
+            if (pokemonPreview.name.toLowerCase().contains(wordToSearch)) {
+              searchedPokemonPreviewList.add(pokemonPreview);
+            }
           }
+
+          emit(TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.pokemonSearched, searchedPokemonPreviewList: searchedPokemonPreviewList));
         } catch (e) {
-          searchedPokemonList.clear();
+          app_utils.myLog(app_const.LOG_ERROR, 'Error searching Pokémon: $e');
+          emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.pokemonSearched, searchedPokemonPreviewList: [], errorMessage: 'An error occurred while searching.'));
         }
+      } else {
+        // if search word is empt emit no results
+        emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.pokemonSearched, searchedPokemonPreviewList: []));
       }
-      emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.pokemonSearched));
     });
 
     on<ReturnFromSearchEvent>((ReturnFromSearchEvent event, Emitter<TypeDetailsState> emit) async {
       emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.cancelingSearch));
-      searchedPokemonList.clear();
+      searchedPokemonPreviewList.clear();
       emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.searchCancelled));
     });
   }
@@ -117,20 +142,22 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
 
   String selectedTypeName = app_const.EMPTY_STRING;
   List<app_models.PokemonPreview> selectedTypePokemonPreviewList = [];
+  app_models.PokemonPreview selectedPokemonPreview = app_models.PokemonPreview.empty();
   app_models.Pokemon selectedPokemon = app_models.Pokemon.empty();
-  List<app_models.Pokemon> finalPokemonList = <app_models.Pokemon>[];
-  int currentIndexForDialog = 1;
-  int totalIndexForDialog = 0;
 
-  List<app_models.Pokemon> searchedPokemonList = <app_models.Pokemon>[];
+  app_models.PokemonTypeDetails selectedPokemonTypeDetails = app_models.PokemonTypeDetails.empty();
+
+  List<app_models.PokemonPreview> searchedPokemonPreviewList = <app_models.PokemonPreview>[];
+
+  List<app_models.PokemonPreview> allPokemonList = [];
 
   void initializeVariables() {
+    selectedPokemonPreview = app_models.PokemonPreview.empty();
     selectedPokemon = app_models.Pokemon.empty();
+
     selectedTypeName = app_const.EMPTY_STRING;
     selectedTypePokemonPreviewList.clear();
-    finalPokemonList.clear();
-    searchedPokemonList.clear();
-    currentIndexForDialog = 1;
-    totalIndexForDialog = 0;
+    selectedPokemonTypeDetails = app_models.PokemonTypeDetails.empty();
+    allPokemonList.clear();
   }
 }

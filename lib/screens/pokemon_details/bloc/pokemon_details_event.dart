@@ -5,10 +5,10 @@ abstract class PokemonDetailsEvent extends Equatable {
 }
 
 class LoadPokemonDetailsEvent extends PokemonDetailsEvent {
-  const LoadPokemonDetailsEvent({required this.name});
+  const LoadPokemonDetailsEvent({required this.pokemon});
 
-  final String name;
+  final app_models.Pokemon pokemon;
 
   @override
-  List<Object?> get props => <Object>[name];
+  List<Object?> get props => <Object>[pokemon];
 }

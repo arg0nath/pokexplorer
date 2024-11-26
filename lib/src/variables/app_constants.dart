@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
-const String APP_LOGO_PNG_PATH = '';
 // #region // * Debug Stuff
 const bool SHOW_LOG = true;
 const int LOG_INFO = 0;
@@ -169,7 +168,7 @@ const String POKEMON_CUSTOM_PHRASE = 'assets/images/gonnasearch.png';
 
 const String LOADING_POKEBALL_LOTTIE = 'assets/lottieFiles/pokeball.json';
 
-const String GENERIC_ERROR_TOAST_MESSAGE = 'Something went wrong...';
+const String GENERIC_ERROR_TOAST_MESSAGE = 'Something went wrong';
 
 // #region // * App Preferences
 const String PREFS_SELECTED_TYPE_NAME = 'selected_type_name';

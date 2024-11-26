@@ -105,6 +105,25 @@ class PokemonType {
   }
 }
 
+class MyError {
+  MyError({
+    required this.name,
+  });
+
+  MyError.empty() {
+    name = app_const.EMPTY_STRING;
+  }
+
+  String name = app_const.EMPTY_STRING;
+
+  void setName(String name) => this.name = name;
+
+  @override
+  String toString() {
+    return 'ERROR: $name';
+  }
+}
+
 class PokemonTypeDetails {
   PokemonTypeDetails({
     required this.id,
@@ -154,22 +173,27 @@ class PokemonTypeDetails {
 class PokemonPreview {
   PokemonPreview({
     required this.name,
+    required this.imageUrl,
     required this.url,
   });
 
   String name = app_const.EMPTY_STRING;
   String url = app_const.EMPTY_STRING;
+  String imageUrl = app_const.EMPTY_STRING;
 
   PokemonPreview.empty() {
     name = app_const.EMPTY_STRING;
     url = app_const.EMPTY_STRING;
+    imageUrl = app_const.EMPTY_STRING;
   }
 
+  String setImageUrl(String imageUrl) => this.imageUrl = imageUrl;
 // json converters
   factory PokemonPreview.fromJson(Map<String, dynamic> json) {
     String url = json['url'] ?? app_const.EMPTY_STRING;
     return PokemonPreview(
       name: json['name'] ?? app_const.EMPTY_STRING,
+      imageUrl: app_utils.extractPokemonImageUrl(url), //todo check if is better with this or with lazy load
       url: url,
     );
   }

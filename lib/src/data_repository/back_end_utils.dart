@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
@@ -17,21 +19,29 @@ class BackendUtils {
     if (kDebugMode && !unEncodedPath.contains('SetLogEvent')) {
       app_utils.myLog(app_const.LOG_INFO, 'unEncodedPath = $unEncodedPath');
     }
+
     final Uri finalUri = Uri.parse(app_const.POKE_API + unEncodedPath);
+
     if (kDebugMode && !unEncodedPath.contains('SetLogEvent')) {
       app_utils.myLog(app_const.LOG_INFO, 'finalUri = $finalUri');
     }
 
     try {
-      final http.Response response = await http.get(finalUri);
+      final http.Response response = await http.get(finalUri).timeout(const Duration(seconds: 15));
 
       if (response.statusCode == app_const.API_STATUS_OK) {
         return json.decode(response.body) as Map<String, dynamic>;
       } else {
-        throw Exception('Failed to load Pokémon data');
+        throw Exception('Failed to load data with status code: ${response.statusCode}');
       }
+    } on SocketException {
+      throw Exception('No Internet connection. Please check your connection.');
+    } on TimeoutException {
+      throw Exception('The connection has timed out. Please try again.');
+    } on FormatException {
+      throw Exception('Invalid response format from the server.');
     } catch (e) {
-      throw Exception('Failed to fetch data: $e');
+      throw Exception('Failed to fetch data.');
     }
   }
 
@@ -42,8 +52,15 @@ class BackendUtils {
     required String type,
   }) async {
     Map<String, dynamic> response = <String, dynamic>{};
+
     final String typeUrl = 'type/$type/';
-    response = await httpRequestMap(typeUrl);
+
+    try {
+      response = await httpRequestMap(typeUrl);
+    } catch (e) {
+      app_utils.myLog(app_const.LOG_ERROR, 'Error in fetching type details: $e');
+      return {'error': '$e'};
+    }
 
     return Future<Map<String, dynamic>>.value(response);
   }
@@ -59,7 +76,12 @@ class BackendUtils {
 
     final String pokemonUrl = 'pokemon/$tmpName/';
 
-    response = await httpRequestMap(pokemonUrl);
+    try {
+      response = await httpRequestMap(pokemonUrl);
+    } catch (e) {
+      app_utils.myLog(app_const.LOG_ERROR, 'Error in fetching Pokémon by name: $e');
+      return {'error': '$e'};
+    }
 
     return Future<Map<String, dynamic>>.value(response);
   }

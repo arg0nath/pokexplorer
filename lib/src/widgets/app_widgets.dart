@@ -45,10 +45,7 @@ class _CustomNetworkImageState extends State<CustomNetworkImage> {
         width: widget.width,
         height: widget.height,
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: imageProvider,
-            fit: BoxFit.scaleDown, //usually scaleDown or fillHeight,
-          ),
+          image: DecorationImage(image: imageProvider, fit: BoxFit.scaleDown),
           borderRadius: BorderRadius.zero,
         ),
       ),
@@ -57,30 +54,16 @@ class _CustomNetworkImageState extends State<CustomNetworkImage> {
         height: widget.height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(
-            color: Colors.transparent,
-            width: app_const.NETWORK_IMAGE_PLACEHOLDER_WIDTH,
-          ),
+          border: Border.all(color: Colors.transparent, width: app_const.NETWORK_IMAGE_PLACEHOLDER_WIDTH),
         ),
-        child: const Center(
-          child: CustomProgressIndicator(),
-        ),
+        child: const Center(child: CustomProgressIndicator()),
       ),
       errorWidget: (BuildContext context, String url, dynamic error) => Container(
         width: widget.width,
         height: widget.height,
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.transparent,
-            width: 0,
-          ),
-        ),
+        decoration: BoxDecoration(border: Border.all(color: Colors.transparent, width: 0)),
         child: Center(
-          child: Image.asset(
-            app_const.EMPTY_POKEBALL_PNG,
-            width: 60,
-            height: 60,
-          ),
+          child: Image.asset(app_const.EMPTY_POKEBALL_PNG, width: app_vars.logicalHeight * 0.05, height: app_vars.logicalHeight * 0.05),
         ),
       ),
     );
@@ -148,13 +131,9 @@ class DialogProgressPokeball extends StatefulWidget {
   const DialogProgressPokeball({
     super.key,
     required this.hardBackEnabled,
-    required this.loadedPokemonLength,
-    required this.totalPokemonLength,
   });
 
   final bool hardBackEnabled;
-  final int loadedPokemonLength;
-  final int totalPokemonLength;
 
   @override
   State<DialogProgressPokeball> createState() => _DialogProgressPokeballState();
@@ -184,7 +163,8 @@ class _DialogProgressPokeballState extends State<DialogProgressPokeball> {
               Expanded(
                   flex: 1,
                   child: MyText(
-                    'Loading ${widget.loadedPokemonLength}/${widget.totalPokemonLength} Pokémon...',
+                    'Loading Pokémon...',
+                    // 'Loading ${widget.loadedPokemonLength}/${widget.totalPokemonLength} Pokémon...',
                   )),
               Expanded(flex: 2, child: Center(child: Lottie.asset(app_const.LOADING_POKEBALL_LOTTIE, height: 200, width: 200, repeat: true, reverse: true, fit: BoxFit.contain))),
             ],
@@ -209,7 +189,7 @@ class CustomPercentIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    app_utils.myLog(app_const.LOG_INFO, 'typeee: $type');
+    app_utils.myLog(app_const.LOG_INFO, 'type: $type');
     final tmpPercent = (value) / 256; //bigest value
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

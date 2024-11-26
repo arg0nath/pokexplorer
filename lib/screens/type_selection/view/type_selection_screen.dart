@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pokexplorer/router/app_router.dart' as app_router;
 
 import 'package:pokexplorer/screens/type_selection/bloc/type_selection_bloc.dart';
@@ -61,14 +62,23 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
       body: BlocConsumer<TypeSelectionBloc, TypeSelectionState>(
         listener: (context, state) async {
           if (state.typeSelectionStatus == TypeSelectionStatus.readyToProceedToTypeDetailsScreen) {
-            Navigator.pushNamed(context, app_const.TYPE_DETAILS_SCREEN_PAGE_ROUTE_NAME,
-                arguments: app_router.TypeDetailsScreenArguments(typeName: _typeSelectionBloc.selectedPokemonType.name.toLowerCase()));
+            //close dialog and navigate to typedetails
+            Navigator.popAndPushNamed(context, app_const.TYPE_DETAILS_SCREEN_PAGE_ROUTE_NAME,
+                arguments: app_router.TypeDetailsScreenArguments(typeDetails: _typeSelectionBloc.selectedPokemonTypeDetails));
           } else if (state.typeSelectionStatus == TypeSelectionStatus.readyToProceedToTypeDetailsScreenNoSelection) {
             app_utils.myToast(context, "Hey! Don't forget to pick a category");
-          } else if (state.typeSelectionStatus == TypeSelectionStatus.readyToProceedToTypeDetailsScreenGenericFail) {
-            app_utils.myToast(context, app_const.GENERIC_ERROR_TOAST_MESSAGE);
+          } else if (state.typeSelectionStatus == TypeSelectionStatus.proceedingToTypeDetailsScreeFailed) {
+            //pop dialog
+            Navigator.pop(context);
+            if (state.errorMessage != null) {
+              app_utils.myToast(context, state.errorMessage!);
+            } else {
+              app_utils.myToast(context, app_const.GENERIC_ERROR_TOAST_MESSAGE);
+            }
           } else if (state.typeSelectionStatus == TypeSelectionStatus.showInfoDialog) {
             await showDialog<bool>(barrierDismissible: true, context: context, builder: (BuildContext context) => const app_widgets.AboutMeDialog());
+          } else if (state.typeSelectionStatus == TypeSelectionStatus.proceedingToTypeDetailsScreen) {
+            await showDialog(context: context, builder: (context) => const app_widgets.DialogProgressPokeball(hardBackEnabled: false));
           }
         },
         builder: (context, state) {
@@ -152,6 +162,53 @@ class _MyTypeCardState extends State<MyTypeCard> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class OfflineScreen extends StatefulWidget {
+  const OfflineScreen({super.key});
+
+  @override
+  State<OfflineScreen> createState() => _OfflineScreenState();
+}
+
+class _OfflineScreenState extends State<OfflineScreen> {
+  late final _typeSelectionBloc = context.read<TypeSelectionBloc>();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: RefreshIndicator(
+        color: Colors.grey,
+        semanticsLabel: 'RefreshHomeScreenOffline',
+        edgeOffset: 10,
+        onRefresh: () async {
+          _typeSelectionBloc.add(const LoadTypesEvent());
+
+          return Future<void>.delayed(const Duration(seconds: 2));
+        },
+        child: Center(
+          child: Container(
+            alignment: Alignment.center,
+            height: app_vars.logicalHeight * 0.7,
+            width: app_vars.logicalWidth * 0.8,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Flexible(
+                    flex: 2,
+                    child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: app_vars.logicalWidth * 0.11),
+                        decoration: const BoxDecoration(image: DecorationImage(image: AssetImage(app_const.POKEXPLORER_LOGO_PNG))))),
+                Flexible(flex: 5, child: Lottie.asset(app_const.LOADING_POKEBALL_LOTTIE, width: 30, height: 30, fit: BoxFit.contain, repeat: true, reverse: false)),
+                const app_widgets.MyText('Please check your internet connection.', style: TextStyle(color: app_const.SECONDARY_TEXT_COLOR, fontSize: 18)),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

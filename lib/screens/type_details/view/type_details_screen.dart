@@ -10,9 +10,9 @@ import 'package:pokexplorer/src/variables/app_variables.dart' as app_vars;
 import 'package:pokexplorer/src/widgets/app_widgets.dart' as app_widgets;
 
 class TypeDetailsScreen extends StatefulWidget {
-  const TypeDetailsScreen({super.key, required this.typeName});
+  const TypeDetailsScreen({super.key, required this.typeDetails});
 
-  final String typeName;
+  final app_models.PokemonTypeDetails typeDetails;
 
   @override
   State<TypeDetailsScreen> createState() => _TypeDetailsScreenState();
@@ -25,7 +25,7 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
 
   @override
   void initState() {
-    _typeDetailsBloc.add(LoadTypeDetailsPokemonsEvent(typeName: widget.typeName));
+    _typeDetailsBloc.add(LoadTypeDetailsPokemonsEvent(typeDetails: widget.typeDetails));
 
     _typeDetailsScrollController.addListener(() {
       if (_typeDetailsScrollController.position.pixels == _typeDetailsScrollController.position.maxScrollExtent) {
@@ -64,98 +64,98 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
       child: Scaffold(
         backgroundColor: app_const.TOTAL_WHITE,
         body: BlocConsumer<TypeDetailsBloc, TypeDetailsState>(
-          listener: (context, state) async {
-            if (state.typeDetailsStatus == TypeDetailsStatus.readyToNavigateToPokemonDetails) {
-              Navigator.pushNamed(context, app_const.POKEMON_DETAILS_SCREEN_ROUTE_NAME, arguments: app_router.PokemonDetailsScreenArguments(pokemon: _typeDetailsBloc.selectedPokemon));
-            } else if (state.typeDetailsStatus == TypeDetailsStatus.typeDetailsExited) {
-              Navigator.pop(context);
-            } else if (state.typeDetailsStatus == TypeDetailsStatus.loadingPokemons) {
-              await showDialog<Widget>(
-                  barrierDismissible: false,
-                  context: context,
-                  barrierColor: const Color(0x73A3A3A3),
-                  builder: (BuildContext context) => BlocBuilder<TypeDetailsBloc, TypeDetailsState>(
-                        builder: (context, state) {
-                          return app_widgets.DialogProgressPokeball(
-                            loadedPokemonLength: _typeDetailsBloc.currentIndexForDialog,
-                            totalPokemonLength: _typeDetailsBloc.totalIndexForDialog,
-                            hardBackEnabled: false,
-                          );
-                        },
-                      ).animate().fade(duration: 100.ms).scale());
-            } else if (state.typeDetailsStatus == TypeDetailsStatus.pokemonsLoaded) {
-              Navigator.pop(context); //close loading dialog
-            }
-          },
-          buildWhen: (previous, current) => current.typeDetailsStatus != TypeDetailsStatus.navigatingToPokemonDetails && current.typeDetailsStatus != TypeDetailsStatus.readyToNavigateToPokemonDetails,
-          builder: (context, typeDetailsState) {
-            if (_searchingController.value.text.isNotEmpty && typeDetailsState.typeDetailsStatus == TypeDetailsStatus.searchingPokemon ||
-                typeDetailsState.typeDetailsStatus == TypeDetailsStatus.pokemonSearched) {
-              return Scrollbar(
+            listener: (context, state) async {
+              if (state.typeDetailsStatus == TypeDetailsStatus.loadingPokemons) {
+                await showDialog<Widget>(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (BuildContext context) => const app_widgets.DialogProgressPokeball(hardBackEnabled: false).animate().fade(duration: 100.ms).scale());
+              } else if (state.typeDetailsStatus == TypeDetailsStatus.pokemonsLoaded) {
+                Navigator.pop(context); //close loading dialog
+              } else if (state.typeDetailsStatus == TypeDetailsStatus.navigatingToPokemonDetails) {
+                await showDialog<Widget>(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (BuildContext context) => const app_widgets.DialogProgressPokeball(hardBackEnabled: false).animate().fade(duration: 100.ms).scale());
+              } else if (state.typeDetailsStatus == TypeDetailsStatus.readyToNavigateToPokemonDetails) {
+                Navigator.popAndPushNamed(context, app_const.POKEMON_DETAILS_SCREEN_ROUTE_NAME,
+                    arguments: app_router.PokemonDetailsScreenArguments(selectedTypeName: _typeDetailsBloc.selectedTypeName, pokemon: _typeDetailsBloc.selectedPokemon));
+              } else if (state.typeDetailsStatus == TypeDetailsStatus.morePokemonsLoadedFailed) {
+                app_utils.myToast(context, state.errorMessage!);
+              } else if (state.typeDetailsStatus == TypeDetailsStatus.navigatingToPokemonDetailsFailed) {
+                if (state.errorMessage != null) {
+                  app_utils.myToast(context, state.errorMessage!);
+                } else {
+                  app_utils.myToast(context, app_const.GENERIC_ERROR_TOAST_MESSAGE);
+                }
+                Navigator.pop(context); //close dialog
+              } else if (state.typeDetailsStatus == TypeDetailsStatus.typeDetailsExited) {
+                Navigator.pop(context);
+              }
+            },
+            buildWhen: (previous, current) =>
+                current.typeDetailsStatus != TypeDetailsStatus.navigatingToPokemonDetails && current.typeDetailsStatus != TypeDetailsStatus.readyToNavigateToPokemonDetails,
+            builder: (context, typeDetailsState) {
+              // Determine the list to display based on whether a search result exists
+              List<app_models.PokemonPreview> displayList =
+                  typeDetailsState.searchedPokemonPreviewList.isNotEmpty ? typeDetailsState.searchedPokemonPreviewList : _typeDetailsBloc.selectedTypePokemonPreviewList;
+
+              return RefreshIndicator(
+                onRefresh: () async {
+                  _typeDetailsBloc.add(LoadTypeDetailsPokemonsEvent(typeDetails: widget.typeDetails));
+                },
+                child: Scrollbar(
                   thumbVisibility: false,
-                  child: CustomScrollView(slivers: [
-                    SliverPersistentHeader(delegate: SliverSearchAppBar(selectedTypeName: widget.typeName, textEditingController: _searchingController), pinned: true),
-                    if (typeDetailsState.typeDetailsStatus == TypeDetailsStatus.searchingPokemon)
-                      SliverToBoxAdapter(
-                        child: SizedBox(
-                          height: app_vars.logicalHeight * 0.5,
-                          child: const Center(child: app_widgets.CustomProgressIndicator()),
+                  child: CustomScrollView(
+                    controller: _typeDetailsScrollController,
+                    slivers: [
+                      SliverPersistentHeader(
+                        delegate: SliverSearchAppBar(
+                          selectedTypeName: widget.typeDetails.name,
+                          textEditingController: _searchingController,
                         ),
-                      )
-                    else if (typeDetailsState.typeDetailsStatus == TypeDetailsStatus.pokemonSearched)
-                      if (_typeDetailsBloc.searchedPokemonList.isEmpty)
+                        pinned: true,
+                      ),
+                      //search results not found
+                      if (typeDetailsState.searchedPokemonPreviewList.isEmpty && typeDetailsState.typeDetailsStatus == TypeDetailsStatus.pokemonSearched)
                         SliverToBoxAdapter(
-                          child: SizedBox(
-                            height: app_vars.logicalHeight * 0.5,
-                            child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Opacity(opacity: 0.6, child: Image.asset(app_const.EMPTY_POKEBALL_PNG, width: 100, height: 100)),
-                                  const SizedBox(height: 15),
-                                  const app_widgets.MyText(
-                                    'Oops! No Pokémon found.',
-                                    style: TextStyle(fontSize: 15, color: app_const.SECONDARY_TEXT_COLOR),
-                                  ),
-                                ],
-                              ),
+                          child: Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset(app_const.EMPTY_POKEBALL_PNG, width: app_vars.logicalHeight * 0.1, height: app_vars.logicalHeight * 0.1), // Replace with your image path
+                                const SizedBox(height: 10),
+                                const app_widgets.MyText('No Pokémon found', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                              ],
                             ),
                           ),
-                        )
-                      else
+                        ),
+                      // search results found
+                      if (typeDetailsState.searchedPokemonPreviewList.isNotEmpty)
                         SliverList.builder(
-                          itemCount: _typeDetailsBloc.searchedPokemonList.length,
+                          itemCount: displayList.length,
                           itemBuilder: (context, index) => PokemonListCard(
-                            onTap: () => _typeDetailsBloc.add(NavigateToPokemonDetailsEvent(pokemon: _typeDetailsBloc.searchedPokemonList[index])),
-                            pokemon: _typeDetailsBloc.searchedPokemonList[index],
-                            typeDetailsState: _typeDetailsBloc.state,
+                            onTap: () => _typeDetailsBloc.add(NavigateToPokemonDetailsEvent(pokemonPreview: displayList[index])),
+                            pokemonPreview: displayList[index],
                           ),
                         ),
-                  ]));
-            } else {
-              //basic list
-              return Scrollbar(
-                thumbVisibility: false,
-                child: CustomScrollView(
-                  controller: _typeDetailsScrollController,
-                  slivers: [
-                    SliverPersistentHeader(delegate: SliverSearchAppBar(selectedTypeName: widget.typeName, textEditingController: _searchingController), pinned: true),
-                    SliverList.builder(
-                        itemCount: _typeDetailsBloc.finalPokemonList.length,
-                        itemBuilder: (context, index) => PokemonListCard(
-                              onTap: () => _typeDetailsBloc.add(NavigateToPokemonDetailsEvent(pokemon: _typeDetailsBloc.finalPokemonList[index])),
-                              pokemon: _typeDetailsBloc.finalPokemonList[index],
-                              typeDetailsState: _typeDetailsBloc.state,
-                            )),
-                    if (typeDetailsState.typeDetailsStatus == TypeDetailsStatus.loadingMorePokemons)
-                      const SliverToBoxAdapter(child: SizedBox(width: double.infinity, height: 50, child: Center(child: app_widgets.CustomProgressIndicator())))
-                  ],
+                      // default list w/ no search results
+                      if (typeDetailsState.searchedPokemonPreviewList.isEmpty && typeDetailsState.typeDetailsStatus != TypeDetailsStatus.pokemonSearched)
+                        SliverList.builder(
+                          itemCount: _typeDetailsBloc.selectedTypePokemonPreviewList.length,
+                          itemBuilder: (context, index) => PokemonListCard(
+                            onTap: () => _typeDetailsBloc.add(NavigateToPokemonDetailsEvent(pokemonPreview: _typeDetailsBloc.selectedTypePokemonPreviewList[index])),
+                            pokemonPreview: _typeDetailsBloc.selectedTypePokemonPreviewList[index],
+                          ),
+                        ),
+                      // load more Pokemon
+                      if (typeDetailsState.typeDetailsStatus == TypeDetailsStatus.loadingMorePokemons)
+                        const SliverToBoxAdapter(child: SizedBox(width: double.infinity, height: 50, child: Center(child: app_widgets.CustomProgressIndicator()))),
+                    ],
+                  ),
                 ),
               );
-            }
-          },
-        ),
+            }),
       ),
     );
   }
@@ -164,14 +164,12 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
 class PokemonListCard extends StatefulWidget {
   const PokemonListCard({
     super.key,
-    required this.pokemon,
+    required this.pokemonPreview,
     required this.onTap,
-    required this.typeDetailsState,
   });
 
-  final app_models.Pokemon pokemon;
+  final app_models.PokemonPreview pokemonPreview;
   final VoidCallback onTap;
-  final TypeDetailsState typeDetailsState;
 
   @override
   State<PokemonListCard> createState() => _PokemonListCardState();
@@ -192,11 +190,11 @@ class _PokemonListCardState extends State<PokemonListCard> {
           child: Row(children: [
             Expanded(
               flex: 2,
-              child: Container(alignment: Alignment.center, margin: const EdgeInsets.all(5), child: app_widgets.CustomNetworkImage(height: 100, width: 100, imageURL: widget.pokemon.lqImageUrl)),
+              child: Container(alignment: Alignment.center, margin: const EdgeInsets.all(5), child: app_widgets.CustomNetworkImage(height: 100, width: 100, imageURL: widget.pokemonPreview.imageUrl)),
             ),
             Expanded(
               flex: 4,
-              child: app_widgets.MyText(widget.pokemon.name.toUpperFirst(), style: const TextStyle(fontSize: 20)),
+              child: app_widgets.MyText(widget.pokemonPreview.name.toUpperFirst(), style: const TextStyle(fontSize: 20)),
             ),
           ])),
     );

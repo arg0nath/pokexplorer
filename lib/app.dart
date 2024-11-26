@@ -92,6 +92,7 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
 
   @override
   Widget build(BuildContext context) {
+    app_vars.isDarkMode = ThemeMode.system == ThemeMode.dark;
     return MultiBlocProvider(
       providers: <BlocProvider<dynamic>>[
         BlocProvider<TypeSelectionBloc>(create: (BuildContext context) => widget.typeSelectionBloc),
@@ -108,17 +109,56 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
         onGenerateRoute: app_router.Router.generateRoute,
         navigatorObservers: <NavigatorObserver>[app_vars.routeObserver],
         supportedLocales: const <Locale>[Locale('en')],
-        theme: ThemeData(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          bottomAppBarTheme: const BottomAppBarTheme(elevation: 0, color: app_const.TOTAL_WHITE, shadowColor: Colors.transparent, surfaceTintColor: Colors.transparent),
-          scrollbarTheme:
-              ScrollbarThemeData(thickness: WidgetStateProperty.all(app_const.SCROLLBAR_THICKNESS), radius: app_const.SCROLLBAR_RADIUS, thumbColor: WidgetStateProperty.all(app_const.SCROLLBAR_COLOR)),
-          primaryTextTheme: const TextTheme(titleLarge: TextStyle(color: app_const.PRIMARY_TEXT_COLOR)),
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          dividerTheme: const DividerThemeData(color: Colors.black26, endIndent: 30, indent: 30),
-        ),
+        themeMode: app_vars.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+        theme: lightTheme(),
+        darkTheme: darkTheme(),
       ),
     );
   }
+}
+
+lightTheme() {
+  return ThemeData(
+    brightness: Brightness.light,
+    primaryColor: Color(0xBC005DBA),
+    dialogBackgroundColor: app_const.HOME_CARD_LIGHT,
+    appBarTheme: const AppBarTheme(
+      color: app_const.SCAFFOLD_BACKGROUND_LIGHT,
+      centerTitle: true,
+      titleTextStyle: TextStyle(fontSize: 26, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+    ),
+    scaffoldBackgroundColor: app_const.SCAFFOLD_BACKGROUND_LIGHT,
+    cardColor: app_const.HOME_CARD_LIGHT,
+    textTheme: const TextTheme(
+      bodySmall: TextStyle(fontSize: 16, color: app_const.GREY, fontFamily: app_const.MAIN_FONT_FAMILY),
+      bodyLarge: TextStyle(fontSize: 18, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+      bodyMedium: TextStyle(fontSize: 16, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+      titleLarge: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+      titleMedium: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+      titleSmall: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+    ),
+  );
+}
+
+darkTheme() {
+  return ThemeData(
+    brightness: Brightness.dark,
+    primaryColor: Color(0xBC005DBA),
+    dialogBackgroundColor: app_const.HOME_CARD_DARK,
+    appBarTheme: const AppBarTheme(
+      color: app_const.SCAFFOLD_BACKGROUND_DARK,
+      centerTitle: true,
+      titleTextStyle: TextStyle(fontSize: 26, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+    ),
+    scaffoldBackgroundColor: app_const.SCAFFOLD_BACKGROUND_DARK,
+    cardColor: app_const.HOME_CARD_DARK,
+    textTheme: const TextTheme(
+      bodySmall: TextStyle(fontSize: 16, color: app_const.GREY, fontFamily: app_const.MAIN_FONT_FAMILY),
+      bodyLarge: TextStyle(fontSize: 18, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+      bodyMedium: TextStyle(fontSize: 16, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+      titleLarge: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+      titleMedium: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+      titleSmall: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+    ),
+  );
 }

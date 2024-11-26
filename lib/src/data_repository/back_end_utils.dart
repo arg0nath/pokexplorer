@@ -34,12 +34,8 @@ class BackendUtils {
       } else {
         throw Exception('Failed to load data with status code: ${response.statusCode}');
       }
-    } on SocketException {
-      throw Exception('No Internet connection. Please check your connection.');
     } on TimeoutException {
       throw Exception('The connection has timed out. Please try again.');
-    } on FormatException {
-      throw Exception('Invalid response format from the server.');
     } catch (e) {
       throw Exception('Failed to fetch data.');
     }

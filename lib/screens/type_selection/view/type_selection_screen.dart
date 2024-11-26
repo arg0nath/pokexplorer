@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,16 +33,22 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
       appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          backgroundColor: app_const.TOTAL_WHITE,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           scrolledUnderElevation: 0,
           leading: const SizedBox.shrink(),
           actions: [
-            IconButton(
-                onPressed: () => _typeSelectionBloc.add(const ShowInfoDialogEvent()),
-                icon: const Icon(
-                  Icons.info_outline_rounded,
-                  color: app_const.SECONDARY_TEXT_COLOR,
-                ))
+            IconButton(onPressed: () => _typeSelectionBloc.add(const ShowInfoDialogEvent()), icon: const Icon(Icons.info_outline_rounded, color: app_const.SECONDARY_TEXT_COLOR)),
+            /*   Row(
+                  children: [
+                    Icon(Icons.light_mode_outlined),
+                    CupertinoSwitch(
+                      activeColor: Theme.of(context).primaryColor,
+                      value: app_vars.isDarkMode, // The value of the switch
+                      onChanged: (value) => _typeSelectionBloc.add(ToggleDarkThemeEvent()),
+                    ),
+                    Icon(Icons.dark_mode_outlined),
+                  ],
+                ), */
           ],
           title: const app_widgets.MyText('Pick a Pokémon type', style: TextStyle(fontSize: 20, color: app_const.PRIMARY_TEXT_COLOR))),
       bottomNavigationBar: Container(
@@ -53,12 +60,12 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
             OutlinedButton(
                 style: OutlinedButton.styleFrom(backgroundColor: app_const.BRIGHT_RED, side: const BorderSide(width: 1, color: app_const.LIGHT_RED)),
                 onPressed: () => _typeSelectionBloc.add(const ProceedToTypeDetailsScreenEvent()),
-                child: const app_widgets.MyText('Next', style: TextStyle(color: app_const.TOTAL_WHITE, fontSize: 19)))
+                child: const app_widgets.MyText('Next', style: TextStyle(color: app_const.WHITE_TOTAL, fontSize: 19)))
           ],
         ),
       ),
       extendBody: true,
-      backgroundColor: app_const.TOTAL_WHITE,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: BlocConsumer<TypeSelectionBloc, TypeSelectionState>(
         listener: (context, state) async {
           if (state.typeSelectionStatus == TypeSelectionStatus.readyToProceedToTypeDetailsScreen) {
@@ -67,7 +74,7 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
                 arguments: app_router.TypeDetailsScreenArguments(typeDetails: _typeSelectionBloc.selectedPokemonTypeDetails));
           } else if (state.typeSelectionStatus == TypeSelectionStatus.readyToProceedToTypeDetailsScreenNoSelection) {
             app_utils.myToast(context, "Hey! Don't forget to pick a category");
-          } else if (state.typeSelectionStatus == TypeSelectionStatus.proceedingToTypeDetailsScreeFailed) {
+          } else if (state.typeSelectionStatus == TypeSelectionStatus.proceedingToTypeDetailsScreenGenericFailed) {
             //pop dialog
             Navigator.pop(context);
             if (state.errorMessage != null) {
@@ -75,6 +82,8 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
             } else {
               app_utils.myToast(context, app_const.GENERIC_ERROR_TOAST_MESSAGE);
             }
+          } else if (state.typeSelectionStatus == TypeSelectionStatus.readyToNotifyForNoInternet) {
+            app_utils.myToast(context, 'Please check your internet connection');
           } else if (state.typeSelectionStatus == TypeSelectionStatus.showInfoDialog) {
             await showDialog<bool>(barrierDismissible: true, context: context, builder: (BuildContext context) => const app_widgets.AboutMeDialog());
           } else if (state.typeSelectionStatus == TypeSelectionStatus.proceedingToTypeDetailsScreen) {

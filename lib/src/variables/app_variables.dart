@@ -19,3 +19,4 @@ Size physicalScreenSize = WidgetsBinding.instance.platformDispatcher.views.first
 Size logicalScreenSize = physicalScreenSize / pixelRatio;
 double logicalWidth = logicalScreenSize.width;
 double logicalHeight = logicalScreenSize.height;
+bool isDarkMode = false;

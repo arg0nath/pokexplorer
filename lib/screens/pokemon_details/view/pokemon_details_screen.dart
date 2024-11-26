@@ -159,7 +159,7 @@ class _LoadingDetailsViewScreenState extends State<LoadingDetailsViewScreen> {
           child: Container(
             decoration: const BoxDecoration(
               boxShadow: [BoxShadow(color: Color(0xFFB4B4B4), blurRadius: 30, spreadRadius: 2, offset: Offset(0, -4))],
-              color: app_const.TOTAL_WHITE,
+              color: app_const.WHITE_TOTAL,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(30),
                 topRight: Radius.circular(30),
@@ -171,7 +171,7 @@ class _LoadingDetailsViewScreenState extends State<LoadingDetailsViewScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                    color: app_const.TOTAL_WHITE,
+                    color: app_const.WHITE_TOTAL,
                     width: app_vars.logicalWidth * 0.2,
                     child: const Icon(
                       Icons.info_outline_rounded,
@@ -185,12 +185,12 @@ class _LoadingDetailsViewScreenState extends State<LoadingDetailsViewScreen> {
         Container(
           height: 40,
           width: app_vars.logicalWidth,
-          color: app_const.TOTAL_WHITE,
+          color: app_const.WHITE_TOTAL,
         ),
         Expanded(
           flex: 1,
           child: Container(
-            color: app_const.TOTAL_WHITE,
+            color: app_const.WHITE_TOTAL,
             width: app_vars.logicalWidth,
             child: Row(
               children: [
@@ -212,7 +212,7 @@ class _LoadingDetailsViewScreenState extends State<LoadingDetailsViewScreen> {
           flex: 3,
           child: Center(
             child: Container(
-              color: app_const.TOTAL_WHITE,
+              color: app_const.WHITE_TOTAL,
               alignment: Alignment.center,
               padding: EdgeInsets.symmetric(horizontal: app_vars.logicalWidth * 0.1),
               child: Column(
@@ -293,7 +293,7 @@ class _LoadedPageDetailsState extends State<LoadedPageDetails> {
           child: Container(
             decoration: const BoxDecoration(
               boxShadow: [BoxShadow(color: Color(0xFFB4B4B4), blurRadius: 30, spreadRadius: 2, offset: Offset(0, -4))],
-              color: app_const.TOTAL_WHITE,
+              color: app_const.WHITE_TOTAL,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(30),
                 topRight: Radius.circular(30),
@@ -305,7 +305,7 @@ class _LoadedPageDetailsState extends State<LoadedPageDetails> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                    color: app_const.TOTAL_WHITE,
+                    color: app_const.WHITE_TOTAL,
                     width: app_vars.logicalWidth * 0.2,
                     child: const Icon(
                       Icons.info_outline_rounded,
@@ -319,7 +319,7 @@ class _LoadedPageDetailsState extends State<LoadedPageDetails> {
         Container(
           height: 40,
           width: app_vars.logicalWidth,
-          color: app_const.TOTAL_WHITE,
+          color: app_const.WHITE_TOTAL,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             physics: const AlwaysScrollableScrollPhysics(),
@@ -333,7 +333,7 @@ class _LoadedPageDetailsState extends State<LoadedPageDetails> {
         Expanded(
           flex: 1,
           child: Container(
-            color: app_const.TOTAL_WHITE,
+            color: app_const.WHITE_TOTAL,
             width: app_vars.logicalWidth,
             child: Row(
               children: [
@@ -355,7 +355,7 @@ class _LoadedPageDetailsState extends State<LoadedPageDetails> {
           flex: 3,
           child: Center(
             child: Container(
-              color: app_const.TOTAL_WHITE,
+              color: app_const.WHITE_TOTAL,
               alignment: Alignment.center,
               padding: EdgeInsets.symmetric(horizontal: app_vars.logicalWidth * 0.1),
               child: Column(

@@ -80,7 +80,12 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
     on<NavigateToPokemonDetailsEvent>((NavigateToPokemonDetailsEvent event, Emitter<TypeDetailsState> emit) async {
       selectedPokemonPreview = app_models.PokemonPreview.empty();
       selectedPokemonPreview = event.pokemonPreview;
-      if (await InternetConnection().hasInternetAccess) {}
+      final bool hasInternetawait = await InternetConnection().hasInternetAccess;
+      if (!hasInternetawait) {
+        emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.notifyingForNoInternetError));
+        emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.readyToNotifyForNoInternet));
+        return;
+      }
 
       emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.navigatingToPokemonDetails));
 
@@ -88,7 +93,7 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
 
       if (result is app_models.MyError) {
         app_utils.myLog(app_const.LOG_ERROR, 'Error loading Pokémon details: ${result.name}');
-        emit(TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.navigatingToPokemonDetailsFailed, errorMessage: result.name));
+        emit(TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.navigatingToPokemonDetailsGeneralFailed, errorMessage: result.name));
         return;
       }
 

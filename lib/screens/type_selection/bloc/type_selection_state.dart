@@ -10,11 +10,14 @@ enum TypeSelectionStatus {
   readyToProceedToTypeDetailsScreen,
 
   failingproceedingToTypeDetailsScreen,
-  proceedingToTypeDetailsScreeFailed,
+  proceedingToTypeDetailsScreenGenericFailed,
 
   readyToProceedToTypeDetailsScreenNoSelection,
+  readyToNotifyForNoInternet,
 
   showInfoDialog,
+  togglingDarkTheme,
+  darkThemeToggled,
 }
 
 class TypeSelectionState extends Equatable {

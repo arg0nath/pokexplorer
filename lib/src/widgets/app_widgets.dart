@@ -151,7 +151,7 @@ class _DialogProgressPokeballState extends State<DialogProgressPokeball> {
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           decoration: BoxDecoration(
               border: Border.all(color: app_const.DIALOG_BORDER_COLOR, width: app_const.DIALOG_BORDER_WIDTH),
-              color: app_const.TOTAL_WHITE,
+              color: app_const.WHITE_TOTAL,
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(app_const.DIALOG_PADDING),
               boxShadow: const <BoxShadow>[BoxShadow(color: Colors.black26, blurRadius: 10.0, offset: Offset(0.0, 10.0))]),
@@ -282,7 +282,7 @@ class _AboutMeDialogState extends State<AboutMeDialog> {
         // height: app_vars.logicalHeight * 0.85,
         decoration: BoxDecoration(
             border: Border.all(color: app_const.DIALOG_BORDER_COLOR, width: app_const.DIALOG_BORDER_WIDTH),
-            color: app_const.TOTAL_WHITE,
+            color: app_const.WHITE_TOTAL,
             shape: BoxShape.rectangle,
             borderRadius: BorderRadius.circular(app_const.DIALOG_PADDING),
             boxShadow: const <BoxShadow>[BoxShadow(color: Colors.black26, blurRadius: 10.0, offset: Offset(0.0, 10.0))]),
@@ -305,8 +305,8 @@ class _AboutMeDialogState extends State<AboutMeDialog> {
           OutlinedButton(
             onPressed: () async => app_utils.sendContactEmail(),
             style: OutlinedButton.styleFrom(
-                foregroundColor: app_const.TOTAL_WHITE, backgroundColor: app_const.MORE_VIBRANT_TURQUOISE, side: const BorderSide(width: 1, color: app_const.MORE_VIBRANT_TURQUOISE)),
-            child: const MyText('Contact me', style: TextStyle(color: app_const.TOTAL_WHITE, fontSize: 18)),
+                foregroundColor: app_const.WHITE_TOTAL, backgroundColor: app_const.MORE_VIBRANT_TURQUOISE, side: const BorderSide(width: 1, color: app_const.MORE_VIBRANT_TURQUOISE)),
+            child: const MyText('Contact me', style: TextStyle(color: app_const.WHITE_TOTAL, fontSize: 18)),
           ),
           const SizedBox(height: 20),
         ]),

@@ -50,25 +50,10 @@ const PERCENT_HIGH_COLOR = Colors.greenAccent;
 const PERCENT_MEDIUM_COLOR = Colors.orangeAccent;
 const PERCENT_LOW_COLOR = Colors.redAccent;
 
-const Color TOTAL_WHITE = Color(0xFFFFFFFF);
-
-//Text Styling
-
-const Color PRIMARY_TEXT_COLOR = Color(0xff4e4e4e);
-const Color SECONDARY_TEXT_COLOR = Color(0xFF9E9E9E);
-const Color TOAST_BACKGROUND_COLOR = Colors.blueGrey;
-const double DIALOG_PADDING = 16.0;
-const double DIALOG_BORDER_WIDTH = 4.0;
-const Color DIALOG_BORDER_COLOR = TOTAL_WHITE;
-
-//dot scoll
-const Color PAGE_INDICATOR_INACTIVATE_DOT_COLOR = Color(0xFFBDBDBD);
-const Color PAGE_INDICATOR_ACTIVATE_DOT_COLOR = Colors.red;
-
 //customNetworkImage customization
 const double NETWORK_IMAGE_BORDER_RADIUS = 80.0;
 const double NETWORK_IMAGE_NO_BORDER_RADIUS = 0.0;
-const Color NETWORK_IMAGE_PLACEHOLDER_COLOR = TOTAL_WHITE;
+const Color NETWORK_IMAGE_PLACEHOLDER_COLOR = WHITE_TOTAL;
 const double NETWORK_IMAGE_PLACEHOLDER_WIDTH = 1.0;
 
 //welcome
@@ -119,6 +104,31 @@ const Color GROUND_COLOR = Color(0xffb88e6f);
 const Color ROCK_COLOR = Color(0xffcbc7ad);
 const Color BUG_COLOR = Color(0xffb8c26a);
 const Color ICE_COLOR = Color(0xff81dff7);
+
+const Color WHITE_TOTAL = Color(0xffffffff);
+const Color WHITE_IOS = Color(0xfff5f5f7);
+const Color BLACK_IOS = Color(0xff313132);
+const Color GREY = Color(0xFF979797);
+
+//Text Styling
+
+const Color PRIMARY_TEXT_COLOR = Color(0xff4e4e4e);
+const Color SECONDARY_TEXT_COLOR = Color(0xFF9E9E9E);
+const Color TOAST_BACKGROUND_COLOR = Colors.blueGrey;
+const double DIALOG_PADDING = 16.0;
+const double DIALOG_BORDER_WIDTH = 4.0;
+const Color DIALOG_BORDER_COLOR = WHITE_TOTAL;
+
+//dot scoll
+const Color PAGE_INDICATOR_INACTIVATE_DOT_COLOR = Color(0xFFBDBDBD);
+const Color PAGE_INDICATOR_ACTIVATE_DOT_COLOR = Colors.red;
+
+const SCAFFOLD_BACKGROUND_DARK = Color(0xff212121);
+const SCAFFOLD_BACKGROUND_LIGHT = WHITE_IOS;
+const HOME_CARD_LIGHT = WHITE_TOTAL;
+const HOME_CARD_DARK = Color(0xff2f2f2f);
+const double EXPANDED_BAR_HEIGHT = 200;
+const double COLLAPSED_BAR_HEIGHT = 130;
 
 //gradients
 const Color BRIGHTER_GREY = Color(0xFFC5C5C5);

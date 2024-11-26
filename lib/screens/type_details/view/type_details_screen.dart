@@ -62,7 +62,7 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
         await _onWillPop();
       },
       child: Scaffold(
-        backgroundColor: app_const.TOTAL_WHITE,
+        backgroundColor: app_const.WHITE_TOTAL,
         body: BlocConsumer<TypeDetailsBloc, TypeDetailsState>(
             listener: (context, state) async {
               if (state.typeDetailsStatus == TypeDetailsStatus.loadingPokemons) {
@@ -82,7 +82,9 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
                     arguments: app_router.PokemonDetailsScreenArguments(selectedTypeName: _typeDetailsBloc.selectedTypeName, pokemon: _typeDetailsBloc.selectedPokemon));
               } else if (state.typeDetailsStatus == TypeDetailsStatus.morePokemonsLoadedFailed) {
                 app_utils.myToast(context, state.errorMessage!);
-              } else if (state.typeDetailsStatus == TypeDetailsStatus.navigatingToPokemonDetailsFailed) {
+              } else if (state.typeDetailsStatus == TypeDetailsStatus.readyToNotifyForNoInternet) {
+                app_utils.myToast(context, 'Please check your internet connection');
+              } else if (state.typeDetailsStatus == TypeDetailsStatus.navigatingToPokemonDetailsGeneralFailed) {
                 if (state.errorMessage != null) {
                   app_utils.myToast(context, state.errorMessage!);
                 } else {
@@ -271,11 +273,11 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
                         style: const TextStyle(color: app_const.PRIMARY_TEXT_COLOR, fontFamily: app_const.MAIN_FONT_FAMILY),
                         controller: textEditingController,
                         decoration: InputDecoration(
-                            fillColor: app_const.TOTAL_WHITE,
+                            fillColor: app_const.WHITE_TOTAL,
                             filled: true,
-                            focusedBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: app_const.TOTAL_WHITE), borderRadius: BorderRadius.circular(15)),
-                            border: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: app_const.TOTAL_WHITE), borderRadius: BorderRadius.circular(15)),
-                            enabledBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: app_const.TOTAL_WHITE), borderRadius: BorderRadius.circular(15)),
+                            focusedBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: app_const.WHITE_TOTAL), borderRadius: BorderRadius.circular(15)),
+                            border: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: app_const.WHITE_TOTAL), borderRadius: BorderRadius.circular(15)),
+                            enabledBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: app_const.WHITE_TOTAL), borderRadius: BorderRadius.circular(15)),
                             hintStyle: const TextStyle(color: app_const.SECONDARY_TEXT_COLOR, fontFamily: app_const.MAIN_FONT_FAMILY),
                             hintText: 'Search for a Pokémon',
                             suffixIcon: IconButton(

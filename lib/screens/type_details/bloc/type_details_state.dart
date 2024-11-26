@@ -12,8 +12,11 @@ enum TypeDetailsStatus {
   morePokemonsLoadedFailed,
 
   navigatingToPokemonDetails,
-  navigatingToPokemonDetailsFailed,
+  navigatingToPokemonDetailsGeneralFailed,
   readyToNavigateToPokemonDetails,
+
+  notifyingForNoInternetError,
+  readyToNotifyForNoInternet,
 
   searchingPokemon,
   pokemonSearched,

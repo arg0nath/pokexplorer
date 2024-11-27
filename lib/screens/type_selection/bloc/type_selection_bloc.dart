@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+// import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:pokexplorer/src/variables/app_variables.dart' as app_vars;
 
 import '../../../src/models/app_models.dart' as app_models;
@@ -63,29 +64,21 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
     on<ProceedToTypeDetailsScreenEvent>((ProceedToTypeDetailsScreenEvent event, Emitter<TypeSelectionState> emit) async {
       if (selectedPokemonType.name.isEmpty) {
         emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.failingproceedingToTypeDetailsScreen));
-        emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.readyToProceedToTypeDetailsScreenNoSelection));
+        emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.errorToProceedToTypeDetailsScreenNoSelection));
         return;
       }
 
       final bool hasInternetawait = await InternetConnection().hasInternetAccess;
       if (!hasInternetawait) {
         emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.failingproceedingToTypeDetailsScreen));
-        emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.readyToNotifyForNoInternet));
+        emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.errorToNotifyForNoInternet));
         return;
       }
 
       emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.proceedingToTypeDetailsScreen));
       frontEndUtils.saveSelectedTypeName(selectedPokemonType.name.toLowerCase());
+      selectedPokemonTypeDetails = await frontEndUtils.loadTypeDetails(type: selectedPokemonType.name.toLowerCase());
 
-      final dynamic result = await frontEndUtils.loadTypeDetails(type: selectedPokemonType.name.toLowerCase());
-
-      if (result is app_models.MyError) {
-        app_utils.myLog(app_const.LOG_ERROR, 'Error loading Pokémon details: ${result.name}');
-        emit(TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.proceedingToTypeDetailsScreenGenericFailed, errorMessage: result.name));
-        return;
-      }
-
-      selectedPokemonTypeDetails = result as app_models.PokemonTypeDetails;
       emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.readyToProceedToTypeDetailsScreen));
     });
 
@@ -97,8 +90,8 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
 
     on<ToggleDarkThemeEvent>((ToggleDarkThemeEvent event, Emitter<TypeSelectionState> emit) async {
       emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.togglingDarkTheme));
-      app_vars.isDarkMode = !app_vars.isDarkMode;
-      print('bloc isDarkMode: ${app_vars.isDarkMode}');
+      //  app_vars.isDarkMode = !app_vars.isDarkMode;
+      //  print('bloc isDarkMode: ${app_vars.isDarkMode}');
       emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.darkThemeToggled));
     });
   }

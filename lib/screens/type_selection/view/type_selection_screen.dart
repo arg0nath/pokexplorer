@@ -72,17 +72,9 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
             //close dialog and navigate to typedetails
             Navigator.popAndPushNamed(context, app_const.TYPE_DETAILS_SCREEN_PAGE_ROUTE_NAME,
                 arguments: app_router.TypeDetailsScreenArguments(typeDetails: _typeSelectionBloc.selectedPokemonTypeDetails));
-          } else if (state.typeSelectionStatus == TypeSelectionStatus.readyToProceedToTypeDetailsScreenNoSelection) {
+          } else if (state.typeSelectionStatus == TypeSelectionStatus.errorToProceedToTypeDetailsScreenNoSelection) {
             app_utils.myToast(context, "Hey! Don't forget to pick a category");
-          } else if (state.typeSelectionStatus == TypeSelectionStatus.proceedingToTypeDetailsScreenGenericFailed) {
-            //pop dialog
-            Navigator.pop(context);
-            if (state.errorMessage != null) {
-              app_utils.myToast(context, state.errorMessage!);
-            } else {
-              app_utils.myToast(context, app_const.GENERIC_ERROR_TOAST_MESSAGE);
-            }
-          } else if (state.typeSelectionStatus == TypeSelectionStatus.readyToNotifyForNoInternet) {
+          } else if (state.typeSelectionStatus == TypeSelectionStatus.errorToNotifyForNoInternet) {
             app_utils.myToast(context, 'Please check your internet connection');
           } else if (state.typeSelectionStatus == TypeSelectionStatus.showInfoDialog) {
             await showDialog<bool>(barrierDismissible: true, context: context, builder: (BuildContext context) => const app_widgets.AboutMeDialog());

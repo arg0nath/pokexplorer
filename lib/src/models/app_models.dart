@@ -105,25 +105,6 @@ class PokemonType {
   }
 }
 
-class MyError {
-  MyError({
-    required this.name,
-  });
-
-  MyError.empty() {
-    name = app_const.EMPTY_STRING;
-  }
-
-  String name = app_const.EMPTY_STRING;
-
-  void setName(String name) => this.name = name;
-
-  @override
-  String toString() {
-    return 'ERROR: $name';
-  }
-}
-
 class PokemonTypeDetails {
   PokemonTypeDetails({
     required this.id,

@@ -81,15 +81,11 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
                 Navigator.popAndPushNamed(context, app_const.POKEMON_DETAILS_SCREEN_ROUTE_NAME,
                     arguments: app_router.PokemonDetailsScreenArguments(selectedTypeName: _typeDetailsBloc.selectedTypeName, pokemon: _typeDetailsBloc.selectedPokemon));
               } else if (state.typeDetailsStatus == TypeDetailsStatus.morePokemonsLoadedFailed) {
-                app_utils.myToast(context, state.errorMessage!);
+                app_utils.myToast(context, app_const.GENERIC_ERROR_TOAST_MESSAGE);
               } else if (state.typeDetailsStatus == TypeDetailsStatus.readyToNotifyForNoInternet) {
-                app_utils.myToast(context, 'Please check your internet connection');
-              } else if (state.typeDetailsStatus == TypeDetailsStatus.navigatingToPokemonDetailsGeneralFailed) {
-                if (state.errorMessage != null) {
-                  app_utils.myToast(context, state.errorMessage!);
-                } else {
-                  app_utils.myToast(context, app_const.GENERIC_ERROR_TOAST_MESSAGE);
-                }
+                app_utils.myToast(context, 'Please check your internet connection and refresh');
+              } else if (state.typeDetailsStatus == TypeDetailsStatus.errorNavigateToPokemonDetailsFailed) {
+                app_utils.myToast(context, app_const.GENERIC_ERROR_TOAST_MESSAGE);
                 Navigator.pop(context); //close dialog
               } else if (state.typeDetailsStatus == TypeDetailsStatus.typeDetailsExited) {
                 Navigator.pop(context);
@@ -98,7 +94,6 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
             buildWhen: (previous, current) =>
                 current.typeDetailsStatus != TypeDetailsStatus.navigatingToPokemonDetails && current.typeDetailsStatus != TypeDetailsStatus.readyToNavigateToPokemonDetails,
             builder: (context, typeDetailsState) {
-              // Determine the list to display based on whether a search result exists
               List<app_models.PokemonPreview> displayList =
                   typeDetailsState.searchedPokemonPreviewList.isNotEmpty ? typeDetailsState.searchedPokemonPreviewList : _typeDetailsBloc.selectedTypePokemonPreviewList;
 

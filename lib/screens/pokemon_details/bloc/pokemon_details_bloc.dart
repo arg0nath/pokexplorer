@@ -29,10 +29,7 @@ class PokemonDetailsBloc extends Bloc<PokemonDetailsEvent, PokemonDetailsState> 
       } catch (e) {
         // Catch any unexpected errors and log them
         app_utils.myLog(app_const.LOG_ERROR, 'Unexpected error loading Pokémon details: $e');
-        emit(PokemonDetailsState(
-          pokemonDetailsStatus: PokemonDetailsStatus.pokemonDetailsLoadFailed,
-          errorMessage: app_const.GENERIC_ERROR_TOAST_MESSAGE,
-        ));
+        emit(PokemonDetailsState(pokemonDetailsStatus: PokemonDetailsStatus.pokemonDetailsLoadFailed, errorMessage: app_const.GENERIC_ERROR_TOAST_MESSAGE));
       }
     });
   }

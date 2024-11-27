@@ -20,35 +20,21 @@ class FrontendUtils {
     localDataUtils.saveSelectedTypeNameToPrefs(typeName);
   }
 
-  Future<dynamic> loadTypeDetails({required String type}) async {
-    dynamic result;
-
+  Future<app_models.PokemonTypeDetails> loadTypeDetails({required String type}) async {
     final Map<String, dynamic> tmpResult = await backendUtils.getTypeDetails(type: type);
 
-    if (tmpResult.containsKey('error')) {
-      app_utils.myLog(app_const.LOG_ERROR, 'Error fetching type details: ${tmpResult['error']}');
-      return app_models.MyError(name: (tmpResult['error'] as String).replaceFirstMapped('Exception:', (match) => app_const.EMPTY_STRING));
-    }
+    final pokeTypeDetails = app_models.PokemonTypeDetails.fromJson(tmpResult);
 
-    result = app_models.PokemonTypeDetails.fromJson(tmpResult);
-
-    return result;
+    return pokeTypeDetails;
   }
 
-  Future<dynamic> loadPokemonByName({
+  Future<app_models.Pokemon> loadPokemonByName({
     required String name,
   }) async {
-    dynamic result;
-
     final Map<String, dynamic> tmpResult = await backendUtils.getPokemonByName(name: name);
 
-    if (tmpResult.containsKey('error')) {
-      app_utils.myLog(app_const.LOG_ERROR, 'Error fetching Pokémon details: ${tmpResult['error']}');
-      return app_models.MyError(name: (tmpResult['error'] as String).replaceFirstMapped('Exception:', (match) => app_const.EMPTY_STRING));
-    }
+    final pokemon = app_models.Pokemon.fromJson(tmpResult);
 
-    result = app_models.Pokemon.fromJson(tmpResult);
-
-    return result;
+    return pokemon;
   }
 }

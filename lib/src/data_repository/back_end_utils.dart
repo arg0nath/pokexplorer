@@ -32,10 +32,8 @@ class BackendUtils {
       if (response.statusCode == app_const.API_STATUS_OK) {
         return json.decode(response.body) as Map<String, dynamic>;
       } else {
-        throw Exception('Failed to load data with status code: ${response.statusCode}');
+        throw Exception('Failed to fetch data.');
       }
-    } on TimeoutException {
-      throw Exception('The connection has timed out. Please try again.');
     } catch (e) {
       throw Exception('Failed to fetch data.');
     }
@@ -51,12 +49,7 @@ class BackendUtils {
 
     final String typeUrl = 'type/$type/';
 
-    try {
-      response = await httpRequestMap(typeUrl);
-    } catch (e) {
-      app_utils.myLog(app_const.LOG_ERROR, 'Error in fetching type details: $e');
-      return {'error': '$e'};
-    }
+    response = await httpRequestMap(typeUrl);
 
     return Future<Map<String, dynamic>>.value(response);
   }
@@ -72,12 +65,7 @@ class BackendUtils {
 
     final String pokemonUrl = 'pokemon/$tmpName/';
 
-    try {
-      response = await httpRequestMap(pokemonUrl);
-    } catch (e) {
-      app_utils.myLog(app_const.LOG_ERROR, 'Error in fetching Pokémon by name: $e');
-      return {'error': '$e'};
-    }
+    response = await httpRequestMap(pokemonUrl);
 
     return Future<Map<String, dynamic>>.value(response);
   }

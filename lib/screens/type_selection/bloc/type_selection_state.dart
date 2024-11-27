@@ -10,10 +10,8 @@ enum TypeSelectionStatus {
   readyToProceedToTypeDetailsScreen,
 
   failingproceedingToTypeDetailsScreen,
-  proceedingToTypeDetailsScreenGenericFailed,
-
-  readyToProceedToTypeDetailsScreenNoSelection,
-  readyToNotifyForNoInternet,
+  errorToProceedToTypeDetailsScreenNoSelection,
+  errorToNotifyForNoInternet,
 
   showInfoDialog,
   togglingDarkTheme,
@@ -21,11 +19,10 @@ enum TypeSelectionStatus {
 }
 
 class TypeSelectionState extends Equatable {
-  const TypeSelectionState({required this.typeSelectionStatus, this.errorMessage});
+  const TypeSelectionState({required this.typeSelectionStatus});
 
   final TypeSelectionStatus typeSelectionStatus;
-  final String? errorMessage;
 
   @override
-  List<Object?> get props => <Object?>[typeSelectionStatus, errorMessage];
+  List<Object?> get props => <Object?>[typeSelectionStatus];
 }

@@ -35,10 +35,3 @@ class ShowInfoDialogEvent extends TypeSelectionEvent {
   @override
   List<Object> get props => <Object>[];
 }
-
-class ToggleDarkThemeEvent extends TypeSelectionEvent {
-  const ToggleDarkThemeEvent();
-
-  @override
-  List<Object> get props => <Object>[];
-}

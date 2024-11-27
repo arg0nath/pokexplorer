@@ -3,9 +3,12 @@ import 'dart:math' as math;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
+import 'package:pokexplorer/screens/theme/bloc/theme_bloc.dart';
+import 'package:pokexplorer/screens/type_selection/bloc/type_selection_bloc.dart';
 import 'package:pokexplorer/src/utilities/app_utils.dart' as app_utils;
 import 'package:pokexplorer/src/variables/app_constants.dart' as app_const;
 import 'package:pokexplorer/src/variables/app_variables.dart' as app_vars;
@@ -193,7 +196,7 @@ class CustomPercentIndicator extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text('$name :', style: const TextStyle(fontSize: 18, color: app_const.SECONDARY_TEXT_COLOR)),
+        Text('$name :', style: Theme.of(context).textTheme.bodyMedium),
         LinearPercentIndicator(
           width: app_vars.logicalWidth * 0.6,
           animation: true,
@@ -201,9 +204,9 @@ class CustomPercentIndicator extends StatelessWidget {
           lineHeight: 20.0,
           animationDuration: 1500,
           percent: tmpPercent,
-          center: Text('$value'),
           progressColor: app_utils.gradientFromType(type).first,
-        )
+        ),
+        Text('$value', style: Theme.of(context).textTheme.bodyMedium),
       ],
     );
   }
@@ -246,25 +249,26 @@ class _AboutMeDialogState extends State<AboutMeDialog> {
           const SizedBox(height: 5),
           Text('Developed by: ', textAlign: TextAlign.left, style: theme.textTheme.bodySmall),
           const SizedBox(height: 5),
-          SizedBox(height: 40, child: Text('Vasileios Makris', style: theme.textTheme.bodyMedium)),
+          SizedBox(height: 40, child: Text('Vasileios Makris', style: theme.textTheme.bodySmall)),
           const SizedBox(height: 20),
           OutlinedButton(onPressed: () async => app_utils.sendContactEmail(), style: Theme.of(context).outlinedButtonTheme.style, child: Text(appLocale.contactMe)),
           const SizedBox(height: 20),
-          /*  Row(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.light_mode_outlined),
-              CupertinoSwitch(
-                activeColor: Theme.of(context).primaryColor,
-                value: app_vars.isDarkMode, // The value of the switch
-                onChanged: (value) => {
-                  setState(() {
-                    app_vars.isDarkMode = !app_vars.isDarkMode;
-                  })
+              Icon(Icons.light_mode_outlined, color: app_const.PRIMARY_TEXT_COLOR),
+              BlocBuilder<TypeSelectionBloc, TypeSelectionState>(
+                builder: (context, state) {
+                  return CupertinoSwitch(
+                    value: context.read<TypeSelectionBloc>().frontEndUtils.localDataUtils.loadIsDarkModeFromPrefs(), // The value of the switch
+                    onChanged: (value) => {context.read<ThemeBloc>().add(ToggleThemeEvent())},
+                  );
                 },
               ),
-              Icon(Icons.dark_mode_outlined),
+              Icon(Icons.dark_mode_outlined, color: app_const.PRIMARY_TEXT_COLOR),
             ],
-          ), */
+          ),
+          const SizedBox(height: 20),
         ]),
       ),
     );

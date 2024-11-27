@@ -23,4 +23,13 @@ class LocalDataUtils {
     app_utils.myLog(app_const.LOG_INFO, 'saveIsInitBootToPrefs, initBoot = $initBoot');
     app_classes.PreferenceUtils.setBool(key: app_const.PREFS_INIT_BOOT, value: initBoot);
   }
+
+  void saveIsDarkModeToPrefs(bool isDarkMode) {
+    app_utils.myLog(app_const.LOG_INFO, 'saveIsDarkModeToPrefs, isDarkMode = $isDarkMode');
+    app_classes.PreferenceUtils.setBool(key: app_const.PREFS_IS_DARK_MODE, value: isDarkMode);
+  }
+
+  bool loadIsDarkModeFromPrefs() {
+    return app_classes.PreferenceUtils.getBool(key: app_const.PREFS_IS_DARK_MODE, defValue: false);
+  }
 }

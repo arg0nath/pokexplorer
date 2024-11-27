@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:pokexplorer/screens/theme/bloc/theme_bloc.dart';
+import 'package:pokexplorer/screens/theme/bloc/theme_state.dart';
 // import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 import 'package:pokexplorer/screens/type_selection/bloc/type_selection_bloc.dart';
@@ -46,6 +48,7 @@ class PokexplorerApp extends StatefulWidget {
     frontEndUtils = FrontendUtils();
     app_vars.routeObserver.setFrontEndUtils(frontEndUtils);
 
+    themeBloc = ThemeBloc(frontEndUtils: frontEndUtils);
     welcomeBloc = WelcomeBloc(frontEndUtils: frontEndUtils);
     typeSelectionBloc = TypeSelectionBloc(frontEndUtils: frontEndUtils);
     typeDetailsBloc = TypeDetailsBloc(frontEndUtils: frontEndUtils);
@@ -59,6 +62,7 @@ class PokexplorerApp extends StatefulWidget {
   late final BackendUtils backEndUtils;
 
   late final WelcomeBloc welcomeBloc;
+  late final ThemeBloc themeBloc;
   late final TypeSelectionBloc typeSelectionBloc;
   late final TypeDetailsBloc typeDetailsBloc;
   late final PokemonDetailsBloc pokemonDetailsBloc;
@@ -81,6 +85,8 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
     app_vars.devicePixelRatio = PlatformDispatcher.instance.implicitView!.devicePixelRatio;
     app_vars.deviceScreenWidth = PlatformDispatcher.instance.implicitView!.physicalSize.width;
     initBoot = localDataUtils.loadIsInitBootFromPrefs();
+    app_vars.isDarkMode = localDataUtils.loadIsDarkModeFromPrefs();
+
     _initialHomePage = initBoot ? const WelcomeScreen() : const TypeSelectionScreen();
 
     super.initState();
@@ -93,30 +99,31 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
 
   @override
   Widget build(BuildContext context) {
-    app_vars.isDarkMode = ThemeMode.system == ThemeMode.dark;
     return MultiBlocProvider(
       providers: <BlocProvider<dynamic>>[
+        BlocProvider<ThemeBloc>(create: (BuildContext context) => widget.themeBloc),
         BlocProvider<TypeSelectionBloc>(create: (BuildContext context) => widget.typeSelectionBloc),
         BlocProvider<TypeDetailsBloc>(create: (BuildContext context) => widget.typeDetailsBloc),
         BlocProvider<PokemonDetailsBloc>(create: (BuildContext context) => widget.pokemonDetailsBloc),
         BlocProvider<WelcomeBloc>(create: (BuildContext context) => widget.welcomeBloc),
       ],
-      child: MaterialApp(
-        navigatorKey: navigatorKey,
-        debugShowCheckedModeBanner: false,
-        home: _initialHomePage,
-        builder: (context, child) => child!,
-        onGenerateTitle: (BuildContext context) => app_const.APP_NAME,
-        onGenerateRoute: app_router.Router.generateRoute,
-        supportedLocales: [
-          const Locale('en', 'US'),
-          const Locale('gr', 'GR'),
-        ],
-        locale: const Locale('en', 'US'), // Set default locale
-        navigatorObservers: <NavigatorObserver>[app_vars.routeObserver],
-        themeMode: app_vars.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-        theme: lightTheme(),
-        darkTheme: darkTheme(),
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) {
+          return MaterialApp(
+            navigatorKey: navigatorKey,
+            debugShowCheckedModeBanner: false,
+            home: _initialHomePage,
+            builder: (context, child) => child!,
+            onGenerateTitle: (BuildContext context) => app_const.APP_NAME,
+            onGenerateRoute: app_router.Router.generateRoute,
+            supportedLocales: const [Locale('en')],
+            locale: const Locale('en'), // Set default locale
+            navigatorObservers: <NavigatorObserver>[app_vars.routeObserver],
+            themeMode: app_vars.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+            theme: lightTheme(),
+            darkTheme: darkTheme(),
+          );
+        },
       ),
     );
   }
@@ -127,6 +134,7 @@ lightTheme() {
     brightness: Brightness.light,
     scaffoldBackgroundColor: app_const.SCAFFOLD_BACKGROUND_LIGHT,
     dialogBackgroundColor: app_const.WHITE_TOTAL,
+    shadowColor: app_const.SHADOW_COLOR_LIGHT,
     inputDecorationTheme: InputDecorationTheme(
       fillColor: app_const.WHITE_TOTAL,
       filled: true,
@@ -164,6 +172,7 @@ lightTheme() {
 darkTheme() {
   return ThemeData(
     brightness: Brightness.dark,
+    shadowColor: app_const.SHADOW_COLOR_DARK,
     scaffoldBackgroundColor: app_const.SCAFFOLD_BACKGROUND_DARK,
     toggleButtonsTheme: const ToggleButtonsThemeData(selectedColor: app_const.BRIGHT_RED, disabledColor: Color(0xFFC4C4C4)),
     dialogBackgroundColor: app_const.CARD_DARK,
@@ -177,6 +186,14 @@ darkTheme() {
       color: app_const.APPBAR_BACKGROUND_DARK,
       centerTitle: true,
       titleTextStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      fillColor: app_const.WHITE_TOTAL,
+      filled: true,
+      focusedBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: app_const.WHITE_TOTAL), borderRadius: BorderRadius.circular(15)),
+      border: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: app_const.WHITE_TOTAL), borderRadius: BorderRadius.circular(15)),
+      enabledBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: app_const.WHITE_TOTAL), borderRadius: BorderRadius.circular(15)),
+      hintStyle: TextStyle(fontSize: 16, color: app_const.GREY, fontFamily: app_const.MAIN_FONT_FAMILY),
     ),
     cardColor: app_const.CARD_DARK,
     textTheme: const TextTheme(

@@ -178,12 +178,15 @@ class _PokemonListCardState extends State<PokemonListCard> {
           alignment: Alignment.center,
           padding: const EdgeInsets.all(2),
           decoration: BoxDecoration(color: Theme.of(context).cardColor, borderRadius: const BorderRadius.all(Radius.circular(20)), border: Border.all(color: const Color(0xFFEEEEEE))),
-          margin: EdgeInsets.symmetric(vertical: 10, horizontal: app_vars.logicalWidth * 0.06),
+          margin: EdgeInsets.symmetric(vertical: app_vars.logicalHeight * 0.01, horizontal: app_vars.logicalWidth * 0.06),
           child: Row(children: [
             //pokemon image
             Expanded(
               flex: 2,
-              child: Container(alignment: Alignment.center, margin: const EdgeInsets.all(5), child: app_widgets.CustomNetworkImage(height: 100, width: 100, imageURL: widget.pokemonPreview.imageUrl)),
+              child: Container(
+                  alignment: Alignment.center,
+                  margin: const EdgeInsets.all(5),
+                  child: app_widgets.CustomNetworkImage(height: app_vars.logicalHeight * 0.1, width: app_vars.logicalHeight * 0.1, imageURL: widget.pokemonPreview.imageUrl)),
             ),
             //pokemon name
             Expanded(

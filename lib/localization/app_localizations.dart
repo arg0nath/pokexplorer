@@ -31,13 +31,11 @@ class LocalizationManager {
   String get height => _localizedStrings[_locale.languageCode]?['height'] ?? 'Height';
   String get noPokemonFound => _localizedStrings[_locale.languageCode]?['no_pokemon_found'] ?? 'No Pokémon found.';
   String get failedToFetchData => _localizedStrings[_locale.languageCode]?['failed_to_fetch_data'] ?? 'Failed to fetch data.';
-  String get connectionFailure => _localizedStrings[_locale.languageCode]?['connection_failure'] ?? 'Please check your internet connection';
+  String get connectionFailure => _localizedStrings[_locale.languageCode]?['connection_failure'] ?? 'Please check your internet connection and refresh';
   String get contactMe => _localizedStrings[_locale.languageCode]?['contact_me'] ?? 'Contact';
   String get loadingDialogMessage => _localizedStrings[_locale.languageCode]?['loading_dialog_message'] ?? 'Loading Pokémon';
   String get generalErrorMessage => _localizedStrings[_locale.languageCode]?['general_error_message'] ?? 'Oops! Something went wrong';
   String get searchBarTitle => _localizedStrings[_locale.languageCode]?['search_bar_title'] ?? 'Search for a Pokémon';
-
-  // String get greeting => _localizedStrings[_locale.languageCode]?['greeting'] ?? 'Welcome';
 }
 
 final Map<String, Map<String, String>> _localizedStrings = {
@@ -56,31 +54,8 @@ final Map<String, Map<String, String>> _localizedStrings = {
     'search_bar_title': 'Search for a Pokémon',
     'no_pokemon_found': 'No Pokémon found.',
     'failed_to_fetch_data': 'Failed to fetch data.',
-    'connection_failure': 'Please check your internet connection and try again',
+    'connection_failure': 'Please check your internet connection and refresh',
     'contact_me': 'Contact',
     'general_error_message': 'Oops! Something went wrong',
   },
-  'el': {
-    'contact_me': 'Επικοινωνία',
-    'failed_to_fetch_data': 'Αποτυχία λήψης δεδομένων.',
-    'welcome_title': 'Καλώς ήρθατε, εξερευνητή! Ένα νέο ταξίδι Poké-αναζήτησης ξεκινά... Ωραία!',
-    'welcome_message_1': 'Επιλέξτε έναν τύπο για εξερεύνηση',
-    'welcome_message_2': 'Αναζητήστε μέσα από Pokémon',
-    'welcome_message_3': 'Δείτε τα στατιστικά κάθε Pokémon',
-    'welcome_button_text': "Πάμε!",
-    'connection_failure': 'Παρακαλώ ελέγξτε τη σύνδεση στο διαδίκτυο',
-    'empty_type_selection_error': 'Έι! Μην ξεχάσετε να επιλέξετε μια κατηγορία',
-    'next': 'Επόμενο',
-    'loading_dialog_message': 'Φορτώνονται Pokémon',
-    'type_selection_appbar_title': 'Επιλέξτε έναν τύπο Pokémon',
-    'weight': 'Βάρος',
-    'height': 'Ύψος',
-    'search_bar_title': 'Ψάξε για κάποιο Pokémon',
-    'no_pokemon_found': 'Δεν βρέθηκαν Pokémon.',
-    'general_error_message': 'Ουπς! Κάτι πήγε στραβά',
-  },
 };
-
-// LocalizationManager.getInstance().hello; use
-
-// LocalizationManager.getInstance().setLocale(Locale('el', 'GR')); // Switch to greek

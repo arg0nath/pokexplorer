@@ -87,13 +87,6 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
 
       emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.typesLoaded));
     });
-
-    on<ToggleDarkThemeEvent>((ToggleDarkThemeEvent event, Emitter<TypeSelectionState> emit) async {
-      emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.togglingDarkTheme));
-      //  app_vars.isDarkMode = !app_vars.isDarkMode;
-      //  print('bloc isDarkMode: ${app_vars.isDarkMode}');
-      emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.darkThemeToggled));
-    });
   }
 
   late final FrontendUtils frontEndUtils;

@@ -121,6 +121,8 @@ const Color PAGE_INDICATOR_ACTIVATE_DOT_COLOR = Colors.red;
 
 const SCAFFOLD_BACKGROUND_DARK = Color(0xff212121);
 const SCAFFOLD_BACKGROUND_LIGHT = WHITE_IOS;
+const SHADOW_COLOR_LIGHT = Color(0xFFB4B4B4);
+const SHADOW_COLOR_DARK = Color.fromARGB(255, 90, 90, 90);
 
 const APPBAR_BACKGROUND_DARK = Color(0xff212121);
 const APPBAR_BACKGROUND_LIGHT = WHITE_IOS;
@@ -181,5 +183,7 @@ const String LOADING_POKEBALL_LOTTIE = 'assets/lottieFiles/pokeball.json';
 
 // #region // * App Preferences
 const String PREFS_SELECTED_TYPE_NAME = 'selected_type_name';
+const String PREFS_SELECTED_LOCALE = 'selected_locale';
 const String PREFS_INIT_BOOT = 'init_boot';
+const String PREFS_IS_DARK_MODE = 'is_dark_mode';
 // #endregion

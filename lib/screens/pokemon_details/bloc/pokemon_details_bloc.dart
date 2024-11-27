@@ -26,13 +26,6 @@ class PokemonDetailsBloc extends Bloc<PokemonDetailsEvent, PokemonDetailsState> 
         pokemonImageList.add(selectedPokemon.gifUrl!);
       }
 
-      final bool hasInternetawait = await InternetConnection().hasInternetAccess;
-      if (!hasInternetawait) {
-        emit(const PokemonDetailsState(pokemonDetailsStatus: PokemonDetailsStatus.notifyingForNoInternetError));
-        emit(const PokemonDetailsState(pokemonDetailsStatus: PokemonDetailsStatus.readyToNotifyForNoInternet));
-        return;
-      }
-
       // Emit the success state with the loaded Pokémon details
       emit(const PokemonDetailsState(pokemonDetailsStatus: PokemonDetailsStatus.pokemonDetailsLoaded));
     });

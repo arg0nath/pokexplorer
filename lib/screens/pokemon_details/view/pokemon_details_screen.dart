@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokexplorer/localization/app_localizations.dart';
 
 import 'package:pokexplorer/screens/pokemon_details/bloc/pokemon_details_bloc.dart';
 import 'package:pokexplorer/src/variables/app_variables.dart' as app_vars;
@@ -47,32 +48,34 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
         await _onDetailsWillPop();
       },
       child: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.arrow_back_outlined, color: app_const.PRIMARY_TEXT_COLOR)),
-            backgroundColor: Colors.transparent,
-          ),
-          extendBody: true,
-          backgroundColor: const Color(0xFFF7F7F7),
-          extendBodyBehindAppBar: true,
-          body: BlocConsumer<PokemonDetailsBloc, PokemonDetailsState>(listener: (context, state) async {
-            if (state.pokemonDetailsStatus == PokemonDetailsStatus.loadingPokemonDetails) {
-              await app_utils.showLoadingDialog(context);
-            } else if (state.pokemonDetailsStatus == PokemonDetailsStatus.pokemonDetailsLoaded) {
-              Navigator.pop(context);
-            } else if (state.pokemonDetailsStatus == PokemonDetailsStatus.readyToNotifyForNoInternet) {
-              app_utils.myToast(context, 'Please check your internet connection');
-            }
-          }, builder: (context, state) {
-            if (state.pokemonDetailsStatus == PokemonDetailsStatus.pokemonDetailsLoaded) {
-              return LoadedPageDetails(pokemonDetailsBloc: _pokemonDetailsBloc, selectedTypeName: widget.selectedTypeName);
-            } else {
-              return LoadingDetailsViewScreen(pokemonName: widget.pokemon.name, typeName: widget.selectedTypeName);
-            }
-          })),
+          appBar: _pokeDetailsScreenAppbar(context), extendBody: true, backgroundColor: Theme.of(context).scaffoldBackgroundColor, extendBodyBehindAppBar: true, body: _pokeDetailsScreenBody()),
+    );
+  }
+
+  BlocConsumer<PokemonDetailsBloc, PokemonDetailsState> _pokeDetailsScreenBody() {
+    return BlocConsumer<PokemonDetailsBloc, PokemonDetailsState>(listener: (context, state) async {
+      if (state.pokemonDetailsStatus == PokemonDetailsStatus.loadingPokemonDetails) {
+        await app_utils.showLoadingDialog(context);
+      } else if (state.pokemonDetailsStatus == PokemonDetailsStatus.pokemonDetailsLoaded) {
+        Navigator.pop(context); //close loading dialog
+      }
+    }, builder: (context, state) {
+      if (state.pokemonDetailsStatus == PokemonDetailsStatus.pokemonDetailsLoaded) {
+        return LoadedPageDetails(pokemonDetailsBloc: _pokemonDetailsBloc, selectedTypeName: widget.selectedTypeName);
+      } else {
+        return LoadingDetailsViewScreen(pokemonName: widget.pokemon.name, typeName: widget.selectedTypeName);
+      }
+    });
+  }
+
+  AppBar _pokeDetailsScreenAppbar(BuildContext context) {
+    return AppBar(
+      leading: IconButton(
+          hoverColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.arrow_back_outlined, color: app_const.PRIMARY_TEXT_COLOR)),
+      backgroundColor: Colors.transparent,
     );
   }
 }
@@ -186,12 +189,12 @@ class _LoadingDetailsViewScreenState extends State<LoadingDetailsViewScreen> {
                 Expanded(
                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                   const Icon(Icons.fitness_center_rounded, color: app_const.SECONDARY_TEXT_COLOR),
-                  Text('Weight: ', style: const TextStyle(color: app_const.SECONDARY_TEXT_COLOR)),
+                  Text('${LocalizationManager.getInstance().weight}: ', style: const TextStyle(color: app_const.SECONDARY_TEXT_COLOR)),
                 ])),
                 Expanded(
                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                   const Icon(Icons.height_rounded, color: app_const.SECONDARY_TEXT_COLOR),
-                  Text('Height:  ', style: const TextStyle(color: app_const.SECONDARY_TEXT_COLOR)),
+                  Text('${LocalizationManager.getInstance().height}: ', style: const TextStyle(color: app_const.SECONDARY_TEXT_COLOR)),
                 ])),
               ],
             ),
@@ -237,19 +240,10 @@ class _LoadedPageDetailsState extends State<LoadedPageDetails> {
         Expanded(
           flex: 5,
           child: Container(
-            color: const Color(0xFFF7F7F7),
+            color: Theme.of(context).scaffoldBackgroundColor, //color betwen pokemon and card
             child: Stack(
               children: [
-                ClipPath(
-                  clipper: PokemonDetailsBackgroundWaveClipper(),
-                  child: Container(
-                    width: app_vars.logicalWidth,
-                    height: app_const.POKEMON_DETAILS_APP_BAR_DELEGATE_MAX_EXTEND,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: app_utils.gradientFromType(widget.selectedTypeName)),
-                    ),
-                  ),
-                ),
+                FancyDetailsScreenBackground(widget: widget),
                 Positioned(
                   top: app_vars.logicalHeight * 0.1,
                   // left: (app_vars.logicalWidth - 240) / 2,
@@ -258,19 +252,11 @@ class _LoadedPageDetailsState extends State<LoadedPageDetails> {
                     height: app_vars.logicalHeight * 0.4,
                     child: CarouselSlider.builder(
                       carouselController: _pokeDetailsCarouselController,
+                      options: _detailsCarouselOptions(),
                       itemCount: widget.pokemonDetailsBloc.pokemonImageList.length,
                       itemBuilder: (BuildContext context, int visiblePageIdx, int realIndex) {
                         return app_widgets.CustomNetworkImage(imageURL: widget.pokemonDetailsBloc.pokemonImageList[visiblePageIdx]);
                       },
-                      options: CarouselOptions(
-                        viewportFraction: 0.5,
-                        autoPlay: false,
-                        aspectRatio: 16 / 9,
-                        enlargeCenterPage: true,
-                        enableInfiniteScroll: false,
-                        enlargeStrategy: CenterPageEnlargeStrategy.scale,
-                        initialPage: 0,
-                      ),
                     ),
                   ),
                 ),
@@ -278,74 +264,27 @@ class _LoadedPageDetailsState extends State<LoadedPageDetails> {
             ),
           ),
         ),
+        //name
         Expanded(
           flex: 1,
-          child: Container(
-            decoration: const BoxDecoration(
-              boxShadow: [BoxShadow(color: Color(0xFFB4B4B4), blurRadius: 30, spreadRadius: 2, offset: Offset(0, -4))],
-              color: app_const.WHITE_TOTAL,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-            ),
-            width: app_vars.logicalWidth,
-            alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                    color: app_const.WHITE_TOTAL,
-                    width: app_vars.logicalWidth * 0.2,
-                    child: const Icon(
-                      Icons.info_outline_rounded,
-                      size: 30,
-                    )),
-                Expanded(flex: 3, child: Text(widget.pokemonDetailsBloc.selectedPokemon.name.toUpperFirst(), style: const TextStyle(fontSize: 23))),
-              ],
-            ),
-          ),
+          child: _pokeDetailsName(context),
         ),
+        //pokemon types
         Container(
-          height: 40,
+          height: app_vars.logicalHeight * 0.05,
           width: app_vars.logicalWidth,
-          color: app_const.WHITE_TOTAL,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            physics: const AlwaysScrollableScrollPhysics(),
-            itemCount: widget.pokemonDetailsBloc.selectedPokemon.types.length,
-            itemBuilder: (context, index) {
-              return Container(
-                  margin: EdgeInsets.only(left: app_vars.logicalWidth * 0.05), child: app_widgets.SelectedTypeContainer(typeName: widget.pokemonDetailsBloc.selectedPokemon.types[index].name));
-            },
-          ),
+          color: Theme.of(context).cardColor,
+          child: _pokeDetailsTypesList(),
         ),
         Expanded(
           flex: 1,
-          child: Container(
-            color: app_const.WHITE_TOTAL,
-            width: app_vars.logicalWidth,
-            child: Row(
-              children: [
-                Expanded(
-                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                  const Icon(Icons.fitness_center_rounded, color: app_const.SECONDARY_TEXT_COLOR),
-                  Text('Weight:  ${widget.pokemonDetailsBloc.selectedPokemon.weight}', style: const TextStyle(color: app_const.SECONDARY_TEXT_COLOR)),
-                ])),
-                Expanded(
-                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                  const Icon(Icons.height_rounded, color: app_const.SECONDARY_TEXT_COLOR),
-                  Text('Height:  ${widget.pokemonDetailsBloc.selectedPokemon.height}', style: const TextStyle(color: app_const.SECONDARY_TEXT_COLOR)),
-                ])),
-              ],
-            ),
-          ),
+          child: _pokeDetailsWeightHeight(),
         ),
         Expanded(
           flex: 3,
           child: Center(
             child: Container(
-              color: app_const.WHITE_TOTAL,
+              color: Theme.of(context).cardColor,
               alignment: Alignment.center,
               padding: EdgeInsets.symmetric(horizontal: app_vars.logicalWidth * 0.1),
               child: Column(
@@ -361,6 +300,104 @@ class _LoadedPageDetailsState extends State<LoadedPageDetails> {
           ),
         ),
       ],
+    );
+  }
+
+  Container _pokeDetailsWeightHeight() {
+    return Container(
+      color: Theme.of(context).cardColor,
+      width: app_vars.logicalWidth,
+      child: Row(
+        children: [
+          Expanded(
+              child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            const Icon(Icons.fitness_center_rounded),
+            Text('${LocalizationManager.getInstance().weight}:  ${widget.pokemonDetailsBloc.selectedPokemon.weight}', style: Theme.of(context).textTheme.bodyMedium),
+          ])),
+          Expanded(
+              child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            const Icon(Icons.height_rounded),
+            Text('${LocalizationManager.getInstance().height}: ${widget.pokemonDetailsBloc.selectedPokemon.height}', style: Theme.of(context).textTheme.bodyMedium),
+          ])),
+        ],
+      ),
+    );
+  }
+
+  ListView _pokeDetailsTypesList() {
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      physics: const AlwaysScrollableScrollPhysics(),
+      itemCount: widget.pokemonDetailsBloc.selectedPokemon.types.length,
+      itemBuilder: (context, index) {
+        return Container(
+            color: Theme.of(context).cardColor,
+            margin: EdgeInsets.only(left: app_vars.logicalWidth * 0.05),
+            child: app_widgets.SelectedTypeContainer(typeName: widget.pokemonDetailsBloc.selectedPokemon.types[index].name));
+      },
+    );
+  }
+
+  Container _pokeDetailsName(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [BoxShadow(color: Theme.of(context).shadowColor, blurRadius: 30, spreadRadius: 2, offset: Offset(0, -4))],
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      width: app_vars.logicalWidth,
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+              color: Theme.of(context).cardColor,
+              width: app_vars.logicalWidth * 0.2,
+              child: const Icon(
+                Icons.info_outline_rounded,
+                size: 30,
+              )),
+          Expanded(flex: 3, child: Text(widget.pokemonDetailsBloc.selectedPokemon.name.toUpperFirst(), style: const TextStyle(fontSize: 23))),
+        ],
+      ),
+    );
+  }
+
+  CarouselOptions _detailsCarouselOptions() {
+    return CarouselOptions(
+      viewportFraction: 0.5,
+      autoPlay: false,
+      aspectRatio: 16 / 9,
+      enlargeCenterPage: true,
+      enableInfiniteScroll: false,
+      enlargeStrategy: CenterPageEnlargeStrategy.scale,
+      initialPage: 0,
+    );
+  }
+}
+
+class FancyDetailsScreenBackground extends StatelessWidget {
+  const FancyDetailsScreenBackground({
+    super.key,
+    required this.widget,
+  });
+
+  final LoadedPageDetails widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipPath(
+      clipper: PokemonDetailsBackgroundWaveClipper(),
+      child: Container(
+        width: app_vars.logicalWidth,
+        height: app_const.POKEMON_DETAILS_APP_BAR_DELEGATE_MAX_EXTEND,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: app_utils.gradientFromType(widget.selectedTypeName)),
+        ),
+      ),
     );
   }
 }

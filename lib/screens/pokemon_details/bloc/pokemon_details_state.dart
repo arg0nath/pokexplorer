@@ -5,8 +5,6 @@ enum PokemonDetailsStatus {
   loadingPokemonDetails,
 
   pokemonDetailsLoaded,
-  notifyingForNoInternetError,
-  readyToNotifyForNoInternet,
 }
 
 class PokemonDetailsState extends Equatable {

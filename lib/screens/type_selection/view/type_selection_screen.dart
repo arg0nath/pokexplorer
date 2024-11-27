@@ -62,9 +62,9 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
             Navigator.popAndPushNamed(context, app_const.TYPE_DETAILS_SCREEN_PAGE_ROUTE_NAME,
                 arguments: app_router.TypeDetailsScreenArguments(typeDetails: _typeSelectionBloc.selectedPokemonTypeDetails));
           } else if (state.typeSelectionStatus == TypeSelectionStatus.errorToProceedToTypeDetailsScreenNoSelection) {
-            app_utils.myToast(context, "Hey! Don't forget to pick a category");
+            app_utils.myToast(context, appLocale.emptyTypeSelectionError);
           } else if (state.typeSelectionStatus == TypeSelectionStatus.errorToNotifyForNoInternet) {
-            app_utils.myToast(context, 'Please check your internet connection');
+            app_utils.myToast(context, appLocale.connectionFailure);
           } else if (state.typeSelectionStatus == TypeSelectionStatus.showInfoDialog) {
             await showDialog<bool>(barrierDismissible: true, context: context, builder: (BuildContext context) => const app_widgets.AboutMeDialog());
           } else if (state.typeSelectionStatus == TypeSelectionStatus.proceedingToTypeDetailsScreen) {
@@ -75,18 +75,7 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
           return Stack(
             children: [
               //type grid
-              Container(
-                height: app_vars.logicalHeight,
-                padding: EdgeInsets.only(bottom: app_vars.logicalHeight * 0.1),
-                child: GridView.builder(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.all(10),
-                    gridDelegate: _gridDelegate(),
-                    itemCount: _typeSelectionBloc.availableTypes.length,
-                    itemBuilder: (context, index) {
-                      return MyTypeCard(onTap: () => _typeSelectionBloc.add(SelectTypeEvent(type: _typeSelectionBloc.availableTypes[index])), pokemonType: _typeSelectionBloc.availableTypes[index]);
-                    }),
-              ),
+
               //pokeball background
               const Positioned(left: -20, bottom: -50, child: app_widgets.PokeballBackground()),
             ],
@@ -95,12 +84,40 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
       ),
     );
   }
+}
 
+class MyTypesGrid extends StatefulWidget {
+  const MyTypesGrid({super.key, required this.typeSelectionBloc});
+
+  final TypeSelectionBloc typeSelectionBloc;
+
+  @override
+  State<MyTypesGrid> createState() => _MyTypesGridState();
+}
+
+class _MyTypesGridState extends State<MyTypesGrid> {
   SliverGridDelegateWithFixedCrossAxisCount _gridDelegate() {
     return const SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 2,
       childAspectRatio: 16 / 9,
       mainAxisSpacing: 10.0,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: app_vars.logicalHeight,
+      padding: EdgeInsets.only(bottom: app_vars.logicalHeight * 0.1),
+      child: GridView.builder(
+          shrinkWrap: true,
+          padding: const EdgeInsets.all(10),
+          gridDelegate: _gridDelegate(),
+          itemCount: widget.typeSelectionBloc.availableTypes.length,
+          itemBuilder: (context, index) {
+            return MyTypeCard(
+                onTap: () => widget.typeSelectionBloc.add(SelectTypeEvent(type: widget.typeSelectionBloc.availableTypes[index])), pokemonType: widget.typeSelectionBloc.availableTypes[index]);
+          }),
     );
   }
 }

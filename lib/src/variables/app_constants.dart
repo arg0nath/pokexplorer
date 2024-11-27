@@ -101,8 +101,9 @@ const Color BUG_COLOR = Color(0xffb8c26a);
 const Color ICE_COLOR = Color(0xff81dff7);
 
 const Color WHITE_TOTAL = Color(0xffffffff);
-const Color WHITE_IOS = Color(0xfff5f5f7);
-const Color BLACK_IOS = Color(0xff313132);
+
+const Color WHITE_IOS = Color(0xfff5f5f7); // i named it like this because apple use slight different white for better ui-contrast
+const Color BLACK_IOS = Color(0xff313132); // i named it like this because apple use slight different black for better ui-contrast
 const Color GREY = Color(0xFF979797);
 
 //Text Styling
@@ -120,8 +121,13 @@ const Color PAGE_INDICATOR_ACTIVATE_DOT_COLOR = Colors.red;
 
 const SCAFFOLD_BACKGROUND_DARK = Color(0xff212121);
 const SCAFFOLD_BACKGROUND_LIGHT = WHITE_IOS;
-const HOME_CARD_LIGHT = WHITE_TOTAL;
-const HOME_CARD_DARK = Color(0xff2f2f2f);
+
+const APPBAR_BACKGROUND_DARK = Color(0xff212121);
+const APPBAR_BACKGROUND_LIGHT = WHITE_IOS;
+
+const CARD_LIGHT = WHITE_TOTAL;
+const CARD_DARK = Color(0xff2f2f2f);
+
 const double EXPANDED_BAR_HEIGHT = 200;
 const double COLLAPSED_BAR_HEIGHT = 130;
 

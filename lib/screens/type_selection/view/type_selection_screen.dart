@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/router/app_router.dart' as app_router;
 
 import 'package:pokexplorer/screens/type_selection/bloc/type_selection_bloc.dart';
+import 'package:pokexplorer/src/models/app_models.dart' as app_models;
 import 'package:pokexplorer/src/utilities/app_utils.dart' as app_utils;
 import 'package:pokexplorer/src/variables/app_constants.dart' as app_const;
 import 'package:pokexplorer/src/widgets/app_widgets.dart' as app_widgets;
@@ -20,6 +22,7 @@ class TypeSelectionScreen extends StatefulWidget {
 
 class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
   late final TypeSelectionBloc _typeSelectionBloc = context.read<TypeSelectionBloc>();
+  late LocalizationManager appLocale = LocalizationManager.getInstance();
 
   @override
   void initState() {
@@ -38,29 +41,15 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
           leading: const SizedBox.shrink(),
           actions: [
             IconButton(onPressed: () => _typeSelectionBloc.add(const ShowInfoDialogEvent()), icon: const Icon(Icons.info_outline_rounded, color: app_const.SECONDARY_TEXT_COLOR)),
-            /*   Row(
-                  children: [
-                    Icon(Icons.light_mode_outlined),
-                    CupertinoSwitch(
-                      activeColor: Theme.of(context).primaryColor,
-                      value: app_vars.isDarkMode, // The value of the switch
-                      onChanged: (value) => _typeSelectionBloc.add(ToggleDarkThemeEvent()),
-                    ),
-                    Icon(Icons.dark_mode_outlined),
-                  ],
-                ), */
           ],
-          title: Text('Pick a Pokémon type', style: Theme.of(context).textTheme.titleMedium)),
+          title: Text(appLocale.typeSelectionAppBarTitle, style: Theme.of(context).textTheme.titleMedium)),
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(20),
         color: Colors.transparent,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            OutlinedButton(
-                style: OutlinedButton.styleFrom(backgroundColor: app_const.BRIGHT_RED, side: const BorderSide(width: 1, color: app_const.LIGHT_RED)),
-                onPressed: () => _typeSelectionBloc.add(const ProceedToTypeDetailsScreenEvent()),
-                child: const app_widgets.MyText('Next', style: TextStyle(color: app_const.WHITE_TOTAL, fontSize: 19)))
+            OutlinedButton(style: Theme.of(context).outlinedButtonTheme.style, onPressed: () => _typeSelectionBloc.add(const ProceedToTypeDetailsScreenEvent()), child: Text(appLocale.next)),
           ],
         ),
       ),
@@ -85,30 +74,33 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
         builder: (context, state) {
           return Stack(
             children: [
-              const Positioned(left: -20, bottom: -50, child: app_widgets.PokeballBackground()),
+              //type grid
               Container(
                 height: app_vars.logicalHeight,
                 padding: EdgeInsets.only(bottom: app_vars.logicalHeight * 0.1),
                 child: GridView.builder(
                     shrinkWrap: true,
                     padding: const EdgeInsets.all(10),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 16 / 9,
-                      mainAxisSpacing: 10.0,
-                    ),
+                    gridDelegate: _gridDelegate(),
                     itemCount: _typeSelectionBloc.availableTypes.length,
                     itemBuilder: (context, index) {
-                      return MyTypeCard(index: index, onTap: () => _typeSelectionBloc.add(SelectTypeEvent(type: _typeSelectionBloc.availableTypes[index])), typeSelectionBloc: _typeSelectionBloc)
-                          .animate()
-                          .fade(duration: 300.ms, curve: Curves.easeOutQuad)
-                          .scale();
+                      return MyTypeCard(onTap: () => _typeSelectionBloc.add(SelectTypeEvent(type: _typeSelectionBloc.availableTypes[index])), pokemonType: _typeSelectionBloc.availableTypes[index]);
                     }),
               ),
+              //pokeball background
+              const Positioned(left: -20, bottom: -50, child: app_widgets.PokeballBackground()),
             ],
           );
         },
       ),
+    );
+  }
+
+  SliverGridDelegateWithFixedCrossAxisCount _gridDelegate() {
+    return const SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 2,
+      childAspectRatio: 16 / 9,
+      mainAxisSpacing: 10.0,
     );
   }
 }
@@ -116,13 +108,12 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
 class MyTypeCard extends StatefulWidget {
   const MyTypeCard({
     super.key,
-    required TypeSelectionBloc typeSelectionBloc,
     required this.onTap,
-    required this.index,
-  }) : _typeSelectionBloc = typeSelectionBloc;
+    required this.pokemonType,
+  });
 
-  final TypeSelectionBloc _typeSelectionBloc;
-  final int index;
+  final app_models.PokemonType pokemonType;
+
   final VoidCallback onTap;
 
   @override
@@ -136,17 +127,13 @@ class _MyTypeCardState extends State<MyTypeCard> {
       onTap: widget.onTap,
       child: Stack(
         children: [
-          Positioned(
-              bottom: 7,
-              right: app_vars.logicalWidth * 0.06,
-              child: (widget._typeSelectionBloc.availableTypes[widget.index].isSelected)
-                  ? const Icon(Icons.check_circle_outline_rounded, color: app_const.BRIGHT_RED)
-                  : const Icon(Icons.circle_outlined, color: Color(0xFFEEEEEE))),
+          // image type + name
           Center(
             child: Container(
               decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
                   borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  border: Border.all(color: widget._typeSelectionBloc.availableTypes[widget.index].isSelected ? app_const.BRIGHT_RED : const Color(0xFFEEEEEE))),
+                  border: Border.all(color: widget.pokemonType.isSelected ? Theme.of(context).toggleButtonsTheme.selectedColor! : Theme.of(context).toggleButtonsTheme.disabledColor!)),
               padding: const EdgeInsets.all(10),
               width: app_vars.logicalWidth * 0.4,
               child: Center(
@@ -154,63 +141,28 @@ class _MyTypeCardState extends State<MyTypeCard> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Expanded(flex: 2, child: Image.asset(widget._typeSelectionBloc.availableTypes[widget.index].icon)),
+                    Expanded(flex: 2, child: Image.asset(widget.pokemonType.icon)),
                     const SizedBox(height: 5),
-                    Flexible(flex: 1, child: app_widgets.MyText(widget._typeSelectionBloc.availableTypes[widget.index].name)),
+                    Flexible(
+                        flex: 1,
+                        child: Text(
+                          widget.pokemonType.name,
+                          style: Theme.of(context).textTheme.labelMedium,
+                        )),
                   ],
                 ),
               ),
             ),
           ),
+          //selected or not - icon
+          Positioned(
+              bottom: 7,
+              right: app_vars.logicalWidth * 0.06,
+              child: (widget.pokemonType.isSelected)
+                  ? Icon(Icons.check_circle_outline_rounded, color: Theme.of(context).toggleButtonsTheme.selectedColor)
+                  : Icon(Icons.circle_outlined, color: Theme.of(context).toggleButtonsTheme.disabledColor)),
         ],
       ),
-    );
-  }
-}
-
-class OfflineScreen extends StatefulWidget {
-  const OfflineScreen({super.key});
-
-  @override
-  State<OfflineScreen> createState() => _OfflineScreenState();
-}
-
-class _OfflineScreenState extends State<OfflineScreen> {
-  late final _typeSelectionBloc = context.read<TypeSelectionBloc>();
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: RefreshIndicator(
-        color: Colors.grey,
-        semanticsLabel: 'RefreshHomeScreenOffline',
-        edgeOffset: 10,
-        onRefresh: () async {
-          _typeSelectionBloc.add(const LoadTypesEvent());
-
-          return Future<void>.delayed(const Duration(seconds: 2));
-        },
-        child: Center(
-          child: Container(
-            alignment: Alignment.center,
-            height: app_vars.logicalHeight * 0.7,
-            width: app_vars.logicalWidth * 0.8,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Flexible(
-                    flex: 2,
-                    child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: app_vars.logicalWidth * 0.11),
-                        decoration: const BoxDecoration(image: DecorationImage(image: AssetImage(app_const.POKEXPLORER_LOGO_PNG))))),
-                Flexible(flex: 5, child: Lottie.asset(app_const.LOADING_POKEBALL_LOTTIE, width: 30, height: 30, fit: BoxFit.contain, repeat: true, reverse: false)),
-                const app_widgets.MyText('Please check your internet connection', style: TextStyle(color: app_const.SECONDARY_TEXT_COLOR, fontSize: 18)),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+    ).animate().fade(duration: 350.ms, curve: Curves.easeOutQuad).scale();
   }
 }

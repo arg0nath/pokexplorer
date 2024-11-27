@@ -109,10 +109,10 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
         onGenerateTitle: (BuildContext context) => app_const.APP_NAME,
         onGenerateRoute: app_router.Router.generateRoute,
         supportedLocales: [
-          Locale('en', 'US'),
-          Locale('gr', 'GR'),
+          const Locale('en', 'US'),
+          const Locale('gr', 'GR'),
         ],
-        locale: Locale('en', 'US'), // Set default locale
+        locale: const Locale('en', 'US'), // Set default locale
         navigatorObservers: <NavigatorObserver>[app_vars.routeObserver],
         themeMode: app_vars.isDarkMode ? ThemeMode.dark : ThemeMode.light,
         theme: lightTheme(),
@@ -125,18 +125,19 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
 lightTheme() {
   return ThemeData(
     brightness: Brightness.light,
-    primaryColor: app_const.BRIGHT_RED,
-    dialogBackgroundColor: app_const.HOME_CARD_LIGHT,
-    appBarTheme: const AppBarTheme(
-      color: app_const.SCAFFOLD_BACKGROUND_LIGHT,
-      centerTitle: true,
-      titleTextStyle: TextStyle(fontSize: 26, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
-    ),
     scaffoldBackgroundColor: app_const.SCAFFOLD_BACKGROUND_LIGHT,
-    cardColor: app_const.HOME_CARD_LIGHT,
+    dialogBackgroundColor: app_const.WHITE_TOTAL,
+    appBarTheme: const AppBarTheme(
+      color: app_const.APPBAR_BACKGROUND_LIGHT,
+      centerTitle: true,
+      titleTextStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+    ),
+    toggleButtonsTheme: const ToggleButtonsThemeData(selectedColor: app_const.BRIGHT_RED, disabledColor: Color(0xFFEEEEEE)),
+    cardColor: app_const.CARD_LIGHT,
     outlinedButtonTheme: OutlinedButtonThemeData(
         style: ButtonStyle(
-            side: WidgetStateProperty.all(BorderSide(width: 1, color: app_const.LIGHT_RED)),
+            textStyle: WidgetStateProperty.all(TextStyle(fontSize: 19, color: app_const.WHITE_TOTAL, fontWeight: FontWeight.bold, fontFamily: app_const.MAIN_FONT_FAMILY)),
+            side: WidgetStateProperty.all(const BorderSide(width: 1, color: app_const.LIGHT_RED)),
             foregroundColor: WidgetStateProperty.all(app_const.WHITE_IOS),
             backgroundColor: WidgetStateProperty.all(app_const.BRIGHT_RED))),
     textTheme: const TextTheme(
@@ -146,6 +147,8 @@ lightTheme() {
       titleLarge: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
       titleMedium: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
       titleSmall: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+      labelMedium: TextStyle(fontSize: 18, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+      labelSmall: TextStyle(fontSize: 16, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
     ),
   );
 }
@@ -154,26 +157,29 @@ darkTheme() {
   return ThemeData(
     brightness: Brightness.dark,
     scaffoldBackgroundColor: app_const.SCAFFOLD_BACKGROUND_DARK,
-    primaryColor: app_const.BRIGHT_RED,
-    dialogBackgroundColor: app_const.HOME_CARD_DARK,
+    toggleButtonsTheme: const ToggleButtonsThemeData(selectedColor: app_const.BRIGHT_RED, disabledColor: Color(0xFFC4C4C4)),
+    dialogBackgroundColor: app_const.CARD_DARK,
     outlinedButtonTheme: OutlinedButtonThemeData(
         style: ButtonStyle(
-            side: WidgetStateProperty.all(BorderSide(width: 1, color: app_const.LIGHT_RED)),
+            textStyle: WidgetStateProperty.all(TextStyle(fontSize: 19, color: app_const.WHITE_TOTAL, fontWeight: FontWeight.bold, fontFamily: app_const.MAIN_FONT_FAMILY)),
+            side: WidgetStateProperty.all(const BorderSide(width: 1, color: app_const.LIGHT_RED)),
             foregroundColor: WidgetStateProperty.all(app_const.WHITE_IOS),
             backgroundColor: WidgetStateProperty.all(app_const.BRIGHT_RED))),
     appBarTheme: const AppBarTheme(
-      color: app_const.SCAFFOLD_BACKGROUND_DARK,
+      color: app_const.APPBAR_BACKGROUND_DARK,
       centerTitle: true,
-      titleTextStyle: TextStyle(fontSize: 26, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+      titleTextStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
     ),
-    cardColor: app_const.HOME_CARD_DARK,
+    cardColor: app_const.CARD_DARK,
     textTheme: const TextTheme(
       bodySmall: TextStyle(fontSize: 16, color: app_const.GREY, fontFamily: app_const.MAIN_FONT_FAMILY),
-      bodyLarge: TextStyle(fontSize: 20, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
-      bodyMedium: TextStyle(fontSize: 18, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+      bodyLarge: TextStyle(fontSize: 20, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+      bodyMedium: TextStyle(fontSize: 18, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
       titleLarge: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
       titleMedium: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
       titleSmall: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+      labelMedium: TextStyle(fontSize: 18, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+      labelSmall: TextStyle(fontSize: 16, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
     ),
   );
 }

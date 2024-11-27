@@ -113,7 +113,7 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
                               children: [
                                 Image.asset(app_const.EMPTY_POKEBALL_PNG, width: app_vars.logicalHeight * 0.1, height: app_vars.logicalHeight * 0.1), // Replace with your image path
                                 const SizedBox(height: 10),
-                                const app_widgets.MyText('No Pokémon found', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                                const Text('No Pokémon found', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
                               ],
                             ),
                           ),
@@ -182,7 +182,7 @@ class _PokemonListCardState extends State<PokemonListCard> {
             ),
             Expanded(
               flex: 4,
-              child: app_widgets.MyText(widget.pokemonPreview.name.toUpperFirst(), style: const TextStyle(fontSize: 20)),
+              child: Text(widget.pokemonPreview.name.toUpperFirst(), style: const TextStyle(fontSize: 20)),
             ),
           ])),
     );

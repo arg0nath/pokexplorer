@@ -166,7 +166,7 @@ class _LoadingDetailsViewScreenState extends State<LoadingDetailsViewScreen> {
                       Icons.info_outline_rounded,
                       size: 30,
                     )),
-                Expanded(flex: 3, child: app_widgets.MyText(widget.pokemonName.toUpperFirst(), style: const TextStyle(fontSize: 23))),
+                Expanded(flex: 3, child: Text(widget.pokemonName.toUpperFirst(), style: const TextStyle(fontSize: 23))),
               ],
             ),
           ),
@@ -186,12 +186,12 @@ class _LoadingDetailsViewScreenState extends State<LoadingDetailsViewScreen> {
                 Expanded(
                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                   const Icon(Icons.fitness_center_rounded, color: app_const.SECONDARY_TEXT_COLOR),
-                  app_widgets.MyText('Weight: ', style: const TextStyle(color: app_const.SECONDARY_TEXT_COLOR)),
+                  Text('Weight: ', style: const TextStyle(color: app_const.SECONDARY_TEXT_COLOR)),
                 ])),
                 Expanded(
                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                   const Icon(Icons.height_rounded, color: app_const.SECONDARY_TEXT_COLOR),
-                  app_widgets.MyText('Height:  ', style: const TextStyle(color: app_const.SECONDARY_TEXT_COLOR)),
+                  Text('Height:  ', style: const TextStyle(color: app_const.SECONDARY_TEXT_COLOR)),
                 ])),
               ],
             ),
@@ -300,7 +300,7 @@ class _LoadedPageDetailsState extends State<LoadedPageDetails> {
                       Icons.info_outline_rounded,
                       size: 30,
                     )),
-                Expanded(flex: 3, child: app_widgets.MyText(widget.pokemonDetailsBloc.selectedPokemon.name.toUpperFirst(), style: const TextStyle(fontSize: 23))),
+                Expanded(flex: 3, child: Text(widget.pokemonDetailsBloc.selectedPokemon.name.toUpperFirst(), style: const TextStyle(fontSize: 23))),
               ],
             ),
           ),
@@ -329,12 +329,12 @@ class _LoadedPageDetailsState extends State<LoadedPageDetails> {
                 Expanded(
                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                   const Icon(Icons.fitness_center_rounded, color: app_const.SECONDARY_TEXT_COLOR),
-                  app_widgets.MyText('Weight:  ${widget.pokemonDetailsBloc.selectedPokemon.weight}', style: const TextStyle(color: app_const.SECONDARY_TEXT_COLOR)),
+                  Text('Weight:  ${widget.pokemonDetailsBloc.selectedPokemon.weight}', style: const TextStyle(color: app_const.SECONDARY_TEXT_COLOR)),
                 ])),
                 Expanded(
                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                   const Icon(Icons.height_rounded, color: app_const.SECONDARY_TEXT_COLOR),
-                  app_widgets.MyText('Height:  ${widget.pokemonDetailsBloc.selectedPokemon.height}', style: const TextStyle(color: app_const.SECONDARY_TEXT_COLOR)),
+                  Text('Height:  ${widget.pokemonDetailsBloc.selectedPokemon.height}', style: const TextStyle(color: app_const.SECONDARY_TEXT_COLOR)),
                 ])),
               ],
             ),

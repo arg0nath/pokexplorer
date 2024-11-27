@@ -125,9 +125,10 @@ ToastificationItem myToast(BuildContext context, String msg) {
     icon: Image.asset(app_const.POKEBALL_PNG, width: 20, height: 20),
     title: Container(
         width: logicalWidth * 0.9,
-        child: app_widgets.MyText(
+        child: Text(
           msg,
           maxLines: 3,
+          style: Theme.of(context).textTheme.labelSmall,
         )),
     closeOnClick: false,
     context: context,

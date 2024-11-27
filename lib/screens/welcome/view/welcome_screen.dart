@@ -45,7 +45,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             const Positioned(left: -20, bottom: -50, child: app_widgets.PokeballBackground()),
             //logo + text
             Container(
-                padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 40),
+                padding: EdgeInsets.symmetric(vertical: app_vars.logicalHeight * 0.1, horizontal: app_vars.logicalWidth * 0.1),
                 width: app_vars.logicalWidth,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -61,7 +61,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           WelcomTitle(title: appLocale.welcomeTitle),
-                          WelcomMessage(imagePath: app_const.POKEBALL_OUTLINED_PNG, message: appLocale.welcomeMessage1),
+                          WelcomMessage(iconData: Icons.catching_pokemon_outlined, message: appLocale.welcomeMessage1),
                           WelcomMessage(iconData: Icons.search_outlined, message: appLocale.welcomeMessage2),
                           WelcomMessage(iconData: Icons.info_outline_rounded, message: appLocale.welcomeMessage3),
                         ],
@@ -111,7 +111,7 @@ class WelcomeProceedButton extends StatelessWidget {
     return OutlinedButton(
       style: Theme.of(context).outlinedButtonTheme.style,
       onPressed: onPressed,
-      child: Text(text, style: TextStyle(color: app_const.WHITE_TOTAL, fontSize: 19)),
+      child: Text(text),
     ).animate(delay: 2300.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad);
   }
 }
@@ -160,22 +160,18 @@ class WelcomMessage extends StatelessWidget {
   const WelcomMessage({
     super.key,
     required this.message,
-    this.iconData,
-    this.imagePath,
+    required this.iconData,
   });
 
   final String message;
-  final IconData? iconData;
-  final String? imagePath;
+  final IconData iconData;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(top: app_vars.logicalHeight * 0.05),
       child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-        if (imagePath != null)
-          Padding(padding: EdgeInsets.only(left: app_vars.logicalWidth * 0.1, right: app_vars.logicalWidth * 0.05), child: Image.asset(imagePath!, width: app_vars.logicalWidth * 0.05)),
-        if (iconData != null) Padding(padding: EdgeInsets.only(left: app_vars.logicalWidth * 0.1, right: app_vars.logicalWidth * 0.05), child: Icon(iconData)),
+        Padding(padding: EdgeInsets.only(left: app_vars.logicalWidth * 0.1, right: app_vars.logicalWidth * 0.05), child: Icon(iconData)),
         Flexible(
           child: Text(message, style: Theme.of(context).textTheme.bodyMedium),
         )

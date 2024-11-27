@@ -20,7 +20,7 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
     on<LoadTypesEvent>((LoadTypesEvent event, Emitter<TypeSelectionState> emit) async {
       await app_utils.loadPrefs(frontEndUtils);
       initializeVariables();
-      app_utils.myLog(app_const.LOG_WARNING, 'LoadTypesEvent loadingTypes..');
+
       emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.loadingTypes));
 
       availableTypes.addAll([

@@ -33,6 +33,7 @@ class LocalizationManager {
   String get failedToFetchData => _localizedStrings[_locale.languageCode]?['failed_to_fetch_data'] ?? 'Failed to fetch data.';
   String get connectionFailure => _localizedStrings[_locale.languageCode]?['connection_failure'] ?? 'Please check your internet connection';
   String get contactMe => _localizedStrings[_locale.languageCode]?['contact_me'] ?? 'Contact me';
+  String get loadingDialogMessage => _localizedStrings[_locale.languageCode]?['loading_dialog_message'] ?? 'Loading Pokémon';
 
   // String get greeting => _localizedStrings[_locale.languageCode]?['greeting'] ?? 'Welcome';
 }

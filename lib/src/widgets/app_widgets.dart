@@ -1,9 +1,11 @@
 import 'dart:math' as math;
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/src/utilities/app_utils.dart' as app_utils;
 import 'package:pokexplorer/src/variables/app_constants.dart' as app_const;
 import 'package:pokexplorer/src/variables/app_variables.dart' as app_vars;
@@ -96,11 +98,7 @@ class _SelectedTypeContainerState extends State<SelectedTypeContainer> {
         children: [
           SizedBox(height: 30, width: 30, child: Image.asset(app_utils.typeToAssetIcon(widget.typeName))),
           const SizedBox(width: 10),
-          MyText(
-            widget.typeName.toUpperFirst(),
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 20, color: Colors.black38),
-          ),
+          Text(widget.typeName.toUpperFirst(), textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium),
         ],
       ),
     );
@@ -142,6 +140,7 @@ class DialogProgressPokeball extends StatefulWidget {
 class _DialogProgressPokeballState extends State<DialogProgressPokeball> {
   @override
   Widget build(BuildContext context) {
+    LocalizationManager appLocale = LocalizationManager.getInstance();
     return PopScope(
       canPop: widget.hardBackEnabled,
       child: Center(
@@ -162,9 +161,8 @@ class _DialogProgressPokeballState extends State<DialogProgressPokeball> {
             children: <Widget>[
               Expanded(
                   flex: 1,
-                  child: MyText(
-                    'Loading Pokémon...',
-                    // 'Loading ${widget.loadedPokemonLength}/${widget.totalPokemonLength} Pokémon...',
+                  child: Text(
+                    '${appLocale.loadingDialogMessage}...',
                   )),
               Expanded(flex: 2, child: Center(child: Lottie.asset(app_const.LOADING_POKEBALL_LOTTIE, height: 200, width: 200, repeat: true, reverse: true, fit: BoxFit.contain))),
             ],
@@ -194,7 +192,7 @@ class CustomPercentIndicator extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        MyText('$name :', style: const TextStyle(fontSize: 18, color: app_const.SECONDARY_TEXT_COLOR)),
+        Text('$name :', style: const TextStyle(fontSize: 18, color: app_const.SECONDARY_TEXT_COLOR)),
         LinearPercentIndicator(
             width: app_vars.logicalWidth * 0.6,
             animation: true,
@@ -202,62 +200,10 @@ class CustomPercentIndicator extends StatelessWidget {
             lineHeight: 20.0,
             animationDuration: 1500,
             percent: tmpPercent,
-            center: MyText('$value'),
+            center: Text('$value'),
             progressColor: app_utils.gradientFromType(type).first),
       ],
     );
-  }
-}
-
-class MyText extends StatelessWidget {
-  const MyText(
-    this.data, {
-    super.key,
-    this.style,
-    this.strutStyle,
-    this.textAlign,
-    this.textDirection,
-    this.locale,
-    this.softWrap,
-    this.overflow,
-    this.maxLines,
-    this.semanticsLabel,
-    this.textWidthBasis,
-    this.textHeightBehavior,
-  });
-  final String data;
-  final TextStyle? style;
-  final StrutStyle? strutStyle;
-  final TextAlign? textAlign;
-  final TextDirection? textDirection;
-  final Locale? locale;
-  final bool? softWrap;
-  final TextOverflow? overflow;
-  final int? maxLines;
-  final String? semanticsLabel;
-  final TextWidthBasis? textWidthBasis;
-  final TextHeightBehavior? textHeightBehavior;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(data,
-        style: TextStyle(
-          fontStyle: style?.fontStyle,
-          fontFamily: style?.fontFamily,
-          fontSize: style?.fontSize,
-          color: style?.color,
-          fontWeight: style?.fontWeight,
-        ),
-        strutStyle: strutStyle,
-        textAlign: textAlign,
-        locale: locale,
-        softWrap: softWrap,
-        overflow: overflow,
-        textScaler: TextScaler.noScaling,
-        maxLines: maxLines,
-        semanticsLabel: semanticsLabel,
-        textWidthBasis: textWidthBasis,
-        textHeightBehavior: textHeightBehavior);
   }
 }
 
@@ -271,8 +217,11 @@ class AboutMeDialog extends StatefulWidget {
 }
 
 class _AboutMeDialogState extends State<AboutMeDialog> {
+  LocalizationManager appLocale = LocalizationManager.getInstance();
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       elevation: 0.0,
@@ -293,20 +242,27 @@ class _AboutMeDialogState extends State<AboutMeDialog> {
             child: Image.asset(height: 80, app_const.POKEXPLORER_LOGO_PNG, fit: BoxFit.scaleDown),
           ),
           const SizedBox(height: 5),
-          const Flexible(
-              flex: 6, child: MyText('Pokéxplorer', textAlign: TextAlign.center, style: TextStyle(color: app_const.PRIMARY_TEXT_COLOR, fontFamily: app_const.MAIN_FONT_FAMILY, fontSize: 18))),
-          const Flexible(flex: 1, child: SizedBox(height: 30)),
-          const MyText('Developed by: ', textAlign: TextAlign.left, style: TextStyle(color: app_const.SECONDARY_TEXT_COLOR, fontSize: 18)),
+          Text('Developed by: ', textAlign: TextAlign.left, style: theme.textTheme.bodySmall),
           const SizedBox(height: 5),
-          const SizedBox(height: 40, child: MyText('Vasileios Makris', style: TextStyle(color: app_const.SECONDARY_TEXT_COLOR, fontSize: 18))),
+          SizedBox(height: 40, child: Text('Vasileios Makris', style: theme.textTheme.bodyMedium)),
           const SizedBox(height: 20),
-          OutlinedButton(
-            onPressed: () async => app_utils.sendContactEmail(),
-            style: OutlinedButton.styleFrom(
-                foregroundColor: app_const.WHITE_TOTAL, backgroundColor: app_const.MORE_VIBRANT_TURQUOISE, side: const BorderSide(width: 1, color: app_const.MORE_VIBRANT_TURQUOISE)),
-            child: const MyText('Contact me', style: TextStyle(color: app_const.WHITE_TOTAL, fontSize: 18)),
-          ),
+          OutlinedButton(onPressed: () async => app_utils.sendContactEmail(), style: Theme.of(context).outlinedButtonTheme.style, child: Text(appLocale.contactMe)),
           const SizedBox(height: 20),
+          /*  Row(
+            children: [
+              Icon(Icons.light_mode_outlined),
+              CupertinoSwitch(
+                activeColor: Theme.of(context).primaryColor,
+                value: app_vars.isDarkMode, // The value of the switch
+                onChanged: (value) => {
+                  setState(() {
+                    app_vars.isDarkMode = !app_vars.isDarkMode;
+                  })
+                },
+              ),
+              Icon(Icons.dark_mode_outlined),
+            ],
+          ), */
         ]),
       ),
     );

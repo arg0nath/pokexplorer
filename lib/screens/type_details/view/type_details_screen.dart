@@ -107,11 +107,8 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
                     controller: _typeDetailsScrollController,
                     slivers: [
                       SliverPersistentHeader(
-                        delegate: SliverSearchAppBar(
-                          selectedTypeName: widget.typeDetails.name,
-                          textEditingController: _searchingController,
-                        ),
                         pinned: true,
+                        delegate: SliverSearchAppBar(selectedTypeName: widget.typeDetails.name, textEditingController: _searchingController),
                       ),
                       //search results not found
                       if (typeDetailsState.searchedPokemonPreviewList.isEmpty && typeDetailsState.typeDetailsStatus == TypeDetailsStatus.pokemonSearched)

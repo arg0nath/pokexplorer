@@ -1,6 +1,7 @@
 // import 'package:android_path_provider/android_path_provider.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:pokexplorer/src/utilities/app_utils.dart' as app_utils;
 import 'package:pokexplorer/src/variables/app_constants.dart' as app_const;
 
@@ -16,21 +17,24 @@ class PokemonDetailsBloc extends Bloc<PokemonDetailsEvent, PokemonDetailsState> 
     on<LoadPokemonDetailsEvent>((LoadPokemonDetailsEvent event, Emitter<PokemonDetailsState> emit) async {
       emit(const PokemonDetailsState(pokemonDetailsStatus: PokemonDetailsStatus.loadingPokemonDetails));
       selectedPokemon = app_models.Pokemon.empty();
-      try {
-        selectedPokemon = event.pokemon;
-        pokemonImageList = [selectedPokemon.hqImageUrl, selectedPokemon.lqImageUrl];
 
-        if (selectedPokemon.gifUrl != null) {
-          pokemonImageList.add(selectedPokemon.gifUrl!);
-        }
+      selectedPokemon = event.pokemon;
 
-        // Emit the success state with the loaded Pokémon details
-        emit(const PokemonDetailsState(pokemonDetailsStatus: PokemonDetailsStatus.pokemonDetailsLoaded));
-      } catch (e) {
-        // Catch any unexpected errors and log them
-        app_utils.myLog(app_const.LOG_ERROR, 'Unexpected error loading Pokémon details: $e');
-        emit(PokemonDetailsState(pokemonDetailsStatus: PokemonDetailsStatus.pokemonDetailsLoadFailed, errorMessage: app_const.GENERIC_ERROR_TOAST_MESSAGE));
+      pokemonImageList = [selectedPokemon.hqImageUrl, selectedPokemon.lqImageUrl];
+
+      if (selectedPokemon.gifUrl != null) {
+        pokemonImageList.add(selectedPokemon.gifUrl!);
       }
+
+      final bool hasInternetawait = await InternetConnection().hasInternetAccess;
+      if (!hasInternetawait) {
+        emit(const PokemonDetailsState(pokemonDetailsStatus: PokemonDetailsStatus.notifyingForNoInternetError));
+        emit(const PokemonDetailsState(pokemonDetailsStatus: PokemonDetailsStatus.readyToNotifyForNoInternet));
+        return;
+      }
+
+      // Emit the success state with the loaded Pokémon details
+      emit(const PokemonDetailsState(pokemonDetailsStatus: PokemonDetailsStatus.pokemonDetailsLoaded));
     });
   }
 

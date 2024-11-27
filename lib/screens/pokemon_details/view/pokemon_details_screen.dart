@@ -60,12 +60,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
           extendBodyBehindAppBar: true,
           body: BlocConsumer<PokemonDetailsBloc, PokemonDetailsState>(listener: (context, state) async {
             if (state.pokemonDetailsStatus == PokemonDetailsStatus.loadingPokemonDetails) {
-              await showDialog<Widget>(
-                barrierDismissible: false,
-                context: context,
-                barrierColor: const Color(0x73A3A3A3),
-                builder: (BuildContext context) => app_widgets.DialogProgressPokeball(hardBackEnabled: false).animate().fade(duration: 100.ms).scale(),
-              );
+              await app_utils.showLoadingDialog(context);
             } else if (state.pokemonDetailsStatus == PokemonDetailsStatus.pokemonDetailsLoaded) {
               Navigator.pop(context);
             } else if (state.pokemonDetailsStatus == PokemonDetailsStatus.readyToNotifyForNoInternet) {

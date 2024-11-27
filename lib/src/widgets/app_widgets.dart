@@ -243,10 +243,10 @@ class MyText extends StatelessWidget {
     return Text(data,
         style: TextStyle(
           fontStyle: style?.fontStyle,
-          fontFamily: style?.fontFamily ?? app_const.MAIN_FONT_FAMILY,
+          fontFamily: style?.fontFamily,
           fontSize: style?.fontSize,
-          color: style?.color ?? app_const.PRIMARY_TEXT_COLOR,
-          fontWeight: style?.fontWeight ?? FontWeight.w800,
+          color: style?.color,
+          fontWeight: style?.fontWeight,
         ),
         strutStyle: strutStyle,
         textAlign: textAlign,
@@ -295,8 +295,6 @@ class _AboutMeDialogState extends State<AboutMeDialog> {
           const SizedBox(height: 5),
           const Flexible(
               flex: 6, child: MyText('Pokéxplorer', textAlign: TextAlign.center, style: TextStyle(color: app_const.PRIMARY_TEXT_COLOR, fontFamily: app_const.MAIN_FONT_FAMILY, fontSize: 18))),
-          const SizedBox(height: 5),
-          const MyText('v. 1.0.001', textAlign: TextAlign.left, style: TextStyle(color: app_const.SECONDARY_TEXT_COLOR, fontSize: 18)),
           const Flexible(flex: 1, child: SizedBox(height: 30)),
           const MyText('Developed by: ', textAlign: TextAlign.left, style: TextStyle(color: app_const.SECONDARY_TEXT_COLOR, fontSize: 18)),
           const SizedBox(height: 5),

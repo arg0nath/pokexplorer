@@ -33,7 +33,7 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
       appBar: AppBar(
           centerTitle: true,
           elevation: 0,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
           scrolledUnderElevation: 0,
           leading: const SizedBox.shrink(),
           actions: [
@@ -50,7 +50,7 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
                   ],
                 ), */
           ],
-          title: const app_widgets.MyText('Pick a Pokémon type', style: TextStyle(fontSize: 20, color: app_const.PRIMARY_TEXT_COLOR))),
+          title: Text('Pick a Pokémon type', style: Theme.of(context).textTheme.titleMedium)),
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(20),
         color: Colors.transparent,
@@ -79,7 +79,7 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
           } else if (state.typeSelectionStatus == TypeSelectionStatus.showInfoDialog) {
             await showDialog<bool>(barrierDismissible: true, context: context, builder: (BuildContext context) => const app_widgets.AboutMeDialog());
           } else if (state.typeSelectionStatus == TypeSelectionStatus.proceedingToTypeDetailsScreen) {
-            await showDialog(context: context, builder: (context) => const app_widgets.DialogProgressPokeball(hardBackEnabled: false));
+            await app_utils.showLoadingDialog(context);
           }
         },
         builder: (context, state) {
@@ -205,7 +205,7 @@ class _OfflineScreenState extends State<OfflineScreen> {
                         margin: EdgeInsets.symmetric(horizontal: app_vars.logicalWidth * 0.11),
                         decoration: const BoxDecoration(image: DecorationImage(image: AssetImage(app_const.POKEXPLORER_LOGO_PNG))))),
                 Flexible(flex: 5, child: Lottie.asset(app_const.LOADING_POKEBALL_LOTTIE, width: 30, height: 30, fit: BoxFit.contain, repeat: true, reverse: false)),
-                const app_widgets.MyText('Please check your internet connection.', style: TextStyle(color: app_const.SECONDARY_TEXT_COLOR, fontSize: 18)),
+                const app_widgets.MyText('Please check your internet connection', style: TextStyle(color: app_const.SECONDARY_TEXT_COLOR, fontSize: 18)),
               ],
             ),
           ),

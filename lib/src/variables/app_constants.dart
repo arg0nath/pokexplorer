@@ -45,11 +45,6 @@ const Radius SCROLLBAR_RADIUS = Radius.circular(10);
 const double SCROLLBAR_THICKNESS = 3.0;
 const Color SCROLLBAR_COLOR = Color(0xFFC5C5C5);
 
-//percent bar
-const PERCENT_HIGH_COLOR = Colors.greenAccent;
-const PERCENT_MEDIUM_COLOR = Colors.orangeAccent;
-const PERCENT_LOW_COLOR = Colors.redAccent;
-
 //customNetworkImage customization
 const double NETWORK_IMAGE_BORDER_RADIUS = 80.0;
 const double NETWORK_IMAGE_NO_BORDER_RADIUS = 0.0;

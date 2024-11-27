@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:pokexplorer/src/variables/app_variables.dart';
 import 'package:pokexplorer/src/widgets/app_widgets.dart' as app_widgets;
 import 'package:toastification/toastification.dart';
@@ -145,4 +146,13 @@ void sendContactEmail() async {
   } else {
     throw 'Could not launch';
   }
+}
+
+Future<Widget?> showLoadingDialog(BuildContext context) {
+  return showDialog<Widget>(
+    barrierDismissible: false,
+    context: context,
+    barrierColor: const Color(0x73A3A3A3),
+    builder: (BuildContext context) => app_widgets.DialogProgressPokeball(hardBackEnabled: false).animate().fade(duration: 100.ms).scale(),
+  );
 }

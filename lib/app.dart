@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 // import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 import 'package:pokexplorer/screens/type_selection/bloc/type_selection_bloc.dart';
@@ -107,8 +108,12 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
         builder: (context, child) => child!,
         onGenerateTitle: (BuildContext context) => app_const.APP_NAME,
         onGenerateRoute: app_router.Router.generateRoute,
+        supportedLocales: [
+          Locale('en', 'US'),
+          Locale('gr', 'GR'),
+        ],
+        locale: Locale('en', 'US'), // Set default locale
         navigatorObservers: <NavigatorObserver>[app_vars.routeObserver],
-        supportedLocales: const <Locale>[Locale('en')],
         themeMode: app_vars.isDarkMode ? ThemeMode.dark : ThemeMode.light,
         theme: lightTheme(),
         darkTheme: darkTheme(),
@@ -120,7 +125,7 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
 lightTheme() {
   return ThemeData(
     brightness: Brightness.light,
-    primaryColor: Color(0xBC005DBA),
+    primaryColor: app_const.BRIGHT_RED,
     dialogBackgroundColor: app_const.HOME_CARD_LIGHT,
     appBarTheme: const AppBarTheme(
       color: app_const.SCAFFOLD_BACKGROUND_LIGHT,
@@ -129,10 +134,15 @@ lightTheme() {
     ),
     scaffoldBackgroundColor: app_const.SCAFFOLD_BACKGROUND_LIGHT,
     cardColor: app_const.HOME_CARD_LIGHT,
+    outlinedButtonTheme: OutlinedButtonThemeData(
+        style: ButtonStyle(
+            side: WidgetStateProperty.all(BorderSide(width: 1, color: app_const.LIGHT_RED)),
+            foregroundColor: WidgetStateProperty.all(app_const.WHITE_IOS),
+            backgroundColor: WidgetStateProperty.all(app_const.BRIGHT_RED))),
     textTheme: const TextTheme(
       bodySmall: TextStyle(fontSize: 16, color: app_const.GREY, fontFamily: app_const.MAIN_FONT_FAMILY),
-      bodyLarge: TextStyle(fontSize: 18, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
-      bodyMedium: TextStyle(fontSize: 16, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+      bodyLarge: TextStyle(fontSize: 20, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+      bodyMedium: TextStyle(fontSize: 18, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
       titleLarge: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
       titleMedium: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
       titleSmall: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
@@ -143,19 +153,24 @@ lightTheme() {
 darkTheme() {
   return ThemeData(
     brightness: Brightness.dark,
-    primaryColor: Color(0xBC005DBA),
+    scaffoldBackgroundColor: app_const.SCAFFOLD_BACKGROUND_DARK,
+    primaryColor: app_const.BRIGHT_RED,
     dialogBackgroundColor: app_const.HOME_CARD_DARK,
+    outlinedButtonTheme: OutlinedButtonThemeData(
+        style: ButtonStyle(
+            side: WidgetStateProperty.all(BorderSide(width: 1, color: app_const.LIGHT_RED)),
+            foregroundColor: WidgetStateProperty.all(app_const.WHITE_IOS),
+            backgroundColor: WidgetStateProperty.all(app_const.BRIGHT_RED))),
     appBarTheme: const AppBarTheme(
       color: app_const.SCAFFOLD_BACKGROUND_DARK,
       centerTitle: true,
       titleTextStyle: TextStyle(fontSize: 26, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
     ),
-    scaffoldBackgroundColor: app_const.SCAFFOLD_BACKGROUND_DARK,
     cardColor: app_const.HOME_CARD_DARK,
     textTheme: const TextTheme(
       bodySmall: TextStyle(fontSize: 16, color: app_const.GREY, fontFamily: app_const.MAIN_FONT_FAMILY),
-      bodyLarge: TextStyle(fontSize: 18, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
-      bodyMedium: TextStyle(fontSize: 16, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+      bodyLarge: TextStyle(fontSize: 20, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+      bodyMedium: TextStyle(fontSize: 18, color: app_const.BLACK_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
       titleLarge: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
       titleMedium: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
       titleSmall: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),

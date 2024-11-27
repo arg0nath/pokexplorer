@@ -66,17 +66,11 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
         body: BlocConsumer<TypeDetailsBloc, TypeDetailsState>(
             listener: (context, state) async {
               if (state.typeDetailsStatus == TypeDetailsStatus.loadingPokemons) {
-                await showDialog<Widget>(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (BuildContext context) => const app_widgets.DialogProgressPokeball(hardBackEnabled: false).animate().fade(duration: 100.ms).scale());
+                await app_utils.showLoadingDialog(context);
               } else if (state.typeDetailsStatus == TypeDetailsStatus.pokemonsLoaded) {
                 Navigator.pop(context); //close loading dialog
               } else if (state.typeDetailsStatus == TypeDetailsStatus.navigatingToPokemonDetails) {
-                await showDialog<Widget>(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (BuildContext context) => const app_widgets.DialogProgressPokeball(hardBackEnabled: false).animate().fade(duration: 100.ms).scale());
+                await app_utils.showLoadingDialog(context);
               } else if (state.typeDetailsStatus == TypeDetailsStatus.readyToNavigateToPokemonDetails) {
                 Navigator.popAndPushNamed(context, app_const.POKEMON_DETAILS_SCREEN_ROUTE_NAME,
                     arguments: app_router.PokemonDetailsScreenArguments(selectedTypeName: _typeDetailsBloc.selectedTypeName, pokemon: _typeDetailsBloc.selectedPokemon));

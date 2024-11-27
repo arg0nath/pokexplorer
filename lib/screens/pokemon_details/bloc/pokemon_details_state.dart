@@ -5,20 +5,19 @@ enum PokemonDetailsStatus {
   loadingPokemonDetails,
 
   pokemonDetailsLoaded,
-  pokemonDetailsLoadFailed,
+  notifyingForNoInternetError,
+  readyToNotifyForNoInternet,
 }
 
 class PokemonDetailsState extends Equatable {
   const PokemonDetailsState({
     required this.pokemonDetailsStatus,
-    this.errorMessage,
   });
 
   final PokemonDetailsStatus pokemonDetailsStatus;
-  final String? errorMessage;
 
   @override
-  List<Object?> get props => <Object?>[pokemonDetailsStatus, errorMessage];
+  List<Object?> get props => <Object?>[pokemonDetailsStatus];
 
   @override
   String toString() => 'pokemonDetailsStatus = $pokemonDetailsStatus\n';

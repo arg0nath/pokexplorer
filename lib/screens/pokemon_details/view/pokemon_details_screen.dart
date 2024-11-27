@@ -68,14 +68,8 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
               );
             } else if (state.pokemonDetailsStatus == PokemonDetailsStatus.pokemonDetailsLoaded) {
               Navigator.pop(context);
-            } else if (state.pokemonDetailsStatus == PokemonDetailsStatus.pokemonDetailsLoadFailed) {
-              if (state.errorMessage != null) {
-                app_utils.myToast(context, state.errorMessage!);
-              } else {
-                app_utils.myToast(context, app_const.GENERIC_ERROR_TOAST_MESSAGE);
-              }
-              Navigator.pop(context); //pop dialog
-              Navigator.pop(context); //pop screen
+            } else if (state.pokemonDetailsStatus == PokemonDetailsStatus.readyToNotifyForNoInternet) {
+              app_utils.myToast(context, 'Please check your internet connection');
             }
           }, builder: (context, state) {
             if (state.pokemonDetailsStatus == PokemonDetailsStatus.pokemonDetailsLoaded) {

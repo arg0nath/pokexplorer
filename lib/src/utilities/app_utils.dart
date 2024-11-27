@@ -109,16 +109,6 @@ List<Color> gradientFromType(String type) {
   return gradList;
 }
 
-/* Color convertPercentToColor(double percent) {
-  if (percent >= 0.4) {
-    return app_const.PERCENT_HIGH_COLOR;
-  } else if (percent >= 0.2) {
-    return app_const.PERCENT_MEDIUM_COLOR;
-  } else {
-    return app_const.PERCENT_LOW_COLOR;
-  }
-} */
-
 ToastificationItem myToast(BuildContext context, String msg) {
   toastification.dismissAll();
   return toastification.show(

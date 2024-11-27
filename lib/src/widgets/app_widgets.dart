@@ -150,7 +150,7 @@ class _DialogProgressPokeballState extends State<DialogProgressPokeball> {
         child: Container(
           width: app_vars.logicalWidth * 0.54,
           height: app_vars.logicalHeight * 0.3,
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          margin: EdgeInsets.symmetric(horizontal: app_vars.logicalWidth * 0.2, vertical: app_vars.logicalHeight * 0.1),
           decoration: BoxDecoration(
               border: Border.all(color: app_const.DIALOG_BORDER_COLOR, width: app_const.DIALOG_BORDER_WIDTH),
               color: app_const.WHITE_TOTAL,
@@ -165,10 +165,14 @@ class _DialogProgressPokeballState extends State<DialogProgressPokeball> {
               Expanded(
                   flex: 1,
                   child: Text(
-                    '${appLocale.loadingDialogMessage}...',
+                    '${appLocale.loadingDialogMessage}',
                     style: Theme.of(context).textTheme.bodySmall,
                   )),
-              Expanded(flex: 2, child: Center(child: Lottie.asset(app_const.LOADING_POKEBALL_LOTTIE, height: 200, width: 200, repeat: true, reverse: true, fit: BoxFit.contain))),
+              Expanded(
+                  flex: 2,
+                  child: Center(
+                      child: Lottie.asset(app_const.LOADING_POKEBALL_LOTTIE,
+                          height: app_vars.logicalHeight * 0.1, width: app_vars.logicalHeight * 0.1, repeat: true, reverse: true, fit: BoxFit.contain))),
             ],
           )),
         ),

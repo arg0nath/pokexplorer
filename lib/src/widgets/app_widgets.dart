@@ -250,13 +250,12 @@ class _AboutMeDialogState extends State<AboutMeDialog> {
             flex: 8,
             child: Image.asset(height: 80, app_const.POKEXPLORER_LOGO_PNG, fit: BoxFit.scaleDown),
           ),
-          const SizedBox(height: 5),
+          SizedBox(height: app_vars.logicalHeight * 0.01),
           Text('Developed by: ', textAlign: TextAlign.left, style: theme.textTheme.bodySmall),
-          const SizedBox(height: 5),
-          SizedBox(height: 40, child: Text('Vasileios Makris', style: theme.textTheme.bodySmall)),
-          const SizedBox(height: 20),
+          SizedBox(height: app_vars.logicalHeight * 0.03, child: Text('Vasileios Makris', style: theme.textTheme.bodySmall)),
+          SizedBox(height: app_vars.logicalHeight * 0.03),
           OutlinedButton(onPressed: () async => app_utils.sendContactEmail(), style: Theme.of(context).outlinedButtonTheme.style, child: Text(appLocale.contactMe)),
-          const SizedBox(height: 20),
+          SizedBox(height: app_vars.logicalHeight * 0.01),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

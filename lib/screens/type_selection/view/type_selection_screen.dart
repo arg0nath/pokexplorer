@@ -33,55 +33,67 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          centerTitle: true,
-          elevation: 0,
-          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
-          scrolledUnderElevation: 0,
-          leading: const SizedBox.shrink(),
-          actions: [
-            IconButton(onPressed: () => _typeSelectionBloc.add(const ShowInfoDialogEvent()), icon: const Icon(Icons.info_outline_rounded, color: app_const.SECONDARY_TEXT_COLOR)),
-          ],
-          title: Text(appLocale.typeSelectionAppBarTitle, style: Theme.of(context).textTheme.titleMedium)),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(20),
-        color: Colors.transparent,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            OutlinedButton(style: Theme.of(context).outlinedButtonTheme.style, onPressed: () => _typeSelectionBloc.add(const ProceedToTypeDetailsScreenEvent()), child: Text(appLocale.next)),
-          ],
-        ),
-      ),
       extendBody: true,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: BlocConsumer<TypeSelectionBloc, TypeSelectionState>(
-        listener: (context, state) async {
-          if (state.typeSelectionStatus == TypeSelectionStatus.readyToProceedToTypeDetailsScreen) {
-            //close dialog and navigate to typedetails
-            Navigator.popAndPushNamed(context, app_const.TYPE_DETAILS_SCREEN_PAGE_ROUTE_NAME,
-                arguments: app_router.TypeDetailsScreenArguments(typeDetails: _typeSelectionBloc.selectedPokemonTypeDetails));
-          } else if (state.typeSelectionStatus == TypeSelectionStatus.errorToProceedToTypeDetailsScreenNoSelection) {
-            app_utils.myToast(context, appLocale.emptyTypeSelectionError);
-          } else if (state.typeSelectionStatus == TypeSelectionStatus.errorToNotifyForNoInternet) {
-            app_utils.myToast(context, appLocale.connectionFailure);
-          } else if (state.typeSelectionStatus == TypeSelectionStatus.showInfoDialog) {
-            await showDialog<bool>(barrierDismissible: true, context: context, builder: (BuildContext context) => const app_widgets.AboutMeDialog());
-          } else if (state.typeSelectionStatus == TypeSelectionStatus.proceedingToTypeDetailsScreen) {
-            await app_utils.showLoadingDialog(context);
-          }
-        },
-        builder: (context, state) {
-          return Stack(
-            children: [
-              //type grid
+      appBar: _typeSelectionAppbar(context),
+      body: _typeSelectionBody(),
+      bottomNavigationBar: _typeSelectionBottomBar(context),
+    );
+  }
 
-              //pokeball background
-              const Positioned(left: -20, bottom: -50, child: app_widgets.PokeballBackground()),
-            ],
-          );
-        },
+  Container _typeSelectionBottomBar(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      color: Colors.transparent,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          OutlinedButton(style: Theme.of(context).outlinedButtonTheme.style, onPressed: () => _typeSelectionBloc.add(const ProceedToTypeDetailsScreenEvent()), child: Text(appLocale.next)),
+        ],
       ),
+    );
+  }
+
+  AppBar _typeSelectionAppbar(BuildContext context) {
+    return AppBar(
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        scrolledUnderElevation: 0,
+        leading: const SizedBox.shrink(),
+        actions: [
+          IconButton(onPressed: () => _typeSelectionBloc.add(const ShowInfoDialogEvent()), icon: const Icon(Icons.info_outline_rounded, color: app_const.SECONDARY_TEXT_COLOR)),
+        ],
+        title: Text(appLocale.typeSelectionAppBarTitle, style: Theme.of(context).textTheme.titleMedium));
+  }
+
+  BlocConsumer<TypeSelectionBloc, TypeSelectionState> _typeSelectionBody() {
+    return BlocConsumer<TypeSelectionBloc, TypeSelectionState>(
+      listener: (context, state) async {
+        if (state.typeSelectionStatus == TypeSelectionStatus.readyToProceedToTypeDetailsScreen) {
+          //close dialog and navigate to typedetails
+          Navigator.popAndPushNamed(context, app_const.TYPE_DETAILS_SCREEN_PAGE_ROUTE_NAME,
+              arguments: app_router.TypeDetailsScreenArguments(typeDetails: _typeSelectionBloc.selectedPokemonTypeDetails));
+        } else if (state.typeSelectionStatus == TypeSelectionStatus.errorToProceedToTypeDetailsScreenNoSelection) {
+          app_utils.myToast(context, appLocale.emptyTypeSelectionError);
+        } else if (state.typeSelectionStatus == TypeSelectionStatus.errorToNotifyForNoInternet) {
+          app_utils.myToast(context, appLocale.connectionFailure);
+        } else if (state.typeSelectionStatus == TypeSelectionStatus.showInfoDialog) {
+          await showDialog<bool>(barrierDismissible: true, context: context, builder: (BuildContext context) => const app_widgets.AboutMeDialog());
+        } else if (state.typeSelectionStatus == TypeSelectionStatus.proceedingToTypeDetailsScreen) {
+          await app_utils.showLoadingDialog(context);
+        }
+      },
+      builder: (context, state) {
+        return Stack(
+          children: [
+            //type grid
+            MyTypesGrid(typeSelectionBloc: _typeSelectionBloc),
+            //pokeball background
+            const Positioned(left: -20, bottom: -50, child: app_widgets.PokeballBackground()),
+          ],
+        );
+      },
     );
   }
 }

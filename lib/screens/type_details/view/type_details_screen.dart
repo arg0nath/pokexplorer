@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/router/app_router.dart' as app_router;
 import 'package:pokexplorer/screens/type_details/bloc/type_details_bloc.dart';
 import 'package:pokexplorer/src/models/app_models.dart' as app_models;
@@ -62,90 +63,93 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
         await _onWillPop();
       },
       child: Scaffold(
-        backgroundColor: app_const.WHITE_TOTAL,
-        body: BlocConsumer<TypeDetailsBloc, TypeDetailsState>(
-            listener: (context, state) async {
-              if (state.typeDetailsStatus == TypeDetailsStatus.loadingPokemons) {
-                await app_utils.showLoadingDialog(context);
-              } else if (state.typeDetailsStatus == TypeDetailsStatus.pokemonsLoaded) {
-                Navigator.pop(context); //close loading dialog
-              } else if (state.typeDetailsStatus == TypeDetailsStatus.navigatingToPokemonDetails) {
-                await app_utils.showLoadingDialog(context);
-              } else if (state.typeDetailsStatus == TypeDetailsStatus.readyToNavigateToPokemonDetails) {
-                Navigator.popAndPushNamed(context, app_const.POKEMON_DETAILS_SCREEN_ROUTE_NAME,
-                    arguments: app_router.PokemonDetailsScreenArguments(selectedTypeName: _typeDetailsBloc.selectedTypeName, pokemon: _typeDetailsBloc.selectedPokemon));
-              } else if (state.typeDetailsStatus == TypeDetailsStatus.morePokemonsLoadedFailed) {
-                app_utils.myToast(context, app_const.GENERIC_ERROR_TOAST_MESSAGE);
-              } else if (state.typeDetailsStatus == TypeDetailsStatus.readyToNotifyForNoInternet) {
-                app_utils.myToast(context, 'Please check your internet connection and refresh');
-              } else if (state.typeDetailsStatus == TypeDetailsStatus.errorNavigateToPokemonDetailsFailed) {
-                app_utils.myToast(context, app_const.GENERIC_ERROR_TOAST_MESSAGE);
-                Navigator.pop(context); //close dialog
-              } else if (state.typeDetailsStatus == TypeDetailsStatus.typeDetailsExited) {
-                Navigator.pop(context);
-              }
-            },
-            buildWhen: (previous, current) =>
-                current.typeDetailsStatus != TypeDetailsStatus.navigatingToPokemonDetails && current.typeDetailsStatus != TypeDetailsStatus.readyToNavigateToPokemonDetails,
-            builder: (context, typeDetailsState) {
-              List<app_models.PokemonPreview> displayList =
-                  typeDetailsState.searchedPokemonPreviewList.isNotEmpty ? typeDetailsState.searchedPokemonPreviewList : _typeDetailsBloc.selectedTypePokemonPreviewList;
-
-              return RefreshIndicator(
-                onRefresh: () async {
-                  _typeDetailsBloc.add(LoadTypeDetailsPokemonsEvent(typeDetails: widget.typeDetails));
-                },
-                child: Scrollbar(
-                  thumbVisibility: false,
-                  child: CustomScrollView(
-                    controller: _typeDetailsScrollController,
-                    slivers: [
-                      SliverPersistentHeader(
-                        pinned: true,
-                        delegate: SliverSearchAppBar(selectedTypeName: widget.typeDetails.name, textEditingController: _searchingController),
-                      ),
-                      //search results not found
-                      if (typeDetailsState.searchedPokemonPreviewList.isEmpty && typeDetailsState.typeDetailsStatus == TypeDetailsStatus.pokemonSearched)
-                        SliverToBoxAdapter(
-                          child: Center(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.asset(app_const.EMPTY_POKEBALL_PNG, width: app_vars.logicalHeight * 0.1, height: app_vars.logicalHeight * 0.1), // Replace with your image path
-                                const SizedBox(height: 10),
-                                const Text('No Pokémon found', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-                              ],
-                            ),
-                          ),
-                        ),
-                      // search results found
-                      if (typeDetailsState.searchedPokemonPreviewList.isNotEmpty)
-                        SliverList.builder(
-                          itemCount: displayList.length,
-                          itemBuilder: (context, index) => PokemonListCard(
-                            onTap: () => _typeDetailsBloc.add(NavigateToPokemonDetailsEvent(pokemonPreview: displayList[index])),
-                            pokemonPreview: displayList[index],
-                          ),
-                        ),
-                      // default list w/ no search results
-                      if (typeDetailsState.searchedPokemonPreviewList.isEmpty && typeDetailsState.typeDetailsStatus != TypeDetailsStatus.pokemonSearched)
-                        SliverList.builder(
-                          itemCount: _typeDetailsBloc.selectedTypePokemonPreviewList.length,
-                          itemBuilder: (context, index) => PokemonListCard(
-                            onTap: () => _typeDetailsBloc.add(NavigateToPokemonDetailsEvent(pokemonPreview: _typeDetailsBloc.selectedTypePokemonPreviewList[index])),
-                            pokemonPreview: _typeDetailsBloc.selectedTypePokemonPreviewList[index],
-                          ),
-                        ),
-                      // load more Pokemon
-                      if (typeDetailsState.typeDetailsStatus == TypeDetailsStatus.loadingMorePokemons)
-                        const SliverToBoxAdapter(child: SizedBox(width: double.infinity, height: 50, child: Center(child: app_widgets.CustomProgressIndicator()))),
-                    ],
-                  ),
-                ),
-              );
-            }),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        body: _typeDetailsBody(),
       ),
     );
+  }
+
+  BlocConsumer<TypeDetailsBloc, TypeDetailsState> _typeDetailsBody() {
+    return BlocConsumer<TypeDetailsBloc, TypeDetailsState>(
+        listener: (context, state) async {
+          if (state.typeDetailsStatus == TypeDetailsStatus.loadingPokemons) {
+            await app_utils.showLoadingDialog(context);
+          } else if (state.typeDetailsStatus == TypeDetailsStatus.pokemonsLoaded) {
+            Navigator.pop(context); //close loading dialog
+          } else if (state.typeDetailsStatus == TypeDetailsStatus.navigatingToPokemonDetails) {
+            await app_utils.showLoadingDialog(context);
+          } else if (state.typeDetailsStatus == TypeDetailsStatus.readyToNavigateToPokemonDetails) {
+            Navigator.popAndPushNamed(context, app_const.POKEMON_DETAILS_SCREEN_ROUTE_NAME,
+                arguments: app_router.PokemonDetailsScreenArguments(selectedTypeName: _typeDetailsBloc.selectedTypeName, pokemon: _typeDetailsBloc.selectedPokemon));
+          } else if (state.typeDetailsStatus == TypeDetailsStatus.morePokemonsLoadedFailed) {
+            app_utils.myToast(context, LocalizationManager.getInstance().generalErrorMessage);
+          } else if (state.typeDetailsStatus == TypeDetailsStatus.readyToNotifyForNoInternet) {
+            app_utils.myToast(context, LocalizationManager.getInstance().connectionFailure);
+          } else if (state.typeDetailsStatus == TypeDetailsStatus.errorNavigateToPokemonDetailsFailed) {
+            app_utils.myToast(context, LocalizationManager.getInstance().generalErrorMessage);
+            Navigator.pop(context); //close dialog
+          } else if (state.typeDetailsStatus == TypeDetailsStatus.typeDetailsExited) {
+            Navigator.pop(context);
+          }
+        },
+        buildWhen: (previous, current) => current.typeDetailsStatus != TypeDetailsStatus.navigatingToPokemonDetails && current.typeDetailsStatus != TypeDetailsStatus.readyToNavigateToPokemonDetails,
+        builder: (context, typeDetailsState) {
+          List<app_models.PokemonPreview> displayList =
+              typeDetailsState.searchedPokemonPreviewList.isNotEmpty ? typeDetailsState.searchedPokemonPreviewList : _typeDetailsBloc.selectedTypePokemonPreviewList;
+
+          return RefreshIndicator(
+            onRefresh: () async {
+              _typeDetailsBloc.add(LoadTypeDetailsPokemonsEvent(typeDetails: widget.typeDetails));
+            },
+            child: Scrollbar(
+              thumbVisibility: false,
+              child: CustomScrollView(
+                controller: _typeDetailsScrollController,
+                slivers: [
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: SliverSearchAppBar(selectedTypeName: widget.typeDetails.name, textEditingController: _searchingController),
+                  ),
+                  //search results not found
+                  if (typeDetailsState.searchedPokemonPreviewList.isEmpty && typeDetailsState.typeDetailsStatus == TypeDetailsStatus.pokemonSearched)
+                    SliverToBoxAdapter(
+                      child: Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(app_const.EMPTY_POKEBALL_PNG, width: app_vars.logicalHeight * 0.1, height: app_vars.logicalHeight * 0.1), // Replace with your image path
+                            const SizedBox(height: 10),
+                            Text(LocalizationManager.getInstance().noPokemonFound, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  // search results found
+                  if (typeDetailsState.searchedPokemonPreviewList.isNotEmpty)
+                    SliverList.builder(
+                      itemCount: displayList.length,
+                      itemBuilder: (context, index) => PokemonListCard(
+                        onTap: () => _typeDetailsBloc.add(NavigateToPokemonDetailsEvent(pokemonPreview: displayList[index])),
+                        pokemonPreview: displayList[index],
+                      ),
+                    ),
+                  // default list w/ no search results
+                  if (typeDetailsState.searchedPokemonPreviewList.isEmpty && typeDetailsState.typeDetailsStatus != TypeDetailsStatus.pokemonSearched)
+                    SliverList.builder(
+                      itemCount: _typeDetailsBloc.selectedTypePokemonPreviewList.length,
+                      itemBuilder: (context, index) => PokemonListCard(
+                        onTap: () => _typeDetailsBloc.add(NavigateToPokemonDetailsEvent(pokemonPreview: _typeDetailsBloc.selectedTypePokemonPreviewList[index])),
+                        pokemonPreview: _typeDetailsBloc.selectedTypePokemonPreviewList[index],
+                      ),
+                    ),
+                  // load more Pokemon
+                  if (typeDetailsState.typeDetailsStatus == TypeDetailsStatus.loadingMorePokemons)
+                    const SliverToBoxAdapter(child: SizedBox(width: double.infinity, height: 50, child: Center(child: app_widgets.CustomProgressIndicator()))),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }
 
@@ -173,16 +177,18 @@ class _PokemonListCardState extends State<PokemonListCard> {
           height: app_vars.logicalHeight * 0.14,
           alignment: Alignment.center,
           padding: const EdgeInsets.all(2),
-          decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(20)), border: Border.all(color: const Color(0xFFEEEEEE))),
+          decoration: BoxDecoration(color: Theme.of(context).cardColor, borderRadius: const BorderRadius.all(Radius.circular(20)), border: Border.all(color: const Color(0xFFEEEEEE))),
           margin: EdgeInsets.symmetric(vertical: 10, horizontal: app_vars.logicalWidth * 0.06),
           child: Row(children: [
+            //pokemon image
             Expanded(
               flex: 2,
               child: Container(alignment: Alignment.center, margin: const EdgeInsets.all(5), child: app_widgets.CustomNetworkImage(height: 100, width: 100, imageURL: widget.pokemonPreview.imageUrl)),
             ),
+            //pokemon name
             Expanded(
               flex: 4,
-              child: Text(widget.pokemonPreview.name.toUpperFirst(), style: const TextStyle(fontSize: 20)),
+              child: Text(widget.pokemonPreview.name.toUpperFirst(), style: Theme.of(context).textTheme.bodyLarge),
             ),
           ])),
     );
@@ -211,18 +217,8 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
           height: app_const.TYPE_DETAILS_APP_BAR_DELEGATE_MAX_EXTEND,
           child: Stack(
             children: [
-              ClipPath(
-                clipper: TypeDetailsBackgroundWaveClipper(),
-                child: Container(
-                  width: app_vars.logicalWidth,
-                  height: app_const.TYPE_DETAILS_APP_BAR_DELEGATE_MAX_EXTEND,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: app_utils.gradientFromType(typeDetailsBloc.frontEndUtils.loadSelectedTypeName()),
-                    ),
-                  ),
-                ),
-              ),
+              //cool gradient background
+              FancyAppbarBackground(typeDetailsBloc: typeDetailsBloc),
               //type icon + name
               Positioned(
                 top: topPadding,
@@ -244,7 +240,7 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
               ),
               //search bar
               Positioned(
-                  top: (topPadding + app_vars.logicalHeight * 0.05 + 10) + offset * 0.3,
+                  top: (topPadding + app_vars.logicalHeight * 0.055) + offset * 0.3,
                   left: 16,
                   right: 16,
                   child: SizedBox(
@@ -255,41 +251,7 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
                       onTap: () {
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
-                      child: TextFormField(
-                        style: const TextStyle(color: app_const.PRIMARY_TEXT_COLOR, fontFamily: app_const.MAIN_FONT_FAMILY),
-                        controller: textEditingController,
-                        decoration: InputDecoration(
-                            fillColor: app_const.WHITE_TOTAL,
-                            filled: true,
-                            focusedBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: app_const.WHITE_TOTAL), borderRadius: BorderRadius.circular(15)),
-                            border: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: app_const.WHITE_TOTAL), borderRadius: BorderRadius.circular(15)),
-                            enabledBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: app_const.WHITE_TOTAL), borderRadius: BorderRadius.circular(15)),
-                            hintStyle: const TextStyle(color: app_const.SECONDARY_TEXT_COLOR, fontFamily: app_const.MAIN_FONT_FAMILY),
-                            hintText: 'Search for a Pokémon',
-                            suffixIcon: IconButton(
-                                icon: Icon(Icons.search, color: app_utils.gradientFromType(selectedTypeName).first),
-                                onPressed: () {
-                                  if (textEditingController.value.text.isNotEmpty) {
-                                    typeDetailsBloc.add(SearchPokemonEvent(value: textEditingController.value.text));
-                                    FocusScope.of(context).unfocus();
-                                  }
-                                }),
-                            prefixIcon: textEditingController.value.text.isEmpty
-                                ? null
-                                : GestureDetector(
-                                    onTap: () {
-                                      typeDetailsBloc.add(const ReturnFromSearchEvent());
-                                      textEditingController.clear();
-                                    },
-                                    child: const Icon(Icons.clear_rounded, color: app_const.SECONDARY_TEXT_COLOR))),
-                        onChanged: (value) {
-                          if (value.isEmpty) {
-                            typeDetailsBloc.add(const ReturnFromSearchEvent());
-                          }
-                        },
-                        onTapOutside: (val) => FocusScope.of(context).unfocus(),
-                        onFieldSubmitted: (String val) => val.isNotEmpty ? typeDetailsBloc.add(SearchPokemonEvent(value: val)) : null,
-                      ),
+                      child: _customTextFormField(typeDetailsBloc, context),
                     ),
                   )),
             ],
@@ -297,6 +259,49 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
         );
       },
     );
+  }
+
+  TextFormField _customTextFormField(TypeDetailsBloc typeDetailsBloc, BuildContext context) {
+    return TextFormField(
+      style: const TextStyle(color: app_const.PRIMARY_TEXT_COLOR, fontFamily: app_const.MAIN_FONT_FAMILY),
+      controller: textEditingController,
+      decoration: InputDecoration(
+          fillColor: Theme.of(context).inputDecorationTheme.fillColor,
+          filled: Theme.of(context).inputDecorationTheme.filled,
+          focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
+          border: Theme.of(context).inputDecorationTheme.border,
+          enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
+          hintText: LocalizationManager.getInstance().searchBarTitle,
+          suffixIcon: _customSuffixIcon(typeDetailsBloc, context),
+          prefixIcon: textEditingController.value.text.isEmpty ? null : _customPrefixButton(typeDetailsBloc)),
+      onChanged: (value) {
+        if (value.isEmpty) {
+          typeDetailsBloc.add(const ReturnFromSearchEvent());
+        }
+      },
+      onTapOutside: (val) => FocusScope.of(context).unfocus(),
+      onFieldSubmitted: (String val) => val.isNotEmpty ? typeDetailsBloc.add(SearchPokemonEvent(value: val)) : null,
+    );
+  }
+
+  IconButton _customSuffixIcon(TypeDetailsBloc typeDetailsBloc, BuildContext context) {
+    return IconButton(
+        icon: Icon(Icons.search, color: app_utils.gradientFromType(selectedTypeName).first),
+        onPressed: () {
+          if (textEditingController.value.text.isNotEmpty) {
+            typeDetailsBloc.add(SearchPokemonEvent(value: textEditingController.value.text));
+            FocusScope.of(context).unfocus();
+          }
+        });
+  }
+
+  GestureDetector _customPrefixButton(TypeDetailsBloc typeDetailsBloc) {
+    return GestureDetector(
+        onTap: () {
+          typeDetailsBloc.add(const ReturnFromSearchEvent());
+          textEditingController.clear();
+        },
+        child: const Icon(Icons.clear_rounded, color: app_const.SECONDARY_TEXT_COLOR));
   }
 
   @override
@@ -307,6 +312,31 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) => oldDelegate.maxExtent != maxExtent || oldDelegate.minExtent != minExtent;
+}
+
+class FancyAppbarBackground extends StatelessWidget {
+  const FancyAppbarBackground({
+    super.key,
+    required this.typeDetailsBloc,
+  });
+
+  final TypeDetailsBloc typeDetailsBloc;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipPath(
+      clipper: TypeDetailsBackgroundWaveClipper(),
+      child: Container(
+        width: app_vars.logicalWidth,
+        height: app_const.TYPE_DETAILS_APP_BAR_DELEGATE_MAX_EXTEND,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: app_utils.gradientFromType(typeDetailsBloc.frontEndUtils.loadSelectedTypeName()),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class TypeDetailsBackgroundWaveClipper extends CustomClipper<Path> {

@@ -32,8 +32,10 @@ class LocalizationManager {
   String get noPokemonFound => _localizedStrings[_locale.languageCode]?['no_pokemon_found'] ?? 'No Pokémon found.';
   String get failedToFetchData => _localizedStrings[_locale.languageCode]?['failed_to_fetch_data'] ?? 'Failed to fetch data.';
   String get connectionFailure => _localizedStrings[_locale.languageCode]?['connection_failure'] ?? 'Please check your internet connection';
-  String get contactMe => _localizedStrings[_locale.languageCode]?['contact_me'] ?? 'Contact me';
+  String get contactMe => _localizedStrings[_locale.languageCode]?['contact_me'] ?? 'Contact';
   String get loadingDialogMessage => _localizedStrings[_locale.languageCode]?['loading_dialog_message'] ?? 'Loading Pokémon';
+  String get generalErrorMessage => _localizedStrings[_locale.languageCode]?['general_error_message'] ?? 'Oops! Something went wrong';
+  String get searchBarTitle => _localizedStrings[_locale.languageCode]?['search_bar_title'] ?? 'Search for a Pokémon';
 
   // String get greeting => _localizedStrings[_locale.languageCode]?['greeting'] ?? 'Welcome';
 }
@@ -51,10 +53,12 @@ final Map<String, Map<String, String>> _localizedStrings = {
     'type_selection_appbar_title': 'Pick a Pokémon type',
     'weight': 'Weight',
     'height': 'Height',
+    'search_bar_title': 'Search for a Pokémon',
     'no_pokemon_found': 'No Pokémon found.',
     'failed_to_fetch_data': 'Failed to fetch data.',
-    'connection_failure': 'Please check your internet connection',
-    'contact_me': 'Contact me',
+    'connection_failure': 'Please check your internet connection and try again',
+    'contact_me': 'Contact',
+    'general_error_message': 'Oops! Something went wrong',
   },
   'el': {
     'contact_me': 'Επικοινωνία',
@@ -71,7 +75,9 @@ final Map<String, Map<String, String>> _localizedStrings = {
     'type_selection_appbar_title': 'Επιλέξτε έναν τύπο Pokémon',
     'weight': 'Βάρος',
     'height': 'Ύψος',
+    'search_bar_title': 'Ψάξε για κάποιο Pokémon',
     'no_pokemon_found': 'Δεν βρέθηκαν Pokémon.',
+    'general_error_message': 'Ουπς! Κάτι πήγε στραβά',
   },
 };
 

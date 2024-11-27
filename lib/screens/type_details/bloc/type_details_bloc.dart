@@ -71,7 +71,7 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
 
         emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.morePokemonsLoaded));
       } catch (e) {
-        app_utils.myLog(app_const.LOG_ERROR, 'Error loading more Pokémon: $e');
+        app_utils.myLog(app_const.LOG_ERROR, 'loadMore pokemon error: $e');
 
         emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.morePokemonsLoadedFailed));
       }
@@ -99,7 +99,6 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
 
     on<ExitTypeDetailsEvent>((ExitTypeDetailsEvent event, Emitter<TypeDetailsState> emit) async {
       emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.exitingTypeDetails));
-
       emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.typeDetailsExited));
     });
 
@@ -120,7 +119,7 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
 
           emit(TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.pokemonSearched, searchedPokemonPreviewList: searchedPokemonPreviewList));
         } catch (e) {
-          app_utils.myLog(app_const.LOG_ERROR, 'Error searching Pokémon: $e');
+          app_utils.myLog(app_const.LOG_ERROR, 'Error searching Pokemon: $e');
           emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.pokemonSearched, searchedPokemonPreviewList: []));
         }
       } else {

@@ -163,6 +163,7 @@ class _DialogProgressPokeballState extends State<DialogProgressPokeball> {
                   flex: 1,
                   child: Text(
                     '${appLocale.loadingDialogMessage}...',
+                    style: Theme.of(context).textTheme.bodySmall,
                   )),
               Expanded(flex: 2, child: Center(child: Lottie.asset(app_const.LOADING_POKEBALL_LOTTIE, height: 200, width: 200, repeat: true, reverse: true, fit: BoxFit.contain))),
             ],
@@ -194,14 +195,15 @@ class CustomPercentIndicator extends StatelessWidget {
       children: [
         Text('$name :', style: const TextStyle(fontSize: 18, color: app_const.SECONDARY_TEXT_COLOR)),
         LinearPercentIndicator(
-            width: app_vars.logicalWidth * 0.6,
-            animation: true,
-            barRadius: const Radius.circular(20),
-            lineHeight: 20.0,
-            animationDuration: 1500,
-            percent: tmpPercent,
-            center: Text('$value'),
-            progressColor: app_utils.gradientFromType(type).first),
+          width: app_vars.logicalWidth * 0.6,
+          animation: true,
+          barRadius: const Radius.circular(20),
+          lineHeight: 20.0,
+          animationDuration: 1500,
+          percent: tmpPercent,
+          center: Text('$value'),
+          progressColor: app_utils.gradientFromType(type).first,
+        )
       ],
     );
   }

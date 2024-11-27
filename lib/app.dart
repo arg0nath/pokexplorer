@@ -127,6 +127,14 @@ lightTheme() {
     brightness: Brightness.light,
     scaffoldBackgroundColor: app_const.SCAFFOLD_BACKGROUND_LIGHT,
     dialogBackgroundColor: app_const.WHITE_TOTAL,
+    inputDecorationTheme: InputDecorationTheme(
+      fillColor: app_const.WHITE_TOTAL,
+      filled: true,
+      focusedBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: app_const.WHITE_TOTAL), borderRadius: BorderRadius.circular(15)),
+      border: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: app_const.WHITE_TOTAL), borderRadius: BorderRadius.circular(15)),
+      enabledBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: app_const.WHITE_TOTAL), borderRadius: BorderRadius.circular(15)),
+      hintStyle: TextStyle(fontSize: 16, color: app_const.GREY, fontFamily: app_const.MAIN_FONT_FAMILY),
+    ),
     appBarTheme: const AppBarTheme(
       color: app_const.APPBAR_BACKGROUND_LIGHT,
       centerTitle: true,

@@ -221,6 +221,7 @@ class LoadedPageDetails extends StatefulWidget {
   const LoadedPageDetails({super.key, required this.pokemonDetailsBloc, required this.selectedTypeName});
 
   final String selectedTypeName;
+
   final PokemonDetailsBloc pokemonDetailsBloc;
 
   @override

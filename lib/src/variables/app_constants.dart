@@ -126,7 +126,7 @@ const APPBAR_BACKGROUND_DARK = Color(0xff212121);
 const APPBAR_BACKGROUND_LIGHT = WHITE_IOS;
 
 const CARD_LIGHT = WHITE_TOTAL;
-const CARD_DARK = Color(0xff2f2f2f);
+const CARD_DARK = Color.fromARGB(255, 80, 80, 80);
 
 const double EXPANDED_BAR_HEIGHT = 200;
 const double COLLAPSED_BAR_HEIGHT = 130;
@@ -178,8 +178,6 @@ const String POKEMON_LOGO_SVG = 'assets/svgs/official_pokemon_logo.svg';
 const String POKEMON_CUSTOM_PHRASE = 'assets/images/gonnasearch.png';
 
 const String LOADING_POKEBALL_LOTTIE = 'assets/lottieFiles/pokeball.json';
-
-const String GENERIC_ERROR_TOAST_MESSAGE = 'Something went wrong';
 
 // #region // * App Preferences
 const String PREFS_SELECTED_TYPE_NAME = 'selected_type_name';

@@ -16,7 +16,7 @@ class PokemonDetailsBloc extends Bloc<PokemonDetailsEvent, PokemonDetailsState> 
   PokemonDetailsBloc({required this.frontEndUtils}) : super(const PokemonDetailsState(pokemonDetailsStatus: PokemonDetailsStatus.pokemonDetailsNotLoaded)) {
     on<LoadPokemonDetailsEvent>((LoadPokemonDetailsEvent event, Emitter<PokemonDetailsState> emit) async {
       emit(const PokemonDetailsState(pokemonDetailsStatus: PokemonDetailsStatus.loadingPokemonDetails));
-      selectedPokemon = app_models.Pokemon.empty();
+      initPokeDetailsVariables();
 
       selectedPokemon = event.pokemon;
 
@@ -35,4 +35,9 @@ class PokemonDetailsBloc extends Bloc<PokemonDetailsEvent, PokemonDetailsState> 
   final FrontendUtils frontEndUtils;
   late List<String> pokemonImageList = [];
   late app_models.Pokemon selectedPokemon = app_models.Pokemon.empty();
+
+  void initPokeDetailsVariables() {
+    pokemonImageList.clear();
+    selectedPokemon = app_models.Pokemon.empty();
+  }
 }

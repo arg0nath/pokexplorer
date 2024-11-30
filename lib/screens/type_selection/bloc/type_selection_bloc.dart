@@ -18,7 +18,7 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
         )) {
     on<LoadTypesEvent>((LoadTypesEvent event, Emitter<TypeSelectionState> emit) async {
       await app_utils.loadPrefs(frontEndUtils);
-      initializeVariables();
+      initializeTypeSelectionVariables();
 
       emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.loadingTypes));
 
@@ -94,7 +94,7 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
   app_models.PokemonType selectedPokemonType = app_models.PokemonType.empty();
   app_models.PokemonTypeDetails selectedPokemonTypeDetails = app_models.PokemonTypeDetails.empty();
 
-  void initializeVariables() {
+  void initializeTypeSelectionVariables() {
     availableTypes.clear();
     selectedPokemonType = app_models.PokemonType.empty();
     selectedPokemonTypeDetails = app_models.PokemonTypeDetails.empty();

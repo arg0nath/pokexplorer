@@ -18,7 +18,7 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
       emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.loadingPokemons));
 
       await app_utils.loadPrefs(frontEndUtils);
-      initializeVariables();
+      initializeTypeDetailsVariables();
       selectedTypeName = frontEndUtils.loadSelectedTypeName();
 
       selectedPokemonTypeDetails = event.typeDetails;
@@ -150,7 +150,7 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
 
   List<app_models.PokemonPreview> allPokemonList = [];
 
-  void initializeVariables() {
+  void initializeTypeDetailsVariables() {
     selectedPokemonPreview = app_models.PokemonPreview.empty();
     selectedPokemon = app_models.Pokemon.empty();
 

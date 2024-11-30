@@ -33,7 +33,6 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
 
   Future<bool> _onDetailsWillPop() async {
     Navigator.pop(context);
-
     return Future<bool>.value(false);
   }
 
@@ -102,7 +101,9 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
             color: Theme.of(context).scaffoldBackgroundColor, //color between pokemon and card
             child: Stack(
               children: [
+                //gradient effect of appbar
                 app_widgets.AppbarGradientBackground(typeName: widget.selectedTypeName),
+                //pokemon image list
                 Positioned(
                   top: app_vars.logicalHeight * 0.1,
                   child: SizedBox(

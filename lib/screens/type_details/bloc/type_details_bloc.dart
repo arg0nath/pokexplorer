@@ -17,9 +17,8 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
     on<LoadTypeDetailsPokemonsEvent>((LoadTypeDetailsPokemonsEvent event, Emitter<TypeDetailsState> emit) async {
       emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.loadingPokemons));
 
-      await app_utils.loadPrefs(frontEndUtils);
       initializeTypeDetailsVariables();
-      selectedTypeName = frontEndUtils.loadSelectedTypeName();
+      selectedTypeName = event.typeDetails.name;
 
       selectedPokemonTypeDetails = event.typeDetails;
       allPokemonList = List.from(selectedPokemonTypeDetails.pokemon);

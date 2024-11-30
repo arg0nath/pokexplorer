@@ -209,19 +209,21 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    final TypeDetailsBloc typeDetailsBloc = context.read<TypeDetailsBloc>();
     double adjustedShrinkOffset = shrinkOffset > minExtent ? minExtent : shrinkOffset;
     double offset = (minExtent - adjustedShrinkOffset) * 0.3; //was 0.4
     double topPadding = MediaQuery.of(context).padding.top + 10;
     return BlocBuilder<TypeDetailsBloc, TypeDetailsState>(
       builder: (context, state) {
-        final TypeDetailsBloc typeDetailsBloc = context.read<TypeDetailsBloc>();
-
         return SizedBox(
           height: app_const.TYPE_DETAILS_APP_BAR_DELEGATE_MAX_EXTEND,
           child: Stack(
             children: [
               //cool gradient background
-              FancyAppbarBackground(typeDetailsBloc: typeDetailsBloc),
+              app_widgets.AppbarGradientBackground(
+                typeName: selectedTypeName,
+              ),
+
               //type icon + name
               Positioned(
                 top: topPadding,
@@ -230,12 +232,7 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      IconButton(
-                          onPressed: () => typeDetailsBloc.add(const ExitTypeDetailsEvent()),
-                          icon: const Icon(
-                            Icons.arrow_back_outlined,
-                            color: app_const.PRIMARY_TEXT_COLOR,
-                          )),
+                      app_widgets.CustomAppbarBackButton(onPressed: () => typeDetailsBloc.add(const ExitTypeDetailsEvent())),
                       app_widgets.SelectedTypeContainer(typeName: selectedTypeName),
                     ],
                   ),
@@ -315,53 +312,4 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) => oldDelegate.maxExtent != maxExtent || oldDelegate.minExtent != minExtent;
-}
-
-class FancyAppbarBackground extends StatelessWidget {
-  const FancyAppbarBackground({
-    super.key,
-    required this.typeDetailsBloc,
-  });
-
-  final TypeDetailsBloc typeDetailsBloc;
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipPath(
-      clipper: TypeDetailsBackgroundWaveClipper(),
-      child: Container(
-        width: app_vars.logicalWidth,
-        height: app_const.TYPE_DETAILS_APP_BAR_DELEGATE_MAX_EXTEND,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: app_utils.gradientFromType(typeDetailsBloc.frontEndUtils.loadSelectedTypeName()),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class TypeDetailsBackgroundWaveClipper extends CustomClipper<Path> {
-// sweet maths
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    const minSize = app_const.TYPE_DETAILS_APP_BAR_DELEGATE_MIN_EXTEND;
-    final p1Diff = ((minSize - size.height) * 0.3).truncate().abs();
-    path.lineTo(0.0, size.height - p1Diff);
-
-    final controlPoint = Offset(size.width * 0.6, size.height);
-    final endPoint = Offset(size.width, minSize);
-
-    path.quadraticBezierTo(controlPoint.dx, controlPoint.dy, endPoint.dx, endPoint.dy);
-
-    path.lineTo(size.width, 0.0);
-    path.close();
-
-    return path;
-  }
-
-  @override
-  bool shouldReclip(TypeDetailsBackgroundWaveClipper oldClipper) => oldClipper != this;
 }

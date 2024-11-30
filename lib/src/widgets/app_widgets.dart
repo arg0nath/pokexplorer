@@ -96,6 +96,27 @@ class CustomActionButton extends StatelessWidget {
   }
 }
 
+class CustomAppbarBackButton extends StatelessWidget {
+  const CustomAppbarBackButton({
+    super.key,
+    required this.onPressed,
+  });
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        hoverColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        onPressed: onPressed,
+        icon: const Icon(
+          Icons.arrow_back_outlined,
+          color: app_const.PRIMARY_TEXT_COLOR,
+        ));
+  }
+}
+
 class SelectedTypeContainer extends StatefulWidget {
   const SelectedTypeContainer({super.key, required this.typeName});
 
@@ -297,4 +318,48 @@ class _AboutMeDialogState extends State<AboutMeDialog> {
       ),
     );
   }
+}
+
+class AppbarGradientBackground extends StatelessWidget {
+  const AppbarGradientBackground({super.key, required this.typeName});
+
+  final String typeName;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipPath(
+      clipper: CustomAppbarBackgroundWaveClipper(),
+      child: Container(
+        width: app_vars.logicalWidth,
+        height: app_const.POKEMON_DETAILS_APP_BAR_DELEGATE_MAX_EXTEND,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: app_utils.gradientFromType(typeName)),
+        ),
+      ),
+    );
+  }
+}
+
+class CustomAppbarBackgroundWaveClipper extends CustomClipper<Path> {
+// sweet maths
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    const minSize = app_const.TYPE_DETAILS_APP_BAR_DELEGATE_MIN_EXTEND;
+    final p1Diff = ((minSize - size.height) * 0.3).truncate().abs();
+    path.lineTo(0.0, size.height - p1Diff);
+
+    final controlPoint = Offset(size.width * 0.6, size.height);
+    final endPoint = Offset(size.width, minSize);
+
+    path.quadraticBezierTo(controlPoint.dx, controlPoint.dy, endPoint.dx, endPoint.dy);
+
+    path.lineTo(size.width, 0.0);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomAppbarBackgroundWaveClipper oldClipper) => oldClipper != this;
 }

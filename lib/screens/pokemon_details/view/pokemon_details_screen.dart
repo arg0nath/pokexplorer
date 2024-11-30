@@ -70,11 +70,9 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
 
   AppBar _pokeDetailsScreenAppbar(BuildContext context) {
     return AppBar(
-      leading: IconButton(
-          hoverColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back_outlined, color: app_const.PRIMARY_TEXT_COLOR)),
+      leading: app_widgets.CustomAppbarBackButton(
+        onPressed: () => Navigator.pop(context),
+      ),
       backgroundColor: Colors.transparent,
     );
   }
@@ -243,7 +241,7 @@ class _LoadedPageDetailsState extends State<LoadedPageDetails> {
             color: Theme.of(context).scaffoldBackgroundColor, //color betwen pokemon and card
             child: Stack(
               children: [
-                FancyDetailsScreenBackground(widget: widget),
+                app_widgets.AppbarGradientBackground(typeName: widget.selectedTypeName),
                 Positioned(
                   top: app_vars.logicalHeight * 0.1,
                   // left: (app_vars.logicalWidth - 240) / 2,
@@ -375,29 +373,6 @@ class _LoadedPageDetailsState extends State<LoadedPageDetails> {
       enableInfiniteScroll: false,
       enlargeStrategy: CenterPageEnlargeStrategy.scale,
       initialPage: 0,
-    );
-  }
-}
-
-class FancyDetailsScreenBackground extends StatelessWidget {
-  const FancyDetailsScreenBackground({
-    super.key,
-    required this.widget,
-  });
-
-  final LoadedPageDetails widget;
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipPath(
-      clipper: PokemonDetailsBackgroundWaveClipper(),
-      child: Container(
-        width: app_vars.logicalWidth,
-        height: app_const.POKEMON_DETAILS_APP_BAR_DELEGATE_MAX_EXTEND,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(colors: app_utils.gradientFromType(widget.selectedTypeName)),
-        ),
-      ),
     );
   }
 }

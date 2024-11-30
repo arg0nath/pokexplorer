@@ -60,11 +60,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
         Navigator.pop(context); //close loading dialog
       }
     }, builder: (context, state) {
-      if (state.pokemonDetailsStatus == PokemonDetailsStatus.pokemonDetailsLoaded) {
-        return LoadedPageDetails(pokemonDetailsBloc: _pokemonDetailsBloc, selectedTypeName: widget.selectedTypeName);
-      } else {
-        return LoadingDetailsViewScreen(pokemonName: widget.pokemon.name, typeName: widget.selectedTypeName);
-      }
+      return PokemonDetailsPage(pokemonDetailsBloc: _pokemonDetailsBloc, selectedTypeName: widget.selectedTypeName);
     });
   }
 
@@ -102,134 +98,18 @@ class PokemonDetailsBackgroundWaveClipper extends CustomClipper<Path> {
   bool shouldReclip(PokemonDetailsBackgroundWaveClipper oldClipper) => oldClipper != this;
 }
 
-class LoadingDetailsViewScreen extends StatefulWidget {
-  const LoadingDetailsViewScreen({super.key, required this.typeName, required this.pokemonName});
-
-  final String typeName;
-  final String pokemonName;
-  @override
-  State<LoadingDetailsViewScreen> createState() => _LoadingDetailsViewScreenState();
-}
-
-class _LoadingDetailsViewScreenState extends State<LoadingDetailsViewScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          flex: 5,
-          child: Container(
-            color: const Color(0xFFF7F7F7),
-            child: Stack(
-              children: [
-                ClipPath(
-                  clipper: PokemonDetailsBackgroundWaveClipper(),
-                  child: Container(
-                    width: app_vars.logicalWidth,
-                    height: app_const.POKEMON_DETAILS_APP_BAR_DELEGATE_MAX_EXTEND,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: app_utils.gradientFromType(widget.typeName)),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: app_vars.logicalHeight * 0.1,
-                  // left: (app_vars.logicalWidth - 240) / 2,
-                  child: SizedBox(
-                    width: app_vars.logicalWidth,
-                    height: app_vars.logicalHeight * 0.4,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 1,
-          child: Container(
-            decoration: const BoxDecoration(
-              boxShadow: [BoxShadow(color: Color(0xFFB4B4B4), blurRadius: 30, spreadRadius: 2, offset: Offset(0, -4))],
-              color: app_const.WHITE_TOTAL,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-            ),
-            width: app_vars.logicalWidth,
-            alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                    color: app_const.WHITE_TOTAL,
-                    width: app_vars.logicalWidth * 0.2,
-                    child: const Icon(
-                      Icons.info_outline_rounded,
-                      size: 30,
-                    )),
-                Expanded(flex: 3, child: Text(widget.pokemonName.toUpperFirst(), style: const TextStyle(fontSize: 23))),
-              ],
-            ),
-          ),
-        ),
-        Container(
-          height: 40,
-          width: app_vars.logicalWidth,
-          color: app_const.WHITE_TOTAL,
-        ),
-        Expanded(
-          flex: 1,
-          child: Container(
-            color: app_const.WHITE_TOTAL,
-            width: app_vars.logicalWidth,
-            child: Row(
-              children: [
-                Expanded(
-                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                  const Icon(Icons.fitness_center_rounded, color: app_const.SECONDARY_TEXT_COLOR),
-                  Text('${LocalizationManager.getInstance().weight}: ', style: const TextStyle(color: app_const.SECONDARY_TEXT_COLOR)),
-                ])),
-                Expanded(
-                    child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                  const Icon(Icons.height_rounded, color: app_const.SECONDARY_TEXT_COLOR),
-                  Text('${LocalizationManager.getInstance().height}: ', style: const TextStyle(color: app_const.SECONDARY_TEXT_COLOR)),
-                ])),
-              ],
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 3,
-          child: Center(
-            child: Container(
-              color: app_const.WHITE_TOTAL,
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: app_vars.logicalWidth * 0.1),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class LoadedPageDetails extends StatefulWidget {
-  const LoadedPageDetails({super.key, required this.pokemonDetailsBloc, required this.selectedTypeName});
+class PokemonDetailsPage extends StatefulWidget {
+  const PokemonDetailsPage({super.key, required this.pokemonDetailsBloc, required this.selectedTypeName});
 
   final String selectedTypeName;
 
   final PokemonDetailsBloc pokemonDetailsBloc;
 
   @override
-  State<LoadedPageDetails> createState() => _LoadedPageDetailsState();
+  State<PokemonDetailsPage> createState() => _PokemonDetailsPageState();
 }
 
-class _LoadedPageDetailsState extends State<LoadedPageDetails> {
+class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
   final CarouselSliderController _pokeDetailsCarouselController = CarouselSliderController();
   @override
   Widget build(BuildContext context) {
@@ -238,13 +118,12 @@ class _LoadedPageDetailsState extends State<LoadedPageDetails> {
         Expanded(
           flex: 5,
           child: Container(
-            color: Theme.of(context).scaffoldBackgroundColor, //color betwen pokemon and card
+            color: Theme.of(context).scaffoldBackgroundColor, //color between pokemon and card
             child: Stack(
               children: [
                 app_widgets.AppbarGradientBackground(typeName: widget.selectedTypeName),
                 Positioned(
                   top: app_vars.logicalHeight * 0.1,
-                  // left: (app_vars.logicalWidth - 240) / 2,
                   child: SizedBox(
                     width: app_vars.logicalWidth,
                     height: app_vars.logicalHeight * 0.4,

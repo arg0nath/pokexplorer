@@ -74,30 +74,6 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
   }
 }
 
-class PokemonDetailsBackgroundWaveClipper extends CustomClipper<Path> {
-// sweet maths
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    const minSize = app_const.POKEMON_DETAILS_APP_BAR_DELEGATE_MIN_EXTEND;
-    final p1Diff = ((minSize - size.height) * 0.8).truncate().abs();
-    path.lineTo(0.0, size.height - p1Diff);
-
-    final controlPoint = Offset(size.width / 2, size.height + p1Diff); // symmetric
-    final endPoint = Offset(size.width, size.height - p1Diff); // bottom right  -  bottom left
-
-    path.quadraticBezierTo(controlPoint.dx, controlPoint.dy, endPoint.dx, endPoint.dy);
-
-    path.lineTo(size.width, 0.0);
-    path.close();
-
-    return path;
-  }
-
-  @override
-  bool shouldReclip(PokemonDetailsBackgroundWaveClipper oldClipper) => oldClipper != this;
-}
-
 class PokemonDetailsPage extends StatefulWidget {
   const PokemonDetailsPage({super.key, required this.pokemonDetailsBloc, required this.selectedTypeName});
 

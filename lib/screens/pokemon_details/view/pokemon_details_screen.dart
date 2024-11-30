@@ -48,7 +48,12 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
         await _onDetailsWillPop();
       },
       child: Scaffold(
-          appBar: _pokeDetailsScreenAppbar(context), extendBody: true, backgroundColor: Theme.of(context).scaffoldBackgroundColor, extendBodyBehindAppBar: true, body: _pokeDetailsScreenBody()),
+        appBar: _pokeDetailsScreenAppbar(context),
+        extendBody: true,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        extendBodyBehindAppBar: true,
+        body: _pokeDetailsScreenBody(),
+      ),
     );
   }
 

@@ -3,11 +3,12 @@ import 'dart:math' as math;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
-import 'package:pokexplorer/screens/theme/bloc/theme_bloc.dart';
+import 'package:pokexplorer/theme/bloc/theme_bloc.dart';
 import 'package:pokexplorer/screens/type_selection/bloc/type_selection_bloc.dart';
 import 'package:pokexplorer/src/utilities/app_utils.dart' as app_utils;
 import 'package:pokexplorer/src/variables/app_constants.dart' as app_const;
@@ -71,6 +72,26 @@ class _CustomNetworkImageState extends State<CustomNetworkImage> {
           child: Image.asset(app_const.EMPTY_POKEBALL_PNG, width: app_vars.logicalHeight * 0.05, height: app_vars.logicalHeight * 0.05),
         ),
       ),
+    );
+  }
+}
+
+class CustomActionButton extends StatelessWidget {
+  const CustomActionButton({
+    super.key,
+    required this.text,
+    required this.onPressed,
+  });
+
+  final VoidCallback onPressed;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      style: Theme.of(context).outlinedButtonTheme.style,
+      onPressed: onPressed,
+      child: Text(text),
     );
   }
 }

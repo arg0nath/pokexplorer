@@ -82,37 +82,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          WelcomeProceedButton(
+          app_widgets.CustomActionButton(
             text: appLocale.welcomeButtonText,
             onPressed: () {
               _welcomeBloc.frontEndUtils.localDataUtils.saveIsInitBootToPrefs(false);
               Navigator.popUntil(context, (Route route) => route.isFirst);
               Navigator.pushReplacementNamed(context, app_const.TYPE_SELECTION_SCREEN_PAGE_ROUTE_NAME);
             },
-          )
+          ).animate(delay: 2300.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad)
         ],
       ),
     );
-  }
-}
-
-class WelcomeProceedButton extends StatelessWidget {
-  const WelcomeProceedButton({
-    super.key,
-    required this.text,
-    required this.onPressed,
-  });
-
-  final VoidCallback onPressed;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return OutlinedButton(
-      style: Theme.of(context).outlinedButtonTheme.style,
-      onPressed: onPressed,
-      child: Text(text),
-    ).animate(delay: 2300.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad);
   }
 }
 

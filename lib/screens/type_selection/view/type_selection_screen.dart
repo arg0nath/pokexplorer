@@ -47,9 +47,7 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
       color: Colors.transparent,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          OutlinedButton(style: Theme.of(context).outlinedButtonTheme.style, onPressed: () => _typeSelectionBloc.add(const ProceedToTypeDetailsScreenEvent()), child: Text(appLocale.next)),
-        ],
+        children: [app_widgets.CustomActionButton(text: appLocale.next, onPressed: () => _typeSelectionBloc.add(const ProceedToTypeDetailsScreenEvent()))],
       ),
     );
   }
@@ -75,19 +73,19 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
           Navigator.popAndPushNamed(context, app_const.TYPE_DETAILS_SCREEN_PAGE_ROUTE_NAME,
               arguments: app_router.TypeDetailsScreenArguments(typeDetails: _typeSelectionBloc.selectedPokemonTypeDetails));
         } else if (state.typeSelectionStatus == TypeSelectionStatus.errorToProceedToTypeDetailsScreenNoSelection) {
-          app_utils.myToast(context, appLocale.emptyTypeSelectionError);
+          app_utils.myToast(context, appLocale.emptyTypeSelectionError); // show select type first toast
         } else if (state.typeSelectionStatus == TypeSelectionStatus.errorToNotifyForNoInternet) {
-          app_utils.myToast(context, appLocale.connectionFailure);
+          app_utils.myToast(context, appLocale.connectionFailure); // show toast to inform about connection failure
         } else if (state.typeSelectionStatus == TypeSelectionStatus.showInfoDialog) {
-          await showDialog<bool>(barrierDismissible: true, context: context, builder: (BuildContext context) => const app_widgets.AboutMeDialog());
+          await showDialog<bool>(barrierDismissible: true, context: context, builder: (BuildContext context) => const app_widgets.AboutMeDialog()); //show about me dialog
         } else if (state.typeSelectionStatus == TypeSelectionStatus.proceedingToTypeDetailsScreen) {
-          await app_utils.showLoadingDialog(context);
+          await app_utils.showLoadingDialog(context); //loading lottie animation
         }
       },
       builder: (context, state) {
         return Stack(
           children: [
-            //type grid
+            //grid list wi types
             MyTypesGrid(typeSelectionBloc: _typeSelectionBloc),
             //pokeball background
             const Positioned(left: -20, bottom: -50, child: app_widgets.PokeballBackground()),
@@ -108,14 +106,6 @@ class MyTypesGrid extends StatefulWidget {
 }
 
 class _MyTypesGridState extends State<MyTypesGrid> {
-  SliverGridDelegateWithFixedCrossAxisCount _gridDelegate() {
-    return const SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: 2,
-      childAspectRatio: 16 / 9,
-      mainAxisSpacing: 10.0,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -130,6 +120,14 @@ class _MyTypesGridState extends State<MyTypesGrid> {
             return MyTypeCard(
                 onTap: () => widget.typeSelectionBloc.add(SelectTypeEvent(type: widget.typeSelectionBloc.availableTypes[index])), pokemonType: widget.typeSelectionBloc.availableTypes[index]);
           }),
+    );
+  }
+
+  SliverGridDelegateWithFixedCrossAxisCount _gridDelegate() {
+    return const SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 2,
+      childAspectRatio: 16 / 9,
+      mainAxisSpacing: 10.0,
     );
   }
 }

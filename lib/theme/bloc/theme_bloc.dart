@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pokexplorer/screens/theme/bloc/theme_state.dart';
+import 'package:pokexplorer/theme/bloc/theme_state.dart';
 import 'package:pokexplorer/src/utilities/app_utils.dart' as app_utils;
 
 import 'package:pokexplorer/src/utilities/front_end_utils.dart';

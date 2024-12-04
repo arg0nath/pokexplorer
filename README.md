@@ -25,7 +25,7 @@ Welcome to the **Pokéxplorer**, a mobile application that allows users to explo
   - **Images & GIFs**
   - **Basic Stats**: HP, Attack, and Defense
 
-### 4. **User Favorite Pokémon**
+### 4. **User Favorites**
 - Users can add Pokémon to their favorites by selecting their desired Pokémon from the list.
 - Once added, users can view all their favorite Pokémon in a dedicated list, where they can easily access its details
 

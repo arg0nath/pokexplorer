@@ -22,4 +22,3 @@ double logicalWidth = logicalScreenSize.width;
 double logicalHeight = logicalScreenSize.height;
 bool isDarkMode = false;
 int selectedBottomBarIndex = 0;
-List<app_models.PokemonPreview> userFavorites = [];

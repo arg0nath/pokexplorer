@@ -18,19 +18,24 @@ class UserFavoritesBloc extends Bloc<UserFavoritesEvent, UserFavoritesState> {
   UserFavoritesBloc({required this.frontEndUtils}) : super(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.userFavoritesNotLoaded)) {
     on<LoadFavoritesEvent>((LoadFavoritesEvent event, Emitter<UserFavoritesState> emit) async {
       emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.loadingUserFavorites));
-
       initFavoritesVariables();
-
-      app_vars.userFavorites = List.from(await _databaseService.getDbPokemonPreviewList());
-
+      userFavorites = List.from(await _databaseService.getDbPokemonPreviewList());
       emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.userFavoritesLoaded));
+    });
+
+    on<RefreshFavoritesEvent>((RefreshFavoritesEvent event, Emitter<UserFavoritesState> emit) async {
+      emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.refreshingFavorites));
+      initFavoritesVariables();
+      userFavorites = List.from(await _databaseService.getDbPokemonPreviewList());
+
+      emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.userFavoritesRefreshed));
     });
 
     on<AddPokemonPreviewToFavoritesEvent>((AddPokemonPreviewToFavoritesEvent event, Emitter<UserFavoritesState> emit) async {
       emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.updatingFavorites));
 
       _databaseService.addFavPokePreviewToDb(imageUrl: event.pokemonPreview.imageUrl, name: event.pokemonPreview.name);
-      app_vars.userFavorites = List.from(await _databaseService.getDbPokemonPreviewList());
+      userFavorites = List.from(await _databaseService.getDbPokemonPreviewList());
       emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.favoritesUpdated));
     });
 
@@ -44,7 +49,7 @@ class UserFavoritesBloc extends Bloc<UserFavoritesEvent, UserFavoritesState> {
       emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.updatingFavorites));
 
       _databaseService.deleteFavPokePreviewFromDb(name: event.pokemonPreview.name);
-      app_vars.userFavorites = List.from(await _databaseService.getDbPokemonPreviewList());
+      userFavorites = List.from(await _databaseService.getDbPokemonPreviewList());
 
       emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.favoritesUpdated));
     });
@@ -53,7 +58,7 @@ class UserFavoritesBloc extends Bloc<UserFavoritesEvent, UserFavoritesState> {
       emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.updatingFavorites));
 
       _databaseService.deleteAllFavPokePreviewFromDb();
-      app_vars.userFavorites = List.from(await _databaseService.getDbPokemonPreviewList());
+      userFavorites = List.from(await _databaseService.getDbPokemonPreviewList());
 
       emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.favoritesUpdated));
     });
@@ -61,10 +66,10 @@ class UserFavoritesBloc extends Bloc<UserFavoritesEvent, UserFavoritesState> {
     on<NavigateToDetailsFromFavoritesEvent>((NavigateToDetailsFromFavoritesEvent event, Emitter<UserFavoritesState> emit) async {
       selectedPokemonPreview = app_models.PokemonPreview.empty();
       selectedPokemonPreview = event.pokemonPreview;
-      final bool hasInternetawait = await InternetConnection().hasInternetAccess;
-      if (!hasInternetawait) {
-        emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.notifyingForNoInternetError));
-        emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.readyToNotifyForNoInternet));
+      final bool hasInternet = await InternetConnection().hasInternetAccess;
+      if (!hasInternet) {
+        emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.notifyingForNoInternetFavoritesError));
+        emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.noInternetFailedFavorites));
         return;
       }
 
@@ -74,7 +79,7 @@ class UserFavoritesBloc extends Bloc<UserFavoritesEvent, UserFavoritesState> {
 
         emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.readyToNavigateToPokemonDetails));
       } catch (e) {
-        rethrow; // ?
+        emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.navigateToDetailsFromFavoritesFailed));
       }
       emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.userFavoritesLoaded));
     });
@@ -87,11 +92,12 @@ class UserFavoritesBloc extends Bloc<UserFavoritesEvent, UserFavoritesState> {
   app_models.PokemonPreview selectedPokemonPreviewForDeletion = app_models.PokemonPreview.empty();
 
   app_models.Pokemon selectedPokemon = app_models.Pokemon.empty();
-
+  List<app_models.PokemonPreview> userFavorites = [];
   final FrontendUtils frontEndUtils;
 
   void initFavoritesVariables() {
     _databaseService = DatabaseService.instance;
+    userFavorites.clear();
 
     selectedPokemon = app_models.Pokemon.empty();
     selectedPokemonPreview = app_models.PokemonPreview.empty();

@@ -4,15 +4,19 @@ enum UserFavoritesStatus {
   userFavoritesNotLoaded,
   loadingUserFavorites,
 
+  refreshingFavorites,
+  userFavoritesRefreshed,
+
   userFavoritesLoaded,
   updatingFavorites,
   favoritesUpdated,
 
-  notifyingForNoInternetError,
-  readyToNotifyForNoInternet,
+  notifyingForNoInternetFavoritesError,
+  noInternetFailedFavorites,
   navigatingToPokemonDetails,
   readyToNavigateToPokemonDetails,
   showDialogToRemovePokemon,
+  navigateToDetailsFromFavoritesFailed
 }
 
 class UserFavoritesState extends Equatable {

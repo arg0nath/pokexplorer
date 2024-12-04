@@ -30,8 +30,8 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
       final int itemCount = selectedPokemonTypeDetails.pokemon.length;
       final int loopEndIndex = itemCount < fetchLimit ? itemCount : fetchLimit;
 
-      app_vars.userFavorites = List.from(await _databaseService.getDbPokemonPreviewList());
-      favoritePokemonNamesSet = app_vars.userFavorites.map((e) => e.name).toSet();
+      List<app_models.PokemonPreview> userFavorites = List.from(await _databaseService.getDbPokemonPreviewList());
+      favoritePokemonNamesSet = userFavorites.map((e) => e.name).toSet();
       app_utils.myLog(msg: 'favoritePokemonNamesSet: $favoritePokemonNamesSet');
 
       for (int i = 0; i < loopEndIndex; i++) {
@@ -90,8 +90,8 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
     on<NavigateToDetailsFromSelectionEvent>((NavigateToDetailsFromSelectionEvent event, Emitter<TypeDetailsState> emit) async {
       selectedPokemonPreview = app_models.PokemonPreview.empty();
       selectedPokemonPreview = event.pokemonPreview;
-      final bool hasInternetawait = await InternetConnection().hasInternetAccess;
-      if (!hasInternetawait) {
+      final bool hasInternet = await InternetConnection().hasInternetAccess;
+      if (!hasInternet) {
         emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.notifyingForNoInternetError));
         emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.readyToNotifyForNoInternet));
         return;

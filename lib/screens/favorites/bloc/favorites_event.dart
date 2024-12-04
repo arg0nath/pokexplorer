@@ -11,6 +11,13 @@ class LoadFavoritesEvent extends UserFavoritesEvent {
   List<Object?> get props => <Object>[];
 }
 
+class RefreshFavoritesEvent extends UserFavoritesEvent {
+  const RefreshFavoritesEvent();
+
+  @override
+  List<Object?> get props => <Object>[];
+}
+
 class AddPokemonPreviewToFavoritesEvent extends UserFavoritesEvent {
   const AddPokemonPreviewToFavoritesEvent({required this.pokemonPreview});
 

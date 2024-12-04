@@ -100,6 +100,11 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       } else if (state.userFavoritesStatus == UserFavoritesStatus.readyToNavigateToPokemonDetails) {
         Navigator.popAndPushNamed(context, app_const.POKEMON_DETAILS_SCREEN_ROUTE_NAME,
             arguments: app_router.PokemonDetailsScreenArguments(selectedTypeName: _favoritesBloc.selectedPokemon.types.first.name, pokemon: _favoritesBloc.selectedPokemon));
+      } else if (state.userFavoritesStatus == UserFavoritesStatus.noInternetFailedFavorites) {
+        app_utils.myToast(context, LocalizationManager.getInstance().connectionFailure);
+      } else if (state.userFavoritesStatus == UserFavoritesStatus.navigateToDetailsFromFavoritesFailed) {
+        app_utils.myToast(context, LocalizationManager.getInstance().generalErrorMessage);
+        Navigator.pop(context); //close dialog
       } else if (state.userFavoritesStatus == UserFavoritesStatus.showDialogToRemovePokemon) {
         await showDialog(
             context: context,
@@ -127,34 +132,38 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                 ));
       }
     }, builder: (context, typeDetailsState) {
-      final displayList = app_vars.userFavorites;
+      final List<app_models.PokemonPreview> displayList = _favoritesBloc.userFavorites;
 
-      if (displayList.isEmpty) {
-        return Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(app_const.EMPTY_POKEBALL_PNG, width: app_vars.logicalHeight * 0.1, height: app_vars.logicalHeight * 0.1), // Replace with your image path
-              const SizedBox(height: 10),
-              Text(LocalizationManager.getInstance().noPokemonFound, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-            ],
-          ),
-        );
-      }
-      return Scrollbar(
-        thumbVisibility: false,
-        child: CustomScrollView(
-          slivers: [
-            SliverList.builder(
-              itemCount: displayList.length,
-              itemBuilder: (context, index) => app_widgets.PokemonListCard(
-                onLongPress: () => _favoritesBloc.add(ShowDialogToRemovePokemonPreviewFromFavoritesEvent(pokemonPreview: displayList[index])),
-                onFavoriteIconTap: null,
-                onCardTap: () => _favoritesBloc.add(NavigateToDetailsFromFavoritesEvent(pokemonPreview: displayList[index])),
-                pokemonPreview: displayList[index],
-              ),
-            ),
-          ],
+      return RefreshIndicator(
+        onRefresh: () async {
+          _favoritesBloc.add(RefreshFavoritesEvent());
+        },
+        child: Scrollbar(
+          thumbVisibility: false,
+          child: (displayList.isEmpty)
+              ? Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(app_const.EMPTY_POKEBALL_PNG, width: app_vars.logicalHeight * 0.1, height: app_vars.logicalHeight * 0.1), // Replace with your image path
+                      const SizedBox(height: 10),
+                      Text(LocalizationManager.getInstance().noPokemonFound, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                    ],
+                  ),
+                )
+              : CustomScrollView(
+                  slivers: [
+                    SliverList.builder(
+                      itemCount: displayList.length,
+                      itemBuilder: (context, index) => app_widgets.PokemonListCard(
+                        onLongPress: () => _favoritesBloc.add(ShowDialogToRemovePokemonPreviewFromFavoritesEvent(pokemonPreview: displayList[index])),
+                        onFavoriteIconTap: null,
+                        onCardTap: () => _favoritesBloc.add(NavigateToDetailsFromFavoritesEvent(pokemonPreview: displayList[index])),
+                        pokemonPreview: displayList[index],
+                      ),
+                    ),
+                  ],
+                ),
         ),
       );
     });

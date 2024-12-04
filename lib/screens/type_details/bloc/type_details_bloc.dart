@@ -111,7 +111,7 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
     });
 
     on<UpdateRelationInTypeDetailsEvent>((UpdateRelationInTypeDetailsEvent event, Emitter<TypeDetailsState> emit) async {
-      emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.updatingRelationInTypeDetails));
+      emit(TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.updatingRelationInTypeDetails, searchedPokemonPreviewList: state.searchedPokemonPreviewList));
 
       final tmpPokemonPreview = event.pokemonPreview;
 
@@ -126,7 +126,7 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
         userFavoritesBloc.add(RemovePokemonPreviewFromFavoritesEvent(pokemonPreview: tmpPokemonPreview));
       }
 
-      emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.relationInTypeDetailsUpdated));
+      emit(TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.relationInTypeDetailsUpdated, searchedPokemonPreviewList: state.searchedPokemonPreviewList));
     });
 
     on<ExitTypeDetailsEvent>((ExitTypeDetailsEvent event, Emitter<TypeDetailsState> emit) async {

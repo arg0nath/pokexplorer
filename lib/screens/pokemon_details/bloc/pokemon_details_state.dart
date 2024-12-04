@@ -3,7 +3,6 @@ part of 'pokemon_details_bloc.dart';
 enum PokemonDetailsStatus {
   pokemonDetailsNotLoaded,
   loadingPokemonDetails,
-
   pokemonDetailsLoaded,
 }
 

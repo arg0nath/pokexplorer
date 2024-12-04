@@ -87,7 +87,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             onPressed: () {
               _welcomeBloc.frontEndUtils.localDataUtils.saveIsInitBootToPrefs(false);
               Navigator.popUntil(context, (Route route) => route.isFirst);
-              Navigator.pushReplacementNamed(context, app_const.TYPE_SELECTION_SCREEN_PAGE_ROUTE_NAME);
+              Navigator.pushReplacementNamed(context, app_const.HOME_SCREEN_PAGE_ROUTE_NAME);
             },
           ).animate(delay: 2300.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad)
         ],

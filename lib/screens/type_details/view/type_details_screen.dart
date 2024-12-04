@@ -30,7 +30,7 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
 
     _typeDetailsScrollController.addListener(() {
       if (_typeDetailsScrollController.position.pixels == _typeDetailsScrollController.position.maxScrollExtent) {
-        app_utils.myLog(app_const.LOG_WARNING, 'bottomReached');
+        app_utils.myLog(level: app_const.LOG_WARNING, msg: 'bottomReached');
         _typeDetailsBloc.add(const LoadMoreTypeDetailsPokemonsEvent());
       }
     });
@@ -128,8 +128,9 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
                   if (typeDetailsState.searchedPokemonPreviewList.isNotEmpty)
                     SliverList.builder(
                       itemCount: displayList.length,
-                      itemBuilder: (context, index) => PokemonListCard(
-                        onTap: () => _typeDetailsBloc.add(NavigateToPokemonDetailsEvent(pokemonPreview: displayList[index])),
+                      itemBuilder: (context, index) => app_widgets.PokemonListCard(
+                        onFavoriteIconTap: () => _typeDetailsBloc.add(UpdateRelationInTypeDetailsEvent(pokemonPreview: displayList[index])),
+                        onCardTap: () => _typeDetailsBloc.add(NavigateToDetailsFromSelectionEvent(pokemonPreview: displayList[index])),
                         pokemonPreview: displayList[index],
                       ),
                     ),
@@ -137,8 +138,9 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
                   if (typeDetailsState.searchedPokemonPreviewList.isEmpty && typeDetailsState.typeDetailsStatus != TypeDetailsStatus.pokemonSearched)
                     SliverList.builder(
                       itemCount: _typeDetailsBloc.selectedTypePokemonPreviewList.length,
-                      itemBuilder: (context, index) => PokemonListCard(
-                        onTap: () => _typeDetailsBloc.add(NavigateToPokemonDetailsEvent(pokemonPreview: _typeDetailsBloc.selectedTypePokemonPreviewList[index])),
+                      itemBuilder: (context, index) => app_widgets.PokemonListCard(
+                        onFavoriteIconTap: () => _typeDetailsBloc.add(UpdateRelationInTypeDetailsEvent(pokemonPreview: displayList[index])),
+                        onCardTap: () => _typeDetailsBloc.add(NavigateToDetailsFromSelectionEvent(pokemonPreview: _typeDetailsBloc.selectedTypePokemonPreviewList[index])),
                         pokemonPreview: _typeDetailsBloc.selectedTypePokemonPreviewList[index],
                       ),
                     ),
@@ -150,51 +152,6 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
             ),
           );
         });
-  }
-}
-
-class PokemonListCard extends StatefulWidget {
-  const PokemonListCard({
-    super.key,
-    required this.pokemonPreview,
-    required this.onTap,
-  });
-
-  final app_models.PokemonPreview pokemonPreview;
-  final VoidCallback onTap;
-
-  @override
-  State<PokemonListCard> createState() => _PokemonListCardState();
-}
-
-class _PokemonListCardState extends State<PokemonListCard> {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: widget.onTap,
-      child: Container(
-          width: app_vars.logicalWidth * 0.7,
-          height: app_vars.logicalHeight * 0.14,
-          alignment: Alignment.center,
-          padding: const EdgeInsets.all(2),
-          decoration: BoxDecoration(color: Theme.of(context).cardColor, borderRadius: const BorderRadius.all(Radius.circular(20)), border: Border.all(color: const Color(0xFFEEEEEE))),
-          margin: EdgeInsets.symmetric(vertical: app_vars.logicalHeight * 0.01, horizontal: app_vars.logicalWidth * 0.06),
-          child: Row(children: [
-            //pokemon image
-            Expanded(
-              flex: 2,
-              child: Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.all(5),
-                  child: app_widgets.CustomNetworkImage(height: app_vars.logicalHeight * 0.1, width: app_vars.logicalHeight * 0.1, imageURL: widget.pokemonPreview.imageUrl)),
-            ),
-            //pokemon name
-            Expanded(
-              flex: 4,
-              child: Text(widget.pokemonPreview.name.toUpperFirst(), style: Theme.of(context).textTheme.bodyLarge),
-            ),
-          ])),
-    );
   }
 }
 

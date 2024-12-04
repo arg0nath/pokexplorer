@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:page_transition/page_transition.dart';
+import 'package:pokexplorer/screens/favorites/view/favorites_screen.dart';
+import 'package:pokexplorer/screens/home/view/home_screen.dart';
 import 'package:pokexplorer/screens/type_selection/view/type_selection_screen.dart';
 
 import '../src/utilities/front_end_utils.dart';
@@ -46,6 +48,13 @@ class Router {
       case app_const.TYPE_SELECTION_SCREEN_PAGE_ROUTE_NAME:
         return PageTransition<dynamic>(
             type: app_const.PAGE_TRANSITION_TYPE_FADE, settings: const RouteSettings(name: app_const.TYPE_SELECTION_SCREEN_PAGE_ROUTE_NAME), child: const TypeSelectionScreen());
+
+      case app_const.HOME_SCREEN_PAGE_ROUTE_NAME:
+        return PageTransition<dynamic>(type: app_const.PAGE_TRANSITION_TYPE_FADE, settings: const RouteSettings(name: app_const.HOME_SCREEN_PAGE_ROUTE_NAME), child: const HomeScreen());
+
+      case app_const.FAVORITES_ROUTE_NAME:
+        return PageTransition<dynamic>(type: app_const.PAGE_TRANSITION_TYPE_FADE, settings: const RouteSettings(name: app_const.FAVORITES_ROUTE_NAME), child: const FavoritesScreen());
+
       case app_const.WELCOME_SCREEN_ROUTE_NAME:
         return PageTransition<dynamic>(type: app_const.PAGE_TRANSITION_TYPE_FADE, settings: const RouteSettings(name: app_const.WELCOME_SCREEN_ROUTE_NAME), child: const WelcomeScreen());
       case app_const.POKEMON_DETAILS_SCREEN_ROUTE_NAME:
@@ -58,8 +67,7 @@ class Router {
               selectedTypeName: args.selectedTypeName,
             ));
       default:
-        return PageTransition<dynamic>(
-            type: app_const.PAGE_TRANSITION_TYPE_FADE, settings: const RouteSettings(name: app_const.TYPE_SELECTION_SCREEN_PAGE_ROUTE_NAME), child: const TypeSelectionScreen());
+        return PageTransition<dynamic>(type: app_const.PAGE_TRANSITION_TYPE_FADE, settings: const RouteSettings(name: app_const.HOME_SCREEN_PAGE_ROUTE_NAME), child: const HomeScreen());
     }
   }
 }

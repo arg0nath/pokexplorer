@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
 
 import 'package:pokexplorer/screens/pokemon_details/bloc/pokemon_details_bloc.dart';
@@ -24,6 +25,7 @@ class PokemonDetailsScreen extends StatefulWidget {
 
 class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
   late final PokemonDetailsBloc _pokemonDetailsBloc = context.read<PokemonDetailsBloc>();
+  final CarouselSliderController _pokeDetailsCarouselController = CarouselSliderController();
 
   @override
   void initState() {
@@ -33,6 +35,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
 
   Future<bool> _onDetailsWillPop() async {
     Navigator.pop(context);
+
     return Future<bool>.value(false);
   }
 
@@ -56,7 +59,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
     );
   }
 
-  BlocConsumer<PokemonDetailsBloc, PokemonDetailsState> _pokeDetailsScreenBody() {
+  Widget _pokeDetailsScreenBody() {
     return BlocConsumer<PokemonDetailsBloc, PokemonDetailsState>(listener: (context, state) async {
       if (state.pokemonDetailsStatus == PokemonDetailsStatus.loadingPokemonDetails) {
         await app_utils.showLoadingDialog(context);
@@ -64,8 +67,87 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
         Navigator.pop(context); //close loading dialog
       }
     }, builder: (context, state) {
-      return PokemonDetailsPage(pokemonDetailsBloc: _pokemonDetailsBloc, selectedTypeName: widget.selectedTypeName);
+      return Column(
+        children: [
+          Expanded(
+            flex: 5,
+            child: Container(
+              color: Theme.of(context).scaffoldBackgroundColor, //color between pokemon and card
+              child: Stack(
+                children: [
+                  //gradient effect of appbar
+                  app_widgets.AppbarGradientBackground(typeName: widget.selectedTypeName),
+                  //pokemon image list
+                  Positioned(
+                    top: app_vars.logicalHeight * 0.1,
+                    child: _imagesCarousel(),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          //name bar
+          Expanded(flex: 1, child: detailsCardTitle(context)),
+          //pokemon types
+          Container(
+            height: app_vars.logicalHeight * 0.05,
+            width: app_vars.logicalWidth,
+            color: Theme.of(context).canvasColor,
+            child: _pokeDetailsTypesList(context),
+          ),
+          Expanded(
+            flex: 1,
+            child: _pokeDetailsWeightHeight(context),
+          ),
+          Expanded(
+            flex: 3,
+            child: Center(
+              child: _pokeDetailsPercentIndicators(context),
+            ),
+          ),
+        ],
+      );
     });
+  }
+
+  Container detailsCardTitle(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).canvasColor,
+        boxShadow: [BoxShadow(color: Theme.of(context).shadowColor, blurRadius: 10, spreadRadius: 0, offset: const Offset(0, -2))],
+        borderRadius: const BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+      ),
+      width: app_vars.logicalWidth,
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(app_vars.logicalWidth * 0.05),
+            child: const Icon(Icons.info_outline_rounded, size: 30),
+          ),
+          if (_pokemonDetailsBloc.selectedPokemon.name.isNotEmpty)
+            Expanded(flex: 3, child: Text(_pokemonDetailsBloc.selectedPokemon.name.toUpperFirst(), style: Theme.of(context).textTheme.titleMedium)),
+        ],
+      ),
+    );
+  }
+
+  SizedBox _imagesCarousel() {
+    return SizedBox(
+      width: app_vars.logicalWidth,
+      height: app_vars.logicalHeight * 0.4,
+      child: CarouselSlider.builder(
+        carouselController: _pokeDetailsCarouselController,
+        options: _detailsCarouselOptions(),
+        itemCount: _pokemonDetailsBloc.pokemonImageList.length,
+        itemBuilder: (BuildContext context, int visiblePageIdx, int realIndex) {
+          final visibleImageUrl = _pokemonDetailsBloc.pokemonImageList[visiblePageIdx];
+
+          return app_widgets.CustomNetworkImage(imageURL: visibleImageUrl);
+        },
+      ),
+    );
   }
 
   AppBar _pokeDetailsScreenAppbar(BuildContext context) {
@@ -76,152 +158,57 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
       backgroundColor: Colors.transparent,
     );
   }
-}
 
-class PokemonDetailsPage extends StatefulWidget {
-  const PokemonDetailsPage({super.key, required this.pokemonDetailsBloc, required this.selectedTypeName});
-
-  final String selectedTypeName;
-
-  final PokemonDetailsBloc pokemonDetailsBloc;
-
-  @override
-  State<PokemonDetailsPage> createState() => _PokemonDetailsPageState();
-}
-
-class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
-  final CarouselSliderController _pokeDetailsCarouselController = CarouselSliderController();
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          flex: 5,
-          child: Container(
-            color: Theme.of(context).scaffoldBackgroundColor, //color between pokemon and card
-            child: Stack(
-              children: [
-                //gradient effect of appbar
-                app_widgets.AppbarGradientBackground(typeName: widget.selectedTypeName),
-                //pokemon image list
-                Positioned(
-                  top: app_vars.logicalHeight * 0.1,
-                  child: SizedBox(
-                    width: app_vars.logicalWidth,
-                    height: app_vars.logicalHeight * 0.4,
-                    child: CarouselSlider.builder(
-                      carouselController: _pokeDetailsCarouselController,
-                      options: _detailsCarouselOptions(),
-                      itemCount: widget.pokemonDetailsBloc.pokemonImageList.length,
-                      itemBuilder: (BuildContext context, int visiblePageIdx, int realIndex) {
-                        return app_widgets.CustomNetworkImage(imageURL: widget.pokemonDetailsBloc.pokemonImageList[visiblePageIdx]);
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        //name
-        Expanded(
-          flex: 1,
-          child: _pokeDetailsName(context),
-        ),
-        //pokemon types
-        Container(
-          height: app_vars.logicalHeight * 0.05,
-          width: app_vars.logicalWidth,
-          color: Theme.of(context).cardColor,
-          child: _pokeDetailsTypesList(),
-        ),
-        Expanded(
-          flex: 1,
-          child: _pokeDetailsWeightHeight(),
-        ),
-        Expanded(
-          flex: 3,
-          child: Center(
-            child: Container(
-              color: Theme.of(context).cardColor,
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: app_vars.logicalWidth * 0.1),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  app_widgets.CustomPercentIndicator(type: widget.pokemonDetailsBloc.selectedPokemon.types.first.name, name: 'HP', value: widget.pokemonDetailsBloc.selectedPokemon.hp),
-                  app_widgets.CustomPercentIndicator(type: widget.pokemonDetailsBloc.selectedPokemon.types.first.name, name: 'ATT', value: widget.pokemonDetailsBloc.selectedPokemon.attack),
-                  app_widgets.CustomPercentIndicator(type: widget.pokemonDetailsBloc.selectedPokemon.types.first.name, name: 'DEF', value: widget.pokemonDetailsBloc.selectedPokemon.defense),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ],
+  Widget _pokeDetailsPercentIndicators(BuildContext context) {
+    if (_pokemonDetailsBloc.selectedPokemon.types.isEmpty) return SizedBox.shrink();
+    return Container(
+      color: Theme.of(context).canvasColor,
+      alignment: Alignment.center,
+      padding: EdgeInsets.symmetric(horizontal: app_vars.logicalWidth * 0.1),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          app_widgets.CustomPercentIndicator(type: _pokemonDetailsBloc.selectedPokemon.types.first.name, name: 'HP', value: _pokemonDetailsBloc.selectedPokemon.hp),
+          app_widgets.CustomPercentIndicator(type: _pokemonDetailsBloc.selectedPokemon.types.first.name, name: 'ATT', value: _pokemonDetailsBloc.selectedPokemon.attack),
+          app_widgets.CustomPercentIndicator(type: _pokemonDetailsBloc.selectedPokemon.types.first.name, name: 'DEF', value: _pokemonDetailsBloc.selectedPokemon.defense),
+        ],
+      ),
     );
   }
 
-  Container _pokeDetailsWeightHeight() {
+  Widget _pokeDetailsWeightHeight(BuildContext context) {
     return Container(
-      color: Theme.of(context).cardColor,
+      color: Theme.of(context).canvasColor,
       width: app_vars.logicalWidth,
       child: Row(
         children: [
           Expanded(
               child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
             const Icon(Icons.fitness_center_rounded),
-            Text('${LocalizationManager.getInstance().weight}:  ${widget.pokemonDetailsBloc.selectedPokemon.weight}', style: Theme.of(context).textTheme.bodyMedium),
+            Text('${LocalizationManager.getInstance().weight}:  ${_pokemonDetailsBloc.selectedPokemon.weight}', style: Theme.of(context).textTheme.bodyMedium),
           ])),
           Expanded(
               child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
             const Icon(Icons.height_rounded),
-            Text('${LocalizationManager.getInstance().height}: ${widget.pokemonDetailsBloc.selectedPokemon.height}', style: Theme.of(context).textTheme.bodyMedium),
+            Text('${LocalizationManager.getInstance().height}: ${_pokemonDetailsBloc.selectedPokemon.height}', style: Theme.of(context).textTheme.bodyMedium),
           ])),
         ],
       ),
     );
   }
 
-  ListView _pokeDetailsTypesList() {
+  Widget _pokeDetailsTypesList(BuildContext context) {
     return ListView.builder(
       scrollDirection: Axis.horizontal,
       physics: const AlwaysScrollableScrollPhysics(),
-      itemCount: widget.pokemonDetailsBloc.selectedPokemon.types.length,
+      itemCount: _pokemonDetailsBloc.selectedPokemon.types.length,
       itemBuilder: (context, index) {
         return Container(
             color: Theme.of(context).cardColor,
             margin: EdgeInsets.only(left: app_vars.logicalWidth * 0.05),
-            child: app_widgets.SelectedTypeContainer(typeName: widget.pokemonDetailsBloc.selectedPokemon.types[index].name));
+            child: app_widgets.SelectedTypeContainer(typeName: _pokemonDetailsBloc.selectedPokemon.types[index].name));
       },
-    );
-  }
-
-  Container _pokeDetailsName(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        boxShadow: [BoxShadow(color: Theme.of(context).shadowColor, blurRadius: 30, spreadRadius: 2, offset: Offset(0, -4))],
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(30),
-          topRight: Radius.circular(30),
-        ),
-      ),
-      width: app_vars.logicalWidth,
-      alignment: Alignment.center,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-              color: Theme.of(context).cardColor,
-              width: app_vars.logicalWidth * 0.2,
-              child: const Icon(
-                Icons.info_outline_rounded,
-                size: 30,
-              )),
-          Expanded(flex: 3, child: Text(widget.pokemonDetailsBloc.selectedPokemon.name.toUpperFirst(), style: const TextStyle(fontSize: 23))),
-        ],
-      ),
     );
   }
 

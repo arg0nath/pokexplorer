@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:pokexplorer/screens/favorites/bloc/favorites_bloc.dart';
+import 'package:pokexplorer/services/db_service.dart';
 import 'package:pokexplorer/src/variables/app_variables.dart' as app_vars;
 
 import '../../../src/models/app_models.dart' as app_models;
@@ -23,24 +25,24 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
       emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.loadingTypes));
 
       availableTypes.addAll([
-        app_models.PokemonType(name: 'Fire', icon: app_const.FIRE_ICON, isSelected: false),
-        app_models.PokemonType(name: 'Water', icon: app_const.WATER_ICON, isSelected: false),
-        app_models.PokemonType(name: 'Grass', icon: app_const.GRASS_ICON, isSelected: false),
-        app_models.PokemonType(name: 'Electric', icon: app_const.ELECTRIC_ICON, isSelected: false),
-        app_models.PokemonType(name: 'Dragon', icon: app_const.DRAGON_ICON, isSelected: false),
-        app_models.PokemonType(name: 'Psychic', icon: app_const.PSYCHIC_ICON, isSelected: false),
-        app_models.PokemonType(name: 'Ghost', icon: app_const.GHOST_ICON, isSelected: false),
-        app_models.PokemonType(name: 'Dark', icon: app_const.DARK_ICON, isSelected: false),
-        app_models.PokemonType(name: 'Steel', icon: app_const.STEEL_ICON, isSelected: false),
-        app_models.PokemonType(name: 'Fairy', icon: app_const.FAIRY_ICON, isSelected: false),
+        app_models.PokemonType(name: 'fire', icon: app_const.FIRE_ICON, isSelected: false),
+        app_models.PokemonType(name: 'water', icon: app_const.WATER_ICON, isSelected: false),
+        app_models.PokemonType(name: 'grass', icon: app_const.GRASS_ICON, isSelected: false),
+        app_models.PokemonType(name: 'electric', icon: app_const.ELECTRIC_ICON, isSelected: false),
+        app_models.PokemonType(name: 'dragon', icon: app_const.DRAGON_ICON, isSelected: false),
+        app_models.PokemonType(name: 'psychic', icon: app_const.PSYCHIC_ICON, isSelected: false),
+        app_models.PokemonType(name: 'ghost', icon: app_const.GHOST_ICON, isSelected: false),
+        app_models.PokemonType(name: 'dark', icon: app_const.DARK_ICON, isSelected: false),
+        app_models.PokemonType(name: 'steel', icon: app_const.STEEL_ICON, isSelected: false),
+        app_models.PokemonType(name: 'fairy', icon: app_const.FAIRY_ICON, isSelected: false),
       ]);
 
       if (frontEndUtils.loadSelectedTypeName().isNotEmpty) {
-        selectedPokemonType = availableTypes.firstWhere((type) => type.name.toLowerCase() == frontEndUtils.loadSelectedTypeName());
+        selectedPokemonType = availableTypes.firstWhere((type) => type.name == frontEndUtils.loadSelectedTypeName());
         selectedPokemonType.setIsSelected(true);
       }
 
-      app_utils.myLog(app_const.LOG_WARNING, 'LoadTypesEvent typesLoaded..');
+      app_utils.myLog(level: app_const.LOG_WARNING, msg: 'LoadTypesEvent typesLoaded..');
       emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.typesLoaded));
     });
 
@@ -75,8 +77,9 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
       }
 
       emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.proceedingToTypeDetailsScreen));
-      frontEndUtils.saveSelectedTypeName(selectedPokemonType.name.toLowerCase());
-      selectedPokemonTypeDetails = await frontEndUtils.loadTypeDetails(type: selectedPokemonType.name.toLowerCase());
+      final tmpSelectedPokemonTypeName = selectedPokemonType.name;
+      frontEndUtils.saveSelectedTypeName(tmpSelectedPokemonTypeName);
+      selectedPokemonTypeDetails = await frontEndUtils.loadTypeDetails(type: tmpSelectedPokemonTypeName);
 
       emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.readyToProceedToTypeDetailsScreen));
     });
@@ -89,6 +92,8 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
   }
 
   late final FrontendUtils frontEndUtils;
+  late final UserFavoritesBloc userFavoritesBloc;
+  void setUserFavoritesBloc(UserFavoritesBloc userFavoritesBloc) => this.userFavoritesBloc = userFavoritesBloc;
 
   List<app_models.PokemonType> availableTypes = [];
   app_models.PokemonType selectedPokemonType = app_models.PokemonType.empty();

@@ -6,7 +6,7 @@ class LocalDataUtils {
   const LocalDataUtils();
 
   void saveSelectedTypeNameToPrefs(String typeName) {
-    app_utils.myLog(app_const.LOG_INFO, 'saveSelectedTypeNameToPrefs, typeName = $typeName');
+    app_utils.myLog(msg: 'saveSelectedTypeNameToPrefs, typeName = $typeName');
     app_classes.PreferenceUtils.setString(key: app_const.PREFS_SELECTED_TYPE_NAME, value: typeName);
   }
 
@@ -20,12 +20,12 @@ class LocalDataUtils {
 
   /// responsible for welcome screen. show only in the init boot of the app and never again (ok I know clear cache is an exeption)
   void saveIsInitBootToPrefs(bool initBoot) {
-    app_utils.myLog(app_const.LOG_INFO, 'saveIsInitBootToPrefs, initBoot = $initBoot');
+    app_utils.myLog(msg: 'saveIsInitBootToPrefs, initBoot = $initBoot');
     app_classes.PreferenceUtils.setBool(key: app_const.PREFS_INIT_BOOT, value: initBoot);
   }
 
   void saveIsDarkModeToPrefs(bool isDarkMode) {
-    app_utils.myLog(app_const.LOG_INFO, 'saveIsDarkModeToPrefs, isDarkMode = $isDarkMode');
+    app_utils.myLog(msg: 'saveIsDarkModeToPrefs, isDarkMode = $isDarkMode');
     app_classes.PreferenceUtils.setBool(key: app_const.PREFS_IS_DARK_MODE, value: isDarkMode);
   }
 

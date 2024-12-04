@@ -20,10 +20,12 @@ const String APP_PACKAGE = 'com.vamakris.pokexplorer';
 const String APP_NAME = 'Pokéxplorer';
 const String POKE_API = 'https://pokeapi.co/api/v2/';
 const int API_STATUS_OK = 200;
+const String HOME_SCREEN_PAGE_ROUTE_NAME = '/screens/home/view/home_screen';
 const String TYPE_DETAILS_SCREEN_PAGE_ROUTE_NAME = '/screens/type_details/view/type_details_screen';
 const String TYPE_SELECTION_SCREEN_PAGE_ROUTE_NAME = '/screens/type_selection/view/type_selection_screen';
 const String POKEMON_DETAILS_SCREEN_ROUTE_NAME = 'screens/pokemon_details/view/details_screen';
 const String WELCOME_SCREEN_ROUTE_NAME = 'screens/welcome/view/welcome_screen';
+const String FAVORITES_ROUTE_NAME = 'screens/welcome/view/favorites_screen';
 
 const PageTransitionType PAGE_TRANSITION_TYPE_FADE = PageTransitionType.fade;
 const int EMPTY_INT = -1;
@@ -101,6 +103,7 @@ const Color BUG_COLOR = Color(0xffb8c26a);
 const Color ICE_COLOR = Color(0xff81dff7);
 
 const Color WHITE_TOTAL = Color(0xffffffff);
+const Color BLACK_TOTAL = Color(0xff000000);
 
 const Color WHITE_IOS = Color(0xfff5f5f7); // i named it like this because apple use slight different white for better ui-contrast
 const Color BLACK_IOS = Color(0xff313132); // i named it like this because apple use slight different black for better ui-contrast
@@ -127,8 +130,8 @@ const SHADOW_COLOR_DARK = Color.fromARGB(255, 90, 90, 90);
 const APPBAR_BACKGROUND_DARK = Color(0xff212121);
 const APPBAR_BACKGROUND_LIGHT = WHITE_IOS;
 
-const CARD_LIGHT = WHITE_TOTAL;
-const CARD_DARK = Color.fromARGB(255, 80, 80, 80);
+const CARD_LIGHT = Color(0xCCFFFFFF);
+const CARD_DARK = Color(0xCC505050);
 
 const double EXPANDED_BAR_HEIGHT = 200;
 const double COLLAPSED_BAR_HEIGHT = 130;

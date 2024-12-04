@@ -4,6 +4,16 @@ ThemeData darkTheme() {
   return ThemeData(
     brightness: Brightness.dark,
     shadowColor: app_const.SHADOW_COLOR_DARK,
+    canvasColor: app_const.BLACK_IOS,
+    primaryColor: app_const.BRIGHT_RED,
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: app_const.BLACK_TOTAL,
+      selectedItemColor: app_const.BRIGHT_RED,
+      selectedLabelStyle: TextStyle(color: app_const.BRIGHT_RED, fontFamily: app_const.MAIN_FONT_FAMILY),
+      showUnselectedLabels: true,
+      unselectedItemColor: app_const.SHADOW_COLOR_LIGHT,
+      unselectedLabelStyle: TextStyle(color: app_const.SHADOW_COLOR_LIGHT, fontFamily: app_const.MAIN_FONT_FAMILY),
+    ),
     scaffoldBackgroundColor: app_const.SCAFFOLD_BACKGROUND_DARK,
     toggleButtonsTheme: const ToggleButtonsThemeData(selectedColor: app_const.BRIGHT_RED, disabledColor: Color(0xFFC4C4C4)),
     dialogBackgroundColor: app_const.CARD_DARK,
@@ -17,6 +27,11 @@ ThemeData darkTheme() {
       color: app_const.APPBAR_BACKGROUND_DARK,
       centerTitle: true,
       titleTextStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
+    ),
+    drawerTheme: DrawerThemeData(backgroundColor: app_const.BLACK_IOS),
+    listTileTheme: ListTileThemeData(
+      selectedColor: app_const.BRIGHT_RED,
+      titleTextStyle: TextStyle(fontSize: 16, color: app_const.GREY, fontFamily: app_const.MAIN_FONT_FAMILY),
     ),
     inputDecorationTheme: InputDecorationTheme(
       fillColor: app_const.WHITE_TOTAL,

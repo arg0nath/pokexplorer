@@ -35,19 +35,20 @@ String typeToAssetIcon(String type) {
 
 /// Prints log output to the console.
 ///
-/// [debugLevel] is the type of message.
+/// [level] is the type of message.
 ///
 /// [msg] is the message to be printed in console.
 ///
 /// Returns void. Debuging purposes only.
-void myLog(int debugLevel, String msg) {
+void myLog({int? level = app_const.LOG_INFO, required String msg}) {
   if (kDebugMode) {
+    level ??= app_const.LOG_INFO;
     if (app_const.SHOW_LOG) {
-      if (debugLevel == app_const.LOG_INFO) {
+      if (level == app_const.LOG_INFO) {
         log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${app_const.APP_PACKAGE}: $msg');
-      } else if (debugLevel == app_const.LOG_WARNING) {
+      } else if (level == app_const.LOG_WARNING) {
         log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${app_const.LOG_WARNING_COLOR}${app_const.APP_PACKAGE}: $msg ${app_const.LOG_RESET_COLOR}');
-      } else if (debugLevel == app_const.LOG_ERROR) {
+      } else if (level == app_const.LOG_ERROR) {
         log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${app_const.LOG_ERROR_COLOR}${app_const.APP_PACKAGE}: 🚫 ERROR: $msg 🚫 ${app_const.LOG_RESET_COLOR}');
       } else {
         log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${app_const.LOG_WTF_COLOR}${app_const.APP_PACKAGE} : WTF:  $msg${app_const.LOG_RESET_COLOR}');
@@ -57,15 +58,18 @@ void myLog(int debugLevel, String msg) {
 }
 
 Future<void> loadPrefs(FrontendUtils frontEndUtils) async {
-  myLog(app_const.LOG_WARNING, 'loadPrefs..');
-
+  myLog(level: app_const.LOG_WARNING, msg: 'loadPrefs..');
   return Future<void>.value();
 }
 
-String extractPokemonImageUrl(String url) {
-  final id = url.split('/').where((segment) => segment.isNotEmpty).last; // the last parameter of the url is the id of the pokemon so
+int extractPokemonPreviewId(String url) {
+  final id = url.split('/').where((segment) => segment.isNotEmpty).last; // the last parameter of the url is the id
+  final resultId = int.tryParse(id) ?? app_const.EMPTY_INT;
+  return resultId;
+}
 
-  return 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png'; // this on takes only 70ms
+String getPokemonBaseImageById(int id) {
+  return 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png';
 }
 
 List<Color> gradientFromType(String type) {

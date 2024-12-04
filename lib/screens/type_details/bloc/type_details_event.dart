@@ -23,8 +23,16 @@ class LoadMoreTypeDetailsPokemonsEvent extends TypeDetailsEvent {
   List<Object> get props => <Object>[];
 }
 
-class NavigateToPokemonDetailsEvent extends TypeDetailsEvent {
-  const NavigateToPokemonDetailsEvent({required this.pokemonPreview});
+class NavigateToDetailsFromSelectionEvent extends TypeDetailsEvent {
+  const NavigateToDetailsFromSelectionEvent({required this.pokemonPreview});
+
+  final app_models.PokemonPreview pokemonPreview;
+  @override
+  List<Object> get props => <Object>[pokemonPreview];
+}
+
+class UpdateRelationInTypeDetailsEvent extends TypeDetailsEvent {
+  const UpdateRelationInTypeDetailsEvent({required this.pokemonPreview});
 
   final app_models.PokemonPreview pokemonPreview;
   @override

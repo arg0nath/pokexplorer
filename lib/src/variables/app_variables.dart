@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:pokexplorer/src/models/app_models.dart' as app_models;
 
 import '../../../router/app_router.dart';
 
@@ -20,3 +21,5 @@ Size logicalScreenSize = physicalScreenSize / pixelRatio;
 double logicalWidth = logicalScreenSize.width;
 double logicalHeight = logicalScreenSize.height;
 bool isDarkMode = false;
+int selectedBottomBarIndex = 0;
+List<app_models.PokemonPreview> userFavorites = [];

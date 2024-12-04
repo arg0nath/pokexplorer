@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/router/app_router.dart' as app_router;
+import 'package:pokexplorer/screens/favorites/favorites.dart';
 
 import 'package:pokexplorer/screens/type_selection/bloc/type_selection_bloc.dart';
 import 'package:pokexplorer/src/models/app_models.dart' as app_models;
@@ -37,18 +38,6 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: _typeSelectionAppbar(context),
       body: _typeSelectionBody(),
-      bottomNavigationBar: _typeSelectionBottomBar(context),
-    );
-  }
-
-  Container _typeSelectionBottomBar(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      color: Colors.transparent,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [app_widgets.CustomActionButton(text: appLocale.next, onPressed: () => _typeSelectionBloc.add(const ProceedToTypeDetailsScreenEvent()))],
-      ),
     );
   }
 
@@ -58,14 +47,13 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
         elevation: 0,
         backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         scrolledUnderElevation: 0,
-        leading: const SizedBox.shrink(),
         actions: [
           IconButton(onPressed: () => _typeSelectionBloc.add(const ShowInfoDialogEvent()), icon: const Icon(Icons.info_outline_rounded, color: app_const.SECONDARY_TEXT_COLOR)),
         ],
         title: Text(appLocale.typeSelectionAppBarTitle, style: Theme.of(context).textTheme.titleMedium));
   }
 
-  BlocConsumer<TypeSelectionBloc, TypeSelectionState> _typeSelectionBody() {
+  Widget _typeSelectionBody() {
     return BlocConsumer<TypeSelectionBloc, TypeSelectionState>(
       listener: (context, state) async {
         if (state.typeSelectionStatus == TypeSelectionStatus.readyToProceedToTypeDetailsScreen) {
@@ -85,10 +73,22 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
       builder: (context, state) {
         return Stack(
           children: [
-            //grid list wi types
-            MyTypesGrid(typeSelectionBloc: _typeSelectionBloc),
             //pokeball background
             const Positioned(left: -20, bottom: -50, child: app_widgets.PokeballBackground()),
+
+            //grid list wi types
+            MyTypesGrid(typeSelectionBloc: _typeSelectionBloc),
+            Positioned(
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  color: Colors.transparent,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [app_widgets.CustomActionButton(text: appLocale.next, onPressed: () => _typeSelectionBloc.add(const ProceedToTypeDetailsScreenEvent()))],
+                  ),
+                ))
           ],
         );
       },
@@ -173,7 +173,7 @@ class _MyTypeCardState extends State<MyTypeCard> {
                     Flexible(
                         flex: 1,
                         child: Text(
-                          widget.pokemonType.name,
+                          widget.pokemonType.name.toUpperFirst(),
                           style: Theme.of(context).textTheme.labelMedium,
                         )),
                   ],

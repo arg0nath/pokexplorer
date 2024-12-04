@@ -4,6 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:pokexplorer/screens/favorites/bloc/favorites_bloc.dart';
+import 'package:pokexplorer/screens/home/view/home_screen.dart';
+import 'package:pokexplorer/services/db_service.dart';
 import 'package:pokexplorer/theme/bloc/theme_bloc.dart';
 import 'package:pokexplorer/theme/bloc/theme_state.dart';
 // import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
@@ -34,12 +37,12 @@ class SimpleBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc<dynamic, dynamic> bloc, Object? event) {
     super.onEvent(bloc, event);
-    app_utils.myLog(app_const.LOG_INFO, 'onEvent, event = $event');
+    app_utils.myLog(msg: 'onEvent, event = $event');
   }
 
   @override
   void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
-    app_utils.myLog(app_const.LOG_ERROR, 'onError, error = $error');
+    app_utils.myLog(level: app_const.LOG_ERROR, msg: 'onError, error = $error');
     super.onError(bloc, error, stackTrace);
   }
 }
@@ -53,8 +56,11 @@ class PokexplorerApp extends StatefulWidget {
 
     themeBloc = ThemeBloc(frontEndUtils: frontEndUtils);
     welcomeBloc = WelcomeBloc(frontEndUtils: frontEndUtils);
+    favoritesBloc = UserFavoritesBloc(frontEndUtils: frontEndUtils);
     typeSelectionBloc = TypeSelectionBloc(frontEndUtils: frontEndUtils);
+    typeSelectionBloc.setUserFavoritesBloc(favoritesBloc);
     typeDetailsBloc = TypeDetailsBloc(frontEndUtils: frontEndUtils);
+    typeDetailsBloc.setUserFavoritesBloc(favoritesBloc);
     pokemonDetailsBloc = PokemonDetailsBloc(frontEndUtils: frontEndUtils);
 
     // #endregion
@@ -68,6 +74,7 @@ class PokexplorerApp extends StatefulWidget {
   late final ThemeBloc themeBloc;
   late final TypeSelectionBloc typeSelectionBloc;
   late final TypeDetailsBloc typeDetailsBloc;
+  late final UserFavoritesBloc favoritesBloc;
   late final PokemonDetailsBloc pokemonDetailsBloc;
 
   // #endregion
@@ -77,7 +84,7 @@ class PokexplorerApp extends StatefulWidget {
 
 class _PokexplorerAppState extends State<PokexplorerApp> {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: 'Main Navigator');
-  Widget _initialHomePage = const TypeSelectionScreen(); // home page
+  Widget _initialHomePage = const HomeScreen(); // home page
   LocalDataUtils localDataUtils = const LocalDataUtils();
   late FrontendUtils frontEndUtils = widget.frontEndUtils;
   late bool initBoot = true;
@@ -89,7 +96,7 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
     app_vars.deviceScreenWidth = PlatformDispatcher.instance.implicitView!.physicalSize.width;
     initBoot = localDataUtils.loadIsInitBootFromPrefs();
     app_vars.isDarkMode = localDataUtils.loadIsDarkModeFromPrefs();
-    _initialHomePage = initBoot ? const WelcomeScreen() : const TypeSelectionScreen();
+    _initialHomePage = initBoot ? const WelcomeScreen() : const HomeScreen();
 
     super.initState();
   }
@@ -108,6 +115,7 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
         BlocProvider<TypeDetailsBloc>(create: (BuildContext context) => widget.typeDetailsBloc),
         BlocProvider<PokemonDetailsBloc>(create: (BuildContext context) => widget.pokemonDetailsBloc),
         BlocProvider<WelcomeBloc>(create: (BuildContext context) => widget.welcomeBloc),
+        BlocProvider<UserFavoritesBloc>(create: (BuildContext context) => widget.favoritesBloc),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {

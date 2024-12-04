@@ -9,7 +9,7 @@ class PreferenceUtils {
 
   static Future<SharedPreferences> init() async {
     _prefsInstance = await _instance;
-    app_utils.myLog(app_const.LOG_WARNING, 'Prefs Initialized');
+    app_utils.myLog(level: app_const.LOG_WARNING, msg: 'Prefs Initialized');
     return _prefsInstance;
   }
 
@@ -20,7 +20,7 @@ class PreferenceUtils {
   static Future<void> reload() async {
     _prefsInstance = await _instance;
     await _prefsInstance.reload();
-    app_utils.myLog(app_const.LOG_WARNING, 'Prefs Reload');
+    app_utils.myLog(level: app_const.LOG_WARNING, msg: 'Prefs Reload');
   }
 
   static String getString({required String key, required String defValue}) {

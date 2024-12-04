@@ -23,6 +23,9 @@ enum TypeDetailsStatus {
   cancelingSearch,
   searchCancelled,
 
+  updatingRelationInTypeDetails,
+  relationInTypeDetailsUpdated,
+
   exitingTypeDetails,
   typeDetailsExited,
 }

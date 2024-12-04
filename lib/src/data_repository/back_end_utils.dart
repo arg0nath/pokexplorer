@@ -17,13 +17,13 @@ class BackendUtils {
   /// Returns the response in the form of a `Map<String,dynamic>`.
   Future<Map<String, dynamic>> httpRequestMap(String unEncodedPath) async {
     if (kDebugMode && !unEncodedPath.contains('SetLogEvent')) {
-      app_utils.myLog(app_const.LOG_INFO, 'unEncodedPath = $unEncodedPath');
+      app_utils.myLog(msg: 'unEncodedPath = $unEncodedPath');
     }
 
     final Uri finalUri = Uri.parse(app_const.POKE_API + unEncodedPath);
 
     if (kDebugMode && !unEncodedPath.contains('SetLogEvent')) {
-      app_utils.myLog(app_const.LOG_INFO, 'finalUri = $finalUri');
+      app_utils.myLog(msg: 'finalUri = $finalUri');
     }
 
     try {
@@ -46,8 +46,9 @@ class BackendUtils {
     required String type,
   }) async {
     Map<String, dynamic> response = <String, dynamic>{};
+    final String tmpType = type.toLowerCase();
 
-    final String typeUrl = 'type/$type/';
+    final String typeUrl = 'type/$tmpType/';
 
     response = await httpRequestMap(typeUrl);
 

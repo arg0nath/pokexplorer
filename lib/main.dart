@@ -14,7 +14,7 @@ Future<bool> main() async {
   LocalizationManager.getInstance().setLocale(Locale('en', 'US'));
   await app_classes.PreferenceUtils.init();
 
-  app_utils.myLog(app_const.LOG_INFO, 'App Initialized..');
+  app_utils.myLog(msg: 'App Initialized..');
 
   Bloc.observer = SimpleBlocObserver();
 

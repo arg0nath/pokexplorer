@@ -1,13 +1,17 @@
 import 'dart:math' as math;
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cached_network_svg_image/cached_network_svg_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
+import 'package:pokexplorer/screens/favorites/bloc/favorites_bloc.dart';
+import 'package:pokexplorer/src/models/app_models.dart' as app_models;
 import 'package:pokexplorer/theme/bloc/theme_bloc.dart';
 import 'package:pokexplorer/screens/type_selection/bloc/type_selection_bloc.dart';
 import 'package:pokexplorer/src/utilities/app_utils.dart' as app_utils;
@@ -31,7 +35,12 @@ class _CustomProgressIndicatorState extends State<CustomProgressIndicator> {
 }
 
 class CustomNetworkImage extends StatefulWidget {
-  const CustomNetworkImage({super.key, required this.imageURL, this.width, this.height});
+  const CustomNetworkImage({
+    super.key,
+    required this.imageURL,
+    this.width,
+    this.height,
+  });
 
   final String imageURL;
   final double? width;
@@ -44,34 +53,50 @@ class CustomNetworkImage extends StatefulWidget {
 class _CustomNetworkImageState extends State<CustomNetworkImage> {
   @override
   Widget build(BuildContext context) {
-    return CachedNetworkImage(
-      imageUrl: widget.imageURL,
-      scale: 0.6,
-      imageBuilder: (BuildContext context, ImageProvider imageProvider) => Container(
+    if (widget.imageURL.contains('.svg')) {
+      return CachedNetworkSVGImage(
+        widget.imageURL,
+        placeholder: _networkImageCustomPlaceHolder(),
+        errorWidget: _networkImageErrorWidget(),
         width: widget.width,
         height: widget.height,
-        decoration: BoxDecoration(
-          image: DecorationImage(image: imageProvider, fit: BoxFit.scaleDown),
-          borderRadius: BorderRadius.zero,
-        ),
-      ),
-      placeholder: (BuildContext context, String url) => Container(
+        fadeDuration: const Duration(milliseconds: 200),
+      );
+    } else {
+      return Image.network(
+        widget.imageURL,
+        scale: 0.3,
         width: widget.width,
         height: widget.height,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.transparent, width: app_const.NETWORK_IMAGE_PLACEHOLDER_WIDTH),
-        ),
-        child: const Center(child: CustomProgressIndicator()),
+        errorBuilder: (context, error, stackTrace) => _networkImageErrorWidget(),
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
+          return _networkImageCustomPlaceHolder();
+        },
+      );
+    }
+  }
+
+  Widget _networkImageErrorWidget() {
+    return Container(
+      width: widget.width,
+      height: widget.height,
+      decoration: BoxDecoration(border: Border.all(color: Colors.transparent, width: 0)),
+      child: Center(
+        child: Image.asset(app_const.EMPTY_POKEBALL_PNG, width: app_vars.logicalHeight * 0.05, height: app_vars.logicalHeight * 0.05),
       ),
-      errorWidget: (BuildContext context, String url, dynamic error) => Container(
-        width: widget.width,
-        height: widget.height,
-        decoration: BoxDecoration(border: Border.all(color: Colors.transparent, width: 0)),
-        child: Center(
-          child: Image.asset(app_const.EMPTY_POKEBALL_PNG, width: app_vars.logicalHeight * 0.05, height: app_vars.logicalHeight * 0.05),
-        ),
+    );
+  }
+
+  Widget _networkImageCustomPlaceHolder() {
+    return Container(
+      width: widget.width,
+      height: widget.height,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: Colors.transparent, width: app_const.NETWORK_IMAGE_PLACEHOLDER_WIDTH),
       ),
+      child: const Center(child: CustomProgressIndicator()),
     );
   }
 }
@@ -237,7 +262,6 @@ class CustomPercentIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    app_utils.myLog(app_const.LOG_INFO, 'type: $type');
     final tmpPercent = (value) / 256; //bigest value
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -301,16 +325,16 @@ class _AboutMeDialogState extends State<AboutMeDialog> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.light_mode_outlined, color: app_const.PRIMARY_TEXT_COLOR),
+              const Icon(Icons.light_mode_outlined, color: app_const.PRIMARY_TEXT_COLOR),
               BlocBuilder<TypeSelectionBloc, TypeSelectionState>(
                 builder: (context, state) {
                   return CupertinoSwitch(
                     value: context.read<TypeSelectionBloc>().frontEndUtils.localDataUtils.loadIsDarkModeFromPrefs(), // The value of the switch
-                    onChanged: (value) => {context.read<ThemeBloc>().add(ToggleThemeEvent())},
+                    onChanged: (value) => {context.read<ThemeBloc>().add(const ToggleThemeEvent())},
                   );
                 },
               ),
-              Icon(Icons.dark_mode_outlined, color: app_const.PRIMARY_TEXT_COLOR),
+              const Icon(Icons.dark_mode_outlined, color: app_const.PRIMARY_TEXT_COLOR),
             ],
           ),
           const SizedBox(height: 20),
@@ -362,4 +386,84 @@ class CustomAppbarBackgroundWaveClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomAppbarBackgroundWaveClipper oldClipper) => oldClipper != this;
+}
+
+class PokemonListCard extends StatefulWidget {
+  const PokemonListCard({
+    super.key,
+    required this.pokemonPreview,
+    required this.onCardTap,
+    this.onFavoriteIconTap,
+    this.onLongPress,
+  });
+
+  final app_models.PokemonPreview pokemonPreview;
+  final VoidCallback onCardTap;
+  final VoidCallback? onFavoriteIconTap;
+  final VoidCallback? onLongPress;
+
+  @override
+  State<PokemonListCard> createState() => _PokemonListCardState();
+}
+
+class _PokemonListCardState extends State<PokemonListCard> {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+        onLongPress: widget.onLongPress,
+        onTap: widget.onCardTap,
+        child: Container(
+            width: app_vars.logicalWidth * 0.7,
+            height: app_vars.logicalHeight * 0.12,
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(2),
+            decoration: BoxDecoration(color: Theme.of(context).cardColor, borderRadius: const BorderRadius.all(Radius.circular(20)), border: Border.all(color: const Color(0xFFEEEEEE))),
+            margin: EdgeInsets.symmetric(vertical: app_vars.logicalHeight * 0.01, horizontal: app_vars.logicalWidth * 0.06),
+            child: Row(children: [
+              //pokemon image
+              Expanded(
+                  flex: 2,
+                  child: Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.all(5),
+                      child: CustomNetworkImage(height: app_vars.logicalHeight * 0.1, width: app_vars.logicalHeight * 0.1, imageURL: widget.pokemonPreview.imageUrl))),
+              //pokemon name
+              Expanded(
+                flex: 3,
+                child: Text('${widget.pokemonPreview.name.toUpperFirst()}', maxLines: 3, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodyLarge),
+              ),
+              //favorite icon
+              if (widget.onFavoriteIconTap != null)
+                Visibility(
+                  visible: widget.onLongPress == null,
+                  child: CustomFavoriteButton(
+                    isFavorite: widget.pokemonPreview.isFavorite == 1,
+                    onPressed: widget.onFavoriteIconTap!,
+                  ),
+                ),
+            ])));
+  }
+}
+
+class CustomFavoriteButton extends StatefulWidget {
+  const CustomFavoriteButton({super.key, required this.isFavorite, required this.onPressed});
+
+  final VoidCallback onPressed;
+  final bool isFavorite;
+
+  @override
+  State<CustomFavoriteButton> createState() => _CustomFavoriteButtonState();
+}
+
+class _CustomFavoriteButtonState extends State<CustomFavoriteButton> {
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: Padding(
+        padding: const EdgeInsets.all(15),
+        child: widget.isFavorite ? Icon(Icons.favorite_rounded, color: Theme.of(context).primaryColor) : const Icon(Icons.favorite_border_rounded, color: app_const.GREY),
+      ),
+      onPressed: widget.onPressed,
+    );
+  }
 }

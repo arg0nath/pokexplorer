@@ -64,6 +64,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           WelcomMessage(iconData: Icons.catching_pokemon_outlined, message: appLocale.welcomeMessage1),
                           WelcomMessage(iconData: Icons.search_outlined, message: appLocale.welcomeMessage2),
                           WelcomMessage(iconData: Icons.info_outline_rounded, message: appLocale.welcomeMessage3),
+                          WelcomMessage(iconData: Icons.favorite_rounded, message: appLocale.welcomeMessage4),
                         ],
                       ),
                     ),

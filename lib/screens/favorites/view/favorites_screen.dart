@@ -146,16 +146,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         child: Scrollbar(
           thumbVisibility: false,
           child: (displayList.isEmpty)
-              ? Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(app_const.EMPTY_POKEBALL_PNG, width: app_vars.logicalHeight * 0.1, height: app_vars.logicalHeight * 0.1), // Replace with your image path
-                      const SizedBox(height: 10),
-                      Text(LocalizationManager.getInstance().noPokemonFound, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-                    ],
-                  ),
-                )
+              ? Center(child: app_widgets.NoPokemonIndicator())
               : CustomScrollView(
                   slivers: [
                     SliverList.builder(

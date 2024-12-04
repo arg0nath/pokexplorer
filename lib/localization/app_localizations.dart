@@ -23,6 +23,7 @@ class LocalizationManager {
   String get welcomeMessage1 => _localizedStrings[_locale.languageCode]?['welcome_message_1'] ?? 'Pick a type to explore';
   String get welcomeMessage2 => _localizedStrings[_locale.languageCode]?['welcome_message_2'] ?? 'Search through Pokémon';
   String get welcomeMessage3 => _localizedStrings[_locale.languageCode]?['welcome_message_3'] ?? 'View stats of any Pokémon';
+  String get welcomeMessage4 => _localizedStrings[_locale.languageCode]?['welcome_message_4'] ?? 'Add Pokémon to Favorites';
   String get welcomeButtonText => _localizedStrings[_locale.languageCode]?['welcome_button_text'] ?? "Let's start!";
   String get next => _localizedStrings[_locale.languageCode]?['next'] ?? 'Next';
   String get typeSelectionAppBarTitle => _localizedStrings[_locale.languageCode]?['type_selection_appbar_title'] ?? 'Pick a Pokémon type';
@@ -56,6 +57,7 @@ final Map<String, Map<String, String>> _localizedStrings = {
     'welcome_message_1': 'Pick a type to explore',
     'welcome_message_2': 'Search through Pokémon',
     'welcome_message_3': 'View stats of any Pokémon',
+    'welcome_message_4': 'Add Pokémon to Favorites',
     'welcome_button_text': "Let's start!",
     'empty_type_selection_error': "Hey! Don't forget to pick a category",
     'next': 'Next',

@@ -113,16 +113,7 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
                   //search results not found
                   if (typeDetailsState.searchedPokemonPreviewList.isEmpty && typeDetailsState.typeDetailsStatus == TypeDetailsStatus.pokemonSearched)
                     SliverToBoxAdapter(
-                      child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image.asset(app_const.EMPTY_POKEBALL_PNG, width: app_vars.logicalHeight * 0.1, height: app_vars.logicalHeight * 0.1), // Replace with your image path
-                            const SizedBox(height: 10),
-                            Text(LocalizationManager.getInstance().noPokemonFound, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-                          ],
-                        ),
-                      ),
+                      child: Center(child: app_widgets.NoPokemonIndicator()),
                     ),
                   // search results found
                   if (typeDetailsState.searchedPokemonPreviewList.isNotEmpty)

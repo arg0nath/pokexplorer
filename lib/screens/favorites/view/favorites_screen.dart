@@ -53,14 +53,18 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     actions.add(
       BlocBuilder<UserFavoritesBloc, UserFavoritesState>(
         builder: (BuildContext context, UserFavoritesState state) {
-          return PopupMenuButton<dynamic>(
-            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
-            icon: const Icon(Icons.more_vert),
-            onSelected: handleClick,
-            itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-              app_widgets.buildPopupMenuItem(context: context, iconData: Icons.delete_forever, menuItemTitle: appLocale.deleteAll, value: app_const.USER_FAVORITES_POP_MENU_CLEAR_ALL_VALUE),
-            ],
-          );
+          if (_favoritesBloc.userFavorites.isEmpty) {
+            return const SizedBox.shrink();
+          } else {
+            return PopupMenuButton<dynamic>(
+              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+              icon: const Icon(Icons.more_vert),
+              onSelected: handleClick,
+              itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                app_widgets.buildPopupMenuItem(context: context, iconData: Icons.delete_forever, menuItemTitle: appLocale.deleteAll, value: app_const.USER_FAVORITES_POP_MENU_CLEAR_ALL_VALUE),
+              ],
+            );
+          }
         },
       ),
     );
@@ -97,6 +101,10 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     return BlocConsumer<UserFavoritesBloc, UserFavoritesState>(listener: (context, state) async {
       if (state.userFavoritesStatus == UserFavoritesStatus.navigatingToPokemonDetails) {
         await app_utils.showLoadingDialog(context);
+      } else if (state.userFavoritesStatus == UserFavoritesStatus.refreshingFavorites) {
+        await app_utils.showLoadingDialog(context);
+      } else if (state.userFavoritesStatus == UserFavoritesStatus.userFavoritesRefreshed) {
+        Navigator.pop(context);
       } else if (state.userFavoritesStatus == UserFavoritesStatus.readyToNavigateToPokemonDetails) {
         Navigator.popAndPushNamed(context, app_const.POKEMON_DETAILS_SCREEN_ROUTE_NAME,
             arguments: app_router.PokemonDetailsScreenArguments(selectedTypeName: _favoritesBloc.selectedPokemon.types.first.name, pokemon: _favoritesBloc.selectedPokemon));

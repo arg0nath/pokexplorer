@@ -32,7 +32,7 @@ class LocalizationManager {
   String get height => _localizedStrings[_locale.languageCode]?['height'] ?? 'Height';
   String get noPokemonFound => _localizedStrings[_locale.languageCode]?['no_pokemon_found'] ?? 'No Pokémon found.';
   String get favoritesScreenTitle => _localizedStrings[_locale.languageCode]?['favorites_screen_title'] ?? 'Favorites';
-  String get deleteFavoritesDialogTitle => _localizedStrings[_locale.languageCode]?['delete_favorites_dialog_title'] ?? 'Are you sure ?';
+  String get deleteFavoritesDialogTitle => _localizedStrings[_locale.languageCode]?['delete_favorites_dialog_title'] ?? 'Delete Pokémon ?';
   String get deleteFavoritesDialogDescription => _localizedStrings[_locale.languageCode]?['delete_favorites_dialog_description'] ?? 'You are going to delete {pokeName} from your favorites';
   String get deleteFavoritesDialogActionButton => delete;
   String get deleteAllFavoritesDialogTitle => _localizedStrings[_locale.languageCode]?['delete_all_favorites_dialog_title'] ?? 'Are you sure ?';
@@ -73,7 +73,7 @@ final Map<String, Map<String, String>> _localizedStrings = {
     'general_error_message': 'Oops! Something went wrong',
     'no_favorite_pokemon': "Hmm.. You 've no favorites yet",
     'favorites_screen_title': "Favorites",
-    'delete_favorites_dialog_title': "Are you sure ?",
+    'delete_favorites_dialog_title': "Delete Pokémon ?",
     'delete_favorites_dialog_description': "You are going to delete {pokeName} from your favorites",
     'delete': "Delete",
     'delete_all': "Delete All",

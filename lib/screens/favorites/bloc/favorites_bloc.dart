@@ -25,7 +25,7 @@ class UserFavoritesBloc extends Bloc<UserFavoritesEvent, UserFavoritesState> {
 
     on<RefreshFavoritesEvent>((RefreshFavoritesEvent event, Emitter<UserFavoritesState> emit) async {
       emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.refreshingFavorites));
-      initFavoritesVariables();
+
       userFavorites = List.from(await _databaseService.getDbPokemonPreviewList());
 
       emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.userFavoritesRefreshed));

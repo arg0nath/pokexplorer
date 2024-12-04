@@ -528,3 +528,21 @@ class CustomAlertDialog extends StatelessWidget {
     );
   }
 }
+
+class NoPokemonIndicator extends StatelessWidget {
+  const NoPokemonIndicator({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Image.asset(app_const.EMPTY_POKEBALL_PNG, width: app_vars.logicalHeight * 0.1, height: app_vars.logicalHeight * 0.1), // Replace with your image path
+        const SizedBox(height: 10),
+        Text(LocalizationManager.getInstance().noPokemonFound, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+      ],
+    );
+  }
+}

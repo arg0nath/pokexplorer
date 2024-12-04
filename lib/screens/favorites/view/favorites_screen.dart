@@ -39,10 +39,39 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     return Future<bool>.value(false);
   }
 
+  List<Widget> _showActions(BuildContext context) {
+    void handleClick(dynamic value) {
+      switch (value as int) {
+        case app_const.USER_FAVORITES_POP_MENU_CLEAR_ALL_VALUE:
+          _favoritesBloc.add(const DeleteAllFavoritesEvent());
+          return;
+      }
+    }
+
+    final List<Widget> actions = <Widget>[];
+
+    actions.add(
+      BlocBuilder<UserFavoritesBloc, UserFavoritesState>(
+        builder: (BuildContext context, UserFavoritesState state) {
+          return PopupMenuButton<dynamic>(
+            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+            icon: const Icon(Icons.more_vert),
+            onSelected: handleClick,
+            itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+              app_widgets.buildPopupMenuItem(context: context, iconData: Icons.delete_forever, menuItemTitle: appLocale.deleteAllFavorites, value: app_const.USER_FAVORITES_POP_MENU_CLEAR_ALL_VALUE),
+            ],
+          );
+        },
+      ),
+    );
+    return actions;
+  }
+
   AppBar _userFavoritesAppbar(BuildContext context) {
     return AppBar(
       title: Text(appLocale.favoritesScreenTitle),
       backgroundColor: Colors.transparent,
+      actions: _showActions(context),
     );
   }
 
@@ -60,7 +89,6 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         appBar: _userFavoritesAppbar(context),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: _favoritesBody(),
-        floatingActionButton: FloatingActionButton(child: const Icon(Icons.delete_forever_rounded), onPressed: () => _favoritesBloc.add(const DeleteAllFavoritesEvent())),
       ),
     );
   }
@@ -76,15 +104,6 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         await showDialog(
             context: context,
             builder: (_) => AlertDialog(
-                  actions: [
-                    OutlinedButton(
-                      onPressed: () {
-                        _favoritesBloc.add(RemovePokemonPreviewFromFavoritesEvent(pokemonPreview: _favoritesBloc.selectedPokemonPreviewForDeletion));
-                        Navigator.pop(context);
-                      },
-                      child: Text(appLocale.deleteFavoritesDialogActionButtonTitle),
-                    ),
-                  ],
                   title: Text(appLocale.deleteFavoritesDialogTitle, textAlign: TextAlign.center),
                   content: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -96,6 +115,15 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       ),
                     ],
                   ),
+                  actions: [
+                    OutlinedButton(
+                      onPressed: () {
+                        _favoritesBloc.add(RemovePokemonPreviewFromFavoritesEvent(pokemonPreview: _favoritesBloc.selectedPokemonPreviewForDeletion));
+                        Navigator.pop(context);
+                      },
+                      child: Text(appLocale.deleteFavoritesDialogActionButton),
+                    ),
+                  ],
                 ));
       }
     }, builder: (context, typeDetailsState) {

@@ -130,8 +130,8 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
     });
 
     on<ExitTypeDetailsEvent>((ExitTypeDetailsEvent event, Emitter<TypeDetailsState> emit) async {
-      emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.exitingTypeDetails));
-      emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.typeDetailsExited));
+      emit(TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.exitingTypeDetails, searchedPokemonPreviewList: state.searchedPokemonPreviewList));
+      emit(TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.typeDetailsExited, searchedPokemonPreviewList: state.searchedPokemonPreviewList));
     });
 
     // #region // * Search Events

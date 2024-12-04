@@ -14,6 +14,12 @@ ThemeData darkTheme() {
       unselectedItemColor: app_const.SHADOW_COLOR_LIGHT,
       unselectedLabelStyle: TextStyle(color: app_const.SHADOW_COLOR_LIGHT, fontFamily: app_const.MAIN_FONT_FAMILY),
     ),
+    popupMenuTheme: const PopupMenuThemeData(
+      iconColor: app_const.GREY,
+      color: app_const.BLACK_IOS,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+      textStyle: TextStyle(fontSize: 16, color: app_const.GREY, fontFamily: app_const.MAIN_FONT_FAMILY),
+    ),
     scaffoldBackgroundColor: app_const.SCAFFOLD_BACKGROUND_DARK,
     toggleButtonsTheme: const ToggleButtonsThemeData(selectedColor: app_const.BRIGHT_RED, disabledColor: Color(0xFFC4C4C4)),
     dialogBackgroundColor: app_const.CARD_DARK,
@@ -28,8 +34,8 @@ ThemeData darkTheme() {
       centerTitle: true,
       titleTextStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: app_const.WHITE_IOS, fontFamily: app_const.MAIN_FONT_FAMILY),
     ),
-    drawerTheme: DrawerThemeData(backgroundColor: app_const.BLACK_IOS),
-    listTileTheme: ListTileThemeData(
+    drawerTheme: const DrawerThemeData(backgroundColor: app_const.BLACK_IOS),
+    listTileTheme: const ListTileThemeData(
       selectedColor: app_const.BRIGHT_RED,
       titleTextStyle: TextStyle(fontSize: 16, color: app_const.GREY, fontFamily: app_const.MAIN_FONT_FAMILY),
     ),

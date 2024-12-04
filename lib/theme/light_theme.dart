@@ -14,6 +14,12 @@ ThemeData lightTheme() {
       unselectedItemColor: app_const.SHADOW_COLOR_LIGHT,
       unselectedLabelStyle: TextStyle(color: app_const.SHADOW_COLOR_LIGHT, fontFamily: app_const.MAIN_FONT_FAMILY),
     ),
+    popupMenuTheme: const PopupMenuThemeData(
+      iconColor: app_const.GREY,
+      color: app_const.WHITE_TOTAL,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+      textStyle: TextStyle(fontSize: 16, color: app_const.GREY, fontFamily: app_const.MAIN_FONT_FAMILY),
+    ),
     dialogBackgroundColor: app_const.WHITE_TOTAL,
     shadowColor: app_const.SHADOW_COLOR_LIGHT,
     inputDecorationTheme: InputDecorationTheme(

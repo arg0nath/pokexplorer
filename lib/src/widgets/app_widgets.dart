@@ -467,3 +467,29 @@ class _CustomFavoriteButtonState extends State<CustomFavoriteButton> {
     );
   }
 }
+
+PopupMenuItem<dynamic> buildPopupMenuItem({required BuildContext context, required IconData iconData, required int value, required String menuItemTitle}) {
+  return PopupMenuItem<dynamic>(
+    value: value,
+    padding: EdgeInsets.zero,
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: Icon(iconData),
+        ),
+
+        Flexible(
+          child: Text(
+            menuItemTitle,
+            textAlign: TextAlign.center,
+          ),
+        ),
+        // SizedBox(width: 5),
+      ],
+    ),
+  );
+}

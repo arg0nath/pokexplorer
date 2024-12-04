@@ -25,6 +25,10 @@ Welcome to the **Pokéxplorer**, a mobile application that allows users to explo
   - **Images & GIFs**
   - **Basic Stats**: HP, Attack, and Defense
 
+### 4. **User Favorite Pokémon**
+- Users can add Pokémon to their favorites by selecting their desired Pokémon from the list.
+- Once added, users can view all their favorite Pokémon in a dedicated list, where they can easily access its details
+
 ## Technologies Used
 - **Flutter SDK** for building a cross-platform application
 - **PokéAPI** for fetching Pokémon data

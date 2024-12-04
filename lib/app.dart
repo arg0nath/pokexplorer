@@ -83,7 +83,7 @@ class PokexplorerApp extends StatefulWidget {
 }
 
 class _PokexplorerAppState extends State<PokexplorerApp> {
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: 'Main Navigator');
+  // final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: 'Main Navigator');
   Widget _initialHomePage = const HomeScreen(); // home page
   LocalDataUtils localDataUtils = const LocalDataUtils();
   late FrontendUtils frontEndUtils = widget.frontEndUtils;
@@ -120,7 +120,7 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {
           return MaterialApp(
-            navigatorKey: navigatorKey,
+            // navigatorKey: navigatorKey,
             debugShowCheckedModeBanner: false,
             home: _initialHomePage,
             builder: (context, child) => child!,

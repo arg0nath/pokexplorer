@@ -16,6 +16,13 @@ enum UserFavoritesStatus {
   navigatingToPokemonDetails,
   readyToNavigateToPokemonDetails,
   showDialogToRemovePokemon,
+  removingPokemon,
+  pokemonRemoved,
+
+  showDialogToDeleteAll,
+  deletingAllPokemon,
+  allPokemonDeleted,
+
   navigateToDetailsFromFavoritesFailed
 }
 

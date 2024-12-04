@@ -34,8 +34,11 @@ class LocalizationManager {
   String get deleteFavoritesDialogTitle => _localizedStrings[_locale.languageCode]?['delete_favorites_dialog_title'] ?? 'Are you sure ?';
   String get deleteFavoritesDialogDescription => _localizedStrings[_locale.languageCode]?['delete_favorites_dialog_description'] ?? 'You are going to delete {pokeName} from your favorites';
   String get deleteFavoritesDialogActionButton => delete;
+  String get deleteAllFavoritesDialogTitle => _localizedStrings[_locale.languageCode]?['delete_all_favorites_dialog_title'] ?? 'Are you sure ?';
+  String get deleteAllFavoritesDialogDescription => _localizedStrings[_locale.languageCode]?['delete_all_favorites_dialog_description'] ?? 'All of your favorites will to be deleted';
+  String get deleteAllFavoritesDialogActionButton => deleteAll;
   String get delete => _localizedStrings[_locale.languageCode]?['delete'] ?? 'Delete';
-  String get deleteAllFavorites => _localizedStrings[_locale.languageCode]?['delete_all'] ?? 'Delete All';
+  String get deleteAll => _localizedStrings[_locale.languageCode]?['delete_all'] ?? 'Delete All';
   String get bottomBarFavoritesScreenTitle => favoritesScreenTitle;
   String get bottomBarHomeScreenTitle => _localizedStrings[_locale.languageCode]?['bottom_bar_home_screen_title'] ?? 'Explore';
   String get noFavoritePokemon => _localizedStrings[_locale.languageCode]?['no_favorite_pokemon'] ?? "Hmm.. You 've no favorites yet";
@@ -73,5 +76,7 @@ final Map<String, Map<String, String>> _localizedStrings = {
     'delete': "Delete",
     'delete_all': "Delete All",
     'bottom_bar_home_screen_title': "Explore",
+    'delete_all_favorites_dialog_title': "Are you sure ?",
+    'delete_all_favorites_dialog_description': "All of your favorites will be deleted",
   },
 };

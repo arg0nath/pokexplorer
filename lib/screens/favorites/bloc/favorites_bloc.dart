@@ -39,28 +39,34 @@ class UserFavoritesBloc extends Bloc<UserFavoritesEvent, UserFavoritesState> {
       emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.favoritesUpdated));
     });
 
-    on<ShowDialogToRemovePokemonPreviewFromFavoritesEvent>((ShowDialogToRemovePokemonPreviewFromFavoritesEvent event, Emitter<UserFavoritesState> emit) async {
+    on<ShowDialogToRemoveFavoriteEvent>((ShowDialogToRemoveFavoriteEvent event, Emitter<UserFavoritesState> emit) async {
       emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.showDialogToRemovePokemon));
       selectedPokemonPreviewForDeletion = event.pokemonPreview;
       emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.userFavoritesLoaded));
     });
 
     on<RemovePokemonPreviewFromFavoritesEvent>((RemovePokemonPreviewFromFavoritesEvent event, Emitter<UserFavoritesState> emit) async {
-      emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.updatingFavorites));
+      emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.removingPokemon));
 
       _databaseService.deleteFavPokePreviewFromDb(name: event.pokemonPreview.name);
       userFavorites = List.from(await _databaseService.getDbPokemonPreviewList());
 
-      emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.favoritesUpdated));
+      emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.pokemonRemoved));
+    });
+
+    on<ShowDialogToDeleteAllEvent>((ShowDialogToDeleteAllEvent event, Emitter<UserFavoritesState> emit) async {
+      emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.showDialogToDeleteAll));
+
+      emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.userFavoritesLoaded));
     });
 
     on<DeleteAllFavoritesEvent>((DeleteAllFavoritesEvent event, Emitter<UserFavoritesState> emit) async {
-      emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.updatingFavorites));
+      emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.deletingAllPokemon));
 
       _databaseService.deleteAllFavPokePreviewFromDb();
       userFavorites = List.from(await _databaseService.getDbPokemonPreviewList());
 
-      emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.favoritesUpdated));
+      emit(const UserFavoritesState(userFavoritesStatus: UserFavoritesStatus.allPokemonDeleted));
     });
 
     on<NavigateToDetailsFromFavoritesEvent>((NavigateToDetailsFromFavoritesEvent event, Emitter<UserFavoritesState> emit) async {

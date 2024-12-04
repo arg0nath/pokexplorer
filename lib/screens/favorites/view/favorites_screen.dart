@@ -43,7 +43,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     void handleClick(dynamic value) {
       switch (value as int) {
         case app_const.USER_FAVORITES_POP_MENU_CLEAR_ALL_VALUE:
-          _favoritesBloc.add(const DeleteAllFavoritesEvent());
+          _favoritesBloc.add(const ShowDialogToDeleteAllEvent());
           return;
       }
     }
@@ -58,7 +58,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
             icon: const Icon(Icons.more_vert),
             onSelected: handleClick,
             itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-              app_widgets.buildPopupMenuItem(context: context, iconData: Icons.delete_forever, menuItemTitle: appLocale.deleteAllFavorites, value: app_const.USER_FAVORITES_POP_MENU_CLEAR_ALL_VALUE),
+              app_widgets.buildPopupMenuItem(context: context, iconData: Icons.delete_forever, menuItemTitle: appLocale.deleteAll, value: app_const.USER_FAVORITES_POP_MENU_CLEAR_ALL_VALUE),
             ],
           );
         },
@@ -104,32 +104,37 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         app_utils.myToast(context, LocalizationManager.getInstance().connectionFailure);
       } else if (state.userFavoritesStatus == UserFavoritesStatus.navigateToDetailsFromFavoritesFailed) {
         app_utils.myToast(context, LocalizationManager.getInstance().generalErrorMessage);
-        Navigator.pop(context); //close dialog
-      } else if (state.userFavoritesStatus == UserFavoritesStatus.showDialogToRemovePokemon) {
+        Navigator.pop(context);
+      }
+      //removing pokemon dialog
+      else if (state.userFavoritesStatus == UserFavoritesStatus.showDialogToRemovePokemon) {
         await showDialog(
             context: context,
-            builder: (_) => AlertDialog(
-                  title: Text(appLocale.deleteFavoritesDialogTitle, textAlign: TextAlign.center),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        appLocale.deleteFavoritesDialogDescription.replaceFirstMapped('{pokeName}', (_) => _favoritesBloc.selectedPokemonPreviewForDeletion.name.toUpperFirst()),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                  actions: [
-                    OutlinedButton(
-                      onPressed: () {
-                        _favoritesBloc.add(RemovePokemonPreviewFromFavoritesEvent(pokemonPreview: _favoritesBloc.selectedPokemonPreviewForDeletion));
-                        Navigator.pop(context);
-                      },
-                      child: Text(appLocale.deleteFavoritesDialogActionButton),
-                    ),
-                  ],
+            builder: (_) => app_widgets.CustomAlertDialog(
+                  title: appLocale.deleteFavoritesDialogTitle,
+                  description: appLocale.deleteFavoritesDialogDescription.replaceFirstMapped('{pokeName}', (_) => _favoritesBloc.selectedPokemonPreviewForDeletion.name.toUpperFirst()),
+                  actionButtonTitle: appLocale.deleteFavoritesDialogActionButton,
+                  onActionTap: () {
+                    _favoritesBloc.add(RemovePokemonPreviewFromFavoritesEvent(pokemonPreview: _favoritesBloc.selectedPokemonPreviewForDeletion));
+                  },
                 ));
+      } else if (state.userFavoritesStatus == UserFavoritesStatus.pokemonRemoved) {
+        Navigator.pop(context);
+      }
+      //delete all dialog
+      else if (state.userFavoritesStatus == UserFavoritesStatus.showDialogToDeleteAll) {
+        await showDialog(
+            context: context,
+            builder: (_) => app_widgets.CustomAlertDialog(
+                  title: appLocale.deleteAllFavoritesDialogTitle,
+                  description: appLocale.deleteAllFavoritesDialogDescription,
+                  actionButtonTitle: appLocale.deleteAllFavoritesDialogActionButton,
+                  onActionTap: () {
+                    _favoritesBloc.add(const DeleteAllFavoritesEvent());
+                  },
+                ));
+      } else if (state.userFavoritesStatus == UserFavoritesStatus.allPokemonDeleted) {
+        Navigator.pop(context);
       }
     }, builder: (context, typeDetailsState) {
       final List<app_models.PokemonPreview> displayList = _favoritesBloc.userFavorites;
@@ -156,7 +161,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                     SliverList.builder(
                       itemCount: displayList.length,
                       itemBuilder: (context, index) => app_widgets.PokemonListCard(
-                        onLongPress: () => _favoritesBloc.add(ShowDialogToRemovePokemonPreviewFromFavoritesEvent(pokemonPreview: displayList[index])),
+                        onLongPress: () => _favoritesBloc.add(ShowDialogToRemoveFavoriteEvent(pokemonPreview: displayList[index])),
                         onFavoriteIconTap: null,
                         onCardTap: () => _favoritesBloc.add(NavigateToDetailsFromFavoritesEvent(pokemonPreview: displayList[index])),
                         pokemonPreview: displayList[index],

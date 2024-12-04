@@ -26,13 +26,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late List<Widget> screenList = [TypeSelectionScreen(), FavoritesScreen()];
+  late List<Widget> screenList = [const TypeSelectionScreen(), const FavoritesScreen()];
   late LocalizationManager appLocale = LocalizationManager.getInstance();
 
   @override
   void initState() {
     super.initState();
   }
+
+  Map<String, GlobalKey<NavigatorState>> navigatorKeys = <String, GlobalKey<NavigatorState>>{
+    app_const.BOTTOM_BAR_PAGE_TYPE_SELECTION_SCREEN: GlobalKey<NavigatorState>(),
+    app_const.BOTTOM_BAR_PAGE_USER_FAVORITES_SCREEN: GlobalKey<NavigatorState>(),
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +58,16 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         currentIndex: app_vars.selectedBottomBarIndex,
         items: [
-          BottomNavigationBarItem(label: appLocale.bottomBarHomeScreenTitle, icon: Icon(Icons.catching_pokemon_rounded)),
-          BottomNavigationBarItem(label: appLocale.bottomBarFavoritesScreenTitle, icon: Icon(Icons.favorite_outline_outlined)),
+          BottomNavigationBarItem(
+            key: navigatorKeys[app_const.BOTTOM_BAR_PAGE_TYPE_SELECTION_SCREEN],
+            label: appLocale.bottomBarHomeScreenTitle,
+            icon: const Icon(Icons.catching_pokemon_rounded),
+          ),
+          BottomNavigationBarItem(
+            key: navigatorKeys[app_const.BOTTOM_BAR_PAGE_USER_FAVORITES_SCREEN],
+            label: appLocale.bottomBarFavoritesScreenTitle,
+            icon: const Icon(Icons.favorite_outline_outlined),
+          ),
         ]);
   }
 }

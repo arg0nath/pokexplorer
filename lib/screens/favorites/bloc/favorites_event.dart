@@ -27,13 +27,20 @@ class AddPokemonPreviewToFavoritesEvent extends UserFavoritesEvent {
   List<Object?> get props => <Object>[pokemonPreview];
 }
 
-class ShowDialogToRemovePokemonPreviewFromFavoritesEvent extends UserFavoritesEvent {
-  const ShowDialogToRemovePokemonPreviewFromFavoritesEvent({required this.pokemonPreview});
+class ShowDialogToRemoveFavoriteEvent extends UserFavoritesEvent {
+  const ShowDialogToRemoveFavoriteEvent({required this.pokemonPreview});
 
   final app_models.PokemonPreview pokemonPreview;
 
   @override
   List<Object?> get props => <Object>[pokemonPreview];
+}
+
+class ShowDialogToDeleteAllEvent extends UserFavoritesEvent {
+  const ShowDialogToDeleteAllEvent();
+
+  @override
+  List<Object?> get props => <Object>[];
 }
 
 class RemovePokemonPreviewFromFavoritesEvent extends UserFavoritesEvent {

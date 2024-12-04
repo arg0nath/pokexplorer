@@ -27,6 +27,9 @@ const String POKEMON_DETAILS_SCREEN_ROUTE_NAME = 'screens/pokemon_details/view/d
 const String WELCOME_SCREEN_ROUTE_NAME = 'screens/welcome/view/welcome_screen';
 const String FAVORITES_ROUTE_NAME = 'screens/welcome/view/favorites_screen';
 
+const String BOTTOM_BAR_PAGE_TYPE_SELECTION_SCREEN = 'TypeSelectionScreen';
+const String BOTTOM_BAR_PAGE_USER_FAVORITES_SCREEN = 'UserFavoritesScreen';
+
 const PageTransitionType PAGE_TRANSITION_TYPE_FADE = PageTransitionType.fade;
 const int EMPTY_INT = -1;
 const int EMPTY_INT_ZERO = 0;

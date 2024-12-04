@@ -120,7 +120,6 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {
           return MaterialApp(
-            // navigatorKey: navigatorKey,
             debugShowCheckedModeBanner: false,
             home: _initialHomePage,
             builder: (context, child) => child!,

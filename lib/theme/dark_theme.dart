@@ -5,6 +5,7 @@ ThemeData darkTheme() {
     brightness: Brightness.dark,
     shadowColor: app_const.SHADOW_COLOR_DARK,
     canvasColor: app_const.BLACK_IOS,
+    useMaterial3: true,
     primaryColor: app_const.BRIGHT_RED,
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: app_const.BLACK_TOTAL,

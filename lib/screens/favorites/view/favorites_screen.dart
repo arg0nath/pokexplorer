@@ -124,10 +124,9 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                   actionButtonTitle: appLocale.deleteFavoritesDialogActionButton,
                   onActionTap: () {
                     _favoritesBloc.add(RemovePokemonPreviewFromFavoritesEvent(pokemonPreview: _favoritesBloc.selectedPokemonPreviewForDeletion));
+                    Navigator.pop(context);
                   },
                 ));
-      } else if (state.userFavoritesStatus == UserFavoritesStatus.pokemonRemoved) {
-        Navigator.pop(context);
       }
       //delete all dialog
       else if (state.userFavoritesStatus == UserFavoritesStatus.showDialogToDeleteAll) {

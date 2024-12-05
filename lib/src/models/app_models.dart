@@ -1,3 +1,5 @@
+import 'package:pokexplorer/src/enums/app_enums.dart';
+
 import '../utilities/app_utils.dart' as app_utils;
 import '../variables/app_constants.dart' as app_const;
 
@@ -100,7 +102,7 @@ class PokemonPreview {
   /// `0 is false`
   ///
   /// `1 is true`
-  int setIsFavorite(int isFavorite) => this.isFavorite = isFavorite;
+  void setIsFavorite(RelationValue relationValue) => isFavorite = relationValue.value;
 
   String setImageUrl(String imageUrl) => this.imageUrl = imageUrl;
 
@@ -112,7 +114,7 @@ class PokemonPreview {
       id: id,
       name: json['name'] ?? app_const.EMPTY_STRING,
       imageUrl: app_utils.getPokemonBaseImageById(id),
-      isFavorite: app_const.EMPTY_INT_ZERO,
+      isFavorite: app_const.EMPTY_INT_ZERO, //false
     );
   }
 
@@ -124,7 +126,7 @@ class PokemonPreview {
 
   @override
   String toString() {
-    return 'PokemonPreview name: $name';
+    return 'PokemonPreview name: $name, isFavorite:$isFavorite';
   }
 }
 
@@ -183,7 +185,7 @@ class Pokemon {
   /// `0 is false`
   ///
   /// `1 is true`
-  int setIsFavorite(int isFavorite) => this.isFavorite = isFavorite;
+  void setIsFavorite(RelationValue relationValue) => isFavorite = relationValue.value;
 
   // json converters
   factory Pokemon.fromJson(Map<String, dynamic> json) {
@@ -216,6 +218,6 @@ class Pokemon {
 
   @override
   String toString() {
-    return 'Pokemon name:$name, isFavorite: ${isFavorite == 1} ';
+    return 'Pokemon name:$name, isFavorite: ${isFavorite == RelationValue.favorite.value} ';
   }
 }

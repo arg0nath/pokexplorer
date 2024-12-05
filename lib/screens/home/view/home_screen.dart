@@ -42,10 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: app_vars.selectedBottomBarIndex,
-        children: screenList,
-      ),
+      body: screenList[app_vars.selectedBottomBarIndex],
       bottomNavigationBar: _typeSelectionBottomBar(context),
     );
   }

@@ -6,6 +6,7 @@ import 'package:pokexplorer/screens/favorites/bloc/favorites_bloc.dart';
 import 'package:pokexplorer/screens/type_details/bloc/type_details_bloc.dart';
 import 'package:pokexplorer/screens/type_selection/bloc/type_selection_bloc.dart';
 import 'package:pokexplorer/services/db_service.dart';
+import 'package:pokexplorer/src/enums/app_enums.dart';
 import 'package:pokexplorer/src/utilities/app_utils.dart' as app_utils;
 import 'package:pokexplorer/src/variables/app_constants.dart' as app_const;
 
@@ -30,6 +31,8 @@ class PokemonDetailsBloc extends Bloc<PokemonDetailsEvent, PokemonDetailsState> 
         isFavorite: selectedPokemon.isFavorite,
       );
 
+      app_utils.myLog(msg: 'SeletectedPreview:$selectedPokemonPreview');
+
       if (selectedPokemon.baseImageUrl.isNotEmpty) {
         pokemonImageList.add(selectedPokemon.baseImageUrl);
       }
@@ -43,17 +46,41 @@ class PokemonDetailsBloc extends Bloc<PokemonDetailsEvent, PokemonDetailsState> 
 
       emit(const PokemonDetailsState(pokemonDetailsStatus: PokemonDetailsStatus.pokemonDetailsLoaded));
     });
+
+    on<UpdatePokemonRelationEvent>((UpdatePokemonRelationEvent event, Emitter<PokemonDetailsState> emit) async {
+      emit(const PokemonDetailsState(pokemonDetailsStatus: PokemonDetailsStatus.updatingPokemoPreviewRelation));
+      //if its not favorite, add it to favorites
+      if (selectedPokemonPreview.isFavorite == RelationValue.notFavorite.value) {
+        selectedPokemon.setIsFavorite(RelationValue.favorite);
+      }
+      // if its favorite, unfavore it
+      else {
+        selectedPokemon.setIsFavorite(RelationValue.notFavorite);
+      }
+      typeDetailsBloc.add(UpdateRelationInTypeDetailsEvent(pokemonPreview: selectedPokemonPreview));
+      emit(const PokemonDetailsState(pokemonDetailsStatus: PokemonDetailsStatus.pokemoPreviewRelationUpdated));
+    });
+
+    on<ExitPokemonDetailsEvent>((ExitPokemonDetailsEvent event, Emitter<PokemonDetailsState> emit) async {
+      emit(const PokemonDetailsState(pokemonDetailsStatus: PokemonDetailsStatus.exitingPokemonDetails));
+
+      typeDetailsBloc.add(const RefreshTypeDetailsEvent()); //refresh list
+      emit(const PokemonDetailsState(pokemonDetailsStatus: PokemonDetailsStatus.readyToExitPokemonDetails));
+    });
   }
 
   //* BLOC Stuff
+
+  late final TypeDetailsBloc typeDetailsBloc;
+  void setTypeDetailsBloc(TypeDetailsBloc typeDetailsBloc) => this.typeDetailsBloc = typeDetailsBloc;
+
   final FrontendUtils frontEndUtils;
   late List<String> pokemonImageList = [];
-  // late DatabaseService _databaseService;
+
   late app_models.Pokemon selectedPokemon = app_models.Pokemon.empty();
   late app_models.PokemonPreview selectedPokemonPreview = app_models.PokemonPreview.empty();
 
   void initPokeDetailsVariables() {
-    // _databaseService = DatabaseService.instance;
     pokemonImageList.clear();
     selectedPokemonPreview = app_models.PokemonPreview.empty();
 

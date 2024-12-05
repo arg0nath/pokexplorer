@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
 
 import 'package:pokexplorer/screens/pokemon_details/bloc/pokemon_details_bloc.dart';
+import 'package:pokexplorer/src/enums/app_enums.dart';
 import 'package:pokexplorer/src/variables/app_variables.dart' as app_vars;
 
 import '../../../src/models/app_models.dart' as app_models;
@@ -34,8 +35,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
   }
 
   Future<bool> _onDetailsWillPop() async {
-    Navigator.pop(context);
-
+    _pokemonDetailsBloc.add(const ExitPokemonDetailsEvent());
     return Future<bool>.value(false);
   }
 
@@ -65,6 +65,8 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
         await app_utils.showLoadingDialog(context);
       } else if (state.pokemonDetailsStatus == PokemonDetailsStatus.pokemonDetailsLoaded) {
         Navigator.pop(context); //close loading dialog
+      } else if (state.pokemonDetailsStatus == PokemonDetailsStatus.readyToExitPokemonDetails) {
+        Navigator.pop(context);
       }
     }, builder: (context, state) {
       return Column(
@@ -86,7 +88,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
               ),
             ),
           ),
-          //name bar
+          //name +favorite button bar
           Expanded(flex: 1, child: detailsCardTitle(context)),
           //pokemon types
           Container(
@@ -128,6 +130,10 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
           ),
           if (_pokemonDetailsBloc.selectedPokemon.name.isNotEmpty)
             Expanded(flex: 3, child: Text(_pokemonDetailsBloc.selectedPokemon.name.toUpperFirst(), style: Theme.of(context).textTheme.titleMedium)),
+          app_widgets.CustomFavoriteButton(
+            isFavorite: _pokemonDetailsBloc.selectedPokemon.isFavorite == RelationValue.favorite.value,
+            onPressed: () => _pokemonDetailsBloc.add(const UpdatePokemonRelationEvent()),
+          )
         ],
       ),
     );
@@ -152,15 +158,13 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
 
   AppBar _pokeDetailsScreenAppbar(BuildContext context) {
     return AppBar(
-      leading: app_widgets.CustomAppbarBackButton(
-        onPressed: () => Navigator.pop(context),
-      ),
+      leading: app_widgets.CustomAppbarBackButton(onPressed: () => _pokemonDetailsBloc.add(const ExitPokemonDetailsEvent())),
       backgroundColor: Colors.transparent,
     );
   }
 
   Widget _pokeDetailsPercentIndicators(BuildContext context) {
-    if (_pokemonDetailsBloc.selectedPokemon.types.isEmpty) return SizedBox.shrink();
+    if (_pokemonDetailsBloc.selectedPokemon.types.isEmpty) return const SizedBox.shrink();
     return Container(
       color: Theme.of(context).canvasColor,
       alignment: Alignment.center,

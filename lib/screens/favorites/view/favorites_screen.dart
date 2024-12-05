@@ -99,12 +99,16 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   Widget _favoritesBody() {
     return BlocConsumer<UserFavoritesBloc, UserFavoritesState>(listener: (context, state) async {
-      if (state.userFavoritesStatus == UserFavoritesStatus.navigatingToPokemonDetails) {
-        await app_utils.showLoadingDialog(context);
-      } else if (state.userFavoritesStatus == UserFavoritesStatus.refreshingFavorites) {
+      if (state.userFavoritesStatus == UserFavoritesStatus.refreshingFavorites) {
         await app_utils.showLoadingDialog(context);
       } else if (state.userFavoritesStatus == UserFavoritesStatus.userFavoritesRefreshed) {
         Navigator.pop(context);
+      } else if (state.userFavoritesStatus == UserFavoritesStatus.loadingUserFavorites) {
+        await app_utils.showLoadingDialog(context);
+      } else if (state.userFavoritesStatus == UserFavoritesStatus.userFavoritesLoaded) {
+        Navigator.pop(context);
+      } else if (state.userFavoritesStatus == UserFavoritesStatus.navigatingToPokemonDetails) {
+        await app_utils.showLoadingDialog(context);
       } else if (state.userFavoritesStatus == UserFavoritesStatus.readyToNavigateToPokemonDetails) {
         Navigator.popAndPushNamed(context, app_const.POKEMON_DETAILS_SCREEN_ROUTE_NAME,
             arguments: app_router.PokemonDetailsScreenArguments(selectedTypeName: _favoritesBloc.selectedPokemon.types.first.name, pokemon: _favoritesBloc.selectedPokemon));
@@ -128,6 +132,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                   },
                 ));
       }
+
       //delete all dialog
       else if (state.userFavoritesStatus == UserFavoritesStatus.showDialogToDeleteAll) {
         await showDialog(

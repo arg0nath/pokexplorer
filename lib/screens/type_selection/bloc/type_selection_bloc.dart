@@ -92,8 +92,6 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
   }
 
   late final FrontendUtils frontEndUtils;
-  late final UserFavoritesBloc userFavoritesBloc;
-  void setUserFavoritesBloc(UserFavoritesBloc userFavoritesBloc) => this.userFavoritesBloc = userFavoritesBloc;
 
   List<app_models.PokemonType> availableTypes = [];
   app_models.PokemonType selectedPokemonType = app_models.PokemonType.empty();

@@ -23,8 +23,13 @@ enum TypeDetailsStatus {
   cancelingSearch,
   searchCancelled,
 
+  refreshingPokemonTypeDetailsRefreshed,
+  pokemonTypeDetailsRefreshed,
   updatingRelationInTypeDetails,
   relationInTypeDetailsUpdated,
+
+  updatingFavoritesTypeDetails,
+  favoritesTypeDetailsUpdated,
 
   exitingTypeDetails,
   typeDetailsExited,

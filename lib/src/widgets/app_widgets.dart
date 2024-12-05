@@ -11,6 +11,7 @@ import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/screens/favorites/bloc/favorites_bloc.dart';
+import 'package:pokexplorer/src/enums/app_enums.dart';
 import 'package:pokexplorer/src/models/app_models.dart' as app_models;
 import 'package:pokexplorer/theme/bloc/theme_bloc.dart';
 import 'package:pokexplorer/screens/type_selection/bloc/type_selection_bloc.dart';
@@ -232,7 +233,7 @@ class _DialogProgressPokeballState extends State<DialogProgressPokeball> {
               Expanded(
                   flex: 1,
                   child: Text(
-                    '${appLocale.loadingDialogMessage}',
+                    appLocale.loadingDialogMessage,
                     style: Theme.of(context).textTheme.bodySmall,
                   )),
               Expanded(
@@ -430,14 +431,14 @@ class _PokemonListCardState extends State<PokemonListCard> {
               //pokemon name
               Expanded(
                 flex: 3,
-                child: Text('${widget.pokemonPreview.name.toUpperFirst()}', maxLines: 3, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodyLarge),
+                child: Text(widget.pokemonPreview.name.toUpperFirst(), maxLines: 3, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodyLarge),
               ),
               //favorite icon
               if (widget.onFavoriteIconTap != null)
                 Visibility(
                   visible: widget.onLongPress == null,
                   child: CustomFavoriteButton(
-                    isFavorite: widget.pokemonPreview.isFavorite == 1,
+                    isFavorite: widget.pokemonPreview.isFavorite == RelationValue.favorite.value,
                     onPressed: widget.onFavoriteIconTap!,
                   ),
                 ),

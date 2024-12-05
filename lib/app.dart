@@ -56,13 +56,13 @@ class PokexplorerApp extends StatefulWidget {
 
     themeBloc = ThemeBloc(frontEndUtils: frontEndUtils);
     welcomeBloc = WelcomeBloc(frontEndUtils: frontEndUtils);
-    favoritesBloc = UserFavoritesBloc(frontEndUtils: frontEndUtils);
+    userFavoritesBloc = UserFavoritesBloc(frontEndUtils: frontEndUtils);
     typeSelectionBloc = TypeSelectionBloc(frontEndUtils: frontEndUtils);
-    typeSelectionBloc.setUserFavoritesBloc(favoritesBloc);
-    typeDetailsBloc = TypeDetailsBloc(frontEndUtils: frontEndUtils);
-    typeDetailsBloc.setUserFavoritesBloc(favoritesBloc);
-    pokemonDetailsBloc = PokemonDetailsBloc(frontEndUtils: frontEndUtils);
 
+    typeDetailsBloc = TypeDetailsBloc(frontEndUtils: frontEndUtils);
+    typeDetailsBloc.setUserFavoritesBloc(userFavoritesBloc);
+    pokemonDetailsBloc = PokemonDetailsBloc(frontEndUtils: frontEndUtils);
+    pokemonDetailsBloc.setTypeDetailsBloc(typeDetailsBloc);
     // #endregion
   }
   // #region // BLocs etc
@@ -74,7 +74,7 @@ class PokexplorerApp extends StatefulWidget {
   late final ThemeBloc themeBloc;
   late final TypeSelectionBloc typeSelectionBloc;
   late final TypeDetailsBloc typeDetailsBloc;
-  late final UserFavoritesBloc favoritesBloc;
+  late final UserFavoritesBloc userFavoritesBloc;
   late final PokemonDetailsBloc pokemonDetailsBloc;
 
   // #endregion
@@ -89,6 +89,7 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
   late FrontendUtils frontEndUtils = widget.frontEndUtils;
   late bool initBoot = true;
   late bool hasSelectedType = false;
+  late DatabaseService databaseService = DatabaseService.instance;
 
   @override
   void initState() {
@@ -115,7 +116,7 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
         BlocProvider<TypeDetailsBloc>(create: (BuildContext context) => widget.typeDetailsBloc),
         BlocProvider<PokemonDetailsBloc>(create: (BuildContext context) => widget.pokemonDetailsBloc),
         BlocProvider<WelcomeBloc>(create: (BuildContext context) => widget.welcomeBloc),
-        BlocProvider<UserFavoritesBloc>(create: (BuildContext context) => widget.favoritesBloc),
+        BlocProvider<UserFavoritesBloc>(create: (BuildContext context) => widget.userFavoritesBloc),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {

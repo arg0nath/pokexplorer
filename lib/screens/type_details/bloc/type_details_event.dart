@@ -23,8 +23,8 @@ class LoadMoreTypeDetailsPokemonsEvent extends TypeDetailsEvent {
   List<Object> get props => <Object>[];
 }
 
-class NavigateToDetailsFromSelectionEvent extends TypeDetailsEvent {
-  const NavigateToDetailsFromSelectionEvent({required this.pokemonPreview});
+class NavigateToDetailsFromTypeDetailsEvent extends TypeDetailsEvent {
+  const NavigateToDetailsFromTypeDetailsEvent({required this.pokemonPreview});
 
   final app_models.PokemonPreview pokemonPreview;
   @override
@@ -57,6 +57,13 @@ class ReturnFromSearchEvent extends TypeDetailsEvent {
 
 class ExitTypeDetailsEvent extends TypeDetailsEvent {
   const ExitTypeDetailsEvent();
+
+  @override
+  List<Object> get props => <Object>[];
+}
+
+class RefreshTypeDetailsEvent extends TypeDetailsEvent {
+  const RefreshTypeDetailsEvent();
 
   @override
   List<Object> get props => <Object>[];

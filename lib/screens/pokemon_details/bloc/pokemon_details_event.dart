@@ -12,3 +12,17 @@ class LoadPokemonDetailsEvent extends PokemonDetailsEvent {
   @override
   List<Object?> get props => <Object>[pokemon];
 }
+
+class UpdatePokemonRelationEvent extends PokemonDetailsEvent {
+  const UpdatePokemonRelationEvent();
+
+  @override
+  List<Object?> get props => <Object>[];
+}
+
+class ExitPokemonDetailsEvent extends PokemonDetailsEvent {
+  const ExitPokemonDetailsEvent();
+
+  @override
+  List<Object?> get props => <Object>[];
+}

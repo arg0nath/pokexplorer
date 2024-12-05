@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:pokexplorer/screens/favorites/bloc/favorites_bloc.dart';
 import 'package:pokexplorer/services/db_service.dart';
+import 'package:pokexplorer/src/enums/app_enums.dart';
 import 'package:pokexplorer/src/variables/app_variables.dart' as app_vars;
 
 import '../../../src/models/app_models.dart' as app_models;
@@ -26,18 +27,18 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
       selectedPokemonTypeDetails = event.typeDetails;
       allPokemonList = List.from(selectedPokemonTypeDetails.pokemon);
 
-      final int fetchLimit = app_const.TYPE_DETAILS_POKEMON_PAGE_SIZE;
+      final int fetchLimit = app_const.TYPE_DETAILS_POKEMON_PAGE_SIZE; //10
       final int itemCount = selectedPokemonTypeDetails.pokemon.length;
       final int loopEndIndex = itemCount < fetchLimit ? itemCount : fetchLimit;
 
-      List<app_models.PokemonPreview> userFavorites = List.from(await _databaseService.getDbPokemonPreviewList());
+      List<app_models.PokemonPreview> userFavorites = List.from(await app_vars.databaseService.getDbPokemonPreviewList());
       favoritePokemonNamesSet = userFavorites.map((e) => e.name).toSet();
       app_utils.myLog(msg: 'favoritePokemonNamesSet: $favoritePokemonNamesSet');
 
       for (int i = 0; i < loopEndIndex; i++) {
         selectedTypePokemonPreviewList.add(selectedPokemonTypeDetails.pokemon[i]);
         if (favoritePokemonNamesSet.contains(selectedPokemonTypeDetails.pokemon[i].name)) {
-          selectedPokemonTypeDetails.pokemon[i].setIsFavorite(1);
+          selectedPokemonTypeDetails.pokemon[i].setIsFavorite(RelationValue.favorite);
         }
       }
 
@@ -71,7 +72,7 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
             })) {
               selectedTypePokemonPreviewList.add(selectedPokemonTypeDetails.pokemon[i]);
               if (favoritePokemonNamesSet.contains(selectedPokemonTypeDetails.pokemon[i].name)) {
-                selectedPokemonTypeDetails.pokemon[i].setIsFavorite(1);
+                selectedPokemonTypeDetails.pokemon[i].setIsFavorite(RelationValue.favorite);
               }
             }
           } else {
@@ -87,7 +88,7 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
       }
     });
 
-    on<NavigateToDetailsFromSelectionEvent>((NavigateToDetailsFromSelectionEvent event, Emitter<TypeDetailsState> emit) async {
+    on<NavigateToDetailsFromTypeDetailsEvent>((NavigateToDetailsFromTypeDetailsEvent event, Emitter<TypeDetailsState> emit) async {
       selectedPokemonPreview = app_models.PokemonPreview.empty();
       selectedPokemonPreview = event.pokemonPreview;
       final bool hasInternet = await InternetConnection().hasInternetAccess;
@@ -98,13 +99,13 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
       }
 
       try {
-        emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.navigatingToPokemonDetails));
+        emit(TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.navigatingToPokemonDetails, searchedPokemonPreviewList: state.searchedPokemonPreviewList));
         selectedPokemon = await frontEndUtils.loadPokemonByName(name: selectedPokemonPreview.name);
-        if (selectedPokemonPreview.isFavorite == 1) {
-          selectedPokemon.setIsFavorite(1);
+        if (selectedPokemonPreview.isFavorite == RelationValue.favorite.value) {
+          selectedPokemon.setIsFavorite(RelationValue.favorite);
         }
 
-        emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.readyToNavigateToPokemonDetails));
+        emit(TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.readyToNavigateToPokemonDetails, searchedPokemonPreviewList: state.searchedPokemonPreviewList));
       } catch (e) {
         emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.errorNavigateToPokemonDetailsFailed));
       }
@@ -116,13 +117,13 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
       final tmpPokemonPreview = event.pokemonPreview;
 
       //if its not favorite
-      if (tmpPokemonPreview.isFavorite == 0) {
-        tmpPokemonPreview.setIsFavorite(1);
+      if (tmpPokemonPreview.isFavorite == RelationValue.notFavorite.value) {
+        tmpPokemonPreview.setIsFavorite(RelationValue.favorite);
         userFavoritesBloc.add(AddPokemonPreviewToFavoritesEvent(pokemonPreview: tmpPokemonPreview));
       }
       // if its favorite
       else {
-        tmpPokemonPreview.setIsFavorite(0);
+        tmpPokemonPreview.setIsFavorite(RelationValue.notFavorite);
         userFavoritesBloc.add(RemovePokemonPreviewFromFavoritesEvent(pokemonPreview: tmpPokemonPreview));
       }
 
@@ -150,7 +151,7 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
             if (pokemonNameLower.contains(wordToSearch)) {
               searchedPokemonPreviewList.add(pokemonPreview);
               if (favoritePokemonNamesSet.contains(pokemonNameLower)) {
-                pokemonPreview.setIsFavorite(1);
+                pokemonPreview.setIsFavorite(RelationValue.favorite);
               }
             }
           }
@@ -172,16 +173,37 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
       emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.searchCancelled));
     });
 
+    on<RefreshTypeDetailsEvent>((RefreshTypeDetailsEvent event, Emitter<TypeDetailsState> emit) async {
+      emit(TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.refreshingPokemonTypeDetailsRefreshed, searchedPokemonPreviewList: state.searchedPokemonPreviewList));
+
+      List<app_models.PokemonPreview> userFavorites = List.from(await app_vars.databaseService.getDbPokemonPreviewList());
+      favoritePokemonNamesSet = {for (var pokemon in userFavorites) pokemon.name};
+
+      // Function to update favorite status
+      void updateFavoriteStatus(List<app_models.PokemonPreview> pokemonList) {
+        for (var pokemonPreview in pokemonList) {
+          pokemonPreview.setIsFavorite(favoritePokemonNamesSet.contains(pokemonPreview.name) ? RelationValue.favorite : RelationValue.notFavorite);
+        }
+      }
+
+      if (state.searchedPokemonPreviewList.isEmpty) {
+        updateFavoriteStatus(selectedTypePokemonPreviewList); // Update favorites for selected type Pokémon
+        emit(TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.pokemonTypeDetailsRefreshed, searchedPokemonPreviewList: state.searchedPokemonPreviewList));
+      } else {
+        List<app_models.PokemonPreview> updatedList = List.from(state.searchedPokemonPreviewList); // Create a new list for safe mutation
+        updateFavoriteStatus(updatedList); // Update favorites for searched Pokémon list
+        emit(TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.pokemonTypeDetailsRefreshed, searchedPokemonPreviewList: updatedList));
+      }
+    });
+
 // #endregion
   }
 
   late final FrontendUtils frontEndUtils;
   TypeDetailsBloc? typeDetailsBloc;
   late final UserFavoritesBloc userFavoritesBloc;
-
   void setUserFavoritesBloc(UserFavoritesBloc userFavoritesBloc) => this.userFavoritesBloc = userFavoritesBloc;
 
-  late DatabaseService _databaseService;
   String selectedTypeName = app_const.EMPTY_STRING;
   List<app_models.PokemonPreview> selectedTypePokemonPreviewList = [];
   app_models.PokemonPreview selectedPokemonPreview = app_models.PokemonPreview.empty();
@@ -195,7 +217,6 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
   Set<String> favoritePokemonNamesSet = <String>{};
 
   void initializeTypeDetailsVariables() {
-    _databaseService = DatabaseService.instance;
     // favoritePokemons.clear();
     favoritePokemonNamesSet.clear();
     selectedPokemonPreview = app_models.PokemonPreview.empty();

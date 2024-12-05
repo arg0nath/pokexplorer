@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/router/app_router.dart' as app_router;
+import 'package:pokexplorer/screens/favorites/bloc/favorites_bloc.dart';
 import 'package:pokexplorer/screens/type_details/bloc/type_details_bloc.dart';
 import 'package:pokexplorer/src/models/app_models.dart' as app_models;
 import 'package:pokexplorer/src/utilities/app_utils.dart' as app_utils;
@@ -69,7 +70,7 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
     );
   }
 
-  BlocConsumer<TypeDetailsBloc, TypeDetailsState> _typeDetailsBody() {
+  Widget _typeDetailsBody() {
     return BlocConsumer<TypeDetailsBloc, TypeDetailsState>(
         listener: (context, state) async {
           if (state.typeDetailsStatus == TypeDetailsStatus.loadingPokemons) {
@@ -112,7 +113,7 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
                   ),
                   //search results not found
                   if (typeDetailsState.searchedPokemonPreviewList.isEmpty && typeDetailsState.typeDetailsStatus == TypeDetailsStatus.pokemonSearched)
-                    SliverToBoxAdapter(
+                    const SliverToBoxAdapter(
                       child: Center(child: app_widgets.NoPokemonIndicator()),
                     ),
                   // search results found
@@ -121,7 +122,7 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
                       itemCount: displayList.length,
                       itemBuilder: (context, index) => app_widgets.PokemonListCard(
                         onFavoriteIconTap: () => _typeDetailsBloc.add(UpdateRelationInTypeDetailsEvent(pokemonPreview: displayList[index])),
-                        onCardTap: () => _typeDetailsBloc.add(NavigateToDetailsFromSelectionEvent(pokemonPreview: displayList[index])),
+                        onCardTap: () => _typeDetailsBloc.add(NavigateToDetailsFromTypeDetailsEvent(pokemonPreview: displayList[index])),
                         pokemonPreview: displayList[index],
                       ),
                     ),
@@ -131,7 +132,7 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
                       itemCount: _typeDetailsBloc.selectedTypePokemonPreviewList.length,
                       itemBuilder: (context, index) => app_widgets.PokemonListCard(
                         onFavoriteIconTap: () => _typeDetailsBloc.add(UpdateRelationInTypeDetailsEvent(pokemonPreview: displayList[index])),
-                        onCardTap: () => _typeDetailsBloc.add(NavigateToDetailsFromSelectionEvent(pokemonPreview: _typeDetailsBloc.selectedTypePokemonPreviewList[index])),
+                        onCardTap: () => _typeDetailsBloc.add(NavigateToDetailsFromTypeDetailsEvent(pokemonPreview: _typeDetailsBloc.selectedTypePokemonPreviewList[index])),
                         pokemonPreview: _typeDetailsBloc.selectedTypePokemonPreviewList[index],
                       ),
                     ),

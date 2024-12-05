@@ -4,6 +4,12 @@ enum PokemonDetailsStatus {
   pokemonDetailsNotLoaded,
   loadingPokemonDetails,
   pokemonDetailsLoaded,
+
+  updatingPokemoPreviewRelation,
+  pokemoPreviewRelationUpdated,
+
+  exitingPokemonDetails,
+  readyToExitPokemonDetails,
 }
 
 class PokemonDetailsState extends Equatable {

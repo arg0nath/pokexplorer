@@ -67,9 +67,7 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
           }
 
           if (i < selectedPokemonTypeDetails.pokemon.length) {
-            if (!selectedTypePokemonPreviewList.any((pokemonPreview) {
-              return pokemonPreview.name == selectedPokemonTypeDetails.pokemon[i].name;
-            })) {
+            if (!selectedTypePokemonPreviewList.any((pokemonPreview) => pokemonPreview.name == selectedPokemonTypeDetails.pokemon[i].name)) {
               selectedTypePokemonPreviewList.add(selectedPokemonTypeDetails.pokemon[i]);
               if (favoritePokemonNamesSet.contains(selectedPokemonTypeDetails.pokemon[i].name)) {
                 selectedPokemonTypeDetails.pokemon[i].setIsFavorite(RelationValue.favorite);
@@ -179,19 +177,12 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
       List<app_models.PokemonPreview> userFavorites = List.from(await app_vars.databaseService.getDbPokemonPreviewList());
       favoritePokemonNamesSet = {for (var pokemon in userFavorites) pokemon.name};
 
-      // Function to update favorite status
-      void updateFavoriteStatus(List<app_models.PokemonPreview> pokemonList) {
-        for (var pokemonPreview in pokemonList) {
-          pokemonPreview.setIsFavorite(favoritePokemonNamesSet.contains(pokemonPreview.name) ? RelationValue.favorite : RelationValue.notFavorite);
-        }
-      }
-
       if (state.searchedPokemonPreviewList.isEmpty) {
-        updateFavoriteStatus(selectedTypePokemonPreviewList); // Update favorites for selected type Pokémon
+        _updateFavoriteStatus(selectedTypePokemonPreviewList);
         emit(TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.pokemonTypeDetailsRefreshed, searchedPokemonPreviewList: state.searchedPokemonPreviewList));
       } else {
-        List<app_models.PokemonPreview> updatedList = List.from(state.searchedPokemonPreviewList); // Create a new list for safe mutation
-        updateFavoriteStatus(updatedList); // Update favorites for searched Pokémon list
+        List<app_models.PokemonPreview> updatedList = List.from(state.searchedPokemonPreviewList);
+        _updateFavoriteStatus(updatedList);
         emit(TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.pokemonTypeDetailsRefreshed, searchedPokemonPreviewList: updatedList));
       }
     });
@@ -226,5 +217,11 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
     selectedTypePokemonPreviewList.clear();
     selectedPokemonTypeDetails = app_models.PokemonTypeDetails.empty();
     allPokemonList.clear();
+  }
+
+  void _updateFavoriteStatus(List<app_models.PokemonPreview> pokemonList) {
+    for (var pokemonPreview in pokemonList) {
+      pokemonPreview.setIsFavorite(favoritePokemonNamesSet.contains(pokemonPreview.name) ? RelationValue.favorite : RelationValue.notFavorite);
+    }
   }
 }

@@ -5,12 +5,12 @@ import 'package:pokexplorer/screens/favorites/view/favorites_screen.dart';
 import 'package:pokexplorer/screens/home/view/home_screen.dart';
 import 'package:pokexplorer/screens/type_selection/view/type_selection_screen.dart';
 
-import '../src/utilities/front_end_utils.dart';
+import '../core/utilities/front_end_utils.dart';
 import '../screens/pokemon_details/view/pokemon_details_screen.dart';
 import '../screens/type_details/view/type_details_screen.dart';
 import '../screens/welcome/welcome.dart';
-import '../src/models/app_models.dart' as app_models;
-import '../src/variables/app_constants.dart' as app_const;
+import '../core/models/app_models.dart' as app_models;
+import '../core/variables/app_constants.dart' as app_const;
 
 // #region // * Arguments
 

@@ -2,14 +2,13 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:pokexplorer/screens/favorites/bloc/favorites_bloc.dart';
-import 'package:pokexplorer/services/db_service.dart';
-import 'package:pokexplorer/src/enums/app_enums.dart';
-import 'package:pokexplorer/src/variables/app_variables.dart' as app_vars;
+import 'package:pokexplorer/core/enums/app_enums.dart';
+import 'package:pokexplorer/core/variables/app_variables.dart' as app_vars;
 
-import '../../../src/models/app_models.dart' as app_models;
-import '../../../src/utilities/app_utils.dart' as app_utils;
-import '../../../src/utilities/front_end_utils.dart';
-import '../../../src/variables/app_constants.dart' as app_const;
+import '../../../core/models/app_models.dart' as app_models;
+import '../../../core/utilities/app_utils.dart' as app_utils;
+import '../../../core/utilities/front_end_utils.dart';
+import '../../../core/variables/app_constants.dart' as app_const;
 
 part 'type_details_event.dart';
 part 'type_details_state.dart';

@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:pokexplorer/src/variables/app_variables.dart';
-import 'package:pokexplorer/src/widgets/app_widgets.dart' as app_widgets;
+import 'package:pokexplorer/core/variables/app_variables.dart';
+import 'package:pokexplorer/core/widgets/app_widgets.dart' as app_widgets;
 import 'package:toastification/toastification.dart';
 import 'package:url_launcher/url_launcher.dart';
 

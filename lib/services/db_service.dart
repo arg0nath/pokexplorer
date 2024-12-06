@@ -1,6 +1,6 @@
-import 'package:pokexplorer/src/models/app_models.dart' as app_models;
-import 'package:pokexplorer/src/utilities/app_utils.dart' as app_utils;
-import 'package:pokexplorer/src/variables/app_constants.dart' as app_const;
+import 'package:pokexplorer/core/models/app_models.dart' as app_models;
+import 'package:pokexplorer/core/utilities/app_utils.dart' as app_utils;
+import 'package:pokexplorer/core/variables/app_constants.dart' as app_const;
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 

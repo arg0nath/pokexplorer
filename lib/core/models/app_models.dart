@@ -1,4 +1,4 @@
-import 'package:pokexplorer/src/enums/app_enums.dart';
+import 'package:pokexplorer/core/enums/app_enums.dart';
 
 import '../utilities/app_utils.dart' as app_utils;
 import '../variables/app_constants.dart' as app_const;

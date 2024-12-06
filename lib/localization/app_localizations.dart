@@ -4,7 +4,7 @@ class LocalizationManager {
   static LocalizationManager? _instance;
 
   // Current locale (set this at the start of the app)
-  Locale _locale = Locale('en', 'US');
+  Locale _locale = const Locale('en', 'US');
 
   // Singleton constructor
   LocalizationManager._();

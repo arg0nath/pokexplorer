@@ -3,8 +3,8 @@ import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/screens/favorites/favorites.dart';
 
 import 'package:pokexplorer/screens/type_selection/view/type_selection_screen.dart';
-import 'package:pokexplorer/src/variables/app_constants.dart' as app_const;
-import '../../../src/variables/app_variables.dart' as app_vars;
+import 'package:pokexplorer/core/variables/app_constants.dart' as app_const;
+import '../../../core/variables/app_variables.dart' as app_vars;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

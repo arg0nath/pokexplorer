@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
-import 'package:pokexplorer/src/variables/app_constants.dart' as app_const;
+import 'package:pokexplorer/core/variables/app_constants.dart' as app_const;
 import 'package:pokexplorer/screens/welcome/bloc/welcome_bloc.dart';
-import 'package:pokexplorer/src/widgets/app_widgets.dart' as app_widgets;
-import '../../../src/variables/app_variables.dart' as app_vars;
+import 'package:pokexplorer/core/widgets/app_widgets.dart' as app_widgets;
+import '../../../core/variables/app_variables.dart' as app_vars;
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});

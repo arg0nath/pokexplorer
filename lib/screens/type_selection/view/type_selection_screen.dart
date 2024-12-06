@@ -5,11 +5,11 @@ import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/router/app_router.dart' as app_router;
 
 import 'package:pokexplorer/screens/type_selection/bloc/type_selection_bloc.dart';
-import 'package:pokexplorer/src/models/app_models.dart' as app_models;
-import 'package:pokexplorer/src/utilities/app_utils.dart' as app_utils;
-import 'package:pokexplorer/src/variables/app_constants.dart' as app_const;
-import 'package:pokexplorer/src/widgets/app_widgets.dart' as app_widgets;
-import '../../../src/variables/app_variables.dart' as app_vars;
+import 'package:pokexplorer/core/models/app_models.dart' as app_models;
+import 'package:pokexplorer/core/utilities/app_utils.dart' as app_utils;
+import 'package:pokexplorer/core/variables/app_constants.dart' as app_const;
+import 'package:pokexplorer/core/widgets/app_widgets.dart' as app_widgets;
+import '../../../core/variables/app_variables.dart' as app_vars;
 
 class TypeSelectionScreen extends StatefulWidget {
   const TypeSelectionScreen({super.key});

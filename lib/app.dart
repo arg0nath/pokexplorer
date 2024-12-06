@@ -10,13 +10,13 @@ import 'package:pokexplorer/theme/bloc/theme_state.dart';
 
 import 'package:pokexplorer/screens/type_selection/bloc/type_selection_bloc.dart';
 
-import 'src/data_repository/back_end_utils.dart';
-import 'src/data_repository/local_data_utils.dart';
-import 'src/utilities/app_utils.dart' as app_utils;
-import 'src/variables/app_constants.dart' as app_const;
-import 'src/variables/app_variables.dart' as app_vars;
+import 'core/data_repository/back_end_utils.dart';
+import 'core/data_repository/local_data_utils.dart';
+import 'core/utilities/app_utils.dart' as app_utils;
+import 'core/variables/app_constants.dart' as app_const;
+import 'core/variables/app_variables.dart' as app_vars;
 
-import 'src/utilities/front_end_utils.dart';
+import 'core/utilities/front_end_utils.dart';
 import 'router/app_router.dart' as app_router;
 
 import 'screens/pokemon_details/bloc/pokemon_details_bloc.dart';

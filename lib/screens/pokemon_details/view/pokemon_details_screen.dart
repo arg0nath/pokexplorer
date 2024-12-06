@@ -4,12 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
 
 import 'package:pokexplorer/screens/pokemon_details/bloc/pokemon_details_bloc.dart';
-import 'package:pokexplorer/src/enums/app_enums.dart';
-import 'package:pokexplorer/src/variables/app_variables.dart' as app_vars;
+import 'package:pokexplorer/core/enums/app_enums.dart';
+import 'package:pokexplorer/core/variables/app_variables.dart' as app_vars;
 
-import '../../../src/models/app_models.dart' as app_models;
-import '../../../src/utilities/app_utils.dart' as app_utils;
-import 'package:pokexplorer/src/widgets/app_widgets.dart' as app_widgets;
+import '../../../core/models/app_models.dart' as app_models;
+import '../../../core/utilities/app_utils.dart' as app_utils;
+import 'package:pokexplorer/core/widgets/app_widgets.dart' as app_widgets;
 
 class PokemonDetailsScreen extends StatefulWidget {
   const PokemonDetailsScreen({super.key, required this.pokemon, required this.selectedTypeName});

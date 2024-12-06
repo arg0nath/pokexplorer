@@ -1,18 +1,13 @@
 // import 'package:android_path_provider/android_path_provider.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
-import 'package:pokexplorer/screens/favorites/bloc/favorites_bloc.dart';
 import 'package:pokexplorer/screens/type_details/bloc/type_details_bloc.dart';
-import 'package:pokexplorer/screens/type_selection/bloc/type_selection_bloc.dart';
-import 'package:pokexplorer/services/db_service.dart';
-import 'package:pokexplorer/src/enums/app_enums.dart';
-import 'package:pokexplorer/src/utilities/app_utils.dart' as app_utils;
-import 'package:pokexplorer/src/variables/app_constants.dart' as app_const;
+import 'package:pokexplorer/core/enums/app_enums.dart';
+import 'package:pokexplorer/core/utilities/app_utils.dart' as app_utils;
 
-import '../../../src/models/app_models.dart' as app_models;
+import '../../../core/models/app_models.dart' as app_models;
 
-import '../../../src/utilities/front_end_utils.dart';
+import '../../../core/utilities/front_end_utils.dart';
 
 part 'pokemon_details_event.dart';
 part 'pokemon_details_state.dart';

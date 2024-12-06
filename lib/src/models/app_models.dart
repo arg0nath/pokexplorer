@@ -108,7 +108,6 @@ class PokemonPreview {
 
 // json converters
   factory PokemonPreview.fromJson(Map<String, dynamic> json) {
-    String url = json['url'] ?? app_const.EMPTY_STRING;
     int id = app_utils.extractPokemonPreviewId(json['url']);
     return PokemonPreview(
       id: id,

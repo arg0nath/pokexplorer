@@ -1,15 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/router/app_router.dart' as app_router;
 import 'package:pokexplorer/screens/favorites/bloc/favorites_bloc.dart';
-import 'package:pokexplorer/screens/type_details/bloc/type_details_bloc.dart';
 import 'package:pokexplorer/src/models/app_models.dart' as app_models;
 import 'package:pokexplorer/src/utilities/app_utils.dart' as app_utils;
 import 'package:pokexplorer/src/variables/app_constants.dart' as app_const;
-import 'package:pokexplorer/src/variables/app_variables.dart' as app_vars;
 import 'package:pokexplorer/src/widgets/app_widgets.dart' as app_widgets;
 
 class FavoritesScreen extends StatefulWidget {
@@ -153,12 +149,12 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
       return RefreshIndicator(
         onRefresh: () async {
-          _favoritesBloc.add(RefreshFavoritesEvent());
+          _favoritesBloc.add(const RefreshFavoritesEvent());
         },
         child: Scrollbar(
           thumbVisibility: false,
           child: (displayList.isEmpty)
-              ? Center(child: app_widgets.NoPokemonIndicator())
+              ? const Center(child: app_widgets.NoPokemonIndicator())
               : CustomScrollView(
                   slivers: [
                     SliverList.builder(

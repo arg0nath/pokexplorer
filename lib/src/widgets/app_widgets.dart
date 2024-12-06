@@ -1,16 +1,12 @@
 import 'dart:math' as math;
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cached_network_svg_image/cached_network_svg_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
-import 'package:pokexplorer/screens/favorites/bloc/favorites_bloc.dart';
 import 'package:pokexplorer/src/enums/app_enums.dart';
 import 'package:pokexplorer/src/models/app_models.dart' as app_models;
 import 'package:pokexplorer/theme/bloc/theme_bloc.dart';
@@ -132,14 +128,7 @@ class CustomAppbarBackButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-        hoverColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        onPressed: onPressed,
-        icon: const Icon(
-          Icons.arrow_back_outlined,
-          color: app_const.PRIMARY_TEXT_COLOR,
-        ));
+    return IconButton(hoverColor: Colors.transparent, highlightColor: Colors.transparent, onPressed: onPressed, icon: const Icon(Icons.arrow_back_outlined, color: app_const.PRIMARY_TEXT_COLOR));
   }
 }
 
@@ -542,7 +531,7 @@ class NoPokemonIndicator extends StatelessWidget {
       children: [
         Image.asset(app_const.EMPTY_POKEBALL_PNG, width: app_vars.logicalHeight * 0.1, height: app_vars.logicalHeight * 0.1), // Replace with your image path
         const SizedBox(height: 10),
-        Text(LocalizationManager.getInstance().noPokemonFound, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+        Text(LocalizationManager.getInstance().noPokemonFound, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
       ],
     );
   }

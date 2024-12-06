@@ -117,7 +117,7 @@ ToastificationItem myToast(BuildContext context, String msg) {
   toastification.dismissAll();
   return toastification.show(
     icon: Image.asset(app_const.POKEBALL_PNG, width: 20, height: 20),
-    title: Container(
+    title: SizedBox(
         width: logicalWidth * 0.9,
         child: Text(
           msg,
@@ -148,6 +148,6 @@ Future<Widget?> showLoadingDialog(BuildContext context) {
     barrierDismissible: false,
     context: context,
     barrierColor: const Color(0x73A3A3A3),
-    builder: (BuildContext context) => app_widgets.DialogProgressPokeball(hardBackEnabled: false).animate().fade(duration: 100.ms).scale(),
+    builder: (BuildContext context) => const app_widgets.DialogProgressPokeball(hardBackEnabled: false).animate().fade(duration: 100.ms).scale(),
   );
 }

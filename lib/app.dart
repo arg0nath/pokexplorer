@@ -1,9 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pokexplorer/screens/favorites/bloc/favorites_bloc.dart';
 import 'package:pokexplorer/screens/home/view/home_screen.dart';
 import 'package:pokexplorer/services/db_service.dart';
@@ -12,7 +9,6 @@ import 'package:pokexplorer/theme/bloc/theme_state.dart';
 // import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 import 'package:pokexplorer/screens/type_selection/bloc/type_selection_bloc.dart';
-import 'package:pokexplorer/screens/type_selection/view/type_selection_screen.dart';
 
 import 'src/data_repository/back_end_utils.dart';
 import 'src/data_repository/local_data_utils.dart';

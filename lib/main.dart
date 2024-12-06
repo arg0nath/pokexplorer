@@ -7,14 +7,13 @@ import 'package:pokexplorer/services/db_service.dart';
 import 'package:pokexplorer/src/variables/app_variables.dart' as app_vars;
 import 'app.dart';
 import 'src/utilities/app_utils.dart' as app_utils;
-import 'src/variables/app_constants.dart' as app_const;
 import 'src/classes/app_classes.dart' as app_classes;
 
 Future<bool> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
-  LocalizationManager.getInstance().setLocale(Locale('en', 'US'));
+  LocalizationManager.getInstance().setLocale(const Locale('en', 'US'));
   app_vars.databaseService = DatabaseService.instance;
   await app_classes.PreferenceUtils.init();
 

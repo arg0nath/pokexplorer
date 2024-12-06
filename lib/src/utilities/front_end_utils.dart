@@ -1,6 +1,3 @@
-import 'package:pokexplorer/src/utilities/app_utils.dart' as app_utils;
-import 'package:pokexplorer/src/variables/app_constants.dart' as app_const;
-
 import '../data_repository/back_end_utils.dart';
 import '../data_repository/local_data_utils.dart';
 import '../models/app_models.dart' as app_models;

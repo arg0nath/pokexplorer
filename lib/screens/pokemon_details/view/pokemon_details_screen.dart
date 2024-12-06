@@ -1,8 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
 
 import 'package:pokexplorer/screens/pokemon_details/bloc/pokemon_details_bloc.dart';
@@ -12,7 +10,6 @@ import 'package:pokexplorer/src/variables/app_variables.dart' as app_vars;
 import '../../../src/models/app_models.dart' as app_models;
 import '../../../src/utilities/app_utils.dart' as app_utils;
 import 'package:pokexplorer/src/widgets/app_widgets.dart' as app_widgets;
-import '../../../src/variables/app_constants.dart' as app_const;
 
 class PokemonDetailsScreen extends StatefulWidget {
   const PokemonDetailsScreen({super.key, required this.pokemon, required this.selectedTypeName});

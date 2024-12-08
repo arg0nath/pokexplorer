@@ -55,7 +55,7 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
         return;
       }
 
-      emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.loadingMorePokemons));
+      emit(TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.loadingMorePokemons, searchedPokemonPreviewList: state.searchedPokemonPreviewList));
 
       int tmpStartIndex = selectedTypePokemonPreviewList.length; // start where I left
 
@@ -77,11 +77,11 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
           }
         }
 
-        emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.morePokemonsLoaded));
+        emit(TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.morePokemonsLoaded, searchedPokemonPreviewList: state.searchedPokemonPreviewList));
       } catch (e) {
         app_utils.myLog(level: app_const.LOG_ERROR, msg: 'loadMore pokemon error: $e');
 
-        emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.morePokemonsLoadedFailed));
+        emit(TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.morePokemonsLoadedFailed, searchedPokemonPreviewList: state.searchedPokemonPreviewList));
       }
     });
 

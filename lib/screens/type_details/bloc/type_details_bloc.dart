@@ -198,9 +198,7 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
   List<app_models.PokemonPreview> selectedTypePokemonPreviewList = [];
   app_models.PokemonPreview selectedPokemonPreview = app_models.PokemonPreview.empty();
   app_models.Pokemon selectedPokemon = app_models.Pokemon.empty();
-
   app_models.PokemonTypeDetails selectedPokemonTypeDetails = app_models.PokemonTypeDetails.empty();
-
   List<app_models.PokemonPreview> searchedPokemonPreviewList = <app_models.PokemonPreview>[];
   // late List<app_models.PokemonPreview> favoritePokemons = [];
   List<app_models.PokemonPreview> allPokemonList = [];

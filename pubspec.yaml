@@ -1,0 +1,94 @@
+name: pokexplorer
+description: "A Flutter-based project for interview purposes - Android only"
+
+# Prevent accidental publishing to pub.dev.
+publish_to: "none"
+
+version: 1.1.003+11003
+
+environment:
+  sdk: ^3.5.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  bloc: ^8.1.4
+  flutter_bloc: ^8.1.6
+  equatable: ^2.0.5
+  http: ^1.2.2
+  shared_preferences: 2.2.3
+  page_transition: ^2.1.0
+  flutter_animate: ^4.5.0
+
+  lottie: ^3.1.3
+  cached_network_image: ^3.4.1
+  flutter_svg: ^2.0.14
+
+  carousel_slider: ^5.0.0
+  toastification: ^2.3.0
+  flutter_launcher_icons: ^0.14.1
+  percent_indicator: ^4.2.3
+  url_launcher: ^6.3.1
+  internet_connection_checker_plus: ^2.5.2
+  sqflite: ^2.4.1
+  path: ^1.9.0
+  cached_network_svg_image: ^1.1.0
+  # flutter_localization: ^0.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^4.0.0
+
+flutter_launcher_icons:
+  android: true
+  image_path_android: "assets/icon/icon.png"
+  adaptive_icon_background: "#ffffff" # only available for Android 8.0 devices and above
+  adaptive_icon_foreground: "assets/icon/icon.png" # only available for Android 8.0 devices and above
+
+flutter:
+  uses-material-design: true
+
+  # Enable generation of localized Strings from arb files.
+  generate: true
+
+  # type icons from https://bulbapedia.bulbagarden.net/wiki/Type#Icons
+
+  assets:
+    - assets/images/fire_icon.png
+    - assets/images/water_icon.png
+    - assets/images/grass_icon.png
+    - assets/images/electric_icon.png
+    - assets/images/dragon_icon.png
+    - assets/images/psychic_icon.png
+    - assets/images/ghost_icon.png
+    - assets/images/dark_icon.png
+    - assets/images/steel_icon.png
+    - assets/images/fairy_icon.png
+    - assets/images/normal_icon.png
+    - assets/images/fighting_icon.png
+    - assets/images/flying_icon.png
+    - assets/images/poison_icon.png
+    - assets/images/ground_icon.png
+    - assets/images/rock_icon.png
+    - assets/images/bug_icon.png
+    - assets/images/ice_icon.png
+    - assets/images/pokedex.png
+
+    - assets/images/pokeball_outlined.png
+    - assets/images/pokeball.png
+    - assets/images/gonnasearch.png
+    - assets/images/pokexplorer_logo.png
+    - assets/svgs/official_pokemon_logo.svg
+
+    - assets/images/emptyPokeball.png
+    - assets/lottieFiles/pokeball.json
+
+  fonts:
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/Lato-Regular.ttf

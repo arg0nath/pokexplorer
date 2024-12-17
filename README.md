@@ -4,7 +4,7 @@
 
 **Developed by**: Vasileios Makris (vamakris07@gmail.com)
 
-**OS**: Android only
+**OS**: Android & iOS
 
 Welcome to the **Pokéxplorer**, a mobile application that allows users to explore Pokémon from various types and learn more about their stats and details. Powered by the [PokéAPI](https://pokeapi.co/) and Flutter SDK
 

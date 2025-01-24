@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -118,6 +119,7 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
         builder: (context, state) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
+
             home: _initialHomePage,
             builder: (context, child) => child!,
             onGenerateTitle: (BuildContext context) => app_const.APP_NAME,

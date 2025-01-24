@@ -1,18 +1,17 @@
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:pokexplorer/core/variables/app_variables.dart';
-import 'package:pokexplorer/core/widgets/app_widgets.dart' as app_widgets;
+import 'package:intl/intl.dart';
 import 'package:toastification/toastification.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:pokexplorer/core/variables/app_variables.dart';
+import 'package:pokexplorer/core/widgets/app_widgets.dart' as app_widgets;
+
 import '../variables/app_constants.dart' as app_const;
 import 'front_end_utils.dart';
-
-import 'package:flutter/foundation.dart';
-
-import 'package:intl/intl.dart';
 
 extension StringExtensions on String {
   /// Converts the very first character in this string to upper case.

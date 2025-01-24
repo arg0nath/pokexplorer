@@ -43,8 +43,11 @@ class Router {
     switch (settings.name) {
       case app_const.TYPE_DETAILS_SCREEN_PAGE_ROUTE_NAME:
         final TypeDetailsScreenArguments args = settings.arguments! as TypeDetailsScreenArguments;
-        return PageTransition<dynamic>(
-            type: app_const.PAGE_TRANSITION_TYPE_FADE, settings: const RouteSettings(name: app_const.TYPE_DETAILS_SCREEN_PAGE_ROUTE_NAME), child: TypeDetailsScreen(typeDetails: args.typeDetails));
+
+        return MaterialPageRoute(builder: (context) => TypeDetailsScreen(typeDetails: args.typeDetails));
+
+      //     return PageTransition<dynamic>(
+      //         type: app_const.PAGE_TRANSITION_TYPE_FADE, settings: const RouteSettings(name: app_const.TYPE_DETAILS_SCREEN_PAGE_ROUTE_NAME), child: TypeDetailsScreen(typeDetails: args.typeDetails));
       case app_const.TYPE_SELECTION_SCREEN_PAGE_ROUTE_NAME:
         return PageTransition<dynamic>(
             type: app_const.PAGE_TRANSITION_TYPE_FADE, settings: const RouteSettings(name: app_const.TYPE_SELECTION_SCREEN_PAGE_ROUTE_NAME), child: const TypeSelectionScreen());

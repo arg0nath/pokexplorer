@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokexplorer/core/utilities/front_end_utils.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/core/variables/app_constants.dart' as app_const;
 import 'package:pokexplorer/screens/welcome/bloc/welcome_bloc.dart';
@@ -31,7 +32,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       extendBody: true,
-      bottomNavigationBar: _welcomeBottomBar(context),
+      bottomNavigationBar: WelcomeBottomBar(appLocale: appLocale, frontEndUtils: _welcomeBloc.frontEndUtils),
       body: _welcomeBody(),
     );
   }
@@ -75,10 +76,23 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       },
     );
   }
+}
 
-  Container _welcomeBottomBar(BuildContext context) {
+class WelcomeBottomBar extends StatelessWidget {
+  const WelcomeBottomBar({
+    super.key,
+    required this.frontEndUtils,
+    required this.appLocale,
+  });
+
+  final FrontendUtils frontEndUtils;
+  final LocalizationManager appLocale;
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
+      margin: EdgeInsets.only(bottom: app_vars.logicalHeight * 0.02, right: app_vars.logicalWidth * 0.05),
       color: Colors.transparent,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -86,7 +100,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           app_widgets.CustomActionButton(
             text: appLocale.welcomeButtonText,
             onPressed: () {
-              _welcomeBloc.frontEndUtils.localDataUtils.saveIsInitBootToPrefs(false);
+              frontEndUtils.localDataUtils.saveIsInitBootToPrefs(false);
               Navigator.popUntil(context, (Route route) => route.isFirst);
               Navigator.pushReplacementNamed(context, app_const.HOME_SCREEN_PAGE_ROUTE_NAME);
             },

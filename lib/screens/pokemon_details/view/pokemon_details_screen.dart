@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,21 +32,23 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
     super.initState();
   }
 
-  Future<bool> _onDetailsWillPop() async {
-    _pokemonDetailsBloc.add(const ExitPokemonDetailsEvent());
-    return Future<bool>.value(false);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvoked: (bool didPop) async {
-        if (didPop) {
-          return;
-        }
-        await _onDetailsWillPop();
+    return PageTransitionSwitcher(
+      layoutBuilder: (entries) {
+        return Stack(
+          alignment: Alignment.topCenter,
+          children: entries,
+        );
       },
+      transitionBuilder: (child, animation, secondaryAnimation) {
+        return FadeThroughTransition(
+          animation: animation,
+          secondaryAnimation: secondaryAnimation,
+          child: child,
+        );
+      },
+      duration: const Duration(milliseconds: 300),
       child: Scaffold(
         appBar: _pokeDetailsScreenAppbar(context),
         extendBody: true,

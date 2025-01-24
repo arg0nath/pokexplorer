@@ -3,6 +3,15 @@ part of '../app.dart';
 ThemeData darkTheme() {
   return ThemeData(
     brightness: Brightness.dark,
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {
+        TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+        TargetPlatform.iOS: FadeThroughPageTransitionsBuilder(),
+        TargetPlatform.macOS: FadeThroughPageTransitionsBuilder(),
+        TargetPlatform.windows: FadeThroughPageTransitionsBuilder(),
+        TargetPlatform.linux: FadeThroughPageTransitionsBuilder(),
+      },
+    ),
     shadowColor: app_const.SHADOW_COLOR_DARK,
     canvasColor: app_const.BLACK_IOS,
     useMaterial3: true,

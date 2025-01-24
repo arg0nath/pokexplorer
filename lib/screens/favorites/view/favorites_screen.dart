@@ -31,10 +31,6 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     super.dispose();
   }
 
-  Future<bool> _onWillPop() async {
-    return Future<bool>.value(false);
-  }
-
   List<Widget> _showActions(BuildContext context) {
     void handleClick(dynamic value) {
       switch (value as int) {
@@ -77,19 +73,10 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvoked: (bool didPop) async {
-        if (didPop) {
-          return;
-        }
-        await _onWillPop();
-      },
-      child: Scaffold(
-        appBar: _userFavoritesAppbar(context),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        body: _favoritesBody(),
-      ),
+    return Scaffold(
+      appBar: _userFavoritesAppbar(context),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      body: _favoritesBody(),
     );
   }
 

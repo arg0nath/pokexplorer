@@ -108,7 +108,7 @@ class MyTypesGrid extends StatefulWidget {
 class _MyTypesGridState extends State<MyTypesGrid> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: app_vars.logicalHeight,
       // padding: EdgeInsets.only(bottom: app_vars.logicalHeight * 0.1),
       child: GridView.builder(
@@ -150,6 +150,7 @@ class MyTypeCard extends StatefulWidget {
 class _MyTypeCardState extends State<MyTypeCard> {
   @override
   Widget build(BuildContext context) {
+    final typeColor = widget.pokemonType.getTypeColor();
     return GestureDetector(
       onTap: widget.onTap,
       child: Stack(
@@ -158,18 +159,18 @@ class _MyTypeCardState extends State<MyTypeCard> {
           Center(
             child: Container(
               decoration: BoxDecoration(
-                  color: Theme.of(context).cardColor,
+                  color: widget.pokemonType.isSelected ? typeColor.withAlpha(30) : Colors.transparent,
                   borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  border: Border.all(color: widget.pokemonType.isSelected ? Theme.of(context).toggleButtonsTheme.selectedColor! : Theme.of(context).toggleButtonsTheme.disabledColor!)),
+                  border: Border.all(color: widget.pokemonType.isSelected ? typeColor : Theme.of(context).toggleButtonsTheme.disabledColor!)),
               padding: const EdgeInsets.all(10),
               width: app_vars.logicalWidth * 0.4,
               child: Center(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 5,
                   children: [
                     Expanded(flex: 2, child: Image.asset(widget.pokemonType.icon)),
-                    const SizedBox(height: 5),
                     Flexible(
                         flex: 1,
                         child: Text(
@@ -183,11 +184,10 @@ class _MyTypeCardState extends State<MyTypeCard> {
           ),
           //selected or not - icon
           Positioned(
-              bottom: 7,
-              right: app_vars.logicalWidth * 0.06,
-              child: (widget.pokemonType.isSelected)
-                  ? Icon(Icons.check_circle_outline_rounded, color: Theme.of(context).toggleButtonsTheme.selectedColor)
-                  : Icon(Icons.circle_outlined, color: Theme.of(context).toggleButtonsTheme.disabledColor)),
+            bottom: 7,
+            right: app_vars.logicalWidth * 0.06,
+            child: (widget.pokemonType.isSelected) ? Icon(Icons.check_circle_outline_rounded, color: typeColor) : const Icon(Icons.circle_outlined, color: Colors.black12),
+          ),
         ],
       ),
     ).animate().fade(duration: 350.ms, curve: Curves.easeOutQuad).scale();

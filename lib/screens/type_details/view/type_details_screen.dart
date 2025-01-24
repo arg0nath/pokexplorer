@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
@@ -44,23 +45,23 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
     _typeDetailsScrollController.dispose();
   }
 
-  Future<bool> _onWillPop() async {
-    if (_typeDetailsBloc.state.typeDetailsStatus != TypeDetailsStatus.loadingPokemons) {
-      _typeDetailsBloc.add(const ExitTypeDetailsEvent());
-    }
-    return Future<bool>.value(false);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvoked: (bool didPop) async {
-        if (didPop) {
-          return;
-        }
-        await _onWillPop();
+    return PageTransitionSwitcher(
+      layoutBuilder: (entries) {
+        return Stack(
+          alignment: Alignment.topCenter,
+          children: entries,
+        );
       },
+      transitionBuilder: (child, animation, secondaryAnimation) {
+        return FadeThroughTransition(
+          animation: animation,
+          secondaryAnimation: secondaryAnimation,
+          child: child,
+        );
+      },
+      duration: const Duration(milliseconds: 300),
       child: Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: _typeDetailsBody(),

@@ -435,6 +435,39 @@ class _PokemonListCardState extends State<PokemonListCard> {
   }
 }
 
+class AnimatedHeart extends StatelessWidget {
+  // Add from here...
+  final bool isActive;
+  final Duration _duration = const Duration(milliseconds: 500);
+  final Curve _curve = Curves.elasticOut;
+  const AnimatedHeart({super.key, required this.isActive});
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedScale(
+      scale: isActive ? 0.6 : 0.5,
+      duration: _duration,
+      curve: _curve,
+      child: TweenAnimationBuilder(
+        curve: _curve,
+        duration: _duration,
+        tween: ColorTween(
+          begin: app_const.GREY,
+          end: isActive ? Theme.of(context).primaryColor : app_const.GREY,
+        ),
+        builder: (context, value, child) {
+          final tmpIcon = isActive ? Icons.favorite_rounded : Icons.favorite_border_rounded;
+          return Icon(
+            tmpIcon,
+            size: 50,
+            color: value, // Modify from here...
+          );
+        }, // To here.
+      ),
+    );
+  }
+}
+
 class CustomFavoriteButton extends StatefulWidget {
   const CustomFavoriteButton({super.key, required this.isFavorite, required this.onPressed});
 
@@ -448,12 +481,9 @@ class CustomFavoriteButton extends StatefulWidget {
 class _CustomFavoriteButtonState extends State<CustomFavoriteButton> {
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Padding(
-        padding: const EdgeInsets.all(15),
-        child: widget.isFavorite ? Icon(Icons.favorite_rounded, color: Theme.of(context).primaryColor) : const Icon(Icons.favorite_border_rounded, color: app_const.GREY),
-      ),
-      onPressed: widget.onPressed,
+    return GestureDetector(
+      onTap: widget.onPressed,
+      child: AnimatedHeart(isActive: widget.isFavorite),
     );
   }
 }

@@ -10,6 +10,8 @@ import 'package:pokexplorer/theme/bloc/theme_state.dart';
 // import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 import 'package:pokexplorer/screens/type_selection/bloc/type_selection_bloc.dart';
+import 'package:pokexplorer/theme/dark_theme.dart';
+import 'package:pokexplorer/theme/light_theme.dart';
 
 import 'core/data_repository/back_end_utils.dart';
 import 'core/data_repository/local_data_utils.dart';
@@ -26,8 +28,7 @@ import 'screens/type_details/bloc/type_details_bloc.dart';
 import 'screens/welcome/bloc/welcome_bloc.dart';
 import 'screens/welcome/view/welcome_screen.dart';
 
-part './theme/light_theme.dart';
-part './theme/dark_theme.dart';
+part 'theme/theme.dart';
 
 /// Custom [BlocObserver] which observes all bloc and cubit instances.
 class SimpleBlocObserver extends BlocObserver {
@@ -128,8 +129,8 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
             locale: const Locale('en'), // Set default locale
             navigatorObservers: <NavigatorObserver>[app_vars.routeObserver],
             themeMode: app_vars.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-            theme: lightTheme(),
-            darkTheme: darkTheme(),
+            theme: PAppTheme.lightTheme,
+            darkTheme: PAppTheme.darkTheme,
           );
         },
       ),

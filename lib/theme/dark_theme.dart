@@ -28,14 +28,14 @@ final pDarkTheme = ThemeData(
   popupMenuTheme: const PopupMenuThemeData().copyWith(
     iconColor: app_const.GREY,
     color: app_const.BLACK_IOS,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
-    textStyle: TextStyle(fontSize: 16, color: app_const.GREY, fontFamily: app_const.MAIN_FONT_FAMILY),
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(const Radius.circular(15))),
+    textStyle: const TextStyle(fontSize: 16, color: app_const.GREY, fontFamily: app_const.MAIN_FONT_FAMILY),
   ),
   scaffoldBackgroundColor: app_const.SCAFFOLD_BACKGROUND_DARK,
   toggleButtonsTheme: const ToggleButtonsThemeData(selectedColor: app_const.BRIGHT_RED, disabledColor: Color(0xFFC4C4C4)),
   dialogBackgroundColor: app_const.CARD_DARK,
   outlinedButtonTheme: OutlinedButtonThemeData(
-      style: ButtonStyle().copyWith(
+      style: const ButtonStyle().copyWith(
           textStyle: WidgetStateProperty.all(const TextStyle(fontSize: 19, color: app_const.WHITE_TOTAL, fontWeight: FontWeight.bold, fontFamily: app_const.MAIN_FONT_FAMILY)),
           side: WidgetStateProperty.all(const BorderSide(width: 1, color: app_const.LIGHT_RED)),
           foregroundColor: WidgetStateProperty.all(app_const.WHITE_IOS),

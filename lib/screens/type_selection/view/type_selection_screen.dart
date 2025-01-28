@@ -35,19 +35,15 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: _typeSelectionAppbar(context),
       body: _typeSelectionBody(),
-      bottomNavigationBar: _typeSelectionBottomBar(),
+      bottomSheet: _typeSelectionBottomBar(),
     );
   }
 
   Widget _typeSelectionBottomBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: app_vars.logicalWidth * 0.1),
-          child: app_widgets.CustomActionButton(text: appLocale.next, onPressed: () => _typeSelectionBloc.add(const ProceedToTypeDetailsScreenEvent())),
-        )
-      ],
+    return Container(
+      color: Colors.transparent,
+      padding: EdgeInsets.all(10)?.copyWith(bottom: MediaQuery.of(context).padding.bottom),
+      child: app_widgets.CustomActionButton(text: appLocale.next, onPressed: () => _typeSelectionBloc.add(const ProceedToTypeDetailsScreenEvent())),
     );
   }
 

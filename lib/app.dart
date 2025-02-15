@@ -1,46 +1,42 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokexplorer/screens/favorites/bloc/favorites_bloc.dart';
-import 'package:pokexplorer/screens/home/view/home_screen.dart';
-import 'package:pokexplorer/services/db_service.dart';
-import 'package:pokexplorer/theme/bloc/theme_bloc.dart';
-import 'package:pokexplorer/theme/bloc/theme_state.dart';
+import 'package:pokexplorer/core/theme/bloc/theme_bloc.dart';
+import 'package:pokexplorer/core/theme/bloc/theme_state.dart';
+import 'package:pokexplorer/core/theme/dark_theme.dart';
+import 'package:pokexplorer/core/theme/light_theme.dart';
+import 'package:pokexplorer/presentation/favorites/bloc/favorites_bloc.dart';
+import 'package:pokexplorer/presentation/home/view/home_screen.dart';
 // import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
-import 'package:pokexplorer/screens/type_selection/bloc/type_selection_bloc.dart';
-import 'package:pokexplorer/theme/dark_theme.dart';
-import 'package:pokexplorer/theme/light_theme.dart';
+import 'package:pokexplorer/presentation/type_selection/bloc/type_selection_bloc.dart';
+import 'package:pokexplorer/services/db_service.dart';
 
 import 'core/data_repository/back_end_utils.dart';
 import 'core/data_repository/local_data_utils.dart';
-import 'core/utilities/app_utils.dart' as app_utils;
-import 'core/variables/app_constants.dart' as app_const;
-import 'core/variables/app_variables.dart' as app_vars;
-
+import 'core/utilities/app_utils.dart';
 import 'core/utilities/front_end_utils.dart';
+import 'core/variables/app_constants.dart';
+import 'core/variables/app_variables.dart';
+import 'presentation/pokemon_details/bloc/pokemon_details_bloc.dart';
+import 'presentation/type_details/bloc/type_details_bloc.dart';
+import 'presentation/welcome/bloc/welcome_bloc.dart';
+import 'presentation/welcome/view/welcome_screen.dart';
 import 'router/app_router.dart' as app_router;
 
-import 'screens/pokemon_details/bloc/pokemon_details_bloc.dart';
-import 'screens/type_details/bloc/type_details_bloc.dart';
-
-import 'screens/welcome/bloc/welcome_bloc.dart';
-import 'screens/welcome/view/welcome_screen.dart';
-
-part 'theme/theme.dart';
+part 'core/theme/theme.dart';
 
 /// Custom [BlocObserver] which observes all bloc and cubit instances.
 class SimpleBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc<dynamic, dynamic> bloc, Object? event) {
     super.onEvent(bloc, event);
-    app_utils.myLog(msg: 'onEvent, event = $event');
+    AppUtils.myLog(msg: 'onEvent, event = $event');
   }
 
   @override
   void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
-    app_utils.myLog(level: app_const.LOG_ERROR, msg: 'onError, error = $error');
+    AppUtils.myLog(level: LOG_ERROR, msg: 'onError, error = $error');
     super.onError(bloc, error, stackTrace);
   }
 }
@@ -50,7 +46,7 @@ class PokexplorerApp extends StatefulWidget {
     // #region // BLocs register
     backEndUtils = BackendUtils();
     frontEndUtils = FrontendUtils();
-    app_vars.routeObserver.setFrontEndUtils(frontEndUtils);
+    routeObserver.setFrontEndUtils(frontEndUtils);
 
     themeBloc = ThemeBloc(frontEndUtils: frontEndUtils);
     welcomeBloc = WelcomeBloc(frontEndUtils: frontEndUtils);
@@ -91,10 +87,10 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
 
   @override
   void initState() {
-    app_vars.devicePixelRatio = PlatformDispatcher.instance.implicitView!.devicePixelRatio;
-    app_vars.deviceScreenWidth = PlatformDispatcher.instance.implicitView!.physicalSize.width;
+    devicePixelRatio = PlatformDispatcher.instance.implicitView!.devicePixelRatio;
+    deviceScreenWidth = PlatformDispatcher.instance.implicitView!.physicalSize.width;
     initBoot = localDataUtils.loadIsInitBootFromPrefs();
-    app_vars.isDarkMode = localDataUtils.loadIsDarkModeFromPrefs();
+    isDarkMode = localDataUtils.loadIsDarkModeFromPrefs();
     _initialHomePage = initBoot ? const WelcomeScreen() : const HomeScreen();
 
     super.initState();
@@ -123,12 +119,12 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
 
             home: _initialHomePage,
             builder: (context, child) => child!,
-            onGenerateTitle: (BuildContext context) => app_const.APP_NAME,
+            onGenerateTitle: (BuildContext context) => APP_NAME,
             onGenerateRoute: app_router.Router.generateRoute,
             supportedLocales: const [Locale('en')],
             locale: const Locale('en'), // Set default locale
-            navigatorObservers: <NavigatorObserver>[app_vars.routeObserver],
-            themeMode: app_vars.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+            navigatorObservers: <NavigatorObserver>[routeObserver],
+            themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
             theme: PAppTheme.lightTheme,
             darkTheme: PAppTheme.darkTheme,
           );

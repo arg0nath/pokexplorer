@@ -1,4 +1,4 @@
-part of '../app.dart';
+part of '../../app.dart';
 
 // TODO(theming): create static for all subthemes.
 

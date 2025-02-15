@@ -3,8 +3,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
-import '../utilities/app_utils.dart' as app_utils;
-import '../variables/app_constants.dart' as app_const;
+import '../utilities/app_utils.dart';
+import '../variables/app_constants.dart';
 import 'local_data_utils.dart';
 
 class BackendUtils {
@@ -16,19 +16,19 @@ class BackendUtils {
   /// Returns the response in the form of a `Map<String,dynamic>`.
   Future<Map<String, dynamic>> httpRequestMap(String unEncodedPath) async {
     if (kDebugMode && !unEncodedPath.contains('SetLogEvent')) {
-      app_utils.myLog(msg: 'unEncodedPath = $unEncodedPath');
+      AppUtils.myLog(msg: 'unEncodedPath = $unEncodedPath');
     }
 
-    final Uri finalUri = Uri.parse(app_const.POKE_API + unEncodedPath);
+    final Uri finalUri = Uri.parse(POKE_API + unEncodedPath);
 
     if (kDebugMode && !unEncodedPath.contains('SetLogEvent')) {
-      app_utils.myLog(msg: 'finalUri = $finalUri');
+      AppUtils.myLog(msg: 'finalUri = $finalUri');
     }
 
     try {
       final http.Response response = await http.get(finalUri).timeout(const Duration(seconds: 15));
 
-      if (response.statusCode == app_const.API_STATUS_OK) {
+      if (response.statusCode == API_STATUS_OK) {
         return json.decode(response.body) as Map<String, dynamic>;
       } else {
         throw Exception('Failed to fetch data.');

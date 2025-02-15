@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pokexplorer/core/enums/app_enums.dart';
 
-import '../utilities/app_utils.dart' as app_utils;
-import '../variables/app_constants.dart' as app_const;
+import '../utilities/app_utils.dart';
+import '../variables/app_constants.dart';
 
 ///Return of  https://pokeapi.co/api/v2/type/
 class PokemonType {
@@ -13,14 +13,14 @@ class PokemonType {
   });
 
   PokemonType.empty() {
-    name = app_const.EMPTY_STRING;
+    name = EMPTY_STRING;
     isSelected = false;
-    icon = app_const.EMPTY_STRING;
+    icon = EMPTY_STRING;
   }
 
-  String name = app_const.EMPTY_STRING;
+  String name = EMPTY_STRING;
   bool isSelected = false;
-  String icon = app_const.EMPTY_STRING;
+  String icon = EMPTY_STRING;
 
   void setName(String name) => this.name = name;
   void setIcon(String icon) => this.icon = icon;
@@ -30,43 +30,43 @@ class PokemonType {
   Color getTypeColor() {
     switch (name.toLowerCase()) {
       case 'fire':
-        return app_const.FIRE_COLOR;
+        return FIRE_COLOR;
       case 'water':
-        return app_const.WATER_COLOR;
+        return WATER_COLOR;
       case 'grass':
-        return app_const.GRASS_COLOR;
+        return GRASS_COLOR;
       case 'electric':
-        return app_const.ELECTRIC_COLOR;
+        return ELECTRIC_COLOR;
       case 'dragon':
-        return app_const.DRAGON_COLOR;
+        return DRAGON_COLOR;
       case 'psychic':
-        return app_const.PSYCHIC_COLOR;
+        return PSYCHIC_COLOR;
       case 'ghost':
-        return app_const.GHOST_COLOR;
+        return GHOST_COLOR;
       case 'dark':
-        return app_const.DARK_COLOR;
+        return DARK_COLOR;
       case 'steel':
-        return app_const.STEEL_COLOR;
+        return STEEL_COLOR;
       case 'fairy':
-        return app_const.FAIRY_COLOR;
+        return FAIRY_COLOR;
       case 'normal':
-        return app_const.NORMAL_COLOR;
+        return NORMAL_COLOR;
       case 'fighting':
-        return app_const.FIGHTING_COLOR;
+        return FIGHTING_COLOR;
       case 'flying':
-        return app_const.FLYING_COLOR;
+        return FLYING_COLOR;
       case 'poison':
-        return app_const.POISON_COLOR;
+        return POISON_COLOR;
       case 'ground':
-        return app_const.GROUND_COLOR;
+        return GROUND_COLOR;
       case 'rock':
-        return app_const.ROCK_COLOR;
+        return ROCK_COLOR;
       case 'bug':
-        return app_const.BUG_COLOR;
+        return BUG_COLOR;
       case 'ice':
-        return app_const.ICE_COLOR;
+        return ICE_COLOR;
       default:
-        return app_const.GRADIENT_BASE; // Default color if no match
+        return GRADIENT_BASE; // Default color if no match
     }
   }
 
@@ -84,14 +84,14 @@ class PokemonTypeDetails {
     required this.icon,
   });
   PokemonTypeDetails.empty() {
-    name = app_const.EMPTY_STRING;
-    icon = app_const.EMPTY_STRING;
+    name = EMPTY_STRING;
+    icon = EMPTY_STRING;
     pokemon = [];
-    id = app_const.EMPTY_INT;
+    id = EMPTY_INT;
   }
-  int id = app_const.EMPTY_INT;
-  String name = app_const.EMPTY_STRING;
-  String icon = app_const.EMPTY_STRING;
+  int id = EMPTY_INT;
+  String name = EMPTY_STRING;
+  String icon = EMPTY_STRING;
   List<PokemonPreview> pokemon = []; // thats not the basic pokemon object,
 
 // json converters
@@ -101,8 +101,8 @@ class PokemonTypeDetails {
 
     return PokemonTypeDetails(
       id: json['id'],
-      icon: app_utils.typeToAssetIcon(json['name']),
-      name: json['name'] ?? app_const.EMPTY_STRING,
+      icon: AppUtils.typeToAssetIcon(json['name']),
+      name: json['name'] ?? EMPTY_STRING,
       pokemon: pokemonPreviews,
     );
   }
@@ -130,16 +130,16 @@ class PokemonPreview {
     required this.isFavorite,
   });
 
-  int id = app_const.EMPTY_INT;
-  String name = app_const.EMPTY_STRING;
-  String imageUrl = app_const.EMPTY_STRING;
-  int isFavorite = app_const.EMPTY_INT_ZERO;
+  int id = EMPTY_INT;
+  String name = EMPTY_STRING;
+  String imageUrl = EMPTY_STRING;
+  int isFavorite = EMPTY_INT_ZERO;
 
   PokemonPreview.empty() {
-    id = app_const.EMPTY_INT;
-    name = app_const.EMPTY_STRING;
-    imageUrl = app_const.EMPTY_STRING;
-    isFavorite = app_const.EMPTY_INT_ZERO;
+    id = EMPTY_INT;
+    name = EMPTY_STRING;
+    imageUrl = EMPTY_STRING;
+    isFavorite = EMPTY_INT_ZERO;
   }
 
   /// [int] setter, instead of [bool] for database purposes
@@ -153,12 +153,12 @@ class PokemonPreview {
 
 // json converters
   factory PokemonPreview.fromJson(Map<String, dynamic> json) {
-    int id = app_utils.extractPokemonPreviewId(json['url']);
+    int id = AppUtils.extractPokemonPreviewId(json['url']);
     return PokemonPreview(
       id: id,
-      name: json['name'] ?? app_const.EMPTY_STRING,
-      imageUrl: app_utils.getPokemonBaseImageById(id),
-      isFavorite: app_const.EMPTY_INT_ZERO, //false
+      name: json['name'] ?? EMPTY_STRING,
+      imageUrl: AppUtils.getPokemonBaseImageById(id),
+      isFavorite: EMPTY_INT_ZERO, //false
     );
   }
 
@@ -192,37 +192,36 @@ class Pokemon {
   });
 
   Pokemon.empty() {
-    id = app_const.EMPTY_INT;
-    name = app_const.EMPTY_STRING;
-    gifUrl = app_const.EMPTY_STRING;
-    hdImageUrl = app_const.EMPTY_STRING;
-    baseImageUrl = app_const.EMPTY_STRING;
-    height = app_const.EMPTY_INT;
-    weight = app_const.EMPTY_INT;
+    id = EMPTY_INT;
+    name = EMPTY_STRING;
+    gifUrl = EMPTY_STRING;
+    hdImageUrl = EMPTY_STRING;
+    baseImageUrl = EMPTY_STRING;
+    height = EMPTY_INT;
+    weight = EMPTY_INT;
+    hp = EMPTY_INT;
+    attack = EMPTY_INT;
+    defense = EMPTY_INT;
+    isFavorite = EMPTY_INT_ZERO;
     types = [];
-    hp = app_const.EMPTY_INT;
-    attack = app_const.EMPTY_INT;
-    defense = app_const.EMPTY_INT;
-    isFavorite = app_const.EMPTY_INT_ZERO;
   }
 
-  int id = app_const.EMPTY_INT;
-  String name = app_const.EMPTY_STRING;
-
-  String? gifUrl = app_const.EMPTY_STRING;
+  int id = EMPTY_INT;
+  String name = EMPTY_STRING;
+  String? gifUrl = EMPTY_STRING;
 
   /// `Low Quality` image
-  String baseImageUrl = app_const.EMPTY_STRING;
+  String baseImageUrl = EMPTY_STRING;
 
   ///`High Quality` image. Bigger file size
-  String hdImageUrl = app_const.EMPTY_STRING;
-  int height = app_const.EMPTY_INT;
-  int weight = app_const.EMPTY_INT;
-  int hp = app_const.EMPTY_INT;
-  int attack = app_const.EMPTY_INT;
-  int defense = app_const.EMPTY_INT;
+  String hdImageUrl = EMPTY_STRING;
+  int height = EMPTY_INT;
+  int weight = EMPTY_INT;
+  int hp = EMPTY_INT;
+  int attack = EMPTY_INT;
+  int defense = EMPTY_INT;
   List<PokemonType> types = [];
-  int isFavorite = app_const.EMPTY_INT_ZERO;
+  int isFavorite = EMPTY_INT_ZERO;
 
   /// [int] setter, instead of [bool] for database purposes
   ///
@@ -241,22 +240,22 @@ class Pokemon {
     final tmpId = (json['id'] as int).toInt();
 
     var typesList = (json['types'] as List).map((type) {
-      return PokemonType(name: type['type']['name'] as String, icon: app_const.EMPTY_STRING, isSelected: false);
+      return PokemonType(name: type['type']['name'] as String, icon: EMPTY_STRING, isSelected: false);
     }).toList();
 
     return Pokemon(
       id: tmpId,
       name: json['name'] as String,
-      hdImageUrl: json['sprites']['other']['official-artwork']['front_default'] as String? ?? app_const.EMPTY_STRING,
-      baseImageUrl: app_utils.getPokemonBaseImageById(tmpId),
-      gifUrl: json['sprites']['other']['showdown']['front_default'] as String? ?? app_const.EMPTY_STRING,
+      hdImageUrl: json['sprites']['other']['official-artwork']['front_default'] as String? ?? EMPTY_STRING,
+      baseImageUrl: AppUtils.getPokemonBaseImageById(tmpId),
+      gifUrl: json['sprites']['other']['showdown']['front_default'] as String? ?? EMPTY_STRING,
       height: (json['height'] as int).toInt(),
       weight: (json['weight'] as int).toInt(),
-      hp: statsMap['hp'] ?? app_const.EMPTY_INT,
-      attack: statsMap['attack'] ?? app_const.EMPTY_INT,
-      defense: statsMap['defense'] ?? app_const.EMPTY_INT,
+      hp: statsMap['hp'] ?? EMPTY_INT,
+      attack: statsMap['attack'] ?? EMPTY_INT,
+      defense: statsMap['defense'] ?? EMPTY_INT,
       types: typesList,
-      isFavorite: app_const.EMPTY_INT_ZERO,
+      isFavorite: EMPTY_INT_ZERO,
     );
   }
 

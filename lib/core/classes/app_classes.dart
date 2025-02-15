@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../utilities/app_utils.dart' as app_utils;
-import '../variables/app_constants.dart' as app_const;
+import '../utilities/app_utils.dart';
+import '../variables/app_constants.dart';
 
 class PreferenceUtils {
   static Future<SharedPreferences> get _instance async => _prefsInstance = await SharedPreferences.getInstance();
@@ -9,7 +9,7 @@ class PreferenceUtils {
 
   static Future<SharedPreferences> init() async {
     _prefsInstance = await _instance;
-    app_utils.myLog(level: app_const.LOG_WARNING, msg: 'Prefs Initialized');
+    AppUtils.myLog(level: LOG_WARNING, msg: 'Prefs Initialized');
     return _prefsInstance;
   }
 
@@ -20,7 +20,7 @@ class PreferenceUtils {
   static Future<void> reload() async {
     _prefsInstance = await _instance;
     await _prefsInstance.reload();
-    app_utils.myLog(level: app_const.LOG_WARNING, msg: 'Prefs Reload');
+    AppUtils.myLog(level: LOG_WARNING, msg: 'Prefs Reload');
   }
 
   static String getString({required String key, required String defValue}) {

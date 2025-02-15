@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-
 import 'package:page_transition/page_transition.dart';
-import 'package:pokexplorer/screens/favorites/view/favorites_screen.dart';
-import 'package:pokexplorer/screens/home/view/home_screen.dart';
-import 'package:pokexplorer/screens/type_selection/view/type_selection_screen.dart';
+import 'package:pokexplorer/presentation/favorites/view/favorites_screen.dart';
+import 'package:pokexplorer/presentation/home/view/home_screen.dart';
+import 'package:pokexplorer/presentation/type_selection/view/type_selection_screen.dart';
 
-import '../core/utilities/front_end_utils.dart';
-import '../screens/pokemon_details/view/pokemon_details_screen.dart';
-import '../screens/type_details/view/type_details_screen.dart';
-import '../screens/welcome/welcome.dart';
 import '../core/models/app_models.dart' as app_models;
+import '../core/utilities/front_end_utils.dart';
 import '../core/variables/app_constants.dart' as app_const;
+import '../presentation/pokemon_details/view/pokemon_details_screen.dart';
+import '../presentation/type_details/view/type_details_screen.dart';
+import '../presentation/welcome/welcome.dart';
 
 // #region // * Arguments
 

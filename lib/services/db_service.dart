@@ -1,8 +1,8 @@
-import 'package:pokexplorer/core/models/app_models.dart' as app_models;
-import 'package:pokexplorer/core/utilities/app_utils.dart' as app_utils;
-import 'package:pokexplorer/core/variables/app_constants.dart' as app_const;
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:pokexplorer/core/models/app_models.dart';
+import 'package:pokexplorer/core/utilities/app_utils.dart';
+import 'package:pokexplorer/core/variables/app_constants.dart';
+import 'package:sqflite/sqflite.dart';
 
 class DatabaseService {
   static Database? _db;
@@ -43,11 +43,11 @@ class DatabaseService {
     return database;
   }
 
-  Future<List<app_models.PokemonPreview>> getDbPokemonPreviewList() async {
+  Future<List<PokemonPreview>> getDbPokemonPreviewList() async {
     final db = await database;
     final data = await db.query(_tableName);
 
-    List<app_models.PokemonPreview> pokePreviewList = data.map((Map<String, Object?> pokePreview) {
+    List<PokemonPreview> pokePreviewList = data.map((Map<String, Object?> pokePreview) {
       int isFavoriteValue = 0; // Default value
       int idValue = 0; // Default value
       final tmpIsFavorite = pokePreview[_isFavoriteColumnName];
@@ -64,7 +64,7 @@ class DatabaseService {
       } else if (tmpIsFavorite is String) {
         isFavoriteValue = int.tryParse(tmpIsFavorite) ?? 0;
       }
-      return app_models.PokemonPreview(
+      return PokemonPreview(
         id: idValue,
         name: (pokePreview[_nameColumnName] as String),
         imageUrl: pokePreview[_imageUrlColumnName] as String,
@@ -85,7 +85,7 @@ class DatabaseService {
       _imageUrlColumnName: imageUrl,
       _isFavoriteColumnName: 1,
     });
-    app_utils.myLog(level: app_const.LOG_WARNING, msg: 'DB: add $name preview to db');
+    AppUtils.myLog(level: LOG_WARNING, msg: 'DB: add $name preview to db');
     return Future<void>.value();
   }
 
@@ -112,7 +112,7 @@ class DatabaseService {
       where: 'name = ?',
       whereArgs: [name.toLowerCase()],
     );
-    app_utils.myLog(level: app_const.LOG_WARNING, msg: 'DB: delete preview $name from db ');
+    AppUtils.myLog(level: LOG_WARNING, msg: 'DB: delete preview $name from db ');
   }
 
   Future<void> deleteAllFavPokePreviewFromDb() async {
@@ -120,6 +120,6 @@ class DatabaseService {
     await db.delete(
       _tableName,
     );
-    app_utils.myLog(level: app_const.LOG_WARNING, msg: 'DB: delete all db ');
+    AppUtils.myLog(level: LOG_WARNING, msg: 'DB: delete all db ');
   }
 }

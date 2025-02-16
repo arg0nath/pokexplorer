@@ -11,8 +11,8 @@ import 'package:pokexplorer/core/common/widgets/custom_progress_indicator.dart';
 import 'package:pokexplorer/core/common/widgets/no_pokemon_indicator.dart';
 import 'package:pokexplorer/core/common/widgets/pokemon_list_card.dart';
 import 'package:pokexplorer/core/common/widgets/selected_type_container.dart';
+import 'package:pokexplorer/core/localization/app_localizations.dart';
 import 'package:pokexplorer/core/theme/colors/app_palette.dart';
-import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/presentation/type_details/bloc/type_details_bloc.dart';
 import 'package:pokexplorer/router/app_router.dart';
 

@@ -7,7 +7,7 @@ import 'package:pokexplorer/core/common/widgets/custom_alter_dialog.dart';
 import 'package:pokexplorer/core/common/widgets/custom_popup_menu_item.dart';
 import 'package:pokexplorer/core/common/widgets/no_pokemon_indicator.dart';
 import 'package:pokexplorer/core/common/widgets/pokemon_list_card.dart';
-import 'package:pokexplorer/localization/app_localizations.dart';
+import 'package:pokexplorer/core/localization/app_localizations.dart';
 import 'package:pokexplorer/presentation/favorites/bloc/favorites_bloc.dart';
 import 'package:pokexplorer/router/app_router.dart';
 

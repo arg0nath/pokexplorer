@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokexplorer/core/common/constants/app_constants.dart' as app_const;
-import 'package:pokexplorer/localization/app_localizations.dart';
+import 'package:pokexplorer/core/localization/app_localizations.dart';
 import 'package:pokexplorer/presentation/favorites/favorites.dart';
 import 'package:pokexplorer/presentation/type_selection/view/type_selection_screen.dart';
 

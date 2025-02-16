@@ -7,8 +7,8 @@ import 'package:pokexplorer/core/common/utilities/app_utils.dart';
 import 'package:pokexplorer/core/common/widgets/about_me_dialog.dart';
 import 'package:pokexplorer/core/common/widgets/custom_action_button.dart';
 import 'package:pokexplorer/core/common/widgets/selected_type_container.dart';
+import 'package:pokexplorer/core/localization/app_localizations.dart';
 import 'package:pokexplorer/core/theme/colors/app_palette.dart';
-import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/presentation/type_selection/bloc/type_selection_bloc.dart';
 import 'package:pokexplorer/router/app_router.dart';
 

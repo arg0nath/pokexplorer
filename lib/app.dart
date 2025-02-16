@@ -5,10 +5,10 @@ import 'package:pokexplorer/core/theme/bloc/theme_bloc.dart';
 import 'package:pokexplorer/core/theme/bloc/theme_state.dart';
 import 'package:pokexplorer/core/theme/dark_theme.dart';
 import 'package:pokexplorer/core/theme/light_theme.dart';
+import 'package:pokexplorer/data/database/db_service.dart';
 import 'package:pokexplorer/presentation/favorites/bloc/favorites_bloc.dart';
 import 'package:pokexplorer/presentation/home/view/home_screen.dart';
 import 'package:pokexplorer/presentation/type_selection/bloc/type_selection_bloc.dart';
-import 'package:pokexplorer/services/db_service.dart';
 
 import 'core/common/constants/app_constants.dart';
 import 'core/common/utilities/app_utils.dart';

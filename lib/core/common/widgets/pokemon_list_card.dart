@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pokexplorer/core/common/constants/app_constants.dart';
+import 'package:pokexplorer/core/common/enums/app_enums.dart';
 import 'package:pokexplorer/core/common/models/app_models.dart';
 import 'package:pokexplorer/core/common/utilities/app_utils.dart';
 import 'package:pokexplorer/core/common/variables/app_variables.dart';
 import 'package:pokexplorer/core/common/widgets/custom_favorite_button.dart';
 import 'package:pokexplorer/core/common/widgets/custom_network_image.dart';
-import 'package:pokexplorer/core/enums/app_enums.dart';
 import 'package:pokexplorer/core/theme/colors/app_palette.dart';
 
 class PokemonListCard extends StatelessWidget {

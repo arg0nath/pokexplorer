@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:pokexplorer/services/db_service.dart';
+import 'package:pokexplorer/data/database/db_service.dart';
 
 import '../../../../router/app_router.dart';
 

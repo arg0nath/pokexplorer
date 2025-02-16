@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokexplorer/core/common/constants/app_constants.dart';
 import 'package:pokexplorer/core/common/widgets/custom_action_button.dart';
 import 'package:pokexplorer/core/common/widgets/selected_type_container.dart';
+import 'package:pokexplorer/core/localization/app_localizations.dart';
 import 'package:pokexplorer/core/theme/colors/app_palette.dart';
 import 'package:pokexplorer/domain/front_end_utils.dart';
-import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/presentation/welcome/bloc/welcome_bloc.dart';
 import 'package:pokexplorer/router/app_router.dart';
 

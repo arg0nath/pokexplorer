@@ -1,7 +1,7 @@
 // import 'package:android_path_provider/android_path_provider.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pokexplorer/core/enums/app_enums.dart';
+import 'package:pokexplorer/core/common/enums/app_enums.dart';
 import 'package:pokexplorer/core/common/utilities/app_utils.dart';
 import 'package:pokexplorer/presentation/type_details/bloc/type_details_bloc.dart';
 

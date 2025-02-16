@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:pokexplorer/core/common/enums/app_enums.dart';
 import 'package:pokexplorer/core/common/variables/app_variables.dart';
-import 'package:pokexplorer/core/enums/app_enums.dart';
 import 'package:pokexplorer/presentation/favorites/bloc/favorites_bloc.dart';
 
 import '../../../core/common/constants/app_constants.dart';

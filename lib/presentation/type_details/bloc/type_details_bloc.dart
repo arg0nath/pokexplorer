@@ -7,8 +7,8 @@ import 'package:pokexplorer/presentation/favorites/bloc/favorites_bloc.dart';
 
 import '../../../core/models/app_models.dart';
 import '../../../core/utilities/app_utils.dart';
-import '../../../core/utilities/front_end_utils.dart';
 import '../../../core/variables/app_constants.dart';
+import '../../../domain/front_end_utils.dart';
 
 part 'type_details_event.dart';
 part 'type_details_state.dart';

@@ -6,7 +6,7 @@ import 'package:pokexplorer/core/utilities/app_utils.dart';
 import 'package:pokexplorer/presentation/type_details/bloc/type_details_bloc.dart';
 
 import '../../../core/models/app_models.dart';
-import '../../../core/utilities/front_end_utils.dart';
+import '../../../domain/front_end_utils.dart';
 
 part 'pokemon_details_event.dart';
 part 'pokemon_details_state.dart';

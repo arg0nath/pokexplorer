@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokexplorer/core/models/app_models.dart';
+import 'package:pokexplorer/core/theme/colors/app_palette.dart';
 import 'package:pokexplorer/core/utilities/app_utils.dart';
-import 'package:pokexplorer/core/variables/app_constants.dart';
 import 'package:pokexplorer/core/widgets/about_me_dialog.dart';
 import 'package:pokexplorer/core/widgets/custom_action_button.dart';
 import 'package:pokexplorer/core/widgets/selected_type_container.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/presentation/type_selection/bloc/type_selection_bloc.dart';
-import 'package:pokexplorer/router/app_router.dart' as app_router;
+import 'package:pokexplorer/router/app_router.dart';
 
 import '../../../core/variables/app_variables.dart';
 
@@ -34,18 +34,8 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: _typeSelectionAppbar(context),
       body: _typeSelectionBody(),
-      bottomSheet: _typeSelectionBottomBar(),
-    );
-  }
-
-  Widget _typeSelectionBottomBar() {
-    return Container(
-      color: Colors.transparent,
-      padding: EdgeInsets.all(10)?.copyWith(bottom: MediaQuery.paddingOf(context).bottom),
-      child: CustomActionButton(text: appLocale.next, onPressed: () => _typeSelectionBloc.add(const ProceedToTypeDetailsScreenEvent())),
     );
   }
 
@@ -53,11 +43,8 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
     return AppBar(
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+        leading: IconButton(onPressed: () => _typeSelectionBloc.add(const ShowInfoDialogEvent()), icon: const Icon(Icons.info_outline_rounded)),
         scrolledUnderElevation: 0,
-        actions: [
-          IconButton(onPressed: () => _typeSelectionBloc.add(const ShowInfoDialogEvent()), icon: const Icon(Icons.info_outline_rounded, color: SECONDARY_TEXT_COLOR)),
-        ],
         title: Text(appLocale.typeSelectionAppBarTitle, style: Theme.of(context).textTheme.titleMedium));
   }
 
@@ -66,7 +53,7 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
       listener: (context, state) async {
         if (state.typeSelectionStatus == TypeSelectionStatus.readyToProceedToTypeDetailsScreen) {
           //close dialog and navigate to typedetails
-          Navigator.popAndPushNamed(context, TYPE_DETAILS_SCREEN_PAGE_ROUTE_NAME, arguments: app_router.TypeDetailsScreenArguments(typeDetails: _typeSelectionBloc.selectedPokemonTypeDetails));
+          Navigator.popAndPushNamed(context, RouteNames.typeDetailsScreen, arguments: TypeDetailsScreenArguments(typeDetails: _typeSelectionBloc.selectedPokemonTypeDetails));
         } else if (state.typeSelectionStatus == TypeSelectionStatus.errorToProceedToTypeDetailsScreenNoSelection) {
           AppUtils.myToast(context, appLocale.emptyTypeSelectionError); // show select type first toast
         } else if (state.typeSelectionStatus == TypeSelectionStatus.errorToNotifyForNoInternet) {
@@ -79,13 +66,17 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
       },
       builder: (context, state) {
         return Stack(
+          alignment: Alignment.bottomCenter,
           children: [
             //pokeball background
             const Positioned(left: -20, bottom: -50, child: PokeballBackground()),
 
             //grid list with types
             MyTypesGrid(typeSelectionBloc: _typeSelectionBloc),
-            //next button
+            //next buttonZ`
+
+            Positioned(
+                bottom: MediaQuery.sizeOf(context).height * 0.02, child: CustomActionButton(text: appLocale.next, onPressed: () => _typeSelectionBloc.add(const ProceedToTypeDetailsScreenEvent()))),
           ],
         );
       },
@@ -156,9 +147,9 @@ class _MyTypeCardState extends State<MyTypeCard> {
           Center(
             child: Container(
               decoration: BoxDecoration(
-                  color: widget.pokemonType.isSelected ? typeColor.withAlpha(30) : Colors.transparent,
+                  color: widget.pokemonType.isSelected ? typeColor.withAlpha(30) : AppPalette.white,
                   borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  border: Border.all(color: widget.pokemonType.isSelected ? typeColor : Theme.of(context).toggleButtonsTheme.disabledColor!)),
+                  border: Border.all(color: widget.pokemonType.isSelected ? typeColor : Theme.of(context).colorScheme.onSurface)),
               padding: const EdgeInsets.all(10),
               width: logicalWidth * 0.4,
               child: Center(
@@ -187,6 +178,6 @@ class _MyTypeCardState extends State<MyTypeCard> {
           ),
         ],
       ),
-    ).animate().fade(duration: 350.ms, curve: Curves.easeOutQuad).scale();
+    ).animate().fade(duration: 300.ms, curve: Curves.easeOutQuad).scale();
   }
 }

@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _typeSelectionBottomBar(BuildContext context) {
     return BottomNavigationBar(
-        backgroundColor: Colors.transparent,
+        // backgroundColor: Colors.transparent,
         elevation: 0,
         onTap: (index) {
           app_vars.selectedBottomBarIndex = index;

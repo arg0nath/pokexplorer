@@ -1,12 +1,8 @@
 part of '../../app.dart';
 
-// TODO(theming): create static for all subthemes.
-
 ///P stands for (P)okexplorer
-class PAppTheme {
-  PAppTheme._();
-
+abstract class AppTheme {
+  AppTheme._();
   static ThemeData darkTheme = pDarkTheme;
-
   static ThemeData lightTheme = pLightTheme;
 }

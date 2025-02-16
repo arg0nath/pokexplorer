@@ -6,8 +6,7 @@ import 'package:pokexplorer/core/enums/app_enums.dart';
 import 'package:pokexplorer/core/variables/app_variables.dart' as app_vars;
 
 import '../../../core/models/app_models.dart' as app_models;
-
-import '../../../core/utilities/front_end_utils.dart';
+import '../../../domain/front_end_utils.dart';
 
 part 'favorites_event.dart';
 part 'favorites_state.dart';

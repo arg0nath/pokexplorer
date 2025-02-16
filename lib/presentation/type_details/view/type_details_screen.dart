@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokexplorer/core/models/app_models.dart';
+import 'package:pokexplorer/core/theme/colors/app_palette.dart';
 import 'package:pokexplorer/core/utilities/app_utils.dart';
 import 'package:pokexplorer/core/variables/app_constants.dart';
 import 'package:pokexplorer/core/variables/app_variables.dart';
@@ -12,8 +13,8 @@ import 'package:pokexplorer/core/widgets/no_pokemon_indicator.dart';
 import 'package:pokexplorer/core/widgets/pokemon_list_card.dart';
 import 'package:pokexplorer/core/widgets/selected_type_container.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
-import 'package:pokexplorer/router/app_router.dart' as app_router;
 import 'package:pokexplorer/presentation/type_details/bloc/type_details_bloc.dart';
+import 'package:pokexplorer/router/app_router.dart';
 
 class TypeDetailsScreen extends StatefulWidget {
   const TypeDetailsScreen({super.key, required this.typeDetails});
@@ -68,7 +69,6 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
       },
       duration: const Duration(milliseconds: 300),
       child: Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: _typeDetailsBody(),
       ),
     );
@@ -84,8 +84,8 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
           } else if (state.typeDetailsStatus == TypeDetailsStatus.navigatingToPokemonDetails) {
             await AppUtils.showLoadingDialog(context);
           } else if (state.typeDetailsStatus == TypeDetailsStatus.readyToNavigateToPokemonDetails) {
-            Navigator.popAndPushNamed(context, POKEMON_DETAILS_SCREEN_ROUTE_NAME,
-                arguments: app_router.PokemonDetailsScreenArguments(selectedTypeName: _typeDetailsBloc.selectedTypeName, pokemon: _typeDetailsBloc.selectedPokemon));
+            Navigator.popAndPushNamed(context, RouteNames.pokeDetailsScreen,
+                arguments: PokemonDetailsScreenArguments(selectedTypeName: _typeDetailsBloc.selectedTypeName, pokemon: _typeDetailsBloc.selectedPokemon));
           } else if (state.typeDetailsStatus == TypeDetailsStatus.morePokemonsLoadedFailed) {
             AppUtils.myToast(context, LocalizationManager.getInstance().generalErrorMessage);
           } else if (state.typeDetailsStatus == TypeDetailsStatus.readyToNotifyForNoInternet) {
@@ -200,7 +200,7 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
                     height: 50,
                     width: logicalWidth - 32,
                     child: InkWell(
-                      splashColor: Colors.transparent,
+                      splashColor: AppPalette.transparent,
                       onTap: () {
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
@@ -216,14 +216,9 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
 
   TextFormField _customTextFormField(TypeDetailsBloc typeDetailsBloc, BuildContext context) {
     return TextFormField(
-      style: const TextStyle(color: PRIMARY_TEXT_COLOR, fontFamily: MAIN_FONT_FAMILY),
+      style: const TextStyle(fontFamily: MAIN_FONT_FAMILY),
       controller: textEditingController,
-      decoration: InputDecoration(
-          fillColor: Theme.of(context).inputDecorationTheme.fillColor,
-          filled: Theme.of(context).inputDecorationTheme.filled,
-          focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
-          border: Theme.of(context).inputDecorationTheme.border,
-          enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
+      decoration: const InputDecoration().copyWith(
           hintText: LocalizationManager.getInstance().searchBarTitle,
           suffixIcon: _customSuffixIcon(typeDetailsBloc, context),
           prefixIcon: textEditingController.value.text.isEmpty ? null : _customPrefixButton(typeDetailsBloc)),
@@ -254,7 +249,9 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
           typeDetailsBloc.add(const ReturnFromSearchEvent());
           textEditingController.clear();
         },
-        child: const Icon(Icons.clear_rounded, color: SECONDARY_TEXT_COLOR));
+        child: const Icon(
+          Icons.clear_rounded,
+        ));
   }
 
   @override

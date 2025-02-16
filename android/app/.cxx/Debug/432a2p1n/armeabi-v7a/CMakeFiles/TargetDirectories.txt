@@ -1,0 +1,2 @@
+/Users/argo/Projects/pokexplorer/android/app/.cxx/Debug/432a2p1n/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/argo/Projects/pokexplorer/android/app/.cxx/Debug/432a2p1n/armeabi-v7a/CMakeFiles/rebuild_cache.dir

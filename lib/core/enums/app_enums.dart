@@ -1,3 +1,4 @@
+///int due to sqflite requirements
 enum RelationValue {
   notFavorite(0),
   favorite(1);

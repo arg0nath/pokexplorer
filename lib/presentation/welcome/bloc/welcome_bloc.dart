@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../core/utilities/front_end_utils.dart';
+import '../../../domain/front_end_utils.dart';
 
 part 'welcome_event.dart';
 part 'welcome_state.dart';

@@ -7,22 +7,19 @@ import 'package:pokexplorer/core/theme/dark_theme.dart';
 import 'package:pokexplorer/core/theme/light_theme.dart';
 import 'package:pokexplorer/presentation/favorites/bloc/favorites_bloc.dart';
 import 'package:pokexplorer/presentation/home/view/home_screen.dart';
-// import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
-
 import 'package:pokexplorer/presentation/type_selection/bloc/type_selection_bloc.dart';
 import 'package:pokexplorer/services/db_service.dart';
 
 import 'core/data_repository/back_end_utils.dart';
 import 'core/data_repository/local_data_utils.dart';
 import 'core/utilities/app_utils.dart';
-import 'core/utilities/front_end_utils.dart';
 import 'core/variables/app_constants.dart';
 import 'core/variables/app_variables.dart';
+import 'domain/front_end_utils.dart';
 import 'presentation/pokemon_details/bloc/pokemon_details_bloc.dart';
 import 'presentation/type_details/bloc/type_details_bloc.dart';
 import 'presentation/welcome/bloc/welcome_bloc.dart';
-import 'presentation/welcome/view/welcome_screen.dart';
-import 'router/app_router.dart' as app_router;
+import 'router/app_router.dart';
 
 part 'core/theme/theme.dart';
 
@@ -78,7 +75,8 @@ class PokexplorerApp extends StatefulWidget {
 
 class _PokexplorerAppState extends State<PokexplorerApp> {
   // final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: 'Main Navigator');
-  Widget _initialHomePage = const HomeScreen(); // home page
+  // Widget _initialHomePage = cMaterialPageRouteconst HomeScreen(); // home page
+  String _initialPage = RouteNames.homeScreen; // home page
   LocalDataUtils localDataUtils = const LocalDataUtils();
   late FrontendUtils frontEndUtils = widget.frontEndUtils;
   late bool initBoot = true;
@@ -91,7 +89,8 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
     deviceScreenWidth = PlatformDispatcher.instance.implicitView!.physicalSize.width;
     initBoot = localDataUtils.loadIsInitBootFromPrefs();
     isDarkMode = localDataUtils.loadIsDarkModeFromPrefs();
-    _initialHomePage = initBoot ? const WelcomeScreen() : const HomeScreen();
+    // _initialHomePage = initBoot ? const WelcomeScreen() : const HomeScreen();
+    _initialPage = initBoot ? RouteNames.welcomeScreen : RouteNames.homeScreen;
 
     super.initState();
   }
@@ -116,17 +115,17 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
         builder: (context, state) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-
-            home: _initialHomePage,
+            initialRoute: _initialPage,
+            home: const HomeScreen(),
             builder: (context, child) => child!,
             onGenerateTitle: (BuildContext context) => APP_NAME,
-            onGenerateRoute: app_router.Router.generateRoute,
+            onGenerateRoute: RouterClass.generateRoute,
             supportedLocales: const [Locale('en')],
-            locale: const Locale('en'), // Set default locale
+            locale: const Locale('en'),
             navigatorObservers: <NavigatorObserver>[routeObserver],
             themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
-            theme: PAppTheme.lightTheme,
-            darkTheme: PAppTheme.darkTheme,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
           );
         },
       ),

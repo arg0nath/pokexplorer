@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokexplorer/core/enums/app_enums.dart';
+import 'package:pokexplorer/core/theme/colors/app_palette.dart';
 import 'package:pokexplorer/core/variables/app_variables.dart';
 import 'package:pokexplorer/core/widgets/appbar_gradient.dart';
 import 'package:pokexplorer/core/widgets/custom_appbar_back_button.dart';
@@ -56,7 +57,6 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
       child: Scaffold(
         appBar: _pokeDetailsScreenAppbar(context),
         extendBody: true,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         extendBodyBehindAppBar: true,
         body: _pokeDetailsScreenBody(),
       ),
@@ -78,7 +78,6 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
           Expanded(
             flex: 5,
             child: Container(
-              color: Theme.of(context).scaffoldBackgroundColor, //color between pokemon and card
               child: Stack(
                 children: [
                   //gradient effect of appbar
@@ -98,7 +97,6 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
           Container(
             height: logicalHeight * 0.05,
             width: logicalWidth,
-            color: Theme.of(context).canvasColor,
             child: _pokeDetailsTypesList(context),
           ),
           Expanded(
@@ -119,7 +117,6 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
   Container detailsCardTitle(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).canvasColor,
         boxShadow: [BoxShadow(color: Theme.of(context).shadowColor, blurRadius: 10, spreadRadius: 0, offset: const Offset(0, -2))],
         borderRadius: const BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
       ),
@@ -163,14 +160,13 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
   AppBar _pokeDetailsScreenAppbar(BuildContext context) {
     return AppBar(
       leading: CustomAppbarBackButton(onPressed: () => _pokemonDetailsBloc.add(const ExitPokemonDetailsEvent())),
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppPalette.transparent,
     );
   }
 
   Widget _pokeDetailsPercentIndicators(BuildContext context) {
     if (_pokemonDetailsBloc.selectedPokemon.types.isEmpty) return const SizedBox.shrink();
     return Container(
-      color: Theme.of(context).canvasColor,
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(horizontal: logicalWidth * 0.1),
       child: Column(
@@ -187,7 +183,6 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
 
   Widget _pokeDetailsWeightHeight(BuildContext context) {
     return Container(
-      color: Theme.of(context).canvasColor,
       width: logicalWidth,
       child: Row(
         children: [
@@ -212,8 +207,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
       physics: const AlwaysScrollableScrollPhysics(),
       itemCount: _pokemonDetailsBloc.selectedPokemon.types.length,
       itemBuilder: (context, index) {
-        return Container(
-            color: Theme.of(context).cardColor, margin: EdgeInsets.only(left: logicalWidth * 0.05), child: SelectedTypeContainer(typeName: _pokemonDetailsBloc.selectedPokemon.types[index].name));
+        return Container(margin: EdgeInsets.only(left: logicalWidth * 0.05), child: SelectedTypeContainer(typeName: _pokemonDetailsBloc.selectedPokemon.types[index].name));
       },
     );
   }

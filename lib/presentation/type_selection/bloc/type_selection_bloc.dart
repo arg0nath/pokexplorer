@@ -4,8 +4,8 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 
 import '../../../core/models/app_models.dart';
 import '../../../core/utilities/app_utils.dart';
-import '../../../core/utilities/front_end_utils.dart';
 import '../../../core/variables/app_constants.dart';
+import '../../../domain/front_end_utils.dart';
 
 part 'type_selection_event.dart';
 part 'type_selection_state.dart';

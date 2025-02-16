@@ -8,8 +8,8 @@ import 'package:pokexplorer/core/widgets/custom_popup_menu_item.dart';
 import 'package:pokexplorer/core/widgets/no_pokemon_indicator.dart';
 import 'package:pokexplorer/core/widgets/pokemon_list_card.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
-import 'package:pokexplorer/router/app_router.dart' as app_router;
 import 'package:pokexplorer/presentation/favorites/bloc/favorites_bloc.dart';
+import 'package:pokexplorer/router/app_router.dart';
 
 class FavoritesScreen extends StatefulWidget {
   const FavoritesScreen({super.key});
@@ -83,7 +83,6 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _userFavoritesAppbar(context),
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: _favoritesBody(),
     );
   }
@@ -101,8 +100,8 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
       } else if (state.userFavoritesStatus == UserFavoritesStatus.navigatingToPokemonDetails) {
         await AppUtils.showLoadingDialog(context);
       } else if (state.userFavoritesStatus == UserFavoritesStatus.readyToNavigateToPokemonDetails) {
-        Navigator.popAndPushNamed(context, POKEMON_DETAILS_SCREEN_ROUTE_NAME,
-            arguments: app_router.PokemonDetailsScreenArguments(selectedTypeName: _favoritesBloc.selectedPokemon.types.first.name, pokemon: _favoritesBloc.selectedPokemon));
+        Navigator.popAndPushNamed(context, RouteNames.pokeDetailsScreen,
+            arguments: PokemonDetailsScreenArguments(selectedTypeName: _favoritesBloc.selectedPokemon.types.first.name, pokemon: _favoritesBloc.selectedPokemon));
       } else if (state.userFavoritesStatus == UserFavoritesStatus.noInternetFailedFavorites) {
         AppUtils.myToast(context, LocalizationManager.getInstance().connectionFailure);
       } else if (state.userFavoritesStatus == UserFavoritesStatus.navigateToDetailsFromFavoritesFailed) {

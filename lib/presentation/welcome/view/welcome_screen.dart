@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokexplorer/core/utilities/front_end_utils.dart';
+import 'package:pokexplorer/core/theme/colors/app_palette.dart';
 import 'package:pokexplorer/core/variables/app_constants.dart';
 import 'package:pokexplorer/core/widgets/custom_action_button.dart';
 import 'package:pokexplorer/core/widgets/selected_type_container.dart';
+import 'package:pokexplorer/domain/front_end_utils.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/presentation/welcome/bloc/welcome_bloc.dart';
+import 'package:pokexplorer/router/app_router.dart';
 
 import '../../../core/variables/app_variables.dart';
 
@@ -32,7 +34,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       extendBody: true,
       bottomNavigationBar: WelcomeBottomBar(appLocale: appLocale, frontEndUtils: _welcomeBloc.frontEndUtils),
       body: _welcomeBody(),
@@ -95,7 +96,7 @@ class WelcomeBottomBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       margin: EdgeInsets.only(bottom: logicalHeight * 0.02, right: logicalWidth * 0.05),
-      color: Colors.transparent,
+      color: AppPalette.transparent,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -104,7 +105,7 @@ class WelcomeBottomBar extends StatelessWidget {
             onPressed: () {
               frontEndUtils.localDataUtils.saveIsInitBootToPrefs(false);
               Navigator.popUntil(context, (Route route) => route.isFirst);
-              Navigator.pushReplacementNamed(context, HOME_SCREEN_PAGE_ROUTE_NAME);
+              Navigator.pushReplacementNamed(context, RouteNames.homeScreen);
             },
           ).animate(delay: 2300.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad)
         ],

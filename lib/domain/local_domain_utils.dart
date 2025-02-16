@@ -1,6 +1,6 @@
-import '../classes/app_classes.dart';
-import '../utilities/app_utils.dart';
-import '../variables/app_constants.dart';
+import '../data/local_data_utils.dart';
+import '../core/common/utilities/app_utils.dart';
+import '../core/common/constants/app_constants.dart';
 
 class LocalDataUtils {
   const LocalDataUtils();

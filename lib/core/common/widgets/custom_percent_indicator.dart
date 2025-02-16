@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:pokexplorer/core/utilities/app_utils.dart';
-import 'package:pokexplorer/core/variables/app_variables.dart';
+import 'package:pokexplorer/core/common/constants/app_constants.dart';
+import 'package:pokexplorer/core/common/utilities/app_utils.dart';
+import 'package:pokexplorer/core/common/variables/app_variables.dart';
 
 class CustomPercentIndicator extends StatelessWidget {
   const CustomPercentIndicator({
@@ -25,7 +26,7 @@ class CustomPercentIndicator extends StatelessWidget {
         LinearPercentIndicator(
           width: logicalWidth * 0.6,
           animation: true,
-          barRadius: const Radius.circular(20),
+          barRadius: const Radius.circular(CIRCULAR_RADIUS),
           lineHeight: 20.0,
           animationDuration: 1500,
           percent: tmpPercent,

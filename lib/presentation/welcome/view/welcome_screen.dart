@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokexplorer/core/common/constants/app_constants.dart';
+import 'package:pokexplorer/core/common/widgets/custom_action_button.dart';
+import 'package:pokexplorer/core/common/widgets/selected_type_container.dart';
 import 'package:pokexplorer/core/theme/colors/app_palette.dart';
-import 'package:pokexplorer/core/variables/app_constants.dart';
-import 'package:pokexplorer/core/widgets/custom_action_button.dart';
-import 'package:pokexplorer/core/widgets/selected_type_container.dart';
 import 'package:pokexplorer/domain/front_end_utils.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/presentation/welcome/bloc/welcome_bloc.dart';
 import 'package:pokexplorer/router/app_router.dart';
 
-import '../../../core/variables/app_variables.dart';
+import '../../../core/common/variables/app_variables.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});

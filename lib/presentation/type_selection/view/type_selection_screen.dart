@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokexplorer/core/models/app_models.dart';
+import 'package:pokexplorer/core/common/constants/app_constants.dart';
+import 'package:pokexplorer/core/common/models/app_models.dart';
+import 'package:pokexplorer/core/common/utilities/app_utils.dart';
+import 'package:pokexplorer/core/common/widgets/about_me_dialog.dart';
+import 'package:pokexplorer/core/common/widgets/custom_action_button.dart';
+import 'package:pokexplorer/core/common/widgets/selected_type_container.dart';
 import 'package:pokexplorer/core/theme/colors/app_palette.dart';
-import 'package:pokexplorer/core/utilities/app_utils.dart';
-import 'package:pokexplorer/core/widgets/about_me_dialog.dart';
-import 'package:pokexplorer/core/widgets/custom_action_button.dart';
-import 'package:pokexplorer/core/widgets/selected_type_container.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/presentation/type_selection/bloc/type_selection_bloc.dart';
 import 'package:pokexplorer/router/app_router.dart';
 
-import '../../../core/variables/app_variables.dart';
+import '../../../core/common/variables/app_variables.dart';
 
 class TypeSelectionScreen extends StatefulWidget {
   const TypeSelectionScreen({super.key});
@@ -43,8 +44,15 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
     return AppBar(
         centerTitle: true,
         elevation: 0,
-        leading: IconButton(onPressed: () => _typeSelectionBloc.add(const ShowInfoDialogEvent()), icon: const Icon(Icons.info_outline_rounded)),
+        leading: IconButton(
+            onPressed: () => _typeSelectionBloc.add(const ShowInfoDialogEvent()),
+            icon: const Icon(
+              Icons.info_outline_rounded,
+            )),
         scrolledUnderElevation: 0,
+        actions: [
+          IconButton(onPressed: () => Navigator.pushNamed(context, RouteNames.welcomeScreen), icon: const Icon(Icons.bug_report_outlined)),
+        ],
         title: Text(appLocale.typeSelectionAppBarTitle, style: Theme.of(context).textTheme.titleMedium));
   }
 
@@ -148,8 +156,8 @@ class _MyTypeCardState extends State<MyTypeCard> {
             child: Container(
               decoration: BoxDecoration(
                   color: widget.pokemonType.isSelected ? typeColor.withAlpha(30) : AppPalette.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  border: Border.all(color: widget.pokemonType.isSelected ? typeColor : Theme.of(context).colorScheme.onSurface)),
+                  borderRadius: BorderRadius.circular(CIRCULAR_RADIUS),
+                  border: Border.all(color: widget.pokemonType.isSelected ? typeColor : Theme.of(context).colorScheme.surface)),
               padding: const EdgeInsets.all(10),
               width: logicalWidth * 0.4,
               child: Center(

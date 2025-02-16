@@ -75,8 +75,9 @@ const String ROCK_TYPE_NAME = 'rock';
 const String BUG_TYPE_NAME = 'bug';
 const String ICE_TYPE_NAME = 'ice';
 
-const double DIALOG_PADDING = 16.0;
-const double DIALOG_BORDER_WIDTH = 4.0;
+const double CIRCULAR_RADIUS = 20;
+const double DIALOG_PADDING = 16;
+const double DIALOG_BORDER_WIDTH = 4;
 
 //dot scoll
 

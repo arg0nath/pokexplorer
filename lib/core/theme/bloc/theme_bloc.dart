@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:pokexplorer/core/common/utilities/app_utils.dart';
+import 'package:pokexplorer/core/common/variables/app_variables.dart';
 import 'package:pokexplorer/core/theme/bloc/theme_state.dart';
-import 'package:pokexplorer/core/utilities/app_utils.dart';
-import 'package:pokexplorer/core/variables/app_variables.dart';
 import 'package:pokexplorer/domain/front_end_utils.dart';
 
 part 'theme_event.dart';

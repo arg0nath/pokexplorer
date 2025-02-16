@@ -3,7 +3,7 @@ import 'package:pokexplorer/core/enums/app_enums.dart';
 import 'package:pokexplorer/core/theme/colors/app_palette.dart';
 
 import '../utilities/app_utils.dart';
-import '../variables/app_constants.dart';
+import '../constants/app_constants.dart';
 
 ///Return of  https://pokeapi.co/api/v2/type/
 class PokemonType {

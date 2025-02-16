@@ -1,9 +1,9 @@
 import 'package:cached_network_svg_image/cached_network_svg_image.dart';
 import 'package:flutter/material.dart';
+import 'package:pokexplorer/core/common/constants/app_constants.dart';
+import 'package:pokexplorer/core/common/variables/app_variables.dart';
+import 'package:pokexplorer/core/common/widgets/custom_progress_indicator.dart';
 import 'package:pokexplorer/core/theme/colors/app_palette.dart';
-import 'package:pokexplorer/core/variables/app_constants.dart';
-import 'package:pokexplorer/core/variables/app_variables.dart';
-import 'package:pokexplorer/core/widgets/custom_progress_indicator.dart';
 
 class CustomNetworkImage extends StatelessWidget {
   const CustomNetworkImage({
@@ -59,7 +59,7 @@ class CustomNetworkImage extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(CIRCULAR_RADIUS),
         border: Border.all(color: AppPalette.transparent, width: NETWORK_IMAGE_PLACEHOLDER_WIDTH),
       ),
       child: const Center(child: CustomProgressIndicator()),

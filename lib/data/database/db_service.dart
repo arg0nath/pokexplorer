@@ -1,7 +1,7 @@
 import 'package:path/path.dart';
-import 'package:pokexplorer/core/models/app_models.dart';
-import 'package:pokexplorer/core/utilities/app_utils.dart';
-import 'package:pokexplorer/core/variables/app_constants.dart';
+import 'package:pokexplorer/core/common/models/app_models.dart';
+import 'package:pokexplorer/core/common/utilities/app_utils.dart';
+import 'package:pokexplorer/core/common/constants/app_constants.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseService {

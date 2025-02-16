@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokexplorer/core/variables/app_constants.dart';
+import 'package:pokexplorer/core/common/constants/app_constants.dart';
 
 class CustomAppbarBackgroundWaveClipper extends CustomClipper<Path> {
 // sweet maths

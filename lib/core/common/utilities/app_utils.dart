@@ -4,14 +4,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:intl/intl.dart';
+import 'package:pokexplorer/core/common/variables/app_variables.dart';
+import 'package:pokexplorer/core/common/widgets/pokeball_loading_dialog.dart';
 import 'package:pokexplorer/core/theme/colors/app_palette.dart';
-import 'package:pokexplorer/core/variables/app_variables.dart';
-import 'package:pokexplorer/core/widgets/pokeball_loading_dialog.dart';
 import 'package:toastification/toastification.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../domain/front_end_utils.dart';
-import '../variables/app_constants.dart' as app_const;
+import '../../../domain/front_end_utils.dart';
+import '../constants/app_constants.dart' as app_const;
 
 extension StringExtensions on String {
   /// Converts the very first character in this string to upper case.

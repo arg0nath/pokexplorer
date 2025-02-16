@@ -3,7 +3,7 @@ import 'package:pokexplorer/presentation/favorites/view/favorites_screen.dart';
 import 'package:pokexplorer/presentation/home/view/home_screen.dart';
 import 'package:pokexplorer/presentation/type_selection/view/type_selection_screen.dart';
 
-import '../core/models/app_models.dart' as app_models;
+import '../core/common/models/app_models.dart' as app_models;
 import '../domain/front_end_utils.dart';
 import '../presentation/pokemon_details/view/pokemon_details_screen.dart';
 import '../presentation/type_details/view/type_details_screen.dart';

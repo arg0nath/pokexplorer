@@ -2,10 +2,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pokexplorer/core/enums/app_enums.dart';
-import 'package:pokexplorer/core/utilities/app_utils.dart';
+import 'package:pokexplorer/core/common/utilities/app_utils.dart';
 import 'package:pokexplorer/presentation/type_details/bloc/type_details_bloc.dart';
 
-import '../../../core/models/app_models.dart';
+import '../../../core/common/models/app_models.dart';
 import '../../../domain/front_end_utils.dart';
 
 part 'pokemon_details_event.dart';

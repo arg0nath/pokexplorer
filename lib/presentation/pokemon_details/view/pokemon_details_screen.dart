@@ -2,20 +2,20 @@ import 'package:animations/animations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokexplorer/core/common/variables/app_variables.dart';
+import 'package:pokexplorer/core/common/widgets/appbar_gradient.dart';
+import 'package:pokexplorer/core/common/widgets/custom_appbar_back_button.dart';
+import 'package:pokexplorer/core/common/widgets/custom_favorite_button.dart';
+import 'package:pokexplorer/core/common/widgets/custom_network_image.dart';
+import 'package:pokexplorer/core/common/widgets/custom_percent_indicator.dart';
+import 'package:pokexplorer/core/common/widgets/selected_type_container.dart';
 import 'package:pokexplorer/core/enums/app_enums.dart';
 import 'package:pokexplorer/core/theme/colors/app_palette.dart';
-import 'package:pokexplorer/core/variables/app_variables.dart';
-import 'package:pokexplorer/core/widgets/appbar_gradient.dart';
-import 'package:pokexplorer/core/widgets/custom_appbar_back_button.dart';
-import 'package:pokexplorer/core/widgets/custom_favorite_button.dart';
-import 'package:pokexplorer/core/widgets/custom_network_image.dart';
-import 'package:pokexplorer/core/widgets/custom_percent_indicator.dart';
-import 'package:pokexplorer/core/widgets/selected_type_container.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/presentation/pokemon_details/bloc/pokemon_details_bloc.dart';
 
-import '../../../core/models/app_models.dart';
-import '../../../core/utilities/app_utils.dart';
+import '../../../core/common/models/app_models.dart';
+import '../../../core/common/utilities/app_utils.dart';
 
 class PokemonDetailsScreen extends StatefulWidget {
   const PokemonDetailsScreen({super.key, required this.pokemon, required this.selectedTypeName});
@@ -116,9 +116,9 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
 
   Container detailsCardTitle(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        boxShadow: [BoxShadow(color: Theme.of(context).shadowColor, blurRadius: 10, spreadRadius: 0, offset: const Offset(0, -2))],
-        borderRadius: const BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+      decoration: const BoxDecoration(
+        boxShadow: [BoxShadow(blurRadius: 10, spreadRadius: 0, offset: Offset(0, -2))],
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
       ),
       width: logicalWidth,
       alignment: Alignment.center,

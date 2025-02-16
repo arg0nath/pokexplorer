@@ -3,9 +3,9 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
-import '../utilities/app_utils.dart';
-import '../variables/app_constants.dart';
-import 'local_data_utils.dart';
+import '../core/common/utilities/app_utils.dart';
+import '../core/common/constants/app_constants.dart';
+import '../domain/local_domain_utils.dart';
 
 class BackendUtils {
   BackendUtils();

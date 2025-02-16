@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pokexplorer/core/variables/app_constants.dart';
-import 'package:pokexplorer/core/variables/app_variables.dart' as app_vars;
+import 'package:pokexplorer/core/common/constants/app_constants.dart';
+import 'package:pokexplorer/core/common/variables/app_variables.dart' as app_vars;
 import 'package:pokexplorer/localization/app_localizations.dart';
 
 class NoPokemonIndicator extends StatelessWidget {

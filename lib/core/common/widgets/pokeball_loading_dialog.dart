@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:pokexplorer/core/variables/app_constants.dart';
-import 'package:pokexplorer/core/variables/app_variables.dart';
+import 'package:pokexplorer/core/common/constants/app_constants.dart';
+import 'package:pokexplorer/core/common/variables/app_variables.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
 
 class DialogProgressPokeball extends StatelessWidget {
@@ -25,7 +25,7 @@ class DialogProgressPokeball extends StatelessWidget {
           decoration: BoxDecoration(
               border: Border.all(width: DIALOG_BORDER_WIDTH),
               shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.circular(DIALOG_PADDING),
+              borderRadius: BorderRadius.circular(CIRCULAR_RADIUS),
               boxShadow: const <BoxShadow>[BoxShadow(blurRadius: 10.0, offset: Offset(0.0, 10.0))]),
           padding: const EdgeInsets.all(25),
           child: Center(

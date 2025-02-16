@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../utilities/app_utils.dart';
-import '../variables/app_constants.dart';
+import '../core/common/utilities/app_utils.dart';
+import '../core/common/constants/app_constants.dart';
 
 class PreferenceUtils {
   static Future<SharedPreferences> get _instance async => _prefsInstance = await SharedPreferences.getInstance();

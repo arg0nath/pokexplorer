@@ -1,6 +1,6 @@
-import '../core/data_repository/back_end_utils.dart';
-import '../core/data_repository/local_data_utils.dart';
-import '../core/models/app_models.dart' as app_models;
+import '../data/remote_data_utils.dart';
+import 'local_domain_utils.dart';
+import '../core/common/models/app_models.dart' as app_models;
 
 class FrontendUtils {
   FrontendUtils() {

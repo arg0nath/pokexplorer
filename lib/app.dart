@@ -10,12 +10,12 @@ import 'package:pokexplorer/presentation/home/view/home_screen.dart';
 import 'package:pokexplorer/presentation/type_selection/bloc/type_selection_bloc.dart';
 import 'package:pokexplorer/services/db_service.dart';
 
-import 'core/data_repository/back_end_utils.dart';
-import 'core/data_repository/local_data_utils.dart';
-import 'core/utilities/app_utils.dart';
-import 'core/variables/app_constants.dart';
-import 'core/variables/app_variables.dart';
+import 'core/common/constants/app_constants.dart';
+import 'core/common/utilities/app_utils.dart';
+import 'core/common/variables/app_variables.dart';
+import 'data/remote_data_utils.dart';
 import 'domain/front_end_utils.dart';
+import 'domain/local_domain_utils.dart';
 import 'presentation/pokemon_details/bloc/pokemon_details_bloc.dart';
 import 'presentation/type_details/bloc/type_details_bloc.dart';
 import 'presentation/welcome/bloc/welcome_bloc.dart';

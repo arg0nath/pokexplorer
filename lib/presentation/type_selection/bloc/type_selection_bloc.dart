@@ -2,9 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
-import '../../../core/models/app_models.dart';
-import '../../../core/utilities/app_utils.dart';
-import '../../../core/variables/app_constants.dart';
+import '../../../core/common/models/app_models.dart';
+import '../../../core/common/utilities/app_utils.dart';
+import '../../../core/common/constants/app_constants.dart';
 import '../../../domain/front_end_utils.dart';
 
 part 'type_selection_event.dart';

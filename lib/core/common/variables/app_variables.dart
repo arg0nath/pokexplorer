@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pokexplorer/services/db_service.dart';
 
-import '../../../router/app_router.dart';
+import '../../../../router/app_router.dart';
 
 /// RouteObserver for monitoring the currently visible screen.
 final MyRouteObserver routeObserver = MyRouteObserver();

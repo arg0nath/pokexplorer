@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:pokexplorer/core/variables/app_constants.dart' as app_const;
+import 'package:pokexplorer/core/common/constants/app_constants.dart' as app_const;
 import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/presentation/favorites/favorites.dart';
 import 'package:pokexplorer/presentation/type_selection/view/type_selection_screen.dart';
 
-import '../../../core/variables/app_variables.dart' as app_vars;
+import '../../../core/common/variables/app_variables.dart' as app_vars;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

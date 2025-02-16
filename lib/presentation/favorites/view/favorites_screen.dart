@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokexplorer/core/models/app_models.dart';
-import 'package:pokexplorer/core/utilities/app_utils.dart';
-import 'package:pokexplorer/core/variables/app_constants.dart';
-import 'package:pokexplorer/core/widgets/custom_alter_dialog.dart';
-import 'package:pokexplorer/core/widgets/custom_popup_menu_item.dart';
-import 'package:pokexplorer/core/widgets/no_pokemon_indicator.dart';
-import 'package:pokexplorer/core/widgets/pokemon_list_card.dart';
+import 'package:pokexplorer/core/common/constants/app_constants.dart';
+import 'package:pokexplorer/core/common/models/app_models.dart';
+import 'package:pokexplorer/core/common/utilities/app_utils.dart';
+import 'package:pokexplorer/core/common/widgets/custom_alter_dialog.dart';
+import 'package:pokexplorer/core/common/widgets/custom_popup_menu_item.dart';
+import 'package:pokexplorer/core/common/widgets/no_pokemon_indicator.dart';
+import 'package:pokexplorer/core/common/widgets/pokemon_list_card.dart';
 import 'package:pokexplorer/localization/app_localizations.dart';
 import 'package:pokexplorer/presentation/favorites/bloc/favorites_bloc.dart';
 import 'package:pokexplorer/router/app_router.dart';
@@ -52,7 +52,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
             return const SizedBox.shrink();
           } else {
             return PopupMenuButton<dynamic>(
-              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(CIRCULAR_RADIUS)),
               icon: const Icon(Icons.more_vert),
               onSelected: handleClick,
               itemBuilder: (BuildContext context) => <BuildPopupMenuItem>[

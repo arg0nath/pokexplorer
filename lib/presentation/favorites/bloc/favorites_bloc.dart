@@ -2,10 +2,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
+import 'package:pokexplorer/core/common/variables/app_variables.dart' as app_vars;
 import 'package:pokexplorer/core/enums/app_enums.dart';
-import 'package:pokexplorer/core/variables/app_variables.dart' as app_vars;
 
-import '../../../core/models/app_models.dart' as app_models;
+import '../../../core/common/models/app_models.dart' as app_models;
 import '../../../domain/front_end_utils.dart';
 
 part 'favorites_event.dart';

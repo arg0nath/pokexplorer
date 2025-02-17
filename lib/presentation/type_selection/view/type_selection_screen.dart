@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokexplorer/core/common/models/app_models.dart';
@@ -45,9 +44,9 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
           icon: const Icon(Icons.info_outline_rounded),
         ),
         scrolledUnderElevation: 0,
-        actions: [
-          if (kDebugMode) IconButton(onPressed: () => Navigator.pushNamed(context, RouteNames.welcomeScreen), icon: const Icon(Icons.bug_report_outlined)),
-          if (kDebugMode) IconButton(onPressed: () => context.showLoadingDialog(), icon: const Icon(Icons.dialpad_outlined)),
+        actions: const [
+          // if (kDebugMode) IconButton(onPressed: () => Navigator.pushNamed(context, RouteNames.welcomeScreen), icon: const Icon(Icons.bug_report_outlined)),
+          // if (kDebugMode) IconButton(onPressed: () => context.showLoadingDialog(), icon: const Icon(Icons.dialpad_outlined)),
         ],
         title: Text(appLocale.typeSelectionAppBarTitle, style: Theme.of(context).textTheme.titleMedium));
   }

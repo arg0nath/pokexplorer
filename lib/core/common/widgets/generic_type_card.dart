@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:pokexplorer/core/common/models/app_models.dart';
 import 'package:pokexplorer/core/common/utilities/app_utils.dart';
+import 'package:pokexplorer/core/theme/colors/app_palette.dart';
 
 class GenericTypeCard extends StatelessWidget {
   const GenericTypeCard({
@@ -24,7 +25,7 @@ class GenericTypeCard extends StatelessWidget {
         borderOnForeground: true,
         color: !pokemonType.isSelected ? typeColor.withAlpha(40) : typeColor.withAlpha(190),
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(20),
           child: Column(
             spacing: 10,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -50,7 +51,7 @@ class GenericTypeCard extends StatelessWidget {
                     fit: BoxFit.scaleDown,
                   ),
                   (pokemonType.isSelected)
-                      ? Icon(Icons.check_circle_outline_rounded, size: 20, color: typeColor)
+                      ? Icon(Icons.check_circle_outline_rounded, size: 20, color: AppPalette.blackish.withAlpha(100))
                       : Icon(Icons.circle_outlined, size: 20, color: Theme.of(context).colorScheme.primary.withAlpha(50)),
                 ],
               ),

@@ -109,11 +109,10 @@ class _MyTypesListState extends State<MyTypesList> {
     return Scrollbar(
       child: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           width: logicalWidth,
           child: Wrap(
               alignment: WrapAlignment.spaceEvenly,
-              runAlignment: WrapAlignment.spaceEvenly,
               runSpacing: 10,
               spacing: 10,
               crossAxisAlignment: WrapCrossAlignment.center,

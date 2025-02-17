@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:pokexplorer/core/common/constants/app_constants.dart';
 import 'package:pokexplorer/core/common/models/app_models.dart';
 import 'package:pokexplorer/core/common/utilities/app_utils.dart';
-import 'package:pokexplorer/core/common/variables/app_variables.dart';
 
 class GenericTypeCard extends StatelessWidget {
   const GenericTypeCard({
@@ -21,43 +19,64 @@ class GenericTypeCard extends StatelessWidget {
     final typeColor = AppUtils.getTypeColor(pokemonType.name);
     return GestureDetector(
       onTap: onTap,
-      child: Stack(
-        children: [
-          // image type + name
-          Center(
-            child: Container(
-              decoration: BoxDecoration(
-                  color: !pokemonType.isSelected ? typeColor.withAlpha(30) : typeColor.withAlpha(70),
-                  borderRadius: BorderRadius.circular(CIRCULAR_RADIUS),
-                  border: Border.all(color: pokemonType.isSelected ? typeColor.withAlpha(60) : Theme.of(context).colorScheme.surface)),
-              padding: const EdgeInsets.all(10),
-              width: logicalWidth * 0.4,
-              child: Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  spacing: 5,
-                  children: [
-                    Expanded(flex: 2, child: Image.asset(pokemonType.icon)),
-                    Flexible(
-                        flex: 1,
-                        child: Text(
-                          pokemonType.name.toUpperFirst(),
-                          style: Theme.of(context).textTheme.labelLarge,
-                        )),
-                  ],
-                ),
+      child: Card(
+        elevation: 0,
+        color: !pokemonType.isSelected ? typeColor.withAlpha(40) : typeColor.withAlpha(70),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            spacing: 10,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                pokemonType.name.toUpperFirst(),
+                style: Theme.of(context).textTheme.labelLarge,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
-            ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    pokemonType.icon,
+                    fit: BoxFit.scaleDown,
+                  ),
+                  (pokemonType.isSelected)
+                      ? Icon(Icons.check_circle_outline_rounded, size: 20, color: typeColor)
+                      : Icon(Icons.circle_outlined, size: 20, color: Theme.of(context).colorScheme.primary.withAlpha(50)),
+                ],
+              ),
+            ],
           ),
-          //selected or not - icon
-          Positioned(
-            bottom: 7,
-            right: logicalWidth * 0.06,
-            child: (pokemonType.isSelected) ? Icon(Icons.check_circle_outline_rounded, color: typeColor) : const Icon(Icons.circle_outlined, color: Colors.black12),
-          ),
-        ],
+        ),
       ),
     ).animate().fade(duration: 300.ms, curve: Curves.easeOutQuad).scale();
   }
 }
+
+/* 
+ Container(
+          decoration: BoxDecoration(
+               borderRadius: BorderRadius.circular(CIRCULAR_RADIUS),
+              border: Border.all(color: pokemonType.isSelected ? typeColor.withAlpha(60) : Theme.of(context).colorScheme.surface)),
+          padding: const EdgeInsets.all(10),
+          width: logicalWidth * 0.4,
+          child: Column(
+            children: [
+              Image.asset(pokemonType.icon),
+              Row(
+                children: [
+                  Flexible(
+                      flex: 1,
+                      child: Text(
+                        pokemonType.name.toUpperFirst() + 'adsasd jkasdjasjdh',
+                        style: Theme.of(context).textTheme.labelLarge,
+                      )),
+                  (pokemonType.isSelected) ? Icon(Icons.check_circle_outline_rounded, color: typeColor) : Icon(Icons.circle_outlined, color: Theme.of(context).colorScheme.primary.withAlpha(50)),
+                ],
+              ),
+            ],
+          )), */

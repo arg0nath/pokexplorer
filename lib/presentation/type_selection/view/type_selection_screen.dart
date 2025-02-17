@@ -1,15 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokexplorer/core/common/models/app_models.dart';
 import 'package:pokexplorer/core/common/utilities/app_utils.dart';
+import 'package:pokexplorer/core/common/variables/app_variables.dart';
 import 'package:pokexplorer/core/common/widgets/about_me_dialog.dart';
 import 'package:pokexplorer/core/common/widgets/generic_type_card.dart';
-import 'package:pokexplorer/core/common/widgets/selected_type_container.dart';
 import 'package:pokexplorer/core/localization/app_localizations.dart';
 import 'package:pokexplorer/presentation/type_selection/bloc/type_selection_bloc.dart';
 import 'package:pokexplorer/router/app_router.dart';
-
-import '../../../core/common/variables/app_variables.dart';
 
 class TypeSelectionScreen extends StatefulWidget {
   const TypeSelectionScreen({super.key});
@@ -75,14 +74,20 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
           alignment: Alignment.bottomCenter,
           children: [
             //pokeball background
-            const Positioned(left: -20, bottom: -50, child: PokeballBackground()),
+            // const Positioned(left: -20, bottom: -50, child: PokeballBackground()),
 
             //grid list with types
-            MyTypesGrid(typeSelectionBloc: _typeSelectionBloc),
+            MyTypesList(typeSelectionBloc: _typeSelectionBloc),
             //next buttonZ`
-
-            Positioned(
-                bottom: MediaQuery.sizeOf(context).height * 0.02, child: ElevatedButton(child: Text(appLocale.next), onPressed: () => _typeSelectionBloc.add(const ProceedToTypeDetailsScreenEvent()))),
+            if (_typeSelectionBloc.selectedPokemonType.name.isNotEmpty)
+              Positioned(
+                bottom: MediaQuery.sizeOf(context).height * 0.02,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(),
+                  onPressed: () => _typeSelectionBloc.add(const ProceedToTypeDetailsScreenEvent()),
+                  child: Text(appLocale.next),
+                ),
+              ),
           ],
         );
       },
@@ -90,40 +95,37 @@ class _TypeSelectionScreenState extends State<TypeSelectionScreen> {
   }
 }
 
-class MyTypesGrid extends StatefulWidget {
-  const MyTypesGrid({super.key, required this.typeSelectionBloc});
+class MyTypesList extends StatefulWidget {
+  const MyTypesList({super.key, required this.typeSelectionBloc});
 
   final TypeSelectionBloc typeSelectionBloc;
 
   @override
-  State<MyTypesGrid> createState() => _MyTypesGridState();
+  State<MyTypesList> createState() => _MyTypesListState();
 }
 
-class _MyTypesGridState extends State<MyTypesGrid> {
+class _MyTypesListState extends State<MyTypesList> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: logicalHeight,
-      // padding: EdgeInsets.only(bottom: app_vars.logicalHeight * 0.1),
-      child: GridView.builder(
-          shrinkWrap: true,
-          padding: const EdgeInsets.all(10),
-          gridDelegate: _gridDelegate(),
-          itemCount: widget.typeSelectionBloc.availableTypes.length,
-          itemBuilder: (context, index) {
-            return GenericTypeCard(
-              onTap: () => widget.typeSelectionBloc.add(SelectTypeEvent(type: widget.typeSelectionBloc.availableTypes[index])),
-              pokemonType: widget.typeSelectionBloc.availableTypes[index],
-            );
-          }),
-    );
-  }
-
-  SliverGridDelegateWithFixedCrossAxisCount _gridDelegate() {
-    return const SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: 2,
-      childAspectRatio: 16 / 9,
-      mainAxisSpacing: 10.0,
+    return Scrollbar(
+      child: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(10),
+          width: logicalWidth,
+          child: Wrap(
+              alignment: WrapAlignment.spaceEvenly,
+              runAlignment: WrapAlignment.spaceEvenly,
+              runSpacing: 10,
+              spacing: 10,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: widget.typeSelectionBloc.availableTypes
+                  .map((PokemonType e) => GenericTypeCard(
+                        onTap: () => widget.typeSelectionBloc.add(SelectTypeEvent(type: e)),
+                        pokemonType: e,
+                      ))
+                  .toList()),
+        ),
+      ),
     );
   }
 }

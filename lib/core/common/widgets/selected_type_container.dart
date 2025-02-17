@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:pokexplorer/core/common/constants/app_constants.dart';
 import 'package:pokexplorer/core/common/utilities/app_utils.dart';
@@ -42,17 +40,17 @@ class PokeballBackground extends StatelessWidget {
   const PokeballBackground({
     super.key,
   });
+  /* Transform.rotate(
+      angle: 20 * math.pi / 180,
+      child: */
 
   @override
   Widget build(BuildContext context) {
-    return Transform.rotate(
-      angle: 20 * math.pi / 180,
-      child: Opacity(
-        opacity: 0.05,
-        child: Image.asset(
-          width: logicalWidth * 0.6,
-          POKEBALL_OUTLINED_PNG,
-        ),
+    return Opacity(
+      opacity: 0.05,
+      child: Image.asset(
+        width: logicalWidth * 0.6,
+        POKEBALL_OUTLINED_PNG,
       ),
     );
   }

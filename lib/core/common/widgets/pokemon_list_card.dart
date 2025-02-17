@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pokexplorer/core/common/constants/app_constants.dart';
 import 'package:pokexplorer/core/common/enums/app_enums.dart';
 import 'package:pokexplorer/core/common/models/app_models.dart';
 import 'package:pokexplorer/core/common/utilities/app_utils.dart';
@@ -27,12 +26,7 @@ class PokemonListCard extends StatelessWidget {
     return GestureDetector(
         onLongPress: onLongPress,
         onTap: onCardTap,
-        child: Container(
-            width: logicalWidth * 0.7,
-            height: logicalHeight * 0.12,
-            alignment: Alignment.center,
-            padding: const EdgeInsets.all(2),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(CIRCULAR_RADIUS)),
+        child: Card(
             margin: EdgeInsets.symmetric(vertical: logicalHeight * 0.01, horizontal: logicalWidth * 0.06),
             child: Row(children: [
               //pokemon image
@@ -45,7 +39,7 @@ class PokemonListCard extends StatelessWidget {
               //pokemon name
               Expanded(
                 flex: 3,
-                child: Text(pokemonPreview.name.toUpperFirst(), maxLines: 3, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodyLarge),
+                child: Text(pokemonPreview.name.toUpperFirst(), maxLines: 3, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.titleLarge),
               ),
               //favorite icon
               if (onFavoriteIconTap != null)

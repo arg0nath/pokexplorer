@@ -72,16 +72,16 @@ class AnimatedHeart extends StatelessWidget {
         duration: _duration,
         tween: ColorTween(
           begin: AppPalette.grey,
-          end: isActive ? Theme.of(context).primaryColor : AppPalette.grey,
+          end: isActive ? AppPalette.brightRed : AppPalette.grey,
         ),
         builder: (context, value, child) {
           final tmpIcon = isActive ? Icons.favorite_rounded : Icons.favorite_border_rounded;
           return Icon(
             tmpIcon,
             size: 50,
-            color: value, // Modify from here...
+            color: value,
           );
-        }, // To here.
+        },
       ),
     );
   }

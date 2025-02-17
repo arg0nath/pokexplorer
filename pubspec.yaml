@@ -37,7 +37,6 @@ dependencies:
   cached_network_svg_image: ^1.1.0
   animations: ^2.0.11
   intl: ^0.19.0
-  # flutter_localization: ^0.2.2
 
 dev_dependencies:
   flutter_test:
@@ -60,30 +59,7 @@ flutter:
   # type icons from https://bulbapedia.bulbagarden.net/wiki/Type#Icons
 
   assets:
-    - assets/images/fire_icon.png
-    - assets/images/water_icon.png
-    - assets/images/grass_icon.png
-    - assets/images/electric_icon.png
-    - assets/images/dragon_icon.png
-    - assets/images/psychic_icon.png
-    - assets/images/ghost_icon.png
-    - assets/images/dark_icon.png
-    - assets/images/steel_icon.png
-    - assets/images/fairy_icon.png
-    - assets/images/normal_icon.png
-    - assets/images/fighting_icon.png
-    - assets/images/flying_icon.png
-    - assets/images/poison_icon.png
-    - assets/images/ground_icon.png
-    - assets/images/rock_icon.png
-    - assets/images/bug_icon.png
-    - assets/images/ice_icon.png
-    - assets/images/pokedex.png
-
-    - assets/images/pokeball_outlined.png
-    - assets/images/pokeball.png
-    - assets/images/gonnasearch.png
-    - assets/images/pokexplorer_logo.png
+    - assets/images/
     - assets/svgs/official_pokemon_logo.svg
 
     - assets/images/emptyPokeball.png

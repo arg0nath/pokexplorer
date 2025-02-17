@@ -29,7 +29,7 @@ class _SelectedTypeContainerState extends State<SelectedTypeContainer> {
         spacing: 10,
         children: [
           SizedBox(height: 30, width: 30, child: Image.asset(AppUtils.typeToAssetIcon(widget.typeName))),
-          Text(widget.typeName.toUpperFirst(), textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyLarge),
+          Text(widget.typeName.toUpperFirst(), textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500)),
         ],
       ),
     );

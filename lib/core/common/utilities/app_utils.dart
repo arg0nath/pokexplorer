@@ -11,7 +11,7 @@ import 'package:toastification/toastification.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../domain/front_end_utils.dart';
-import '../constants/app_constants.dart' as app_const;
+import '../constants/app_constants.dart';
 
 extension StringExtensions on String {
   /// Converts the very first character in this string to upper case.
@@ -54,31 +54,31 @@ abstract class AppUtils {
   /// [msg] is the message to be printed in console.
   ///
   /// Returns void. Debuging purposes only.
-  static void myLog({int? level = app_const.LOG_INFO, required String msg}) {
+  static void myLog({int? level = LOG_INFO, required String msg}) {
     if (kDebugMode) {
-      level ??= app_const.LOG_INFO;
-      if (app_const.SHOW_LOG) {
-        if (level == app_const.LOG_INFO) {
-          log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${app_const.APP_PACKAGE}: $msg');
-        } else if (level == app_const.LOG_WARNING) {
-          log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${app_const.LOG_WARNING_COLOR}${app_const.APP_PACKAGE}: $msg ${app_const.LOG_RESET_COLOR}');
-        } else if (level == app_const.LOG_ERROR) {
-          log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${app_const.LOG_ERROR_COLOR}${app_const.APP_PACKAGE}: 🚫 ERROR: $msg 🚫 ${app_const.LOG_RESET_COLOR}');
+      level ??= LOG_INFO;
+      if (SHOW_LOG) {
+        if (level == LOG_INFO) {
+          log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${APP_PACKAGE}: $msg');
+        } else if (level == LOG_WARNING) {
+          log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${LOG_WARNING_COLOR}${APP_PACKAGE}: $msg ${LOG_RESET_COLOR}');
+        } else if (level == LOG_ERROR) {
+          log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${LOG_ERROR_COLOR}${APP_PACKAGE}: 🚫 ERROR: $msg 🚫 ${LOG_RESET_COLOR}');
         } else {
-          log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${app_const.LOG_WTF_COLOR}${app_const.APP_PACKAGE} : WTF:  $msg${app_const.LOG_RESET_COLOR}');
+          log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${LOG_WTF_COLOR}${APP_PACKAGE} : WTF:  $msg${LOG_RESET_COLOR}');
         }
       }
     }
   }
 
   static Future<void> loadPrefs(FrontendUtils frontEndUtils) async {
-    myLog(level: app_const.LOG_WARNING, msg: 'loadPrefs..');
+    myLog(level: LOG_WARNING, msg: 'loadPrefs..');
     return Future<void>.value();
   }
 
   static int extractPokemonPreviewId(String url) {
     final id = url.split('/').where((segment) => segment.isNotEmpty).last; // the last parameter of the url is the id
-    final resultId = int.tryParse(id) ?? app_const.EMPTY_INT;
+    final resultId = int.tryParse(id) ?? EMPTY_INT;
     return resultId;
   }
 
@@ -89,7 +89,7 @@ abstract class AppUtils {
   static ToastificationItem myToast(BuildContext context, String msg) {
     toastification.dismissAll();
     return toastification.show(
-      icon: Image.asset(app_const.POKEBALL_PNG, width: 20, height: 20),
+      icon: Image.asset(POKEBALL_PNG, width: 20, height: 20),
       title: SizedBox(
           width: logicalWidth * 0.9,
           child: Text(
@@ -119,41 +119,41 @@ abstract class AppUtils {
   // Method to get color based on Pokemon type
   static Color getTypeColor(String name) {
     switch (name.toLowerCase()) {
-      case 'fire':
+      case FIRE_TYPE_NAME:
         return AppPalette.fire;
-      case 'water':
+      case WATER_TYPE_NAME:
         return AppPalette.water;
-      case 'grass':
+      case GRASS_TYPE_NAME:
         return AppPalette.grass;
-      case 'electric':
+      case ELECTRIC_TYPE_NAME:
         return AppPalette.electric;
-      case 'dragon':
+      case DRAGON_TYPE_NAME:
         return AppPalette.dragon;
-      case 'psychic':
+      case PSYCHIC_TYPE_NAME:
         return AppPalette.psychic;
-      case 'ghost':
+      case GHOST_TYPE_NAME:
         return AppPalette.ghost;
-      case 'dark':
+      case DARK_TYPE_NAME:
         return AppPalette.dark;
-      case 'steel':
+      case STEEL_TYPE_NAME:
         return AppPalette.steel;
-      case 'fairy':
+      case FAIRY_TYPE_NAME:
         return AppPalette.fairy;
-      case 'normal':
+      case NORMAL_TYPE_NAME:
         return AppPalette.normal;
-      case 'fighting':
+      case FIGHTING_TYPE_NAME:
         return AppPalette.fighting;
-      case 'flying':
+      case FLYING_TYPE_NAME:
         return AppPalette.flying;
-      case 'poison':
+      case POISON_TYPE_NAME:
         return AppPalette.poison;
-      case 'ground':
+      case GROUND_TYPE_NAME:
         return AppPalette.ground;
-      case 'rock':
+      case ROCK_TYPE_NAME:
         return AppPalette.rock;
-      case 'bug':
+      case BUG_TYPE_NAME:
         return AppPalette.bug;
-      case 'ice':
+      case ICE_TYPE_NAME:
         return AppPalette.ice;
       default:
         return AppPalette.gradientBaseLight; // Default color if no match

@@ -46,7 +46,7 @@ class LocalizationManager {
   String get failedToFetchData => _localizedStrings[_locale.languageCode]?['failed_to_fetch_data'] ?? 'Failed to fetch data.';
   String get connectionFailure => _localizedStrings[_locale.languageCode]?['connection_failure'] ?? 'Please check your internet connection and refresh';
   String get contactMe => _localizedStrings[_locale.languageCode]?['contact_me'] ?? 'Contact';
-  String get loadingDialogMessage => _localizedStrings[_locale.languageCode]?['loading_dialog_message'] ?? 'Loading Pokémon';
+  String get loadingDialogMessage => _localizedStrings[_locale.languageCode]?['loading_dialog_message'] ?? 'Loading';
   String get generalErrorMessage => _localizedStrings[_locale.languageCode]?['general_error_message'] ?? 'Oops! Something went wrong';
   String get searchBarTitle => _localizedStrings[_locale.languageCode]?['search_bar_title'] ?? 'Search for a Pokémon';
 }
@@ -61,7 +61,7 @@ final Map<String, Map<String, String>> _localizedStrings = {
     'welcome_button_text': "Let's start!",
     'empty_type_selection_error': "Hey! Don't forget to pick a category",
     'next': 'Next',
-    'loading_dialog_message': 'Loading Pokémon',
+    'loading_dialog_message': 'Loading',
     'type_selection_appbar_title': 'Pick a Pokémon type',
     'weight': 'Weight',
     'height': 'Height',

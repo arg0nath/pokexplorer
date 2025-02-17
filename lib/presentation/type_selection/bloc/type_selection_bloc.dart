@@ -2,9 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
+import '../../../core/common/constants/app_constants.dart';
 import '../../../core/common/models/app_models.dart';
 import '../../../core/common/utilities/app_utils.dart';
-import '../../../core/common/constants/app_constants.dart';
 import '../../../domain/front_end_utils.dart';
 
 part 'type_selection_event.dart';
@@ -22,16 +22,16 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
       emit(const TypeSelectionState(typeSelectionStatus: TypeSelectionStatus.loadingTypes));
 
       availableTypes.addAll([
-        PokemonType(name: 'fire', icon: FIRE_ICON, isSelected: false),
-        PokemonType(name: 'water', icon: WATER_ICON, isSelected: false),
-        PokemonType(name: 'grass', icon: GRASS_ICON, isSelected: false),
-        PokemonType(name: 'electric', icon: ELECTRIC_ICON, isSelected: false),
-        PokemonType(name: 'dragon', icon: DRAGON_ICON, isSelected: false),
-        PokemonType(name: 'psychic', icon: PSYCHIC_ICON, isSelected: false),
-        PokemonType(name: 'ghost', icon: GHOST_ICON, isSelected: false),
-        PokemonType(name: 'dark', icon: DARK_ICON, isSelected: false),
-        PokemonType(name: 'steel', icon: STEEL_ICON, isSelected: false),
-        PokemonType(name: 'fairy', icon: FAIRY_ICON, isSelected: false),
+        PokemonType(name: FIRE_TYPE_NAME, icon: FIRE_ICON, isSelected: false),
+        PokemonType(name: WATER_TYPE_NAME, icon: WATER_ICON, isSelected: false),
+        PokemonType(name: GRASS_TYPE_NAME, icon: GRASS_ICON, isSelected: false),
+        PokemonType(name: ELECTRIC_TYPE_NAME, icon: ELECTRIC_ICON, isSelected: false),
+        PokemonType(name: DRAGON_TYPE_NAME, icon: DRAGON_ICON, isSelected: false),
+        PokemonType(name: PSYCHIC_TYPE_NAME, icon: PSYCHIC_ICON, isSelected: false),
+        PokemonType(name: GHOST_TYPE_NAME, icon: GHOST_ICON, isSelected: false),
+        PokemonType(name: DARK_TYPE_NAME, icon: DARK_ICON, isSelected: false),
+        PokemonType(name: STEEL_TYPE_NAME, icon: STEEL_ICON, isSelected: false),
+        PokemonType(name: FAIRY_TYPE_NAME, icon: FAIRY_ICON, isSelected: false),
       ]);
 
       if (frontEndUtils.loadSelectedTypeName().isNotEmpty) {

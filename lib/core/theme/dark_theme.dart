@@ -16,7 +16,7 @@ final _elevatedButtonTheme = ElevatedButtonThemeData(
   style: ButtonStyle(
     textStyle: WidgetStatePropertyAll(const TextStyle().copyWith(fontSize: 18, fontWeight: FontWeight.w600)),
     foregroundColor: const WidgetStatePropertyAll(AppPalette.whitish),
-    backgroundColor: const WidgetStatePropertyAll(AppPalette.brightRed), //red
+    backgroundColor: const WidgetStatePropertyAll(AppPalette.brightRed),
   ),
 );
 

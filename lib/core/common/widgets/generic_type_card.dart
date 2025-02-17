@@ -21,7 +21,8 @@ class GenericTypeCard extends StatelessWidget {
       onTap: onTap,
       child: Card(
         elevation: 0,
-        color: !pokemonType.isSelected ? typeColor.withAlpha(40) : typeColor.withAlpha(70),
+        borderOnForeground: true,
+        color: !pokemonType.isSelected ? typeColor.withAlpha(40) : typeColor.withAlpha(190),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
@@ -29,11 +30,14 @@ class GenericTypeCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                pokemonType.name.toUpperFirst(),
-                style: Theme.of(context).textTheme.labelLarge,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: Text(
+                  pokemonType.name.toUpperFirst(),
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -42,6 +46,7 @@ class GenericTypeCard extends StatelessWidget {
                 children: [
                   Image.asset(
                     pokemonType.icon,
+                    height: 100,
                     fit: BoxFit.scaleDown,
                   ),
                   (pokemonType.isSelected)

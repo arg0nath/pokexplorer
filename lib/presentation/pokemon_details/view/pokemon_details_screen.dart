@@ -31,11 +31,16 @@ class PokemonDetailsScreen extends StatefulWidget {
 class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
   late final PokemonDetailsBloc _pokemonDetailsBloc = context.read<PokemonDetailsBloc>();
   final CarouselSliderController _pokeDetailsCarouselController = CarouselSliderController();
-
   @override
   void initState() {
     _pokemonDetailsBloc.add(LoadPokemonDetailsEvent(pokemon: widget.pokemon));
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -56,6 +61,7 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
       },
       duration: const Duration(milliseconds: 300),
       child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surfaceContainerLow,
         appBar: _pokeDetailsScreenAppbar(context),
         extendBody: true,
         extendBodyBehindAppBar: true,
@@ -93,9 +99,22 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
             ),
           ),
           //name +favorite button bar
-          Expanded(flex: 1, child: detailsCardTitle(context)),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (_pokemonDetailsBloc.selectedPokemon.name.isNotEmpty)
+                  Expanded(flex: 3, child: Text(_pokemonDetailsBloc.selectedPokemon.name.toUpperFirst(), style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600))),
+                CustomFavoriteButton(
+                  isFavorite: _pokemonDetailsBloc.selectedPokemon.isFavorite == RelationValue.favorite.value,
+                  onPressed: () => _pokemonDetailsBloc.add(const UpdatePokemonRelationEvent()),
+                )
+              ],
+            ),
+          ),
           //pokemon types
-          Container(
+          SizedBox(
             height: logicalHeight * 0.05,
             width: logicalWidth,
             child: _pokeDetailsTypesList(context),
@@ -113,32 +132,6 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
         ],
       );
     });
-  }
-
-  Container detailsCardTitle(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        boxShadow: [BoxShadow(blurRadius: 10, spreadRadius: 0, offset: Offset(0, -2))],
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-      ),
-      width: logicalWidth,
-      alignment: Alignment.center,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(logicalWidth * 0.05),
-            child: const Icon(Icons.info_outline_rounded, size: 30),
-          ),
-          if (_pokemonDetailsBloc.selectedPokemon.name.isNotEmpty)
-            Expanded(flex: 3, child: Text(_pokemonDetailsBloc.selectedPokemon.name.toUpperFirst(), style: Theme.of(context).textTheme.titleMedium)),
-          CustomFavoriteButton(
-            isFavorite: _pokemonDetailsBloc.selectedPokemon.isFavorite == RelationValue.favorite.value,
-            onPressed: () => _pokemonDetailsBloc.add(const UpdatePokemonRelationEvent()),
-          )
-        ],
-      ),
-    );
   }
 
   SizedBox _imagesCarousel() {
@@ -169,7 +162,8 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
     if (_pokemonDetailsBloc.selectedPokemon.types.isEmpty) return const SizedBox.shrink();
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(horizontal: logicalWidth * 0.1),
+      width: logicalWidth * 0.9,
+      padding: EdgeInsets.symmetric(horizontal: logicalWidth * 0.01),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -183,19 +177,19 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
   }
 
   Widget _pokeDetailsWeightHeight(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: logicalWidth,
       child: Row(
         children: [
           Expanded(
               child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            const Icon(Icons.fitness_center_rounded),
-            Text('${LocalizationManager.getInstance().weight}:  ${_pokemonDetailsBloc.selectedPokemon.weight}', style: Theme.of(context).textTheme.bodyMedium),
+            const Icon(Icons.scale_rounded),
+            Text('${LocalizationManager.getInstance().weight}:  ${_pokemonDetailsBloc.selectedPokemon.weight}', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500)),
           ])),
           Expanded(
               child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            const Icon(Icons.height_rounded),
-            Text('${LocalizationManager.getInstance().height}: ${_pokemonDetailsBloc.selectedPokemon.height}', style: Theme.of(context).textTheme.bodyMedium),
+            const Icon(Icons.straighten),
+            Text('${LocalizationManager.getInstance().height}: ${_pokemonDetailsBloc.selectedPokemon.height}', style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500)),
           ])),
         ],
       ),
@@ -244,7 +238,7 @@ class CustomPercentIndicator extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text('$name :', style: Theme.of(context).textTheme.bodyMedium),
+        Text('$name :', style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600)),
         LinearPercentIndicator(
           width: logicalWidth * 0.6,
           animation: true,
@@ -254,7 +248,7 @@ class CustomPercentIndicator extends StatelessWidget {
           percent: tmpPercent,
           progressColor: AppUtils.getTypeColor(type),
         ),
-        Text('$value', style: Theme.of(context).textTheme.bodyMedium),
+        Text('$value', style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600)),
       ],
     );
   }

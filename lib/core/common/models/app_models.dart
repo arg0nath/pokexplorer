@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:pokexplorer/core/common/enums/app_enums.dart';
-import 'package:pokexplorer/core/theme/colors/app_palette.dart';
 
 import '../constants/app_constants.dart';
 import '../utilities/app_utils.dart';
@@ -26,50 +24,6 @@ class PokemonType {
   void setName(String name) => this.name = name;
   void setIcon(String icon) => this.icon = icon;
   void setIsSelected(bool isSelected) => this.isSelected = isSelected;
-
-  // Method to get color based on Pokemon type
-  Color getTypeColor() {
-    switch (name.toLowerCase()) {
-      case 'fire':
-        return AppPalette.fire;
-      case 'water':
-        return AppPalette.water;
-      case 'grass':
-        return AppPalette.grass;
-      case 'electric':
-        return AppPalette.electric;
-      case 'dragon':
-        return AppPalette.dragon;
-      case 'psychic':
-        return AppPalette.psychic;
-      case 'ghost':
-        return AppPalette.ghost;
-      case 'dark':
-        return AppPalette.dark;
-      case 'steel':
-        return AppPalette.steel;
-      case 'fairy':
-        return AppPalette.fairy;
-      case 'normal':
-        return AppPalette.normal;
-      case 'fighting':
-        return AppPalette.fighting;
-      case 'flying':
-        return AppPalette.flying;
-      case 'poison':
-        return AppPalette.poison;
-      case 'ground':
-        return AppPalette.ground;
-      case 'rock':
-        return AppPalette.rock;
-      case 'bug':
-        return AppPalette.bug;
-      case 'ice':
-        return AppPalette.ice;
-      default:
-        return AppPalette.gradientBase; // Default color if no match
-    }
-  }
 
   @override
   String toString() {

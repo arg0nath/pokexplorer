@@ -28,10 +28,10 @@ class _SelectedTypeContainerState extends State<SelectedTypeContainer> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
+        spacing: 10,
         children: [
           SizedBox(height: 30, width: 30, child: Image.asset(AppUtils.typeToAssetIcon(widget.typeName))),
-          const SizedBox(width: 10),
-          Text(widget.typeName.toUpperFirst(), textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium),
+          Text(widget.typeName.toUpperFirst(), textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyLarge),
         ],
       ),
     );

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokexplorer/core/common/constants/app_constants.dart';
-import 'package:pokexplorer/core/common/widgets/custom_action_button.dart';
 import 'package:pokexplorer/core/common/widgets/selected_type_container.dart';
 import 'package:pokexplorer/core/localization/app_localizations.dart';
 import 'package:pokexplorer/core/theme/colors/app_palette.dart';
@@ -100,8 +99,8 @@ class WelcomeBottomBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          CustomActionButton(
-            text: appLocale.welcomeButtonText,
+          ElevatedButton(
+            child: Text(appLocale.welcomeButtonText),
             onPressed: () {
               frontEndUtils.localDataUtils.saveIsInitBootToPrefs(false);
               Navigator.popUntil(context, (Route route) => route.isFirst);

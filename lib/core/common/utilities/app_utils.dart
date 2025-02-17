@@ -28,6 +28,14 @@ extension ContextExtension on BuildContext {
   /* void showSnackBar(String message, {bool isError = false}) {
     ScaffoldMessenger.of(this)..hideCurrentSnackBar()..showSnackBar(SnackBar(content: Text(message),backgroundColor: isError ? Theme.of(this).colorScheme.error : Theme.of(this).snackBarTheme.backgroundColor,),);
   } */
+
+  Future<Widget?> showLoadingDialog() {
+    return showDialog<Widget>(
+      barrierDismissible: false,
+      context: this,
+      builder: (_) => const DialogProgressPokeball(hardBackEnabled: false).animate().fade(duration: 100.ms).scale(),
+    );
+  }
 }
 
 abstract class AppUtils {
@@ -78,47 +86,6 @@ abstract class AppUtils {
     return 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png';
   }
 
-  static List<Color> gradientFromType(String type) {
-    List<Color> gradList = [AppPalette.gradientBase];
-    switch (type.toLowerCase()) {
-      case app_const.FIRE_TYPE_NAME:
-        gradList.insert(0, AppPalette.fire);
-        break;
-      case app_const.WATER_TYPE_NAME:
-        gradList.insert(0, AppPalette.water);
-        break;
-      case app_const.GRASS_TYPE_NAME:
-        gradList.insert(0, AppPalette.grass);
-        break;
-      case app_const.ELECTRIC_TYPE_NAME:
-        gradList.insert(0, AppPalette.electric);
-        break;
-      case app_const.DRAGON_TYPE_NAME:
-        gradList.insert(0, AppPalette.dragon);
-        break;
-      case app_const.PSYCHIC_TYPE_NAME:
-        gradList.insert(0, AppPalette.psychic);
-        break;
-      case app_const.GHOST_TYPE_NAME:
-        gradList.insert(0, AppPalette.ghost);
-        break;
-      case app_const.DARK_TYPE_NAME:
-        gradList.insert(0, AppPalette.dark);
-        break;
-      case app_const.STEEL_TYPE_NAME:
-        gradList.insert(0, AppPalette.steel);
-        break;
-      case app_const.FAIRY_TYPE_NAME:
-        gradList.insert(0, AppPalette.fairy);
-        break;
-
-      default:
-        gradList.insert(0, AppPalette.gradientDefault);
-    }
-
-    return gradList;
-  }
-
   static ToastificationItem myToast(BuildContext context, String msg) {
     toastification.dismissAll();
     return toastification.show(
@@ -149,11 +116,47 @@ abstract class AppUtils {
     }
   }
 
-  static Future<Widget?> showLoadingDialog(BuildContext context) {
-    return showDialog<Widget>(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) => const DialogProgressPokeball(hardBackEnabled: false).animate().fade(duration: 100.ms).scale(),
-    );
+  // Method to get color based on Pokemon type
+  static Color getTypeColor(String name) {
+    switch (name.toLowerCase()) {
+      case 'fire':
+        return AppPalette.fire;
+      case 'water':
+        return AppPalette.water;
+      case 'grass':
+        return AppPalette.grass;
+      case 'electric':
+        return AppPalette.electric;
+      case 'dragon':
+        return AppPalette.dragon;
+      case 'psychic':
+        return AppPalette.psychic;
+      case 'ghost':
+        return AppPalette.ghost;
+      case 'dark':
+        return AppPalette.dark;
+      case 'steel':
+        return AppPalette.steel;
+      case 'fairy':
+        return AppPalette.fairy;
+      case 'normal':
+        return AppPalette.normal;
+      case 'fighting':
+        return AppPalette.fighting;
+      case 'flying':
+        return AppPalette.flying;
+      case 'poison':
+        return AppPalette.poison;
+      case 'ground':
+        return AppPalette.ground;
+      case 'rock':
+        return AppPalette.rock;
+      case 'bug':
+        return AppPalette.bug;
+      case 'ice':
+        return AppPalette.ice;
+      default:
+        return AppPalette.gradientBaseLight; // Default color if no match
+    }
   }
 }

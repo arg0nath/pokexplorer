@@ -4,7 +4,8 @@ abstract class AppPalette {
   AppPalette._();
 
   static const Color transparent = Colors.transparent;
-  static const Color gradientBase = Color(0xFFF6EFE9);
+  static const Color gradientBaseLight = Color(0xFFF6EFE9);
+  static const Color gradientBaseDark = Color(0xFF413F3E);
   static const Color gradientDefault = Color(0xFFFACCCC);
   //types
   static const Color fire = Color(0xffef7374);
@@ -33,8 +34,6 @@ abstract class AppPalette {
   static const Color shadowLight = Color(0xFFB4B4B4);
   static const Color shadowDark = Color.fromARGB(255, 90, 90, 90);
 
-  static const Color primaryColor = brightRed;
-
   //gradients
 
   static const Color vibrantTurquoise = Color(0xFF1CD5C6);
@@ -43,7 +42,7 @@ abstract class AppPalette {
   static const Color lighterGreen = Color(0xFF74B577);
   static const Color darkerGreen = Color(0xFF66CC6B);
   static const Color darkRed = Color(0xFFAA4242);
-  static const Color brightRed = Color(0xFFFF5555);
+  static const Color brightRed = Color(0xFFF04F4F);
 
   static const List<Color> gradientTurquoise = <Color>[vibrantTurquoise, moreVibrantTurquoise];
   static const List<Color> gradientGrey = <Color>[grey, shadowLight];

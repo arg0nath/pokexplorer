@@ -6,7 +6,6 @@ import 'package:pokexplorer/core/common/utilities/app_utils.dart';
 import 'package:pokexplorer/core/common/variables/app_variables.dart';
 import 'package:pokexplorer/core/localization/app_localizations.dart';
 import 'package:pokexplorer/core/theme/bloc/theme_bloc.dart';
-import 'package:pokexplorer/core/theme/colors/app_palette.dart';
 import 'package:pokexplorer/presentation/type_selection/bloc/type_selection_bloc.dart';
 
 class AboutMeDialog extends StatelessWidget {
@@ -21,11 +20,6 @@ class AboutMeDialog extends StatelessWidget {
       elevation: 0.0,
       child: Container(
         width: logicalWidth * 0.7,
-        decoration: BoxDecoration(
-            border: Border.all(width: DIALOG_BORDER_WIDTH),
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.circular(CIRCULAR_RADIUS),
-            boxShadow: const <BoxShadow>[BoxShadow(color: AppPalette.shadowDark, blurRadius: 10.0, offset: Offset(0.0, 10.0))]),
         padding: const EdgeInsets.all(25),
         child: Column(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
           Flexible(
@@ -36,7 +30,7 @@ class AboutMeDialog extends StatelessWidget {
           Text('Developed by: ', textAlign: TextAlign.left, style: theme.textTheme.bodySmall),
           SizedBox(height: logicalHeight * 0.03, child: Text('Vasileios Makris', style: theme.textTheme.bodySmall)),
           SizedBox(height: logicalHeight * 0.03),
-          OutlinedButton(onPressed: () async => AppUtils.sendContactEmail(), child: Text(appLocale.contactMe)),
+          ElevatedButton(onPressed: () async => AppUtils.sendContactEmail(), child: Text(appLocale.contactMe)),
           SizedBox(height: logicalHeight * 0.01),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

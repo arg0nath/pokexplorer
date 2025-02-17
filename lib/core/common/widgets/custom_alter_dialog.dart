@@ -18,7 +18,6 @@ class CustomAlertDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       //title
-
       title: Text(title, textAlign: TextAlign.center),
       //description
       content: Column(
@@ -30,7 +29,7 @@ class CustomAlertDialog extends StatelessWidget {
       ),
       //button
       actions: [
-        OutlinedButton(onPressed: onActionTap, child: Text(actionButtonTitle)),
+        ElevatedButton(onPressed: onActionTap, child: Text(actionButtonTitle)),
       ],
     );
   }

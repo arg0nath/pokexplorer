@@ -1,14 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:pokexplorer/core/common/constants/app_constants.dart';
 import 'package:pokexplorer/core/theme/colors/app_palette.dart';
 
+final ColorScheme _colorScheme = ColorScheme.fromSeed(
+  seedColor: AppPalette.brightRed,
+  brightness: Brightness.light,
+  dynamicSchemeVariant: DynamicSchemeVariant.fidelity,
+);
+
 final pLightTheme = ThemeData(
-  useMaterial3: true,
   // brightness: Brightness.light,
-  colorScheme: ColorScheme.fromSeed(seedColor: AppPalette.primaryColor).copyWith(
-    brightness: Brightness.light,
+  colorScheme: _colorScheme,
+  dialogTheme: DialogThemeData(
+    backgroundColor: _colorScheme.onPrimary,
   ),
-  shadowColor: AppPalette.shadowLight,
-  dialogTheme: const DialogThemeData(backgroundColor: AppPalette.white, elevation: 0),
+
+  elevatedButtonTheme: const ElevatedButtonThemeData(
+    style: ButtonStyle(
+      foregroundColor: WidgetStatePropertyAll(AppPalette.whitish),
+      backgroundColor: WidgetStatePropertyAll(AppPalette.brightRed), //red
+    ),
+  ),
+
+  fontFamily: MAIN_FONT_FAMILY,
+  inputDecorationTheme: InputDecorationTheme().copyWith(
+    fillColor: AppPalette.whitish,
+    filled: true,
+    hintStyle: const TextStyle().copyWith(color: AppPalette.grey),
+    labelStyle: const TextStyle().copyWith(color: AppPalette.grey),
+    suffixIconColor: AppPalette.grey,
+    focusedBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: AppPalette.whitish), borderRadius: BorderRadius.circular(CIRCULAR_RADIUS)),
+    border: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: AppPalette.whitish), borderRadius: BorderRadius.circular(CIRCULAR_RADIUS)),
+    enabledBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: AppPalette.whitish), borderRadius: BorderRadius.circular(CIRCULAR_RADIUS)),
+  ),
 
   pageTransitionsTheme: const PageTransitionsTheme(
     builders: {

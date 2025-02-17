@@ -28,10 +28,11 @@ class TypeDetailsScreen extends StatefulWidget {
 class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
   late final TypeDetailsBloc _typeDetailsBloc = context.read<TypeDetailsBloc>();
   late final TextEditingController _searchingController = TextEditingController();
-  late final ScrollController _typeDetailsScrollController = ScrollController();
+  late ScrollController _typeDetailsScrollController;
 
   @override
   void initState() {
+    _typeDetailsScrollController = ScrollController();
     _typeDetailsBloc.add(LoadTypeDetailsPokemonsEvent(typeDetails: widget.typeDetails));
 
     _typeDetailsScrollController.addListener(() {
@@ -78,11 +79,11 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
     return BlocConsumer<TypeDetailsBloc, TypeDetailsState>(
         listener: (context, state) async {
           if (state.typeDetailsStatus == TypeDetailsStatus.loadingPokemons) {
-            await AppUtils.showLoadingDialog(context);
+            await context.showLoadingDialog();
           } else if (state.typeDetailsStatus == TypeDetailsStatus.pokemonsLoaded) {
             Navigator.pop(context); //close loading dialog
           } else if (state.typeDetailsStatus == TypeDetailsStatus.navigatingToPokemonDetails) {
-            await AppUtils.showLoadingDialog(context);
+            await context.showLoadingDialog();
           } else if (state.typeDetailsStatus == TypeDetailsStatus.readyToNavigateToPokemonDetails) {
             Navigator.popAndPushNamed(context, RouteNames.pokeDetailsScreen,
                 arguments: PokemonDetailsScreenArguments(selectedTypeName: _typeDetailsBloc.selectedTypeName, pokemon: _typeDetailsBloc.selectedPokemon));
@@ -113,7 +114,7 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
                 slivers: [
                   SliverPersistentHeader(
                     pinned: true,
-                    delegate: SliverSearchAppBar(selectedTypeName: widget.typeDetails.name, textEditingController: _searchingController),
+                    delegate: SliverSearchAppBar(typeName: widget.typeDetails.name, textEditingController: _searchingController),
                   ),
                   //search results not found
                   if (typeDetailsState.searchedPokemonPreviewList.isEmpty && typeDetailsState.typeDetailsStatus == TypeDetailsStatus.pokemonSearched)
@@ -153,12 +154,12 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
 
 class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
   SliverSearchAppBar({
-    required this.selectedTypeName,
+    required this.typeName,
     required this.textEditingController,
   });
 
   final TextEditingController textEditingController;
-  final String selectedTypeName;
+  final String typeName;
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -174,7 +175,7 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
             children: [
               //cool gradient background
               AppbarGradientBackground(
-                typeName: selectedTypeName,
+                color: AppUtils.getTypeColor(typeName),
               ),
 
               //type icon + name
@@ -186,7 +187,7 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       CustomAppbarBackButton(onPressed: () => typeDetailsBloc.add(const ExitTypeDetailsEvent())),
-                      SelectedTypeContainer(typeName: selectedTypeName),
+                      SelectedTypeContainer(typeName: typeName),
                     ],
                   ),
                 ),
@@ -216,7 +217,6 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
 
   TextFormField _customTextFormField(TypeDetailsBloc typeDetailsBloc, BuildContext context) {
     return TextFormField(
-      style: const TextStyle(fontFamily: MAIN_FONT_FAMILY),
       controller: textEditingController,
       decoration: const InputDecoration().copyWith(
           hintText: LocalizationManager.getInstance().searchBarTitle,
@@ -234,7 +234,7 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
 
   IconButton _customSuffixIcon(TypeDetailsBloc typeDetailsBloc, BuildContext context) {
     return IconButton(
-        icon: Icon(Icons.search, color: AppUtils.gradientFromType(selectedTypeName).first),
+        icon: const Icon(Icons.search),
         onPressed: () {
           if (textEditingController.value.text.isNotEmpty) {
             typeDetailsBloc.add(SearchPokemonEvent(value: textEditingController.value.text));

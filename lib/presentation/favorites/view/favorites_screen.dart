@@ -90,15 +90,15 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   Widget _favoritesBody() {
     return BlocConsumer<UserFavoritesBloc, UserFavoritesState>(listener: (context, state) async {
       if (state.userFavoritesStatus == UserFavoritesStatus.refreshingFavorites) {
-        await AppUtils.showLoadingDialog(context);
+        await context.showLoadingDialog();
       } else if (state.userFavoritesStatus == UserFavoritesStatus.userFavoritesRefreshed) {
         Navigator.pop(context);
       } else if (state.userFavoritesStatus == UserFavoritesStatus.loadingUserFavorites) {
-        await AppUtils.showLoadingDialog(context);
+        await context.showLoadingDialog();
       } else if (state.userFavoritesStatus == UserFavoritesStatus.userFavoritesLoaded) {
         Navigator.pop(context);
       } else if (state.userFavoritesStatus == UserFavoritesStatus.navigatingToPokemonDetails) {
-        await AppUtils.showLoadingDialog(context);
+        await context.showLoadingDialog();
       } else if (state.userFavoritesStatus == UserFavoritesStatus.readyToNavigateToPokemonDetails) {
         Navigator.popAndPushNamed(context, RouteNames.pokeDetailsScreen,
             arguments: PokemonDetailsScreenArguments(selectedTypeName: _favoritesBloc.selectedPokemon.types.first.name, pokemon: _favoritesBloc.selectedPokemon));

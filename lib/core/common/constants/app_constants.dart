@@ -77,7 +77,7 @@ const String ICE_TYPE_NAME = 'ice';
 
 const double CIRCULAR_RADIUS = 20;
 const double DIALOG_PADDING = 16;
-const double DIALOG_BORDER_WIDTH = 4;
+const double DIALOG_BORDER_WIDTH = 1;
 
 //dot scoll
 

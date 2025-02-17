@@ -16,7 +16,7 @@ final _elevatedButtonTheme = ElevatedButtonThemeData(
   style: ButtonStyle(
     textStyle: WidgetStatePropertyAll(const TextStyle().copyWith(fontSize: 18, fontWeight: FontWeight.w600)),
     foregroundColor: const WidgetStatePropertyAll(AppPalette.whitish),
-    backgroundColor: const WidgetStatePropertyAll(AppPalette.brightRed), //red
+    backgroundColor: const WidgetStatePropertyAll(AppPalette.brightRed),
   ),
 );
 
@@ -35,6 +35,7 @@ final pLightTheme = ThemeData(
   // brightness: Brightness.light,
   bottomNavigationBarTheme: const BottomNavigationBarThemeData().copyWith(elevation: 0.2),
   colorScheme: _colorScheme,
+
   dialogTheme: _dialogTheme,
   elevatedButtonTheme: _elevatedButtonTheme,
   fontFamily: MAIN_FONT_FAMILY,

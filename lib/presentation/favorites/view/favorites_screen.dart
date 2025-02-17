@@ -4,7 +4,6 @@ import 'package:pokexplorer/core/common/constants/app_constants.dart';
 import 'package:pokexplorer/core/common/models/app_models.dart';
 import 'package:pokexplorer/core/common/utilities/app_utils.dart';
 import 'package:pokexplorer/core/common/widgets/custom_alter_dialog.dart';
-import 'package:pokexplorer/core/common/widgets/custom_popup_menu_item.dart';
 import 'package:pokexplorer/core/common/widgets/no_pokemon_indicator.dart';
 import 'package:pokexplorer/core/common/widgets/pokemon_list_card.dart';
 import 'package:pokexplorer/core/localization/app_localizations.dart';
@@ -52,18 +51,18 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
             return const SizedBox.shrink();
           } else {
             return PopupMenuButton<dynamic>(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(CIRCULAR_RADIUS)),
-              icon: const Icon(Icons.more_vert),
-              onSelected: handleClick,
-              itemBuilder: (BuildContext context) => <BuildPopupMenuItem>[
-                BuildPopupMenuItem(
-                  iconData: Icons.delete_forever,
-                  menuItemTitle: appLocale.deleteAll,
-                  value: USER_FAVORITES_POP_MENU_CLEAR_ALL_VALUE,
-                  child: const SizedBox(),
-                ),
-              ],
-            );
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(CIRCULAR_RADIUS)),
+                icon: const Icon(Icons.more_vert),
+                onSelected: handleClick,
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
+                      PopupMenuItem<int>(
+                        value: USER_FAVORITES_POP_MENU_CLEAR_ALL_VALUE,
+                        child: ListTile(
+                          leading: Icon(Icons.delete_forever),
+                          title: Text(appLocale.deleteAll),
+                        ),
+                      ),
+                    ]);
           }
         },
       ),

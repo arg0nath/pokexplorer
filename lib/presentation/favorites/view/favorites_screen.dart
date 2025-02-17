@@ -58,7 +58,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
                       PopupMenuItem<int>(
                         value: USER_FAVORITES_POP_MENU_CLEAR_ALL_VALUE,
                         child: ListTile(
-                          leading: Icon(Icons.delete_forever),
+                          leading: const Icon(Icons.delete_forever),
                           title: Text(appLocale.deleteAll),
                         ),
                       ),

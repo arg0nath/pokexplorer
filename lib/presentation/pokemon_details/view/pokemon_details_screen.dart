@@ -84,18 +84,16 @@ class _PokemonDetailsScreenState extends State<PokemonDetailsScreen> {
         children: [
           Expanded(
             flex: 5,
-            child: Container(
-              child: Stack(
-                children: [
-                  //gradient effect of appbar
-                  AppbarGradientBackground(color: AppUtils.getTypeColor(widget.selectedTypeName)),
-                  //pokemon image list
-                  Positioned(
-                    top: logicalHeight * 0.1,
-                    child: _imagesCarousel(),
-                  ),
-                ],
-              ),
+            child: Stack(
+              children: [
+                //gradient effect of appbar
+                AppbarGradientBackground(color: AppUtils.getTypeColor(widget.selectedTypeName)),
+                //pokemon image list
+                Positioned(
+                  top: logicalHeight * 0.1,
+                  child: _imagesCarousel(),
+                ),
+              ],
             ),
           ),
           //name +favorite button bar

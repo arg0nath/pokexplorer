@@ -59,13 +59,13 @@ abstract class AppUtils {
       level ??= LOG_INFO;
       if (SHOW_LOG) {
         if (level == LOG_INFO) {
-          log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${APP_PACKAGE}: $msg');
+          log('${DateFormat('HH:mm:ss').format(DateTime.now())}-$APP_PACKAGE: $msg');
         } else if (level == LOG_WARNING) {
-          log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${LOG_WARNING_COLOR}${APP_PACKAGE}: $msg ${LOG_RESET_COLOR}');
+          log('${DateFormat('HH:mm:ss').format(DateTime.now())}-$LOG_WARNING_COLOR$APP_PACKAGE: $msg $LOG_RESET_COLOR');
         } else if (level == LOG_ERROR) {
-          log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${LOG_ERROR_COLOR}${APP_PACKAGE}: 🚫 ERROR: $msg 🚫 ${LOG_RESET_COLOR}');
+          log('${DateFormat('HH:mm:ss').format(DateTime.now())}-$LOG_ERROR_COLOR$APP_PACKAGE: 🚫 ERROR: $msg 🚫 $LOG_RESET_COLOR');
         } else {
-          log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${LOG_WTF_COLOR}${APP_PACKAGE} : WTF:  $msg${LOG_RESET_COLOR}');
+          log('${DateFormat('HH:mm:ss').format(DateTime.now())}-$LOG_WTF_COLOR$APP_PACKAGE : WTF:  $msg$LOG_RESET_COLOR');
         }
       }
     }

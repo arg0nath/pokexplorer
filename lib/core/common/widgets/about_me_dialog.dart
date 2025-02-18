@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:pokexplorer/core/common/constants/app_constants.dart';
 import 'package:pokexplorer/core/common/utilities/app_utils.dart';
 import 'package:pokexplorer/core/common/variables/app_variables.dart';
@@ -29,7 +30,7 @@ class AboutMeDialog extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.light_mode_outlined),
+              const Icon(Iconsax.sun_1),
               BlocBuilder<TypeSelectionBloc, TypeSelectionState>(
                 builder: (context, state) {
                   return CupertinoSwitch(
@@ -38,7 +39,7 @@ class AboutMeDialog extends StatelessWidget {
                   );
                 },
               ),
-              const Icon(Icons.dark_mode_outlined),
+              const Icon(Iconsax.moon),
             ],
           ),
           RichText(
@@ -51,7 +52,11 @@ class AboutMeDialog extends StatelessWidget {
               ],
             ),
           ),
-          ElevatedButton(onPressed: () async => AppUtils.sendContactEmail(), child: Text(appLocale.contactMe)),
+          OutlinedButton.icon(
+            onPressed: () async => AppUtils.sendContactEmail(),
+            label: Text(appLocale.contactMe),
+            icon: const Icon(Iconsax.user),
+          ),
         ]),
       ),
     );

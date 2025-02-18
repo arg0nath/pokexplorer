@@ -12,7 +12,7 @@ class AboutMeDialog extends StatelessWidget {
   const AboutMeDialog({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Dialog build(BuildContext context) {
     LocalizationManager appLocale = LocalizationManager.getInstance();
     final theme = Theme.of(context);
     return Dialog(
@@ -21,17 +21,11 @@ class AboutMeDialog extends StatelessWidget {
       child: Container(
         width: logicalWidth * 0.7,
         padding: const EdgeInsets.all(25),
-        child: Column(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
+        child: Column(mainAxisSize: MainAxisSize.min, spacing: logicalHeight * 0.03, mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
           Flexible(
             flex: 8,
             child: Image.asset(height: 80, POKEXPLORER_LOGO_PNG, fit: BoxFit.scaleDown),
           ),
-          SizedBox(height: logicalHeight * 0.01),
-          Text('Developed by: ', textAlign: TextAlign.left, style: theme.textTheme.bodySmall),
-          SizedBox(height: logicalHeight * 0.03, child: Text('Vasileios Makris', style: theme.textTheme.bodySmall)),
-          SizedBox(height: logicalHeight * 0.03),
-          ElevatedButton(onPressed: () async => AppUtils.sendContactEmail(), child: Text(appLocale.contactMe)),
-          SizedBox(height: logicalHeight * 0.01),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -47,7 +41,17 @@ class AboutMeDialog extends StatelessWidget {
               const Icon(Icons.dark_mode_outlined),
             ],
           ),
-          const SizedBox(height: 20),
+          RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              style: theme.textTheme.titleMedium,
+              text: 'Made using Flutter by:\n',
+              children: [
+                TextSpan(text: 'Vasileios Makris', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+              ],
+            ),
+          ),
+          ElevatedButton(onPressed: () async => AppUtils.sendContactEmail(), child: Text(appLocale.contactMe)),
         ]),
       ),
     );

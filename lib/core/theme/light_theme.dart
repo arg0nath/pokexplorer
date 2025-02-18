@@ -12,9 +12,11 @@ final _dialogTheme = DialogThemeData(
   backgroundColor: _colorScheme.onPrimary,
 );
 
+const TextStyle _textThemeData = TextStyle(fontFamily: MAIN_FONT_FAMILY);
+
 final _elevatedButtonTheme = ElevatedButtonThemeData(
   style: ButtonStyle(
-    textStyle: WidgetStatePropertyAll(const TextStyle().copyWith(fontSize: 18, fontWeight: FontWeight.w600)),
+    textStyle: WidgetStatePropertyAll(_textThemeData.copyWith(fontSize: 18, fontWeight: FontWeight.w600)),
     foregroundColor: const WidgetStatePropertyAll(AppPalette.whitish),
     backgroundColor: const WidgetStatePropertyAll(AppPalette.brightRed),
   ),
@@ -23,8 +25,8 @@ final _elevatedButtonTheme = ElevatedButtonThemeData(
 final _inputDecorationTheme = const InputDecorationTheme().copyWith(
   fillColor: AppPalette.white,
   filled: true,
-  hintStyle: const TextStyle().copyWith(color: AppPalette.grey),
-  labelStyle: const TextStyle().copyWith(color: AppPalette.grey),
+  labelStyle: _textThemeData.copyWith(color: _colorScheme.primary),
+  hintStyle: _textThemeData.copyWith(color: _colorScheme.primary),
   suffixIconColor: AppPalette.grey,
   focusedBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: AppPalette.whitish), borderRadius: BorderRadius.circular(CIRCULAR_RADIUS)),
   border: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: AppPalette.whitish), borderRadius: BorderRadius.circular(CIRCULAR_RADIUS)),

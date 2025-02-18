@@ -218,6 +218,7 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
   TextFormField _customTextFormField(TypeDetailsBloc typeDetailsBloc, BuildContext context) {
     return TextFormField(
       controller: textEditingController,
+      style: Theme.of(context).inputDecorationTheme.labelStyle,
       decoration: const InputDecoration().copyWith(
           hintText: LocalizationManager.getInstance().searchBarTitle,
           suffixIcon: _customSuffixIcon(typeDetailsBloc, context),

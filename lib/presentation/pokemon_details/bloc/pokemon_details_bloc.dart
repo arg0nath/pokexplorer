@@ -3,7 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pokexplorer/core/common/enums/app_enums.dart';
 import 'package:pokexplorer/core/common/utilities/app_utils.dart';
-import 'package:pokexplorer/presentation/type_details/bloc/type_details_bloc.dart';
+import 'package:pokexplorer/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
 
 import '../../../core/common/models/app_models.dart';
 import '../../../domain/front_end_utils.dart';
@@ -65,8 +65,8 @@ class PokemonDetailsBloc extends Bloc<PokemonDetailsEvent, PokemonDetailsState> 
 
   //* BLOC Stuff
 
-  late final TypeDetailsBloc typeDetailsBloc;
-  void setTypeDetailsBloc(TypeDetailsBloc typeDetailsBloc) => this.typeDetailsBloc = typeDetailsBloc;
+  late final PokemonListBloc typeDetailsBloc;
+  void setPokemonListBloc(PokemonListBloc typeDetailsBloc) => this.typeDetailsBloc = typeDetailsBloc;
 
   final FrontendUtils frontEndUtils;
   late List<String> pokemonImageList = [];

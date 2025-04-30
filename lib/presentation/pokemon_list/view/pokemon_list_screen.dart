@@ -13,32 +13,32 @@ import 'package:pokexplorer/core/common/widgets/pokemon_list_card.dart';
 import 'package:pokexplorer/core/common/widgets/selected_type_container.dart';
 import 'package:pokexplorer/core/localization/app_localizations.dart';
 import 'package:pokexplorer/core/theme/colors/app_palette.dart';
-import 'package:pokexplorer/presentation/type_details/bloc/type_details_bloc.dart';
+import 'package:pokexplorer/presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
 import 'package:pokexplorer/router/app_router.dart';
 
-class TypeDetailsScreen extends StatefulWidget {
-  const TypeDetailsScreen({super.key, required this.typeDetails});
+class PokemonListScreen extends StatefulWidget {
+  const PokemonListScreen({super.key, required this.typeDetails});
 
   final PokemonTypeDetails typeDetails;
 
   @override
-  State<TypeDetailsScreen> createState() => _TypeDetailsScreenState();
+  State<PokemonListScreen> createState() => _PokemonListScreenState();
 }
 
-class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
-  late final TypeDetailsBloc _typeDetailsBloc = context.read<TypeDetailsBloc>();
+class _PokemonListScreenState extends State<PokemonListScreen> {
+  late final PokemonListBloc _pokemonListBloc = context.read<PokemonListBloc>();
   late final TextEditingController _searchingController = TextEditingController();
   late ScrollController _typeDetailsScrollController;
 
   @override
   void initState() {
     _typeDetailsScrollController = ScrollController();
-    _typeDetailsBloc.add(LoadTypeDetailsPokemonsEvent(typeDetails: widget.typeDetails));
+    _pokemonListBloc.add(LoadPokemonListEvent(typeDetails: widget.typeDetails));
 
     _typeDetailsScrollController.addListener(() {
       if (_typeDetailsScrollController.position.pixels == _typeDetailsScrollController.position.maxScrollExtent) {
         AppUtils.myLog(level: LOG_WARNING, msg: 'bottomReached');
-        _typeDetailsBloc.add(const LoadMoreTypeDetailsPokemonsEvent());
+        _pokemonListBloc.add(const LoadMorePokemonListEvent());
       }
     });
 
@@ -76,7 +76,7 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
   }
 
   Widget _typeDetailsBody() {
-    return BlocConsumer<TypeDetailsBloc, TypeDetailsState>(
+    return BlocConsumer<PokemonListBloc, TypeDetailsState>(
         listener: (context, state) async {
           if (state.typeDetailsStatus == TypeDetailsStatus.loadingPokemons) {
             await context.showLoadingDialog();
@@ -86,7 +86,7 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
             await context.showLoadingDialog();
           } else if (state.typeDetailsStatus == TypeDetailsStatus.readyToNavigateToPokemonDetails) {
             Navigator.popAndPushNamed(context, RouteNames.pokeDetailsScreen,
-                arguments: PokemonDetailsScreenArguments(selectedTypeName: _typeDetailsBloc.selectedTypeName, pokemon: _typeDetailsBloc.selectedPokemon));
+                arguments: PokemonDetailsScreenArguments(selectedTypeName: _pokemonListBloc.selectedTypeName, pokemon: _pokemonListBloc.selectedPokemon));
           } else if (state.typeDetailsStatus == TypeDetailsStatus.morePokemonsLoadedFailed) {
             AppUtils.myToast(context, LocalizationManager.getInstance().generalErrorMessage);
           } else if (state.typeDetailsStatus == TypeDetailsStatus.readyToNotifyForNoInternet) {
@@ -100,11 +100,11 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
         },
         buildWhen: (previous, current) => current.typeDetailsStatus != TypeDetailsStatus.navigatingToPokemonDetails && current.typeDetailsStatus != TypeDetailsStatus.readyToNavigateToPokemonDetails,
         builder: (context, typeDetailsState) {
-          List<PokemonPreview> displayList = typeDetailsState.searchedPokemonPreviewList.isNotEmpty ? typeDetailsState.searchedPokemonPreviewList : _typeDetailsBloc.selectedTypePokemonPreviewList;
+          List<PokemonPreview> displayList = typeDetailsState.searchedPokemonPreviewList.isNotEmpty ? typeDetailsState.searchedPokemonPreviewList : _pokemonListBloc.selectedTypePokemonPreviewList;
 
           return RefreshIndicator(
             onRefresh: () async {
-              _typeDetailsBloc.add(LoadTypeDetailsPokemonsEvent(typeDetails: widget.typeDetails));
+              _pokemonListBloc.add(LoadPokemonListEvent(typeDetails: widget.typeDetails));
             },
             child: Scrollbar(
               controller: _typeDetailsScrollController,
@@ -126,19 +126,19 @@ class _TypeDetailsScreenState extends State<TypeDetailsScreen> {
                     SliverList.builder(
                       itemCount: displayList.length,
                       itemBuilder: (context, index) => PokemonListCard(
-                        onFavoriteIconTap: () => _typeDetailsBloc.add(UpdateRelationInTypeDetailsEvent(pokemonPreview: displayList[index])),
-                        onCardTap: () => _typeDetailsBloc.add(NavigateToDetailsFromTypeDetailsEvent(pokemonPreview: displayList[index])),
+                        onFavoriteIconTap: () => _pokemonListBloc.add(UpdateRelationInTypeDetailsEvent(pokemonPreview: displayList[index])),
+                        onCardTap: () => _pokemonListBloc.add(NavigateToDetailsFromTypeDetailsEvent(pokemonPreview: displayList[index])),
                         pokemonPreview: displayList[index],
                       ),
                     ),
                   // default list w/ no search results
                   if (typeDetailsState.searchedPokemonPreviewList.isEmpty && typeDetailsState.typeDetailsStatus != TypeDetailsStatus.pokemonSearched)
                     SliverList.builder(
-                      itemCount: _typeDetailsBloc.selectedTypePokemonPreviewList.length,
+                      itemCount: _pokemonListBloc.selectedTypePokemonPreviewList.length,
                       itemBuilder: (context, index) => PokemonListCard(
-                        onFavoriteIconTap: () => _typeDetailsBloc.add(UpdateRelationInTypeDetailsEvent(pokemonPreview: displayList[index])),
-                        onCardTap: () => _typeDetailsBloc.add(NavigateToDetailsFromTypeDetailsEvent(pokemonPreview: _typeDetailsBloc.selectedTypePokemonPreviewList[index])),
-                        pokemonPreview: _typeDetailsBloc.selectedTypePokemonPreviewList[index],
+                        onFavoriteIconTap: () => _pokemonListBloc.add(UpdateRelationInTypeDetailsEvent(pokemonPreview: displayList[index])),
+                        onCardTap: () => _pokemonListBloc.add(NavigateToDetailsFromTypeDetailsEvent(pokemonPreview: _pokemonListBloc.selectedTypePokemonPreviewList[index])),
+                        pokemonPreview: _pokemonListBloc.selectedTypePokemonPreviewList[index],
                       ),
                     ),
                   // load more Pokemon
@@ -163,11 +163,11 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    final TypeDetailsBloc typeDetailsBloc = context.read<TypeDetailsBloc>();
+    final PokemonListBloc typeDetailsBloc = context.read<PokemonListBloc>();
     double adjustedShrinkOffset = shrinkOffset > minExtent ? minExtent : shrinkOffset;
     double offset = (minExtent - adjustedShrinkOffset) * 0.3; //was 0.4
     double topPadding = MediaQuery.paddingOf(context).top + 10;
-    return BlocBuilder<TypeDetailsBloc, TypeDetailsState>(
+    return BlocBuilder<PokemonListBloc, TypeDetailsState>(
       builder: (context, state) {
         return SizedBox(
           height: TYPE_DETAILS_APP_BAR_DELEGATE_MAX_EXTEND,
@@ -215,7 +215,7 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
     );
   }
 
-  TextFormField _customTextFormField(TypeDetailsBloc typeDetailsBloc, BuildContext context) {
+  TextFormField _customTextFormField(PokemonListBloc typeDetailsBloc, BuildContext context) {
     return TextFormField(
       controller: textEditingController,
       style: Theme.of(context).inputDecorationTheme.labelStyle,
@@ -233,7 +233,7 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
     );
   }
 
-  IconButton _customSuffixIcon(TypeDetailsBloc typeDetailsBloc, BuildContext context) {
+  IconButton _customSuffixIcon(PokemonListBloc typeDetailsBloc, BuildContext context) {
     return IconButton(
         icon: const Icon(Icons.search),
         onPressed: () {
@@ -244,7 +244,7 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
         });
   }
 
-  GestureDetector _customPrefixButton(TypeDetailsBloc typeDetailsBloc) {
+  GestureDetector _customPrefixButton(PokemonListBloc typeDetailsBloc) {
     return GestureDetector(
         onTap: () {
           typeDetailsBloc.add(const ReturnFromSearchEvent());

@@ -1,14 +1,14 @@
-part of 'type_details_bloc.dart';
+part of 'pokemon_list_bloc.dart';
 
-abstract class TypeDetailsEvent extends Equatable {
-  const TypeDetailsEvent();
+abstract class PokemonListEvent extends Equatable {
+  const PokemonListEvent();
 
   @override
   List<Object> get props => <Object>[];
 }
 
-class LoadTypeDetailsPokemonsEvent extends TypeDetailsEvent {
-  const LoadTypeDetailsPokemonsEvent({required this.typeDetails});
+class LoadPokemonListEvent extends PokemonListEvent {
+  const LoadPokemonListEvent({required this.typeDetails});
 
   final PokemonTypeDetails typeDetails;
 
@@ -16,14 +16,14 @@ class LoadTypeDetailsPokemonsEvent extends TypeDetailsEvent {
   List<Object> get props => <Object>[typeDetails];
 }
 
-class LoadMoreTypeDetailsPokemonsEvent extends TypeDetailsEvent {
-  const LoadMoreTypeDetailsPokemonsEvent();
+class LoadMorePokemonListEvent extends PokemonListEvent {
+  const LoadMorePokemonListEvent();
 
   @override
   List<Object> get props => <Object>[];
 }
 
-class NavigateToDetailsFromTypeDetailsEvent extends TypeDetailsEvent {
+class NavigateToDetailsFromTypeDetailsEvent extends PokemonListEvent {
   const NavigateToDetailsFromTypeDetailsEvent({required this.pokemonPreview});
 
   final PokemonPreview pokemonPreview;
@@ -31,7 +31,7 @@ class NavigateToDetailsFromTypeDetailsEvent extends TypeDetailsEvent {
   List<Object> get props => <Object>[pokemonPreview];
 }
 
-class UpdateRelationInTypeDetailsEvent extends TypeDetailsEvent {
+class UpdateRelationInTypeDetailsEvent extends PokemonListEvent {
   const UpdateRelationInTypeDetailsEvent({required this.pokemonPreview});
 
   final PokemonPreview pokemonPreview;
@@ -40,7 +40,7 @@ class UpdateRelationInTypeDetailsEvent extends TypeDetailsEvent {
 }
 
 ///`value` is the pokemon name
-class SearchPokemonEvent extends TypeDetailsEvent {
+class SearchPokemonEvent extends PokemonListEvent {
   const SearchPokemonEvent({required this.value});
 
   final String value;
@@ -48,21 +48,21 @@ class SearchPokemonEvent extends TypeDetailsEvent {
   List<Object> get props => <Object>[value];
 }
 
-class ReturnFromSearchEvent extends TypeDetailsEvent {
+class ReturnFromSearchEvent extends PokemonListEvent {
   const ReturnFromSearchEvent();
 
   @override
   List<Object> get props => <Object>[];
 }
 
-class ExitTypeDetailsEvent extends TypeDetailsEvent {
+class ExitTypeDetailsEvent extends PokemonListEvent {
   const ExitTypeDetailsEvent();
 
   @override
   List<Object> get props => <Object>[];
 }
 
-class RefreshTypeDetailsEvent extends TypeDetailsEvent {
+class RefreshTypeDetailsEvent extends PokemonListEvent {
   const RefreshTypeDetailsEvent();
 
   @override

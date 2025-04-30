@@ -27,7 +27,7 @@ class AboutMeDialog extends StatelessWidget {
             flex: 8,
             child: Image.asset(height: 80, POKEXPLORER_LOGO_PNG, fit: BoxFit.scaleDown),
           ),
-          Row(
+          Row( 
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(Iconsax.sun_1),

@@ -17,10 +17,6 @@ class _HomeScreenState extends State<HomeScreen> {
   late List<Widget> screenList = [const TypeSelectionScreen(), const FavoritesScreen()];
   late LocalizationManager appLocale = LocalizationManager.getInstance();
 
-  @override
-  void initState() {
-    super.initState();
-  }
 
   Map<String, GlobalKey<NavigatorState>> navigatorKeys = <String, GlobalKey<NavigatorState>>{
     app_const.BOTTOM_BAR_PAGE_TYPE_SELECTION_SCREEN: GlobalKey<NavigatorState>(),

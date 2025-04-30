@@ -6,7 +6,7 @@ import 'package:pokexplorer/presentation/type_selection/view/type_selection_scre
 import '../core/common/models/app_models.dart' as app_models;
 import '../domain/front_end_utils.dart';
 import '../presentation/pokemon_details/view/pokemon_details_screen.dart';
-import '../presentation/type_details/view/type_details_screen.dart';
+import '../presentation/pokemon_list/view/pokemon_list_screen.dart';
 import '../presentation/welcome/welcome.dart';
 
 // #region // * Arguments
@@ -49,7 +49,7 @@ class RouterClass {
     switch (settings.name) {
       case RouteNames.typeDetailsScreen:
         final TypeDetailsScreenArguments args = settings.arguments! as TypeDetailsScreenArguments;
-        return MaterialPageRoute(builder: (context) => TypeDetailsScreen(typeDetails: args.typeDetails));
+        return MaterialPageRoute(builder: (context) => PokemonListScreen(typeDetails: args.typeDetails));
       case RouteNames.typeSelectionScreen:
         return MaterialPageRoute(
           settings: const RouteSettings(name: RouteNames.typeSelectionScreen),

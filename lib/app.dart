@@ -17,7 +17,7 @@ import 'data/remote_data_utils.dart';
 import 'domain/front_end_utils.dart';
 import 'domain/local_domain_utils.dart';
 import 'presentation/pokemon_details/bloc/pokemon_details_bloc.dart';
-import 'presentation/type_details/bloc/type_details_bloc.dart';
+import 'presentation/pokemon_list/bloc/pokemon_list_bloc.dart';
 import 'presentation/welcome/bloc/welcome_bloc.dart';
 import 'router/app_router.dart';
 
@@ -50,10 +50,10 @@ class PokexplorerApp extends StatefulWidget {
     userFavoritesBloc = UserFavoritesBloc(frontEndUtils: frontEndUtils);
     typeSelectionBloc = TypeSelectionBloc(frontEndUtils: frontEndUtils);
 
-    typeDetailsBloc = TypeDetailsBloc(frontEndUtils: frontEndUtils);
-    typeDetailsBloc.setUserFavoritesBloc(userFavoritesBloc);
+    pokemonListBloc = PokemonListBloc(frontEndUtils: frontEndUtils);
+    pokemonListBloc.setUserFavoritesBloc(userFavoritesBloc);
     pokemonDetailsBloc = PokemonDetailsBloc(frontEndUtils: frontEndUtils);
-    pokemonDetailsBloc.setTypeDetailsBloc(typeDetailsBloc);
+    pokemonDetailsBloc.setPokemonListBloc(pokemonListBloc);
     // #endregion
   }
   // #region // BLocs etc
@@ -64,7 +64,7 @@ class PokexplorerApp extends StatefulWidget {
   late final WelcomeBloc welcomeBloc;
   late final ThemeBloc themeBloc;
   late final TypeSelectionBloc typeSelectionBloc;
-  late final TypeDetailsBloc typeDetailsBloc;
+  late final PokemonListBloc pokemonListBloc;
   late final UserFavoritesBloc userFavoritesBloc;
   late final PokemonDetailsBloc pokemonDetailsBloc;
 
@@ -106,7 +106,7 @@ class _PokexplorerAppState extends State<PokexplorerApp> {
       providers: <BlocProvider<dynamic>>[
         BlocProvider<ThemeBloc>(create: (BuildContext context) => widget.themeBloc),
         BlocProvider<TypeSelectionBloc>(create: (BuildContext context) => widget.typeSelectionBloc),
-        BlocProvider<TypeDetailsBloc>(create: (BuildContext context) => widget.typeDetailsBloc),
+        BlocProvider<PokemonListBloc>(create: (BuildContext context) => widget.pokemonListBloc),
         BlocProvider<PokemonDetailsBloc>(create: (BuildContext context) => widget.pokemonDetailsBloc),
         BlocProvider<WelcomeBloc>(create: (BuildContext context) => widget.welcomeBloc),
         BlocProvider<UserFavoritesBloc>(create: (BuildContext context) => widget.userFavoritesBloc),

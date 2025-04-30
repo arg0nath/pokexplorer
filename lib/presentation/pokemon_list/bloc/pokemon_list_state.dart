@@ -1,4 +1,4 @@
-part of 'type_details_bloc.dart';
+part of 'pokemon_list_bloc.dart';
 
 enum TypeDetailsStatus {
   typeDetailsNotLoaded,

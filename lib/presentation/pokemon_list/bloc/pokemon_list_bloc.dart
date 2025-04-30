@@ -10,14 +10,14 @@ import '../../../core/common/models/app_models.dart';
 import '../../../core/common/utilities/app_utils.dart';
 import '../../../domain/front_end_utils.dart';
 
-part 'type_details_event.dart';
-part 'type_details_state.dart';
+part 'pokemon_list_event.dart';
+part 'pokemon_list_state.dart';
 
-class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
-  TypeDetailsBloc({required this.frontEndUtils}) : super(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.typeDetailsNotLoaded)) {
+class PokemonListBloc extends Bloc<PokemonListEvent, TypeDetailsState> {
+  PokemonListBloc({required this.frontEndUtils}) : super(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.typeDetailsNotLoaded)) {
     typeDetailsBloc = this;
 
-    on<LoadTypeDetailsPokemonsEvent>((LoadTypeDetailsPokemonsEvent event, Emitter<TypeDetailsState> emit) async {
+    on<LoadPokemonListEvent>((LoadPokemonListEvent event, Emitter<TypeDetailsState> emit) async {
       emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.loadingPokemons));
 
       initializeTypeDetailsVariables();
@@ -44,7 +44,7 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
       emit(const TypeDetailsState(typeDetailsStatus: TypeDetailsStatus.pokemonsLoaded));
     });
 
-    on<LoadMoreTypeDetailsPokemonsEvent>((LoadMoreTypeDetailsPokemonsEvent event, Emitter<TypeDetailsState> emit) async {
+    on<LoadMorePokemonListEvent>((LoadMorePokemonListEvent event, Emitter<TypeDetailsState> emit) async {
       if (state.typeDetailsStatus == TypeDetailsStatus.loadingMorePokemons) {
         return; // rrevent re-emitting
       }
@@ -190,7 +190,7 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
   }
 
   late final FrontendUtils frontEndUtils;
-  TypeDetailsBloc? typeDetailsBloc;
+  PokemonListBloc? typeDetailsBloc;
   late final UserFavoritesBloc userFavoritesBloc;
   void setUserFavoritesBloc(UserFavoritesBloc userFavoritesBloc) => this.userFavoritesBloc = userFavoritesBloc;
 

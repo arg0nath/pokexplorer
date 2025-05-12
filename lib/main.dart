@@ -1,7 +1,11 @@
 import 'package:flutter/widgets.dart';
 import 'package:pokexplorer/app.dart';
+import 'package:pokexplorer/service_locator.dart';
 
-void main() {
-  //TODO(Vasilis): add if any async is added  WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupServiceLocator();
+  runApp(
+    const MyApp(),
+  );
 }

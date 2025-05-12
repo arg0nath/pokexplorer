@@ -12,6 +12,7 @@ class TypeResultsUsecase implements Usecase<List<PokemonPreview>, TypeResultsPar
   @override
   Future<Either<Failure, List<PokemonPreview>>> call({required TypeResultsParams params}) async {
     return await typeResultsRepository.getPokemonPreviewList(typeId: params.typeId);
+    //rivaan 01:56:50
   }
 }
 

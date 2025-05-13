@@ -1,7 +1,7 @@
 abstract class RouteNames {
-  static const String typeResultsPage = '/typeResultsPage';
-  static const String typeSelectionPage = '/typeSelectionPage';
-  static const String pokemonDetailsPage = '/pokeDetailsPage';
-  static const String welcomePage = '/welcomePage';
-  static const String userFavoritesPage = '/favoritesPage';
+  static const String typeResultsPage = '/type-results';
+  static const String typeSelectionPage = '/type-selection';
+  static const String pokemonDetailsPage = '/poke-details';
+  static const String welcomePage = '/welcome';
+  static const String userFavoritesPage = '/user-favorites';
 }

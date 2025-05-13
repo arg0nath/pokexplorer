@@ -43,7 +43,6 @@ dependencies:
   json_serializable: ^6.9.5
   get_it: ^8.0.3
   fpdart: ^1.1.1
-  build_runner: ^2.4.15
   json_annotation: ^4.9.0
   go_router: ^15.1.2
 
@@ -70,8 +69,6 @@ flutter:
   assets:
     - assets/images/
     - assets/svgs/official_pokemon_logo.svg
-
-    - assets/images/emptyPokeball.png
     - assets/lottieFiles/pokeball.json
 
   fonts:

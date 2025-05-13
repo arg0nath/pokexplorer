@@ -5,8 +5,8 @@ import 'package:pokexplorer/core/usecase/usecase.dart';
 import 'package:pokexplorer/features/type_selection/domain/entities/pokemon_type.dart';
 import 'package:pokexplorer/features/type_selection/domain/repositories/type_selection_repo.dart';
 
-class TypeSelectionUsecase implements Usecase<List<PokemonType>, NoParams> {
-  TypeSelectionUsecase({required this.typeSelectionRepository});
+class GetPokemonTypesUsecase implements Usecase<List<PokemonType>, NoParams> {
+  GetPokemonTypesUsecase({required this.typeSelectionRepository});
 
   final TypeSelectionRepository typeSelectionRepository;
 

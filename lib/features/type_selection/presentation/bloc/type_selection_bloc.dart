@@ -6,8 +6,15 @@ part 'type_selection_state.dart';
 
 class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
   TypeSelectionBloc() : super(TypeSelectionInitial()) {
-    on<TypeSelectionEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<LoadPokemonTypesEvent>(_loadPokemonTypes);
+  }
+
+  void _loadPokemonTypes(
+    LoadPokemonTypesEvent event,
+    Emitter<TypeSelectionState> emit,
+  ) async {
+    emit(LoadingPokemonTypes());
+
+    emit(PokemonTypesLoaded());
   }
 }

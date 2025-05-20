@@ -1,1 +1,3 @@
-class NoParams {}
+class NoParams {
+  const NoParams();
+}

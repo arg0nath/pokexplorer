@@ -13,3 +13,12 @@ final class LoadPokemonTypesEvent extends TypeSelectionEvent {
   @override
   List<Object> get props => [];
 }
+
+final class ToggleTypeSelection extends TypeSelectionEvent {
+  const ToggleTypeSelection({required this.typeName});
+
+  final String typeName;
+
+  @override
+  List<Object> get props => [typeName];
+}

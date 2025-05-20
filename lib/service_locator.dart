@@ -5,11 +5,8 @@ import 'package:pokexplorer/core/theme/domain/repository/theme_repo.dart';
 import 'package:pokexplorer/core/theme/domain/usecase/get_theme_usecase.dart';
 import 'package:pokexplorer/core/theme/domain/usecase/set_theme_usecase.dart';
 import 'package:pokexplorer/core/theme/presentation/bloc/theme_bloc.dart';
-import 'package:pokexplorer/features/type_selection/data/repositories/type_selection_impl.dart';
-import 'package:pokexplorer/features/type_selection/data/sources/local/implementation/type_selection_local_data_source_impl.dart';
-import 'package:pokexplorer/features/type_selection/data/sources/local/interface/type_selection_local_data_source_interface.dart';
-import 'package:pokexplorer/features/type_selection/domain/repositories/type_selection_repo.dart';
-import 'package:pokexplorer/features/type_selection/domain/usecases/type_selection_usecase.dart';
+import 'package:pokexplorer/features/type_selection/data/sources/type_selection_local_source.dart';
+import 'package:pokexplorer/features/type_selection/domain/usecases/get_local_pokemon_types_usecase.dart';
 import 'package:pokexplorer/features/type_selection/presentation/bloc/type_selection_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,7 +38,6 @@ void _initTheme() {
 void _initTypeSelection() {
   sl
     ..registerFactory<TypeSelectionLocalSourceInterface>(() => TypeSelectionLocalSourceImpl())
-    ..registerFactory<TypeSelectionRepository>(() => TypeSelectionImpl(typeSelectionSource: sl()))
-    ..registerFactory<GetPokemonTypesUsecase>(() => GetPokemonTypesUsecase(typeSelectionRepository: sl()))
+    ..registerFactory<GetLocalPokemonTypesUseCase>(() => GetLocalPokemonTypesUseCase(sl<TypeSelectionLocalSourceInterface>()))
     ..registerFactory<TypeSelectionBloc>(() => TypeSelectionBloc(getPokemonTypesUsecase: sl()));
 }

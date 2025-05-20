@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokexplorer/core/theme/app_palette.dart';
 
 class AppTheme {
   static ThemeData getTheme(bool isDark) {
@@ -11,10 +12,10 @@ class AppTheme {
       ),
       brightness: isDark ? Brightness.dark : Brightness.light,
       appBarTheme: AppBarTheme(
-        backgroundColor: isDark ? Colors.black : Colors.white,
-        foregroundColor: isDark ? Colors.white : Colors.black,
+        backgroundColor: isDark ? AppPalette.black : AppPalette.white,
+        foregroundColor: isDark ? AppPalette.white : AppPalette.black,
       ),
-      scaffoldBackgroundColor: isDark ? Colors.black : Colors.white,
+      scaffoldBackgroundColor: isDark ? AppPalette.black : AppPalette.white,
     );
   }
 }

@@ -1,34 +1,17 @@
-import 'dart:convert';
+import 'package:pokexplorer/features/type_selection/domain/entities/pokemon_type.dart';
 
-class PokemonTypeDto {
+class PokemonTypeDto extends PokemonType {
   PokemonTypeDto({
-    required this.name,
-    required this.icon,
-    required this.isSelected,
+    required super.name,
+    required super.icon,
+    required super.isSelected,
   });
 
-  final String name;
-  final String icon;
-
-  final bool isSelected;
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'name': name,
-      'icon': icon,
-      'isSelected': isSelected,
-    };
-  }
-
-  factory PokemonTypeDto.fromMap(Map<String, dynamic> map) {
+  factory PokemonTypeDto.fromDomain(PokemonType type) {
     return PokemonTypeDto(
-      name: map['name'] as String,
-      icon: map['icon'] as String,
-      isSelected: map['isSelected'] as bool,
+      name: type.name,
+      icon: type.icon,
+      isSelected: type.isSelected,
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory PokemonTypeDto.fromJson(String source) => PokemonTypeDto.fromMap(json.decode(source) as Map<String, dynamic>);
 }

@@ -22,16 +22,26 @@ final GetIt sl = GetIt.instance;
 Future<void> setupServiceLocator() async {
   //sharedPrefs
   sl.registerSingleton<SharedPreferences>(await SharedPreferences.getInstance());
+  //network is registerFactory because we want to create a new instance every time
   //theme
-  sl.registerSingleton<ThemeLocalDatasource>(ThemeLocalDatasource(sharedPreferences: sl()));
-  sl.registerSingleton<ThemeRepository>(ThemeRepositoryImpl(themeLocalDatasource: sl()));
-  sl.registerSingleton<GetThemeUseCase>(GetThemeUseCase(sl()));
-  sl.registerSingleton(SetThemeUseCase(sl()));
-  sl.registerSingleton(ThemeBloc(getThemeUseCase: sl(), setThemeUseCase: sl()));
-
+  _initTheme();
   //type selection
-  sl.registerFactory<TypeSelectionLocalSourceInterface>(() => TypeSelectionLocalSourceImpl());
-  sl.registerFactory<TypeSelectionRepository>(() => TypeSelectionImpl(typeSelectionSource: sl()));
-  sl.registerFactory<GetPokemonTypesUsecase>(() => GetPokemonTypesUsecase(typeSelectionRepository: sl()));
-  sl.registerFactory<TypeSelectionBloc>(() => TypeSelectionBloc(getPokemonTypesUsecase: sl()));
+  _initTypeSelection();
+}
+
+void _initTheme() {
+  sl
+    ..registerSingleton<ThemeLocalDatasource>(ThemeLocalDatasource(sharedPreferences: sl()))
+    ..registerSingleton<ThemeRepository>(ThemeRepositoryImpl(themeLocalDatasource: sl()))
+    ..registerSingleton<GetThemeUseCase>(GetThemeUseCase(sl()))
+    ..registerSingleton(SetThemeUseCase(sl()))
+    ..registerSingleton(ThemeBloc(getThemeUseCase: sl(), setThemeUseCase: sl()));
+}
+
+void _initTypeSelection() {
+  sl
+    ..registerFactory<TypeSelectionLocalSourceInterface>(() => TypeSelectionLocalSourceImpl())
+    ..registerFactory<TypeSelectionRepository>(() => TypeSelectionImpl(typeSelectionSource: sl()))
+    ..registerFactory<GetPokemonTypesUsecase>(() => GetPokemonTypesUsecase(typeSelectionRepository: sl()))
+    ..registerFactory<TypeSelectionBloc>(() => TypeSelectionBloc(getPokemonTypesUsecase: sl()));
 }

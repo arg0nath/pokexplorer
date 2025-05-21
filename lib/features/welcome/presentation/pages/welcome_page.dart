@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokexplorer/core/routes/route_names.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -19,7 +20,7 @@ class WelcomePage extends StatelessWidget {
             ),
             FilledButton(
               onPressed: () => context.go(
-                '/type-selection',
+                RoutePath.typeSelectionPage,
               ),
               child: const Text('Go to Type Selection'),
             )

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokexplorer/routes/route_names.dart';
+import 'package:pokexplorer/core/routes/route_names.dart';
 
 class BottomBar extends StatelessWidget {
   const BottomBar({super.key, required this.selectedIndex});
@@ -13,11 +13,11 @@ class BottomBar extends StatelessWidget {
       onTap: (int index) {
         switch (index) {
           case 0:
-            Navigator.pushNamed(context, RouteNames.typeSelectionPage);
+            Navigator.pushNamed(context, RoutePath.typeSelectionPage);
             // Navigate to TypeSelectionScreen
             break;
           case 1:
-            Navigator.pushNamed(context, RouteNames.typeSelectionPage);
+            Navigator.pushNamed(context, RoutePath.typeSelectionPage);
             break;
         }
       },

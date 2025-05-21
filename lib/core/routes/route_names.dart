@@ -1,4 +1,4 @@
-abstract class RouteNames {
+abstract class RoutePath {
   static const String typeResultsPage = '/type-results';
   static const String typeSelectionPage = '/type-selection';
   static const String pokemonDetailsPage = '/poke-details';

@@ -4,7 +4,7 @@ import 'package:pokexplorer/config/theme/domain/repository/theme_repo.dart';
 
 class ThemeRepositoryImpl implements ThemeRepository {
   ThemeRepositoryImpl({required this.themeLocalDatasource});
-  final ThemeLocalDatasource themeLocalDatasource;
+  final ThemeLocalDataSource themeLocalDatasource;
 
   @override
   Future<ThemeEntity> getTheme() async {

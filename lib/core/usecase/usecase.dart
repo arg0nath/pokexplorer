@@ -1,6 +1,13 @@
-import 'package:fpdart/fpdart.dart';
-import 'package:pokexplorer/core/error/failures.dart';
+import 'package:pokexplorer/core/utils/typedefs/typedefs.dart';
 
-abstract interface class Usecase<SuccessType, Params> {
-  Future<Either<Failure, SuccessType>> call({required Params params});
+abstract class UsecaseWithParams<Type, Params> {
+  const UsecaseWithParams();
+
+  ResultFuture<Type> call(Params params);
+}
+
+abstract class UsecaseWithoutParams<Type> {
+  const UsecaseWithoutParams();
+
+  ResultFuture<Type> call();
 }

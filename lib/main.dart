@@ -2,13 +2,14 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokexplorer/core/config/app.dart';
-import 'package:pokexplorer/core/helpers/bloc_observer.dart';
+import 'package:pokexplorer/app.dart';
+import 'package:pokexplorer/core/common/bloc_observer.dart';
+import 'package:pokexplorer/core/services/injection_container.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   Bloc.observer = AppBlocObserver();
-
+  await injectionInit();
   runApp(const MyApp());
 }

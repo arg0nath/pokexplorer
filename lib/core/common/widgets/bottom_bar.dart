@@ -11,7 +11,6 @@ class MyBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      // currentIndex: selectedIndex,
       onTap: (int index) {
         switch (index) {
           case 0:

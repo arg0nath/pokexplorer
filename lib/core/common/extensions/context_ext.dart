@@ -7,11 +7,13 @@ extension ContextExtension on BuildContext {
     ScaffoldMessenger.of(this)..hideCurrentSnackBar()..showSnackBar(SnackBar(content: Text(message),backgroundColor: isError ? Theme.of(this).colorScheme.error : Theme.of(this).snackBarTheme.backgroundColor,),);
   } */
 
+  ThemeData get theme => Theme.of(this);
+
   Future<Widget?> showLoadingDialog() {
     return showDialog<Widget>(
       barrierDismissible: false,
       context: this,
-      builder: (_) => const DialogProgressPokeball(hardBackEnabled: false).animate().fade(duration: 100.ms).scale(),
+      builder: (_) => const LoadingDialog(hardBackEnabled: false).animate().fade(duration: 100.ms).scale(),
     );
   }
 }

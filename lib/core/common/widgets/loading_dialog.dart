@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pokexplorer/core/common/constants/app_const.dart';
 
-class DialogProgressPokeball extends StatelessWidget {
-  const DialogProgressPokeball({
+class LoadingDialog extends StatelessWidget {
+  const LoadingDialog({
     super.key,
     required this.hardBackEnabled,
   });

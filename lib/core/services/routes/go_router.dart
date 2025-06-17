@@ -4,22 +4,26 @@ import 'package:go_router/go_router.dart';
 import 'package:pokexplorer/core/common/widgets/bottom_bar.dart';
 import 'package:pokexplorer/core/services/injection_container.dart';
 import 'package:pokexplorer/core/services/routes/route_names.dart';
+import 'package:pokexplorer/src/features/on_boarding/data/datasources/on_boarding_local_data_source.dart';
 import 'package:pokexplorer/src/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
 import 'package:pokexplorer/src/features/on_boarding/presentation/pages/on_boarding_page.dart';
 import 'package:pokexplorer/src/features/type_selection/presentation/pages/type_selection_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
+final SharedPreferences prefs = sl<SharedPreferences>();
+final bool isFirstTimer = prefs.getBool(kFirstTimerKey) ?? true;
 
 final GoRouter router = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: RoutePath.onBoardingPage, // Default route
+  initialLocation: isFirstTimer ? RoutePath.onBoardingPage : RoutePath.typeSelectionPage, // Default route
 
   routes: <RouteBase>[
     GoRoute(
       path: RoutePath.onBoardingPage,
       name: RouteName.onBoardingPageName,
       builder: (BuildContext context, GoRouterState state) => BlocProvider(
-        create: (context) => sl<OnBoardingCubit>(),
+        create: (BuildContext context) => sl<OnBoardingCubit>(),
         child: const OnBoardingPage(),
       ),
     ),

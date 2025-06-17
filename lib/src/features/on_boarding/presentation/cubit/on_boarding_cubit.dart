@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
@@ -22,6 +24,7 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
   Future<void> cacheFirstTimer() async {
     emit(const CachingFirstTimer());
     final Either<Failure, void> result = await _cacheFirstTimer();
+    log('cacheFirstTimer result: $result');
     result.fold(
       (Failure failure) => emit(OnBoardingError(failure.errorMessage)),
       (_) => emit(const UserCached()),
@@ -32,6 +35,8 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
     emit(const CheckingIfUserFirstTimer());
 
     final Either<Failure, bool> result = await _checkFirstTimer();
+    log('checkIfUserFirstTimer result: $result');
+
     result.fold(
       (Failure failure) => emit(const OnBoardingStatus(isFirstTimer: true)),
       (bool status) => emit(OnBoardingStatus(isFirstTimer: status)),

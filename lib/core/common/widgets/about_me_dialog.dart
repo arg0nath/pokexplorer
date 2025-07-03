@@ -48,7 +48,7 @@ class AboutMeDialog extends StatelessWidget {
               style: theme.textTheme.titleMedium,
               text: 'Made using Flutter by:\n',
               children: [
-                TextSpan(text: 'Vasileios Makris', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+                TextSpan(text: 'arg0nath', style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
               ],
             ),
           ),

@@ -38,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _typeSelectionBottomBar(BuildContext context) {
     return BottomNavigationBar(
         // backgroundColor: Colors.transparent,
+        selectedItemColor: Colors.redAccent[200],
         elevation: 0,
         onTap: (index) {
           app_vars.selectedBottomBarIndex = index;
@@ -53,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             key: navigatorKeys[app_const.BOTTOM_BAR_PAGE_USER_FAVORITES_SCREEN],
             label: appLocale.bottomBarFavoritesScreenTitle,
-            icon: const Icon(Icons.favorite_outline_outlined),
+            icon: Icon(app_vars.selectedBottomBarIndex == 1 ? Icons.favorite_rounded : Icons.favorite_outline_outlined),
           ),
         ]);
   }

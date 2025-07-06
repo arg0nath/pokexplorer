@@ -2,7 +2,7 @@
 
 # Pokéxplorer
 
-**Developed by**: arg0nath 
+**Developed by**: *arg0nath* 
 
 **OS**: Android & iOS
 

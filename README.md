@@ -2,7 +2,7 @@
 
 # Pokéxplorer
 
-**Developed by**: Vasileios Makris (vamakris07@gmail.com)
+**Developed by**: arg0nath 
 
 **OS**: Android & iOS
 

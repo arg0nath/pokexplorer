@@ -1,120 +1,87 @@
-// ignore_for_file: constant_identifier_names
-
 import 'package:flutter/material.dart';
 
-// #region // * Debug Stuff
-const bool SHOW_LOG = true;
-const int LOG_INFO = 0;
-const int LOG_WARNING = 1;
-const int LOG_ERROR = 2;
-const int LOG_WTF = 3; // :P
-const String LOG_RESET_COLOR = '\u001b[0m';
-const String LOG_ERROR_COLOR = '\u001b[31m';
-const String LOG_WARNING_COLOR = '\u001b[32m';
-const String LOG_WTF_COLOR = '\u001b[36;1m';
+class AppConst {
+  AppConst._(); // Prevent instantiation
+  // #region // * Debug Stuff
+  static const bool showLog = true;
+  static const int logInfo = 0;
+  static const int logWarning = 1;
+  static const int logError = 2;
+  static const int logWtf = 3; // :P
+  static const String logResetColor = '\u001b[0m';
+  static const String logErrorColor = '\u001b[31m';
+  static const String logWarningColor = '\u001b[32m';
+  static const String logWtfColor = '\u001b[36;1m';
 // #endregion
 
-const String MAIN_FONT_FAMILY = 'lato';
-const String APP_PACKAGE = 'com.vamakris.pokexplorer';
-const String APP_NAME = 'Pokéxplorer';
-const String POKE_API = 'https://pokeapi.co/api/v2/';
-const int API_STATUS_OK = 200;
-
-const int EMPTY_INT = -1;
-const int EMPTY_INT_ZERO = 0;
-const double EMPTY_DOUBLE = -1.0;
-const double EMPTY_DOUBLE_ZERO = 0.0;
-const String EMPTY_GUID = '00000000-0000-0000-0000-000000000000';
-const String EMPTY_STRING = '';
+  static const String mainFontFamily = 'lato';
+  static const String appPackage = 'com.vamakris.pokexplorer';
+  static const String appName = 'Pokéxplorer';
+  static const String pokeApi = 'https://pokeapi.co/api/v2/';
+  static const int apiStatusOk = 200;
+  static const int emptyInt = -1;
+  static const int emptyIntZero = 0;
+  static const double emptyDouble = -1.0;
+  static const double emptyDoubleZero = 0.0;
+  static const String emptyGuid = '00000000-0000-0000-0000-000000000000';
+  static const String emptyString = '';
 
 //appbar delegate stuff
-const double TYPE_DETAILS_APP_BAR_DELEGATE_MAX_EXTEND = 330;
-const double TYPE_DETAILS_APP_BAR_DELEGATE_MIN_EXTEND = 180;
-
-const double POKEMON_DETAILS_APP_BAR_DELEGATE_MAX_EXTEND = 280;
-const double POKEMON_DETAILS_APP_BAR_DELEGATE_MIN_EXTEND = 200;
+  static const double typeDetailsAppBarDelegateMaxExtend = 330;
+  static const double typeDetailsAppBarDelegateMinExtend = 180;
+  static const double pokemonDetailsAppBarDelegateMaxExtend = 280;
+  static const double pokemonDetailsAppBarDelegateMinExtend = 200;
 
 //* SCROLLBAR CONSTANTS
-const Radius SCROLLBAR_RADIUS = Radius.circular(10);
-const double SCROLLBAR_THICKNESS = 3.0;
-const Color SCROLLBAR_COLOR = Color(0xFFC5C5C5);
+  static const Radius scrollbarRadius = Radius.circular(10);
+  static const double scrollbarThickness = 3.0;
+  static const Color scrollbarColor = Color(0xFFC5C5C5);
 
 //customNetworkImage customization
-const double NETWORK_IMAGE_BORDER_RADIUS = 80.0;
-const double NETWORK_IMAGE_NO_BORDER_RADIUS = 0.0;
-const double NETWORK_IMAGE_PLACEHOLDER_WIDTH = 1.0;
+  static const double networkImageBorderRadius = 80.0;
+  static const double networkImageNoBorderRadius = 0.0;
+  static const double networkImagePlaceholderWidth = 1.0;
 
 //welcome
-const double WELCOME_SCREEN_CAROUSEL_BLUR_RADIUS = 7;
-const double WELCOME_SCREEN_CAROUSEL_SPREAD_RADIUS = 6;
+  static const double welcomeScreenCarouselBlurRadius = 7;
+  static const double welcomeScreenCarouselSpreadRadius = 6;
 
 //lazy load stuff
-const int TYPE_DETAILS_POKEMON_PAGE_SIZE = 10;
+  static const int typeDetailsPokemonPageSize = 10;
+  static const String fireTypeName = 'fire';
+  static const String waterTypeName = 'water';
+  static const String grassTypeName = 'grass';
+  static const String electricTypeName = 'electric';
+  static const String dragonTypeName = 'dragon';
+  static const String psychicTypeName = 'psychic';
+  static const String ghostTypeName = 'ghost';
+  static const String darkTypeName = 'dark';
+  static const String steelTypeName = 'steel';
+  static const String fairyTypeName = 'fairy';
+  static const String normalTypeName = 'normal';
+  static const String fightingTypeName = 'fighting';
+  static const String flyingTypeName = 'flying';
+  static const String poisonTypeName = 'poison';
+  static const String groundTypeName = 'ground';
+  static const String rockTypeName = 'rock';
+  static const String bugTypeName = 'bug';
+  static const String iceTypeName = 'ice';
 
-const String FIRE_TYPE_NAME = 'fire';
-const String WATER_TYPE_NAME = 'water';
-const String GRASS_TYPE_NAME = 'grass';
-const String ELECTRIC_TYPE_NAME = 'electric';
-const String DRAGON_TYPE_NAME = 'dragon';
-const String PSYCHIC_TYPE_NAME = 'psychic';
-const String GHOST_TYPE_NAME = 'ghost';
-const String DARK_TYPE_NAME = 'dark';
-const String STEEL_TYPE_NAME = 'steel';
-const String FAIRY_TYPE_NAME = 'fairy';
-
-const String NORMAL_TYPE_NAME = 'normal';
-const String FIGHTING_TYPE_NAME = 'fighting';
-const String FLYING_TYPE_NAME = 'flying';
-const String POISON_TYPE_NAME = 'poison';
-const String GROUND_TYPE_NAME = 'ground';
-const String ROCK_TYPE_NAME = 'rock';
-const String BUG_TYPE_NAME = 'bug';
-const String ICE_TYPE_NAME = 'ice';
-
-const double CIRCULAR_RADIUS = 20;
-const double DIALOG_PADDING = 16;
-const double DIALOG_BORDER_WIDTH = 1;
+  static const double dialogPadding = 16;
+  static const double circularRadius = 20;
+  static const double dialogBorderWidth = 1;
 
 //dot scoll
 
-const int USER_FAVORITES_POP_MENU_CLEAR_ALL_VALUE = 0;
+  static const int userFavoritesPopMenuClearAllValue = 0;
 
-const double EXPANDED_BAR_HEIGHT = 200;
-const double COLLAPSED_BAR_HEIGHT = 130;
-
-//assets stuff
-
-const String FIRE_ICON = 'assets/images/fire_icon.png';
-const String WATER_ICON = 'assets/images/water_icon.png';
-const String GRASS_ICON = 'assets/images/grass_icon.png';
-const String ELECTRIC_ICON = 'assets/images/electric_icon.png';
-const String DRAGON_ICON = 'assets/images/dragon_icon.png';
-const String PSYCHIC_ICON = 'assets/images/psychic_icon.png';
-const String GHOST_ICON = 'assets/images/ghost_icon.png';
-const String DARK_ICON = 'assets/images/dark_icon.png';
-const String STEEL_ICON = 'assets/images/steel_icon.png';
-const String FAIRY_ICON = 'assets/images/fairy_icon.png';
-const String NORMAL_ICON = 'assets/images/normal_icon.png';
-const String FIGHTING_ICON = 'assets/images/fighting_icon.png';
-const String FLYING_ICON = 'assets/images/flying_icon.png';
-const String POISON_ICON = 'assets/images/poison_icon.png';
-const String GROUND_ICON = 'assets/images/ground_icon.png';
-const String ROCK_ICON = 'assets/images/rock_icon.png';
-const String BUG_ICON = 'assets/images/bug_icon.png';
-const String ICE_ICON = 'assets/images/ice_icon.png';
-const String POKEDEX_PNG = 'assets/images/pokedex.png';
-const String POKEBALL_PNG = 'assets/images/pokeball.png';
-const String EMPTY_POKEBALL_PNG = 'assets/images/emptyPokeball.png';
-const String POKEBALL_OUTLINED_PNG = 'assets/images/pokeball_outlined.png';
-const String POKEXPLORER_LOGO_PNG = 'assets/images/pokexplorer_logo.png';
-const String POKEMON_LOGO_SVG = 'assets/svgs/official_pokemon_logo.svg';
-const String POKEMON_CUSTOM_PHRASE = 'assets/images/gonnasearch.png';
-
-const String LOADING_POKEBALL_LOTTIE = 'assets/lottieFiles/pokeball.json';
+  static const double expandedBarHeight = 200;
+  static const double collapsedBarHeight = 130;
 
 // #region // * App Preferences
-const String PREFS_SELECTED_TYPE_NAME = 'selected_type_name';
-const String PREFS_SELECTED_LOCALE = 'selected_locale';
-const String PREFS_INIT_BOOT = 'init_boot';
-const String PREFS_IS_DARK_MODE = 'is_dark_mode';
+  static const String prefsSelectedTypeName = 'selected_type_name';
+  static const String prefsSelectedLocale = 'selected_locale';
+  static const String prefsInitBoot = 'init_boot';
+  static const String prefsIsDarkMode = 'is_dark_mode';
 // #endregion
+}

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokexplorer/core/services/routes/route_names.dart';
+import 'package:pokexplorer/core/routes/route_names.dart';
 
 class MyBottomBar extends StatelessWidget {
   const MyBottomBar({

@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pokexplorer/core/services/routes/route_names.dart';
+import 'package:pokexplorer/core/routes/route_names.dart';
 import 'package:pokexplorer/src/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
 
 class OnBoardingPage extends StatefulWidget {

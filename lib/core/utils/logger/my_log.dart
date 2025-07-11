@@ -11,18 +11,18 @@ import 'package:pokexplorer/core/common/constants/app_const.dart';
 /// [msg] is the message to be printed in console.
 ///
 /// Returns void. Debuging purposes only.
-void myLog({int? level = LOG_INFO, required String msg}) {
+void myLog({int? level = AppConst.logInfo, required String msg}) {
   if (kDebugMode) {
-    level ??= LOG_INFO;
-    if (SHOW_LOG) {
-      if (level == LOG_INFO) {
-        log('${DateFormat('HH:mm:ss').format(DateTime.now())}-$APP_PACKAGE: $msg');
-      } else if (level == LOG_WARNING) {
-        log('${DateFormat('HH:mm:ss').format(DateTime.now())}-$LOG_WARNING_COLOR$APP_PACKAGE: $msg $LOG_RESET_COLOR');
-      } else if (level == LOG_ERROR) {
-        log('${DateFormat('HH:mm:ss').format(DateTime.now())}-$LOG_ERROR_COLOR$APP_PACKAGE: 🚫 ERROR: $msg 🚫 $LOG_RESET_COLOR');
+    level ??= AppConst.logInfo;
+    if (AppConst.showLog) {
+      if (level == AppConst.logInfo) {
+        log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${AppConst.appPackage}: $msg');
+      } else if (level == AppConst.logWarning) {
+        log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${AppConst.logWarningColor}${AppConst.appPackage}: $msg ${AppConst.logResetColor}');
+      } else if (level == AppConst.logError) {
+        log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${AppConst.logErrorColor}${AppConst.appPackage}: 🚫 ERROR: $msg 🚫 ${AppConst.logResetColor}');
       } else {
-        log('${DateFormat('HH:mm:ss').format(DateTime.now())}-$LOG_WTF_COLOR$APP_PACKAGE : WTF:  $msg$LOG_RESET_COLOR');
+        log('${DateFormat('HH:mm:ss').format(DateTime.now())}-${AppConst.logWtfColor}${AppConst.appPackage} : WTF:  $msg${AppConst.logResetColor}');
       }
     }
   }

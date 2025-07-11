@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:pokexplorer/core/common/constants/app_const.dart';
+import 'package:pokexplorer/core/common/res/app_assets.dart';
 
 class LoadingDialog extends StatelessWidget {
   const LoadingDialog({
@@ -23,7 +23,7 @@ class LoadingDialog extends StatelessWidget {
         children: <Widget>[
           const SizedBox(height: 20),
           Lottie.asset(
-            LOADING_POKEBALL_LOTTIE,
+            AppAssets.loadingPokeballLottie,
             height: 120,
             width: 120,
             repeat: true,

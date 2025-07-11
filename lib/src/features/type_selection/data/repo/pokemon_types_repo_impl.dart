@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:pokexplorer/config/typedefs/typedefs.dart';
 import 'package:pokexplorer/core/common/errors/exceptions.dart';
 import 'package:pokexplorer/core/common/errors/failures.dart';
-import 'package:pokexplorer/core/utils/typedefs/typedefs.dart';
 import 'package:pokexplorer/src/features/type_selection/data/datasources/local/type_selection_local_datasource.dart';
 import 'package:pokexplorer/src/features/type_selection/domain/entities/pokemon_type.dart';
 import 'package:pokexplorer/src/features/type_selection/domain/repos/pokemon_types_repo.dart';

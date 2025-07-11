@@ -1,4 +1,4 @@
-import 'package:pokexplorer/core/utils/typedefs/typedefs.dart';
+import 'package:pokexplorer/config/typedefs/typedefs.dart';
 
 abstract class UseCaseWithParams<Type, Params> {
   const UseCaseWithParams();

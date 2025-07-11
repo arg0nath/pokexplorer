@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:pokexplorer/core/utils/type/pokemon_type.dart';
-import 'package:pokexplorer/core/utils/typedefs/typedefs.dart';
+import 'package:pokexplorer/config/typedefs/typedefs.dart';
+import 'package:pokexplorer/core/common/utils/type/pokemon_type.dart';
 import 'package:pokexplorer/src/features/type_selection/domain/entities/pokemon_type.dart';
 
 class PokemonTypeDto extends PokemonType {

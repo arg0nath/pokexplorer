@@ -41,7 +41,7 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
                     return Container(
                       width: 30,
                       height: 30,
-                      color: Colors.red,
+                      color: types[index].color,
                       child: Center(child: Text('Type ${types[index].name}')),
                     );
                   },

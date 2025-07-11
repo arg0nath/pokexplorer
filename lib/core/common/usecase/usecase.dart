@@ -1,13 +1,13 @@
 import 'package:pokexplorer/core/utils/typedefs/typedefs.dart';
 
-abstract class UsecaseWithParams<Type, Params> {
-  const UsecaseWithParams();
+abstract class UseCaseWithParams<Type, Params> {
+  const UseCaseWithParams();
 
   ResultFuture<Type> call(Params params);
 }
 
-abstract class UsecaseWithoutParams<Type> {
-  const UsecaseWithoutParams();
+abstract class UseCaseWithoutParams<Type> {
+  const UseCaseWithoutParams();
 
   ResultFuture<Type> call();
 }

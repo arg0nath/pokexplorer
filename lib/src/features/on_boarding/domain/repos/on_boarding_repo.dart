@@ -1,4 +1,4 @@
-import 'package:pokexplorer/core/utils/typedefs/typedefs.dart';
+import 'package:pokexplorer/config/typedefs/typedefs.dart';
 
 abstract interface class OnBoardingRepository {
   const OnBoardingRepository();

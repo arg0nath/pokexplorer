@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:pokexplorer/config/typedefs/typedefs.dart';
 import 'package:pokexplorer/core/common/errors/exceptions.dart';
 import 'package:pokexplorer/core/common/errors/failures.dart';
-import 'package:pokexplorer/core/utils/typedefs/typedefs.dart';
 import 'package:pokexplorer/src/features/on_boarding/data/datasources/on_boarding_local_data_source.dart';
 import 'package:pokexplorer/src/features/on_boarding/domain/repos/on_boarding_repo.dart';
 

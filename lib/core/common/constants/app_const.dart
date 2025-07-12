@@ -19,10 +19,9 @@ class AppConst {
   static const String appName = 'Pokéxplorer';
   static const String pokeApi = 'https://pokeapi.co/api/v2/';
   static const int apiStatusOk = 200;
-  static const int emptyInt = -1;
-  static const int emptyIntZero = 0;
-  static const double emptyDouble = -1.0;
-  static const double emptyDoubleZero = 0.0;
+
+  static const int emptyInt = 0;
+  static const double emptyDouble = 0.0;
   static const String emptyGuid = '00000000-0000-0000-0000-000000000000';
   static const String emptyString = '';
 

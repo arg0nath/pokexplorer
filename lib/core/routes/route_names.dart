@@ -1,9 +1,9 @@
 abstract class RoutePath {
-  static const String typeResultsPage = '/type-results';
-  static const String typeSelectionPage = '/type-selection';
-  static const String pokemonDetailsPage = '/poke-details';
-  static const String onBoardingPage = '/on-boarding';
-  static const String userFavoritesPage = '/user-favorites';
+  static const String typeResultsPage = '/${RouteName.typeResultsPageName}';
+  static const String typeSelectionPage = '/${RouteName.typeSelectionPageName}';
+  static const String pokemonDetailsPage = '/${RouteName.pokemonDetailsPageName}';
+  static const String onBoardingPage = '/${RouteName.onBoardingPageName}';
+  static const String userFavoritesPage = '/${RouteName.userFavoritesPageName}';
 }
 
 abstract class RouteName {

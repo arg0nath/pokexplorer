@@ -1,35 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:pokexplorer/core/routes/route_names.dart';
+import 'package:go_router/go_router.dart';
 
-class MyBottomBar extends StatelessWidget {
+class MyBottomBar extends StatefulWidget {
   const MyBottomBar({
+    required this.navigationShell,
     super.key,
   });
 
-  // final int selectedIndex; required this.selectedIndex
+  final StatefulNavigationShell navigationShell;
 
+  @override
+  State<MyBottomBar> createState() => _MyBottomBarState();
+}
+
+class _MyBottomBarState extends State<MyBottomBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      onTap: (int index) {
-        switch (index) {
-          case 0:
-            Navigator.pushNamed(context, RoutePath.typeSelectionPage);
-            // Navigate to TypeSelectionScreen
-            break;
-          case 1:
-            Navigator.pushNamed(context, RoutePath.typeSelectionPage);
-            break;
-        }
-      },
+      currentIndex: widget.navigationShell.currentIndex,
+      onTap: (int index) => widget.navigationShell.goBranch(index),
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
-          label: 'Type Selection',
+          label: 'Home',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.favorite),
-          label: 'User Favorites',
+          label: 'Favorites',
         ),
       ],
     );

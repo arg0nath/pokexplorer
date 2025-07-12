@@ -18,7 +18,6 @@ dependencies:
   bloc: ^8.1.4
   flutter_bloc: ^8.1.6
   equatable: ^2.0.7
-  http: ^1.2.2
   shared_preferences: ^2.5.3
   flutter_animate: ^4.5.0
 
@@ -43,10 +42,17 @@ dependencies:
   go_router: ^15.1.2
   dartz: ^0.10.1
   intl: ^0.20.2
+  retrofit: ^4.6.0
+  json_annotation: ^4.9.0
+
 
 
 
 dev_dependencies:
+  retrofit_generator: ^9.7.0
+  json_serializable: ^6.9.5
+  build_runner: ^2.5.4
+
 
 
   flutter_test:

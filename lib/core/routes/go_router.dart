@@ -31,15 +31,24 @@ final GoRouter router = GoRouter(
     StatefulShellRoute.indexedStack(
       builder: (BuildContext context, GoRouterState state, StatefulNavigationShell navShell) => Scaffold(
         body: navShell,
-        bottomNavigationBar: const MyBottomBar(),
+        bottomNavigationBar: MyBottomBar(
+          navigationShell: navShell,
+        ),
       ),
       branches: <StatefulShellBranch>[
         StatefulShellBranch(
           routes: <RouteBase>[
             GoRoute(
               path: RoutePath.typeSelectionPage,
-              name: RouteName.typeResultsPageName,
+              name: RouteName.typeSelectionPageName,
               builder: (BuildContext context, GoRouterState state) => const TypeSelectionPage(),
+              routes: <GoRoute>[
+                GoRoute(
+                  path: RoutePath.typeResultsPage,
+                  name: RouteName.typeResultsPageName,
+                  builder: (BuildContext context, GoRouterState state) => const Placeholder(),
+                ),
+              ],
             ),
           ],
         ),

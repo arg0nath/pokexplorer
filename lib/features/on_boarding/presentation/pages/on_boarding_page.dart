@@ -31,7 +31,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           if (state is OnBoardingStatus && !state.isFirstTimer) {
             context.goNamed(RouteName.typeResultsPageName);
           } else if (state is UserCached) {
-            context.goNamed(RouteName.userFavoritesPageName);
+            context.goNamed(RouteName.typeResultsPageName);
           }
         },
         builder: (BuildContext context, OnBoardingState state) {

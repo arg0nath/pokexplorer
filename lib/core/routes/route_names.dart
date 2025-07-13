@@ -1,6 +1,6 @@
 abstract class RoutePath {
   static const String rootPage = '/';
-  static const String typeResultsPage = '/${RouteName.typeResultsPageName}';
+  static const String typeDetailsPage = '/${RouteName.typeDetailsPageName}';
   static const String typeSelectionPage = '/${RouteName.typeSelectionPageName}';
   static const String pokemonDetailsPage = '/${RouteName.pokemonDetailsPageName}';
   static const String onBoardingPage = '/${RouteName.onBoardingPageName}';
@@ -8,7 +8,7 @@ abstract class RoutePath {
 }
 
 abstract class RouteName {
-  static const String typeResultsPageName = 'type-results';
+  static const String typeDetailsPageName = 'type-details';
   static const String typeSelectionPageName = 'type-selection';
   static const String pokemonDetailsPageName = 'poke-details';
   static const String onBoardingPageName = 'on-boarding';

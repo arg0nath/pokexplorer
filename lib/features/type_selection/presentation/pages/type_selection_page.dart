@@ -26,13 +26,13 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
         title: const Text('Select Pokemon Type'),
       ),
       floatingActionButton: BlocBuilder<TypeSelectionBloc, TypeSelectionState>(
-        buildWhen: (TypeSelectionState previous, TypeSelectionState current) => current is! ReadyToProceedTypeResults,
+        buildWhen: (TypeSelectionState previous, TypeSelectionState current) => current is! ReadyToProceedTypeDetails,
         builder: (BuildContext context, TypeSelectionState state) {
           if (state is TypesLoaded) {
             _selectedTypeName = state.selectedTypeName;
             if (_selectedTypeName.isNotEmpty) {
               return FloatingActionButton.extended(
-                onPressed: () => typeSelectionBloc.add(ProceedToTypeResults()),
+                onPressed: () => typeSelectionBloc.add(ProceedToTypeDetails()),
                 label: Icon(Icons.catching_pokemon_rounded),
                 icon: Text('Explore'),
               );
@@ -46,16 +46,13 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
       ),
       body: BlocConsumer<TypeSelectionBloc, TypeSelectionState>(
         listener: (BuildContext context, TypeSelectionState state) {
-          if (state is ReadyToProceedTypeResults) {
-            context.pushNamed(
-              RouteName.typeResultsPageName,
-              pathParameters: {'typeName': _selectedTypeName},
-            );
+          if (state is ReadyToProceedTypeDetails) {
+            context.pushNamed(RouteName.typeDetailsPageName, pathParameters: <String, String>{'typeName': _selectedTypeName});
           } else if (state is TypeSelectionError) {
             showPokeToast(context, state.message);
           }
         },
-        buildWhen: (TypeSelectionState previous, TypeSelectionState current) => current is! ReadyToProceedTypeResults,
+        buildWhen: (TypeSelectionState previous, TypeSelectionState current) => current is! ReadyToProceedTypeDetails,
         builder: (BuildContext context, TypeSelectionState state) {
           if (state is LoadingTypes) {
             return const Center(child: CircularProgressIndicator());

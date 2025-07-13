@@ -11,11 +11,6 @@ abstract class PokemonType extends Equatable {
   final String icon;
   final int colorValue;
 
-  const PokemonType.empty()
-      : name = '',
-        icon = '',
-        colorValue = 0xFF000000;
-
   Color get color => Color(colorValue);
 
   @override

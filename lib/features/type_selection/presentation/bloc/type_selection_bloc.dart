@@ -23,7 +23,7 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
     // on<TypeSelectionEvent>((TypeSelectionEvent event, Emitter<TypeSelectionState> emit) {});
     on<GetTypesEvent>(_onGetPokemonTypesHandler);
     on<SelectTypeEvent>(_onSelectTypeHandler);
-    on<ProceedToTypeResults>(_onProceedToTypeResultsHandler);
+    on<ProceedToTypeDetails>(_onProceedToTypeDetailsHandler);
     add(const GetTypesEvent());
   }
 
@@ -68,7 +68,7 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
     );
   }
 
-  Future<void> _onProceedToTypeResultsHandler(ProceedToTypeResults event, Emitter<TypeSelectionState> emit) async {
-    emit(ReadyToProceedTypeResults());
+  Future<void> _onProceedToTypeDetailsHandler(ProceedToTypeDetails event, Emitter<TypeSelectionState> emit) async {
+    emit(ReadyToProceedTypeDetails());
   }
 }

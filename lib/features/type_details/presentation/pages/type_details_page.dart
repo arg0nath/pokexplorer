@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 //final String extraString = GoRouterState.of(context).extra! as String;
 
-class TypeResultsPage extends StatefulWidget {
-  const TypeResultsPage({super.key, required this.typeName});
+class TypeDetailsPage extends StatefulWidget {
+  const TypeDetailsPage({super.key, required this.typeName});
 
   final String typeName;
 
   @override
-  State<TypeResultsPage> createState() => _TypeResultsPageState();
+  State<TypeDetailsPage> createState() => _TypeDetailsPageState();
 }
 
-class _TypeResultsPageState extends State<TypeResultsPage> {
+class _TypeDetailsPageState extends State<TypeDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

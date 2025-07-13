@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-
-abstract class PokemonPreview extends Equatable {
+class PokemonPreview {
   const PokemonPreview({
     required this.id,
     required this.name,
@@ -9,12 +7,4 @@ abstract class PokemonPreview extends Equatable {
   final int id;
   final String name;
   final String thumbnail;
-
-  @override
-  List<Object?> get props => [id, name];
-
-  @override
-  String toString() {
-    return 'PokemonPreview(name: $name)';
-  }
 }

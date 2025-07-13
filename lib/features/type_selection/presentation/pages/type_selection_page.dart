@@ -31,6 +31,7 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
         title: const Text('Select Pokemon Type'),
       ),
       floatingActionButton: BlocBuilder<TypeSelectionBloc, TypeSelectionState>(
+        buildWhen: (TypeSelectionState previous, TypeSelectionState current) => current is! ReadyToProceedTypeResults,
         builder: (BuildContext context, TypeSelectionState state) {
           if (state is TypesLoaded) {
             _selectedTypeName = state.selectedTypeName;

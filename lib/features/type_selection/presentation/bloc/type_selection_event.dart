@@ -21,3 +21,10 @@ final class SelectTypeEvent extends TypeSelectionEvent {
   @override
   List<Object> get props => [typeName];
 }
+
+final class ProceedToTypeResults extends TypeSelectionEvent {
+  const ProceedToTypeResults();
+
+  @override
+  List<Object> get props => [];
+}

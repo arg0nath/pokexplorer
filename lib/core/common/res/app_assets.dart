@@ -1,7 +1,7 @@
 class AppAssets {
-  static const String imagesBasePath = 'assets/images/';
-  static const String lottiesBasePath = 'assets/lottieFiles/';
-  static const String svgsBasePath = 'assets/svgs/';
+  static const String imagesBasePath = 'assets/images';
+  static const String lottiesBasePath = 'assets/lottieFiles';
+  static const String svgsBasePath = 'assets/svgs';
 
   static const String pokedexPng = '$imagesBasePath/pokedex.png';
   static const String pokeballPng = '$imagesBasePath/pokeball.png';

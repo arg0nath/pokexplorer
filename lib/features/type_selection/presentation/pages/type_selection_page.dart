@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/features/type_selection/domain/entities/pokemon_type.dart';
 import 'package:pokexplorer/features/type_selection/presentation/bloc/type_selection_bloc.dart';
 import 'package:pokexplorer/features/type_selection/presentation/widgets/type_card.dart';
@@ -12,9 +14,12 @@ class TypeSelectionPage extends StatefulWidget {
 }
 
 class _TypeSelectionPageState extends State<TypeSelectionPage> {
+  late String _selectedTypeName;
+  late TypeSelectionBloc _typeSelectionBloc;
   @override
   void initState() {
-    context.read<TypeSelectionBloc>().add(const GetTypesEvent());
+    _typeSelectionBloc = context.read<TypeSelectionBloc>();
+    _typeSelectionBloc.add(const GetTypesEvent());
     super.initState();
   }
 
@@ -24,8 +29,34 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
       appBar: AppBar(
         title: const Text('Select Pokemon Type'),
       ),
+      floatingActionButton: BlocBuilder<TypeSelectionBloc, TypeSelectionState>(
+        buildWhen: (TypeSelectionState previous, TypeSelectionState current) => current is! ReadyToProceedTypeResults && current is! ProceedingToTypeResults,
+        builder: (BuildContext context, TypeSelectionState state) {
+          if (state is TypesLoaded) {
+            _selectedTypeName = state.selectedTypeName;
+            if (_selectedTypeName.isNotEmpty) {
+              return FloatingActionButton.extended(
+                onPressed: () => _typeSelectionBloc.add(ProceedToTypeResults()),
+                label: Icon(Icons.arrow_forward_ios_rounded),
+                icon: Text('NEXT'),
+              );
+            } else {
+              return SizedBox.shrink();
+            }
+          } else {
+            return SizedBox.shrink();
+          }
+        },
+      ),
       body: BlocConsumer<TypeSelectionBloc, TypeSelectionState>(
-        listener: (BuildContext context, TypeSelectionState state) {},
+        listener: (BuildContext context, TypeSelectionState state) {
+          if (state is ProceedingToTypeResults) {
+            context.showLoadingDialog();
+          } else if (state is ReadyToProceedTypeResults) {
+            GoRouter.of(context).pop();
+          }
+        },
+        buildWhen: (TypeSelectionState previous, TypeSelectionState current) => current is! ReadyToProceedTypeResults && current is! ProceedingToTypeResults,
         builder: (BuildContext context, TypeSelectionState state) {
           if (state is LoadingTypes) {
             return const Center(child: CircularProgressIndicator());
@@ -33,7 +64,7 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
             return Center(child: Text(state.message));
           } else if (state is TypesLoaded) {
             final List<PokemonType> types = state.types;
-            final String selectedTypeName = state.selectedTypeName;
+            _selectedTypeName = state.selectedTypeName;
 
             return Container(
               constraints: const BoxConstraints.expand(),
@@ -44,8 +75,8 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
                     // Placeholder for type items
                     return TypeCard(
                       type: types[index],
-                      onTap: () => context.read<TypeSelectionBloc>().add(SelectTypeEvent(typeName: types[index].name)),
-                      selectedTypeName: selectedTypeName,
+                      onTap: () => _typeSelectionBloc.add(SelectTypeEvent(typeName: types[index].name)),
+                      selectedTypeName: _selectedTypeName,
                     );
                   },
                   itemCount: types.length),

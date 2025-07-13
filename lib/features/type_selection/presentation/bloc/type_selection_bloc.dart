@@ -24,6 +24,7 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
     on<GetTypesEvent>(_onGetPokemonTypesHandler);
     on<SelectTypeEvent>(_onSelectTypeHandler);
     on<ProceedToTypeResults>(_onProceedToTypeResultsHandler);
+    add(const GetTypesEvent());
   }
 
   final GetPokemonTypes _getPokemonTypes;

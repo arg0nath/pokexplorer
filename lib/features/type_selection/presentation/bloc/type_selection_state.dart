@@ -40,16 +40,8 @@ class TypeSelected extends TypeSelectionState {
   List<Object> get props => <Object>[selectedTypeName];
 }
 
-class ProceedingToTypeResults extends TypeSelectionState {
-  const ProceedingToTypeResults();
-
-  @override
-  List<Object> get props => <Object>[];
-}
-
 class ReadyToProceedTypeResults extends TypeSelectionState {
   const ReadyToProceedTypeResults();
-
   @override
   List<Object> get props => <Object>[];
 }

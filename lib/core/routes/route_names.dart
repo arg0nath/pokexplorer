@@ -1,4 +1,5 @@
 abstract class RoutePath {
+  static const String rootPage = '/';
   static const String typeResultsPage = '/${RouteName.typeResultsPageName}';
   static const String typeSelectionPage = '/${RouteName.typeSelectionPageName}';
   static const String pokemonDetailsPage = '/${RouteName.pokemonDetailsPageName}';

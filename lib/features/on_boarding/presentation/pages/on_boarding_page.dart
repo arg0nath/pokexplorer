@@ -14,8 +14,6 @@ class OnBoardingPage extends StatefulWidget {
 }
 
 class _OnBoardingPageState extends State<OnBoardingPage> {
-  // final PageController _pageController = PageController();
-
   @override
   void initState() {
     context.read<OnBoardingCubit>().checkIfUserFirstTimer();

@@ -4,10 +4,10 @@ import 'package:pokexplorer/core/common/errors/exceptions.dart';
 import 'package:pokexplorer/core/common/errors/failures.dart';
 import 'package:pokexplorer/features/type_selection/data/datasources/local/type_selection_local_datasource.dart';
 import 'package:pokexplorer/features/type_selection/domain/entities/pokemon_type.dart';
-import 'package:pokexplorer/features/type_selection/domain/repos/pokemon_types_repo.dart';
+import 'package:pokexplorer/features/type_selection/domain/repos/type_selection_repo.dart';
 
-class PokemonTypesRepositoryImpl implements PokemonTypeRepository {
-  const PokemonTypesRepositoryImpl(this._localDataSource);
+class TypeSelectionRepositoryImpl implements TypeSelectionRepository {
+  const TypeSelectionRepositoryImpl(this._localDataSource);
 
   final TypeSelectionLocalDataSource _localDataSource;
 

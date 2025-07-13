@@ -12,8 +12,8 @@ import 'package:pokexplorer/features/on_boarding/domain/usecases/cache_first_tim
 import 'package:pokexplorer/features/on_boarding/domain/usecases/check_first_timer.dart';
 import 'package:pokexplorer/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
 import 'package:pokexplorer/features/type_selection/data/datasources/local/type_selection_local_datasource.dart';
-import 'package:pokexplorer/features/type_selection/data/repo/pokemon_types_repo_impl.dart';
-import 'package:pokexplorer/features/type_selection/domain/repos/pokemon_types_repo.dart';
+import 'package:pokexplorer/features/type_selection/data/repo/type_selection_repo_impl.dart';
+import 'package:pokexplorer/features/type_selection/domain/repos/type_selection_repo.dart';
 import 'package:pokexplorer/features/type_selection/domain/usecases/get_pokemon_types.dart';
 import 'package:pokexplorer/features/type_selection/domain/usecases/get_selected_pokemon_type.dart';
 import 'package:pokexplorer/features/type_selection/domain/usecases/select_pokemon_types.dart';
@@ -50,7 +50,7 @@ Future<void> injectionInit() async {
     ..registerLazySingleton(() => GetPokemonTypes(sl()))
     ..registerLazySingleton(() => SelectPokemonType(sl()))
     ..registerLazySingleton(() => GetSelectedPokemonType(sl()))
-    ..registerLazySingleton<PokemonTypeRepository>(() => PokemonTypesRepositoryImpl(sl()))
+    ..registerLazySingleton<TypeSelectionRepository>(() => TypeSelectionRepositoryImpl(sl()))
     ..registerLazySingleton<TypeSelectionLocalDataSource>(() => TypeSelectionLocalDataSourceImpl(sl()))
     // ..registerLazySingleton(()=>SharedPreferences.getInstance()) // ! Cant do this becsue it ns not initialized so check the init
     ..registerLazySingleton(() => prefs);

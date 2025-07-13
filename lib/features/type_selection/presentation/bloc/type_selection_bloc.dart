@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:pokexplorer/core/common/constants/app_const.dart';
 import 'package:pokexplorer/core/common/errors/failures.dart';
 import 'package:pokexplorer/features/type_selection/domain/entities/pokemon_type.dart';
@@ -69,8 +68,6 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
   }
 
   Future<void> _onProceedToTypeResultsHandler(ProceedToTypeResults event, Emitter<TypeSelectionState> emit) async {
-    emit(ProceedingToTypeResults());
-    await Future<void>.delayed(5000.ms);
     emit(ReadyToProceedTypeResults());
   }
 }

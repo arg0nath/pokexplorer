@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokexplorer/core/common/res/app_assets.dart';
 import 'package:toastification/toastification.dart';
 
-ToastificationItem myToast(BuildContext context, String msg) {
+ToastificationItem showPokeToast(BuildContext context, String msg) {
   toastification.dismissAll();
   return toastification.show(
     icon: Image.asset(AppAssets.pokeballPng, width: 20, height: 20),

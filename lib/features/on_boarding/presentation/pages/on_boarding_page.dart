@@ -29,9 +29,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       body: BlocConsumer<OnBoardingCubit, OnBoardingState>(
         listener: (BuildContext context, OnBoardingState state) {
           if (state is OnBoardingStatus && !state.isFirstTimer) {
-            context.goNamed(RouteName.typeResultsPageName);
+            context.goNamed(RouteName.typeSelectionPageName);
           } else if (state is UserCached) {
-            context.goNamed(RouteName.typeResultsPageName);
+            context.goNamed(RouteName.typeSelectionPageName);
           }
         },
         builder: (BuildContext context, OnBoardingState state) {

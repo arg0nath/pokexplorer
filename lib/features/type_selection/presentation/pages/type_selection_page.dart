@@ -16,16 +16,11 @@ class TypeSelectionPage extends StatefulWidget {
 
 class _TypeSelectionPageState extends State<TypeSelectionPage> {
   late String _selectedTypeName;
-  late TypeSelectionBloc _typeSelectionBloc;
-  @override
-  void initState() {
-    _typeSelectionBloc = context.read<TypeSelectionBloc>();
-    _typeSelectionBloc.add(const GetTypesEvent());
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
+    final TypeSelectionBloc typeSelectionBloc = context.read<TypeSelectionBloc>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Select Pokemon Type'),
@@ -37,7 +32,7 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
             _selectedTypeName = state.selectedTypeName;
             if (_selectedTypeName.isNotEmpty) {
               return FloatingActionButton.extended(
-                onPressed: () => _typeSelectionBloc.add(ProceedToTypeResults()),
+                onPressed: () => typeSelectionBloc.add(ProceedToTypeResults()),
                 label: Icon(Icons.catching_pokemon_rounded),
                 icon: Text('Explore'),
               );
@@ -52,8 +47,10 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
       body: BlocConsumer<TypeSelectionBloc, TypeSelectionState>(
         listener: (BuildContext context, TypeSelectionState state) {
           if (state is ReadyToProceedTypeResults) {
-            context.push(RoutePath.typeResultsPage, extra: _selectedTypeName);
-            // context.push('/type-results', extra: _selectedTypeName);
+            context.pushNamed(
+              RouteName.typeResultsPageName,
+              pathParameters: {'typeName': _selectedTypeName},
+            );
           } else if (state is TypeSelectionError) {
             showPokeToast(context, state.message);
           }
@@ -77,7 +74,7 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
                     // Placeholder for type items
                     return TypeCard(
                       type: types[index],
-                      onTap: () => _typeSelectionBloc.add(SelectTypeEvent(typeName: types[index].name)),
+                      onTap: () => typeSelectionBloc.add(SelectTypeEvent(typeName: types[index].name)),
                       selectedTypeName: _selectedTypeName,
                     );
                   },

@@ -4,12 +4,12 @@ import 'package:pokexplorer/config/usecase/usecase.dart';
 import 'package:pokexplorer/features/type_selection/domain/repos/type_selection_repo.dart';
 
 class SelectPokemonType extends UseCaseWithParams<void, SelectedPokemonTypeParams> {
-  const SelectPokemonType(this._userRepository);
+  const SelectPokemonType(this._typeSelectionRepository);
 
-  final TypeSelectionRepository _userRepository;
+  final TypeSelectionRepository _typeSelectionRepository;
 
   @override
-  ResultFutureVoid call(SelectedPokemonTypeParams params) async => _userRepository.selectPokemonType(params.typeName);
+  ResultFutureVoid call(SelectedPokemonTypeParams params) async => _typeSelectionRepository.selectPokemonType(params.typeName);
 }
 
 class SelectedPokemonTypeParams extends Equatable {

@@ -12,6 +12,11 @@ import 'package:pokexplorer/features/on_boarding/domain/repos/on_boarding_repo.d
 import 'package:pokexplorer/features/on_boarding/domain/usecases/cache_first_timer.dart';
 import 'package:pokexplorer/features/on_boarding/domain/usecases/check_first_timer.dart';
 import 'package:pokexplorer/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
+import 'package:pokexplorer/features/pokemon_details/data/datasource/remote/pokemon_details_remote_data_source.dart';
+import 'package:pokexplorer/features/pokemon_details/data/repos/pokemon_details_repo_impl.dart';
+import 'package:pokexplorer/features/pokemon_details/domain/repos/pokemon_details_repo.dart';
+import 'package:pokexplorer/features/pokemon_details/domain/usecases/fetch_pokemon_details.dart';
+import 'package:pokexplorer/features/pokemon_details/presentation/bloc/pokemon_details_bloc.dart';
 import 'package:pokexplorer/features/type_details/data/datasource/remote/type_details_remote_data_source.dart';
 import 'package:pokexplorer/features/type_details/data/repos/type_details_repo_impl.dart';
 import 'package:pokexplorer/features/type_details/domain/repos/type_details_repo.dart';
@@ -28,27 +33,30 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final GetIt sl = GetIt.instance;
 
+//Feature
+//bloc first!
+//then usecases
+//repo
+//data source
+//service
+
 Future<void> injectionInit() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //Feature - OnBoarding
-  //bloc first!
+
   sl
+    // * Theme
     ..registerFactory(() => ThemeBloc(getThemeUseCase: sl(), setThemeUseCase: sl()))
     ..registerLazySingleton(() => GetThemeUseCase(sl()))
     ..registerLazySingleton(() => SetThemeUseCase(sl()))
     ..registerLazySingleton<ThemeRepository>(() => ThemeRepositoryImpl(themeLocalDatasource: sl()))
     ..registerLazySingleton<ThemeLocalDataSource>(() => ThemeLocalDatasourceImpl(sl()))
-    ..registerLazySingleton<http.Client>(() => http.Client())
+    // * On boarding
     ..registerFactory(() => OnBoardingCubit(cacheFirstTimer: sl(), checkFirstTimer: sl()))
-    //then usecases
     ..registerLazySingleton(() => CacheFirstTimer(sl()))
     ..registerLazySingleton(() => CheckFirstTimer(sl()))
-    //repo
     ..registerLazySingleton<OnBoardingRepository>(() => OnBoardingRepoImpl(sl()))
-    //data source
     ..registerLazySingleton<OnBoardingLocalDataSource>(() => OnBoardingLocalDataSourceImpl(sl()))
-    //service
-
+    // * Type selection
     ..registerFactory(() => TypeSelectionBloc(
           getPokemonTypes: sl(),
           selectPokemonType: sl(),
@@ -60,14 +68,23 @@ Future<void> injectionInit() async {
     ..registerLazySingleton<TypeSelectionRepository>(() => TypeSelectionRepositoryImpl(sl()))
     ..registerLazySingleton<TypeSelectionLocalDataSource>(() => TypeSelectionLocalDataSourceImpl(sl()))
 
-//type Details
+    // * Type Details
     ..registerFactory(() => TypeDetailsBloc(
           fetchTypeDetails: sl(),
         ))
     ..registerLazySingleton(() => FetchTypeDetails(sl()))
     ..registerLazySingleton<TypeDetailsRepository>(() => TypeDetailsRepoImpl(sl()))
     ..registerLazySingleton<TypeDetailsRemoteDataSource>(() => TypeDetailsRemoteDataSourceImpl(sl()))
+    // * Pokemon Details
+    ..registerFactory(() => PokemonDetailsBloc(
+          fetchPokemonDetails: sl(),
+        ))
+    ..registerLazySingleton(() => FetchPokemonDetails(sl()))
+    ..registerLazySingleton<PokemonDetailsRepository>(() => PokemonDetailsRepoImpl(sl()))
+    ..registerLazySingleton<PokemonDetailsRemoteDataSource>(() => PokemonDetailsRemoteDataSourceImpl(sl()))
 
-    // ..registerLazySingleton(()=>SharedPreferences.getInstance()) // ! Cant do this becsue it ns not initialized so check the init
+    // * General Services
+    ..registerLazySingleton<http.Client>(() => http.Client())
     ..registerLazySingleton(() => prefs);
+  // ..registerLazySingleton(()=>SharedPreferences.getInstance()) // ! Cant do this becsue it ns not initialized so check the init
 }

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:pokexplorer/core/common/constants/app_const.dart';
 import 'package:pokexplorer/core/common/errors/failures.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/type_details.dart';
 import 'package:pokexplorer/features/type_details/domain/usecases/fetch_type_details.dart';
@@ -55,6 +56,13 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
         emit(TypeDetailsState.error(e.toString()));
       }
     });
+
+    on<_ProceedToPokemonDetails>((_ProceedToPokemonDetails event, Emitter<TypeDetailsState> emit) {
+      emit(TypeDetailsState.readyToProceedToPokemonDetails(ProceedingStatus.proceeding));
+      selectedPokemonName = event.pokemonName;
+      emit(TypeDetailsState.readyToProceedToPokemonDetails(ProceedingStatus.completed));
+    });
   }
+  String selectedPokemonName = AppConst.emptyString;
   final FetchTypeDetails _fetchTypeDetails;
 }

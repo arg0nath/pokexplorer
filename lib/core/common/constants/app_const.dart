@@ -18,7 +18,9 @@ class AppConst {
   static const String appPackage = 'com.vamakris.pokexplorer';
   static const String appName = 'Pokéxplorer';
   static const String pokeApiUrl = 'pokeapi.co';
-  static const String getTypeDetailsUrl = '/api/v2/type/:type';
+  static const String getTypeDetailsUrl = '/api/v2/type/:typeName';
+  static const String getPokemonDetailsUrl = '/api/v2/pokemon/:pokemonName';
+
   static const int apiStatusOk = 200;
 
   static const int emptyInt = 0;

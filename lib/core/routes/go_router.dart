@@ -8,6 +8,8 @@ import 'package:pokexplorer/core/services/injection_container.dart';
 import 'package:pokexplorer/features/on_boarding/data/datasources/on_boarding_local_data_source.dart';
 import 'package:pokexplorer/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
 import 'package:pokexplorer/features/on_boarding/presentation/pages/on_boarding_page.dart';
+import 'package:pokexplorer/features/pokemon_details/presentation/bloc/pokemon_details_bloc.dart';
+import 'package:pokexplorer/features/pokemon_details/presentation/pages/pokemon_details_page.dart';
 import 'package:pokexplorer/features/type_details/presentation/bloc/type_details_bloc.dart';
 import 'package:pokexplorer/features/type_details/presentation/pages/type_details_page.dart';
 import 'package:pokexplorer/features/type_selection/presentation/pages/type_selection_page.dart';
@@ -29,6 +31,16 @@ final GoRouter router = GoRouter(
       builder: (BuildContext context, GoRouterState state) => BlocProvider<OnBoardingCubit>(
         create: (BuildContext context) => sl<OnBoardingCubit>(),
         child: const OnBoardingPage(),
+      ),
+    ),
+    customGoRoute(
+      path: '${RoutePath.pokemonDetailsPage}/:pokemonName',
+      name: RouteName.pokemonDetailsPageName,
+      builder: (BuildContext context, GoRouterState state) => BlocProvider<PokemonDetailsBloc>(
+        create: (BuildContext context) => sl<PokemonDetailsBloc>(),
+        child: PokemonDetailsPage(
+          name: state.pathParameters['pokemonName']!, // Replace with actual Pokemon name or pass it dynamically
+        ),
       ),
     ),
     StatefulShellRoute.indexedStack(

@@ -9,4 +9,11 @@ class TypeDetailsState with _$TypeDetailsState {
   const factory TypeDetailsState.loaded(TypeDetails typeDetails) = _Loaded;
 
   const factory TypeDetailsState.error(String message) = _Error;
+
+  const factory TypeDetailsState.readyToProceedToPokemonDetails(ProceedingStatus status) = _ReadyToProceedToPokemonDetails;
+}
+
+enum ProceedingStatus {
+  proceeding,
+  completed,
 }

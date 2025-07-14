@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pokexplorer/core/common/widgets/message_toast.dart';
+import 'package:pokexplorer/core/routes/route_names.dart';
+import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/type_details.dart';
 import 'package:pokexplorer/features/type_details/presentation/bloc/type_details_bloc.dart';
-//final String extraString = GoRouterState.of(context).extra! as String;
 
 class TypeDetailsPage extends StatefulWidget {
   const TypeDetailsPage({super.key, required this.typeName});
@@ -20,21 +23,37 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
     super.initState();
 
     context.read<TypeDetailsBloc>().add(TypeDetailsEvent.fetchTypeDetails(widget.typeName));
+    typeDetailsBloc = context.read<TypeDetailsBloc>();
   }
 
   @override
   Widget build(BuildContext context) {
-    typeDetailsBloc = context.read<TypeDetailsBloc>();
     return Scaffold(
       appBar: AppBar(
         title: Text('Results for ${widget.typeName}'),
       ),
       body: BlocConsumer<TypeDetailsBloc, TypeDetailsState>(
-        listener: (BuildContext context, TypeDetailsState state) {},
+        listener: (BuildContext context, TypeDetailsState state) {
+          state.maybeMap(
+            readyToProceedToPokemonDetails: (value) {
+              if (value.status == ProceedingStatus.completed) {
+                context.pushNamed(RouteName.pokemonDetailsPageName, pathParameters: <String, String>{'pokemonName': typeDetailsBloc.selectedPokemonName});
+              }
+            },
+            error: (value) {
+              showPokeToast(context, value.message);
+            },
+            orElse: () {},
+          );
+        },
         builder: (BuildContext context, TypeDetailsState state) {
           return state.when(
             initial: () => const SizedBox.shrink(),
             loading: () => const Center(child: CircularProgressIndicator()),
+            readyToProceedToPokemonDetails: (ProceedingStatus status) {
+              // Optional: show some loading or overlay
+              return const Center(child: Text('Proceeding...'));
+            },
             error: (String message) => Center(child: Text('Error: $message')),
             loaded: (TypeDetails typeDetails) {
               return Container(
@@ -42,12 +61,12 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
                 child: ListView.builder(
                   itemCount: typeDetails.pokemons.length,
                   itemBuilder: (BuildContext context, int index) {
-                    final pokemon = typeDetails.pokemons[index];
+                    final PokemonPreview pokemon = typeDetails.pokemons[index];
                     return ListTile(
                       leading: Image.network(pokemon.thumbnail),
                       title: Text(pokemon.name),
                       onTap: () {
-                        // Handle tap on Pokemon preview
+                        context.read<TypeDetailsBloc>().add(TypeDetailsEvent.proceedToPokemonDetails(pokemon.name));
                       },
                     );
                   },

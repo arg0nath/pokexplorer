@@ -7,24 +7,24 @@ import 'package:pokexplorer/config/logger/my_log.dart';
 import 'package:pokexplorer/config/typedefs/typedefs.dart';
 import 'package:pokexplorer/core/common/constants/app_const.dart';
 import 'package:pokexplorer/core/common/errors/exceptions.dart';
-import 'package:pokexplorer/features/type_details/data/dtos/type_details_dto.dart';
+import 'package:pokexplorer/features/pokemon_details/data/dtos/pokemon_details_dto.dart';
 import 'package:retry/retry.dart';
 
-abstract interface class TypeDetailsRemoteDataSource {
-  Future<TypeDetailsDto> fetchTypeDetails(String typeName);
+abstract interface class PokemonDetailsRemoteDataSource {
+  Future<PokemonDetailsDto> fetchPokemonDetails(String name);
 }
 
-class TypeDetailsRemoteDataSourceImpl implements TypeDetailsRemoteDataSource {
-  const TypeDetailsRemoteDataSourceImpl(this._client);
+class PokemonDetailsRemoteDataSourceImpl implements PokemonDetailsRemoteDataSource {
+  const PokemonDetailsRemoteDataSourceImpl(this._client);
 
   final http.Client _client;
 
   @override
-  Future<TypeDetailsDto> fetchTypeDetails(String typeName) async {
+  Future<PokemonDetailsDto> fetchPokemonDetails(String name) async {
     try {
       final Uri uri = Uri.https(
         AppConst.pokeApiUrl,
-        AppConst.getTypeDetailsUrl.replaceFirst(':typeName', typeName),
+        AppConst.getPokemonDetailsUrl.replaceFirst(':pokemonName', name),
       );
 
       final http.Response response = await retry(
@@ -35,13 +35,13 @@ class TypeDetailsRemoteDataSourceImpl implements TypeDetailsRemoteDataSource {
 
       if (response.statusCode != 200) {
         throw ApiException(
-          message: 'Failed to fetch type details',
+          message: 'Failed to fetch Pokemon details',
           statusCode: response.statusCode,
         );
       }
 
       final DataMap jsonMap = json.decode(response.body) as DataMap;
-      return TypeDetailsDto.fromJson(jsonMap);
+      return PokemonDetailsDto.fromJson(jsonMap);
     } on ApiException {
       rethrow;
     } catch (e) {

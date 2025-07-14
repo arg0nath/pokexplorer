@@ -35,7 +35,7 @@ GoRoute customGoRoute({
     path: path,
     name: name,
     pageBuilder: (BuildContext context, GoRouterState state) {
-      return CustomTransitionPage(
+      return CustomTransitionPage<dynamic>(
         key: state.pageKey,
         child: Builder(
           builder: (BuildContext context) {

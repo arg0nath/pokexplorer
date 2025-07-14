@@ -17,7 +17,8 @@ class AppConst {
   static const String mainFontFamily = 'lato';
   static const String appPackage = 'com.vamakris.pokexplorer';
   static const String appName = 'Pokéxplorer';
-  static const String pokeApiUrl = 'https://pokeapi.co/api/v2/';
+  static const String pokeApiUrl = 'pokeapi.co';
+  static const String getTypeDetailsUrl = '/api/v2/type/:type';
   static const int apiStatusOk = 200;
 
   static const int emptyInt = 0;

@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:http/http.dart' as http;
 import 'package:pokexplorer/config/theme/data/repository/theme_repo_impl.dart';
 import 'package:pokexplorer/config/theme/data/source/local/theme_local_datasource.dart';
 import 'package:pokexplorer/config/theme/domain/repository/theme_repo.dart';
@@ -11,6 +12,11 @@ import 'package:pokexplorer/features/on_boarding/domain/repos/on_boarding_repo.d
 import 'package:pokexplorer/features/on_boarding/domain/usecases/cache_first_timer.dart';
 import 'package:pokexplorer/features/on_boarding/domain/usecases/check_first_timer.dart';
 import 'package:pokexplorer/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
+import 'package:pokexplorer/features/type_details/data/datasource/remote/type_details_remote_data_source.dart';
+import 'package:pokexplorer/features/type_details/data/repos/type_details_repo_impl.dart';
+import 'package:pokexplorer/features/type_details/domain/repos/type_details_repo.dart';
+import 'package:pokexplorer/features/type_details/domain/usecases/fetch_type_details.dart';
+import 'package:pokexplorer/features/type_details/presentation/bloc/type_details_bloc.dart';
 import 'package:pokexplorer/features/type_selection/data/datasources/local/type_selection_local_datasource.dart';
 import 'package:pokexplorer/features/type_selection/data/repo/type_selection_repo_impl.dart';
 import 'package:pokexplorer/features/type_selection/domain/repos/type_selection_repo.dart';
@@ -32,6 +38,7 @@ Future<void> injectionInit() async {
     ..registerLazySingleton(() => SetThemeUseCase(sl()))
     ..registerLazySingleton<ThemeRepository>(() => ThemeRepositoryImpl(themeLocalDatasource: sl()))
     ..registerLazySingleton<ThemeLocalDataSource>(() => ThemeLocalDatasourceImpl(sl()))
+    ..registerLazySingleton<http.Client>(() => http.Client())
     ..registerFactory(() => OnBoardingCubit(cacheFirstTimer: sl(), checkFirstTimer: sl()))
     //then usecases
     ..registerLazySingleton(() => CacheFirstTimer(sl()))
@@ -52,6 +59,15 @@ Future<void> injectionInit() async {
     ..registerLazySingleton(() => GetSelectedPokemonType(sl()))
     ..registerLazySingleton<TypeSelectionRepository>(() => TypeSelectionRepositoryImpl(sl()))
     ..registerLazySingleton<TypeSelectionLocalDataSource>(() => TypeSelectionLocalDataSourceImpl(sl()))
+
+//type Details
+    ..registerFactory(() => TypeDetailsBloc(
+          fetchTypeDetails: sl(),
+        ))
+    ..registerLazySingleton(() => FetchTypeDetails(sl()))
+    ..registerLazySingleton<TypeDetailsRepository>(() => TypeDetailsRepoImpl(sl()))
+    ..registerLazySingleton<TypeDetailsRemoteDataSource>(() => TypeDetailsRemoteDataSourceImpl(sl()))
+
     // ..registerLazySingleton(()=>SharedPreferences.getInstance()) // ! Cant do this becsue it ns not initialized so check the init
     ..registerLazySingleton(() => prefs);
 }

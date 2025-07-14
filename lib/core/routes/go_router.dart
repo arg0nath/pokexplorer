@@ -8,6 +8,7 @@ import 'package:pokexplorer/core/services/injection_container.dart';
 import 'package:pokexplorer/features/on_boarding/data/datasources/on_boarding_local_data_source.dart';
 import 'package:pokexplorer/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
 import 'package:pokexplorer/features/on_boarding/presentation/pages/on_boarding_page.dart';
+import 'package:pokexplorer/features/type_details/presentation/bloc/type_details_bloc.dart';
 import 'package:pokexplorer/features/type_details/presentation/pages/type_details_page.dart';
 import 'package:pokexplorer/features/type_selection/presentation/pages/type_selection_page.dart';
 import 'package:pokexplorer/features/user_favorites/presentation/page/user_favorites_page.dart';
@@ -48,8 +49,11 @@ final GoRouter router = GoRouter(
                 customGoRoute(
                   path: '${RoutePath.typeDetailsPage}/:typeName',
                   name: RouteName.typeDetailsPageName,
-                  builder: (BuildContext context, GoRouterState state) => TypeDetailsPage(
-                    typeName: state.pathParameters['typeName']!,
+                  builder: (BuildContext context, GoRouterState state) => BlocProvider<TypeDetailsBloc>(
+                    create: (BuildContext context) => sl<TypeDetailsBloc>(),
+                    child: TypeDetailsPage(
+                      typeName: state.pathParameters['typeName']!,
+                    ),
                   ),
                 ),
               ],

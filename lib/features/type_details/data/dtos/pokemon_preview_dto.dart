@@ -16,12 +16,10 @@ abstract class PokemonPreviewDto with _$PokemonPreviewDto {
   factory PokemonPreviewDto.fromJson(DataMap json) => _$PokemonPreviewDtoFromJson(json);
 }
 
-PokemonPreview toPokemonPreview(PokemonPreviewDto dto) {
-  final int id = extractPokemonPreviewId(dto.url);
-  final String thumbnail = getPokemonBaseImageById(id);
-  return PokemonPreview(
-    id: id,
-    name: dto.name,
-    thumbnail: thumbnail,
-  );
+extension PokemonPreviewDtoX on PokemonPreviewDto {
+  PokemonPreview toEntity() {
+    final int id = extractPokemonPreviewId(url);
+    final String thumbnail = getPokemonBaseImageById(id);
+    return PokemonPreview(id: id, name: name, thumbnail: thumbnail);
+  }
 }

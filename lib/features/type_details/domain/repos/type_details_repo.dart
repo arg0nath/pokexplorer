@@ -4,5 +4,5 @@ import 'package:pokexplorer/features/type_details/domain/entities/type_details.d
 abstract interface class TypeDetailsRepository {
   const TypeDetailsRepository();
 
-  ResultFuture<TypeDetails> getTypeDetails(String typeName);
+  ResultFuture<TypeDetails> fetchTypeDetails(String typeName);
 }

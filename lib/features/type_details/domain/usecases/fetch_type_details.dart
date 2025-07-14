@@ -4,17 +4,17 @@ import 'package:pokexplorer/config/usecase/usecase.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/type_details.dart';
 import 'package:pokexplorer/features/type_details/domain/repos/type_details_repo.dart';
 
-class GetTypeDetails extends UseCaseWithParams<TypeDetails, GetTypeDetailsParams> {
-  const GetTypeDetails(this._typeDetailsRepository);
+class FetchTypeDetails extends UseCaseWithParams<TypeDetails, FetchTypeDetailsParams> {
+  const FetchTypeDetails(this._typeDetailsRepository);
 
   final TypeDetailsRepository _typeDetailsRepository;
 
   @override
-  ResultFuture<TypeDetails> call(GetTypeDetailsParams params) async => _typeDetailsRepository.getTypeDetails(params.typeName);
+  ResultFuture<TypeDetails> call(FetchTypeDetailsParams params) async => _typeDetailsRepository.fetchTypeDetails(params.typeName);
 }
 
-class GetTypeDetailsParams extends Equatable {
-  const GetTypeDetailsParams({required this.typeName});
+class FetchTypeDetailsParams extends Equatable {
+  const FetchTypeDetailsParams({required this.typeName});
 
   final String typeName;
 

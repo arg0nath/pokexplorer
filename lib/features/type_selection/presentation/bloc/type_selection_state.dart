@@ -1,5 +1,10 @@
 part of 'type_selection_bloc.dart';
 
+enum ProceedingStatus {
+  proceeding,
+  completed,
+}
+
 sealed class TypeSelectionState extends Equatable {
   const TypeSelectionState();
 
@@ -41,7 +46,9 @@ class TypeSelected extends TypeSelectionState {
 }
 
 class ReadyToProceedTypeDetails extends TypeSelectionState {
-  const ReadyToProceedTypeDetails();
+  const ReadyToProceedTypeDetails({required this.proceedingStatus});
+
+  final ProceedingStatus proceedingStatus;
   @override
-  List<Object> get props => <Object>[];
+  List<Object> get props => <Object>[proceedingStatus];
 }

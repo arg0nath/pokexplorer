@@ -46,7 +46,7 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
       ),
       body: BlocConsumer<TypeSelectionBloc, TypeSelectionState>(
         listener: (BuildContext context, TypeSelectionState state) {
-          if (state is ReadyToProceedTypeDetails) {
+          if (state is ReadyToProceedTypeDetails && state.proceedingStatus == ProceedingStatus.completed) {
             context.pushNamed(RouteName.typeDetailsPageName, pathParameters: <String, String>{'typeName': _selectedTypeName});
           } else if (state is TypeSelectionError) {
             showPokeToast(context, state.message);

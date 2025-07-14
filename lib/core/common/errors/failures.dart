@@ -17,10 +17,10 @@ abstract class Failure extends Equatable {
   List<Object?> get props => [message, statusCode];
 }
 
-class ServerFailure extends Failure {
-  ServerFailure({required super.message, required super.statusCode});
+class ApiFailure extends Failure {
+  ApiFailure({required super.message, required super.statusCode});
 
-  ServerFailure.fromException(ApiException apiException) : this(message: apiException.message, statusCode: apiException.statusCode);
+  ApiFailure.fromException(ApiException apiException) : this(message: apiException.message, statusCode: apiException.statusCode);
 }
 
 class CacheFailure extends Failure {

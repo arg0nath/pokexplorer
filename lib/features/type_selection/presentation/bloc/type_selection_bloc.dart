@@ -69,6 +69,7 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
   }
 
   Future<void> _onProceedToTypeDetailsHandler(ProceedToTypeDetails event, Emitter<TypeSelectionState> emit) async {
-    emit(ReadyToProceedTypeDetails());
+    emit(ReadyToProceedTypeDetails(proceedingStatus: ProceedingStatus.proceeding));
+    emit(ReadyToProceedTypeDetails(proceedingStatus: ProceedingStatus.completed));
   }
 }

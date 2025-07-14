@@ -42,17 +42,13 @@ dependencies:
   go_router: ^16.0.0
   dartz: ^0.10.1
   intl: ^0.20.2
-  retrofit: ^4.6.0
   json_annotation: ^4.9.0
-  dio: ^5.8.0+1
   freezed: ^3.1.0
   freezed_annotation: ^3.1.0
-
-
-
+  http: ^1.4.0
+  retry: ^3.1.2
 
 dev_dependencies:
-  retrofit_generator: ^9.7.0
   json_serializable: ^6.9.5
   build_runner: ^2.5.4
 

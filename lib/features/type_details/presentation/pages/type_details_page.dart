@@ -46,6 +46,8 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
             orElse: () {},
           );
         },
+        buildWhen: (TypeDetailsState previous, TypeDetailsState current) =>
+            current != TypeDetailsState.readyToProceedToPokemonDetails(ProceedingStatus.completed) && current != TypeDetailsState.readyToProceedToPokemonDetails(ProceedingStatus.proceeding),
         builder: (BuildContext context, TypeDetailsState state) {
           return state.when(
             initial: () => const SizedBox.shrink(),

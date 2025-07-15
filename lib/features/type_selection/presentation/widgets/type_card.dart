@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokexplorer/core/common/extensions/string_ext.dart';
-import 'package:pokexplorer/features/type_selection/domain/entities/pokemon_type.dart';
+import 'package:pokexplorer/shared/entities/pokemon_type.dart';
 
 class TypeCard extends StatelessWidget {
   const TypeCard({

@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pokexplorer/config/typedefs/typedefs.dart';
-import 'package:pokexplorer/core/common/utils/type/pokemon_type.dart';
+import 'package:pokexplorer/core/common/utils/pokemon/extract_poke_preview_id.dart';
+import 'package:pokexplorer/core/common/utils/pokemon/get_poke_image_by_id.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
 
 part 'pokemon_preview_dto.freezed.dart';

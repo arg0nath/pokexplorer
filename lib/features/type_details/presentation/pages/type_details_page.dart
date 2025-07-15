@@ -34,14 +34,15 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
       ),
       body: BlocConsumer<TypeDetailsBloc, TypeDetailsState>(
         listener: (BuildContext context, TypeDetailsState state) {
-          state.maybeMap(
-            readyToProceedToPokemonDetails: (value) {
-              if (value.status == ProceedingStatus.completed) {
+          state.maybeWhen(
+            readyToProceedToPokemonDetails: (ProceedingStatus value) {
+              if (value == ProceedingStatus.completed) {
                 context.pushNamed(RouteName.pokemonDetailsPageName, pathParameters: <String, String>{'pokemonName': typeDetailsBloc.selectedPokemonName});
               }
             },
-            error: (value) {
-              showPokeToast(context, value.message);
+            error: (String message) {
+              showPokeToast(context, message);
+              context.pop();
             },
             orElse: () {},
           );

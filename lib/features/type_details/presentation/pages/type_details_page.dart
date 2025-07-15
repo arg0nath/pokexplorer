@@ -18,12 +18,25 @@ class TypeDetailsPage extends StatefulWidget {
 
 class _TypeDetailsPageState extends State<TypeDetailsPage> {
   late TypeDetailsBloc typeDetailsBloc;
+  late TextEditingController _searchingController;
+  late ScrollController _typeDetailsScrollController;
+
   @override
   void initState() {
     super.initState();
 
     context.read<TypeDetailsBloc>().add(TypeDetailsEvent.fetchTypeDetails(widget.typeName));
     typeDetailsBloc = context.read<TypeDetailsBloc>();
+
+    _searchingController = TextEditingController();
+    _typeDetailsScrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _searchingController.dispose();
+    _typeDetailsScrollController.dispose();
   }
 
   @override
@@ -59,20 +72,23 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
             },
             error: (String message) => Center(child: Text('Error: $message')),
             loaded: (TypeDetails typeDetails) {
-              return Container(
-                constraints: BoxConstraints.expand(),
-                child: ListView.builder(
-                  itemCount: typeDetails.pokemons.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final PokemonPreview pokemon = typeDetails.pokemons[index];
-                    return ListTile(
-                      leading: Image.network(pokemon.thumbnail),
-                      title: Text(pokemon.name),
-                      onTap: () {
-                        context.read<TypeDetailsBloc>().add(TypeDetailsEvent.proceedToPokemonDetails(pokemon.name));
-                      },
-                    );
-                  },
+              return Scrollbar(
+                controller: _typeDetailsScrollController,
+                child: Container(
+                  constraints: BoxConstraints.expand(),
+                  child: ListView.builder(
+                    itemCount: typeDetails.pokemons.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final PokemonPreview pokemon = typeDetails.pokemons[index];
+                      return ListTile(
+                        leading: Image.network(pokemon.thumbnail),
+                        title: Text(pokemon.name),
+                        onTap: () {
+                          context.read<TypeDetailsBloc>().add(TypeDetailsEvent.proceedToPokemonDetails(pokemon.name));
+                        },
+                      );
+                    },
+                  ),
                 ),
               );
             },

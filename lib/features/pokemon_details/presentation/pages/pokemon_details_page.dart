@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokexplorer/features/pokemon_details/domain/entities/pokemon_details.dart';
 import 'package:pokexplorer/features/pokemon_details/presentation/bloc/pokemon_details_bloc.dart';
+import 'package:pokexplorer/shared/entities/pokemon_type.dart';
 //final String extraString = GoRouterState.of(context).extra! as String;
 
 class PokemonDetailsPage extends StatefulWidget {
@@ -39,7 +40,20 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
             loaded: (PokemonDetails pokemonDetails) {
               return Container(
                 constraints: BoxConstraints.expand(),
-                child: Text(pokemonDetails.name),
+                child: Column(
+                  children: <Widget>[
+                    Text(pokemonDetails.name),
+                    if (pokemonDetails.gifUrl != null) Image.network(pokemonDetails.gifUrl!),
+                    Image.network(pokemonDetails.hdImageUrl),
+                    Text('ID: ${pokemonDetails.id}'),
+                    Text('Height: ${pokemonDetails.height}'),
+                    Text('Weight: ${pokemonDetails.weight}'),
+                    Text('HP: ${pokemonDetails.hp}'),
+                    Text('Attack: ${pokemonDetails.attack}'),
+                    Text('Defense: ${pokemonDetails.defense}'),
+                    Text('Types: ${pokemonDetails.types.map((PokemonType type) => type.name).join(', ')}'),
+                  ],
+                ),
               );
             },
           );

@@ -39,7 +39,7 @@ final GoRouter router = GoRouter(
       builder: (BuildContext context, GoRouterState state) => BlocProvider<PokemonDetailsBloc>(
         create: (BuildContext context) => sl<PokemonDetailsBloc>(),
         child: PokemonDetailsPage(
-          name: state.pathParameters['pokemonName']!, // Replace with actual Pokemon name or pass it dynamically
+          name: state.pathParameters['pokemonName']!,
         ),
       ),
     ),

@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokexplorer/core/common/widgets/message_toast.dart';
 import 'package:pokexplorer/core/routes/route_names.dart';
-import 'package:pokexplorer/features/type_selection/domain/entities/pokemon_type.dart';
 import 'package:pokexplorer/features/type_selection/presentation/bloc/type_selection_bloc.dart';
 import 'package:pokexplorer/features/type_selection/presentation/widgets/type_card.dart';
+import 'package:pokexplorer/shared/entities/pokemon_type.dart';
 
 class TypeSelectionPage extends StatefulWidget {
   const TypeSelectionPage({super.key});

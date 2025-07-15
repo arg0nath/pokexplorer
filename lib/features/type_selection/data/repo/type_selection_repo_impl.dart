@@ -3,8 +3,8 @@ import 'package:pokexplorer/config/typedefs/typedefs.dart';
 import 'package:pokexplorer/core/common/errors/exceptions.dart';
 import 'package:pokexplorer/core/common/errors/failures.dart';
 import 'package:pokexplorer/features/type_selection/data/datasources/local/type_selection_local_datasource.dart';
-import 'package:pokexplorer/features/type_selection/domain/entities/pokemon_type.dart';
 import 'package:pokexplorer/features/type_selection/domain/repos/type_selection_repo.dart';
+import 'package:pokexplorer/shared/entities/pokemon_type.dart';
 
 class TypeSelectionRepositoryImpl implements TypeSelectionRepository {
   const TypeSelectionRepositoryImpl(this._localDataSource);

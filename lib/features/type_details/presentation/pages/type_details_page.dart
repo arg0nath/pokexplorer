@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -24,19 +25,19 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
   @override
   void initState() {
     super.initState();
-
-    context.read<TypeDetailsBloc>().add(TypeDetailsEvent.fetchTypeDetails(widget.typeName));
+    context.read<TypeDetailsBloc>().add(
+          TypeDetailsEvent.fetchTypeDetails(widget.typeName),
+        );
     typeDetailsBloc = context.read<TypeDetailsBloc>();
-
     _searchingController = TextEditingController();
     _typeDetailsScrollController = ScrollController();
   }
 
   @override
   void dispose() {
-    super.dispose();
     _searchingController.dispose();
     _typeDetailsScrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -50,7 +51,12 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
           state.maybeWhen(
             readyToProceedToPokemonDetails: (ProceedingStatus value) {
               if (value == ProceedingStatus.completed) {
-                context.pushNamed(RouteName.pokemonDetailsPageName, pathParameters: <String, String>{'pokemonName': typeDetailsBloc.selectedPokemonName});
+                context.pushNamed(
+                  RouteName.pokemonDetailsPageName,
+                  pathParameters: <String, String>{
+                    'pokemonName': typeDetailsBloc.selectedPokemonName,
+                  },
+                );
               }
             },
             error: (String message) {
@@ -66,35 +72,61 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
           return state.when(
             initial: () => const SizedBox.shrink(),
             loading: () => const Center(child: CircularProgressIndicator()),
-            readyToProceedToPokemonDetails: (ProceedingStatus status) {
-              // Optional: show some loading or overlay
-              return const Center(child: Text('Proceeding...'));
-            },
+            readyToProceedToPokemonDetails: (ProceedingStatus status) => const Center(child: Text('Proceeding...')),
             error: (String message) => Center(child: Text('Error: $message')),
+            searching: () => const Center(child: CircularProgressIndicator()),
+            searched: (List<PokemonPreview> searchResults) {
+              return buildPokemonList(searchResults);
+            },
             loaded: (TypeDetails typeDetails) {
-              return Scrollbar(
-                controller: _typeDetailsScrollController,
-                child: Container(
-                  constraints: BoxConstraints.expand(),
-                  child: ListView.builder(
-                    itemCount: typeDetails.pokemons.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final PokemonPreview pokemon = typeDetails.pokemons[index];
-                      return ListTile(
-                        leading: Image.network(pokemon.thumbnail),
-                        title: Text(pokemon.name),
-                        onTap: () {
-                          context.read<TypeDetailsBloc>().add(TypeDetailsEvent.proceedToPokemonDetails(pokemon.name));
-                        },
-                      );
-                    },
-                  ),
-                ),
-              );
+              return buildPokemonList(typeDetails.pokemons);
             },
           );
         },
       ),
+    );
+  }
+
+  Widget buildPokemonList(List<PokemonPreview> pokemons) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextField(
+            controller: _searchingController,
+            decoration: const InputDecoration(
+              labelText: 'Search Pokémon',
+              border: OutlineInputBorder(),
+            ),
+            onChanged: (String query) {
+              typeDetailsBloc.add(TypeDetailsEvent.searchPokemons(query));
+            },
+          ),
+        ),
+        Expanded(
+          child: Scrollbar(
+            controller: _typeDetailsScrollController,
+            child: ListView.builder(
+              controller: _typeDetailsScrollController,
+              itemCount: pokemons.length,
+              itemBuilder: (BuildContext context, int index) {
+                final PokemonPreview pokemon = pokemons[index];
+                return ListTile(
+                  leading: CachedNetworkImage(
+                    imageUrl: pokemon.thumbnail,
+                    placeholder: (BuildContext context, String url) => const SizedBox.shrink(),
+                    errorWidget: (BuildContext context, String url, dynamic error) => const Icon(Icons.error),
+                  ),
+                  title: Text(pokemon.name),
+                  onTap: () {
+                    context.read<TypeDetailsBloc>().add(TypeDetailsEvent.proceedToPokemonDetails(pokemon.name));
+                  },
+                );
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -70,18 +70,13 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
             current != TypeDetailsState.readyToProceedToPokemonDetails(ProceedingStatus.completed) && current != TypeDetailsState.readyToProceedToPokemonDetails(ProceedingStatus.proceeding),
         builder: (BuildContext context, TypeDetailsState state) {
           return state.when(
-            initial: () => const SizedBox.shrink(),
-            loading: () => const Center(child: CircularProgressIndicator()),
-            readyToProceedToPokemonDetails: (ProceedingStatus status) => const Center(child: Text('Proceeding...')),
-            error: (String message) => Center(child: Text('Error: $message')),
-            searching: () => const Center(child: CircularProgressIndicator()),
-            searched: (List<PokemonPreview> searchResults) {
-              return buildPokemonList(searchResults);
-            },
-            loaded: (TypeDetails typeDetails) {
-              return buildPokemonList(typeDetails.pokemons);
-            },
-          );
+              initial: () => const SizedBox.shrink(),
+              loading: () => const Center(child: CircularProgressIndicator()),
+              readyToProceedToPokemonDetails: (ProceedingStatus status) => const Center(child: Text('Proceeding...')),
+              error: (String message) => Center(child: Text('Error: $message')),
+              searching: () => const Center(child: CircularProgressIndicator()),
+              searched: (List<PokemonPreview> searchResults) => buildPokemonList(searchResults),
+              loaded: (TypeDetails typeDetails) => buildPokemonList(typeDetails.pokemons));
         },
       ),
     );

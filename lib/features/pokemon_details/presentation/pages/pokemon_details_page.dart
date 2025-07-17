@@ -22,7 +22,7 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
   void initState() {
     super.initState();
 
-    context.read<PokemonDetailsBloc>().add(PokemonDetailsEvent.fetchPokemonDetails(widget.name));
+    context.read<PokemonDetailsBloc>().add(FetchPokemonDetailsEvent(widget.name));
   }
 
   @override

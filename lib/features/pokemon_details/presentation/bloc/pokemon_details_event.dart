@@ -1,7 +1,20 @@
 part of 'pokemon_details_bloc.dart';
 
-@freezed
-class PokemonDetailsEvent with _$PokemonDetailsEvent {
-  const factory PokemonDetailsEvent.started() = _Started;
-  const factory PokemonDetailsEvent.fetchPokemonDetails(final String name) = _FetchPokemonDetails;
+abstract class PokemonDetailsEvent extends Equatable {
+  const PokemonDetailsEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class InitialPokeDetailsEvent extends PokemonDetailsEvent {
+  const InitialPokeDetailsEvent();
+}
+
+class FetchPokemonDetailsEvent extends PokemonDetailsEvent {
+  final String name;
+  const FetchPokemonDetailsEvent(this.name);
+
+  @override
+  List<Object?> get props => [name];
 }

@@ -26,7 +26,7 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
   void initState() {
     super.initState();
     context.read<TypeDetailsBloc>().add(
-          TypeDetailsEvent.fetchTypeDetails(widget.typeName),
+          FetchTypeDetailsEvent(widget.typeName),
         );
     typeDetailsBloc = context.read<TypeDetailsBloc>();
     _searchingController = TextEditingController();
@@ -94,7 +94,7 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
               border: OutlineInputBorder(),
             ),
             onChanged: (String query) {
-              typeDetailsBloc.add(TypeDetailsEvent.searchPokemons(query));
+              typeDetailsBloc.add(SearchPokemonsEvent(query));
             },
           ),
         ),
@@ -114,7 +114,7 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
                   ),
                   title: Text(pokemon.name),
                   onTap: () {
-                    context.read<TypeDetailsBloc>().add(TypeDetailsEvent.proceedToPokemonDetails(pokemon.name));
+                    context.read<TypeDetailsBloc>().add(ProceedToPokemonDetailsEvent(pokemon.name));
                   },
                 );
               },

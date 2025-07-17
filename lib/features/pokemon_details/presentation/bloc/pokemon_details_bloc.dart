@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pokexplorer/core/common/errors/failures.dart';
 import 'package:pokexplorer/features/pokemon_details/domain/entities/pokemon_details.dart';
@@ -17,11 +18,11 @@ class PokemonDetailsBloc extends Bloc<PokemonDetailsEvent, PokemonDetailsState> 
   PokemonDetailsBloc({required FetchPokemonDetails fetchPokemonDetails})
       : _fetchPokemonDetails = fetchPokemonDetails,
         super(_Initial()) {
-    on<_Started>((_Started event, Emitter<PokemonDetailsState> emit) {
+    on<InitialPokeDetailsEvent>((InitialPokeDetailsEvent event, Emitter<PokemonDetailsState> emit) {
       emit(const PokemonDetailsState.initial());
     });
 
-    on<_FetchPokemonDetails>((_FetchPokemonDetails event, Emitter<PokemonDetailsState> emit) async {
+    on<FetchPokemonDetailsEvent>((FetchPokemonDetailsEvent event, Emitter<PokemonDetailsState> emit) async {
       emit(const PokemonDetailsState.loading());
       try {
         final Either<Failure, PokemonDetails> result = await _fetchPokemonDetails(FetchPokemonDetailsParams(name: event.name));

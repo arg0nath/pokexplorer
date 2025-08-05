@@ -6,8 +6,9 @@ import 'package:pokexplorer/config/theme/app_theme.dart';
 import 'package:pokexplorer/config/theme/domain/entity/theme_entity.dart';
 import 'package:pokexplorer/config/theme/presentation/bloc/theme_bloc.dart';
 import 'package:pokexplorer/core/routes/go_router.dart';
-import 'package:pokexplorer/core/services/injection_container.dart';
+import 'package:pokexplorer/core/services/di_imports.dart';
 import 'package:pokexplorer/features/type_selection/presentation/bloc/type_selection_bloc.dart';
+import 'package:pokexplorer/features/user_favorites/presentation/bloc/user_favorites_bloc.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<ThemeBloc>(create: (BuildContext context) => sl<ThemeBloc>()),
         BlocProvider<TypeSelectionBloc>(create: (BuildContext context) => sl<TypeSelectionBloc>()),
+        BlocProvider<UserFavoritesBloc>(create: (BuildContext context) => sl<UserFavoritesBloc>()),
         //TODO add user favorites
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(

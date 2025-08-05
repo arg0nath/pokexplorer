@@ -24,3 +24,10 @@ extension PokemonPreviewDtoX on PokemonPreviewDto {
     return PokemonPreview(id: id, name: name, thumbnail: thumbnail);
   }
 }
+
+extension PokemonPreviewX on PokemonPreview {
+  PokemonPreviewDto toDto() {
+    final String thumbnail = getPokemonBaseImageById(id);
+    return PokemonPreviewDto(name: name, url: thumbnail);
+  }
+}

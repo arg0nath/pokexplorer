@@ -65,12 +65,6 @@ Future<void> injectionInit() async {
     ..registerLazySingleton(() => RemoveFromFavorites(sl()))
     ..registerLazySingleton<UserFavoritesRepo>(() => UserFavoritesRepoImpl(sl()))
     ..registerLazySingleton<UserFavoritesLocalDataSource>(() => UserFavoritesLocalDataSourceImpl(sl()))
-    // * Pokemon Details
-    ..registerFactory(() => PokemonDetailsBloc(
-          fetchPokemonDetails: sl(),
-        ))
-    ..registerLazySingleton(() => FetchPokemonDetails(sl()))
-    ..registerLazySingleton<PokemonDetailsRepository>(() => PokemonDetailsRepoImpl(sl()))
 
     // * General Services
     ..registerLazySingleton<http.Client>(() => http.Client())

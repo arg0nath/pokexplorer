@@ -9,12 +9,23 @@ sealed class UserFavoritesState extends Equatable {
 
 final class UserFavoritesInitial extends UserFavoritesState {}
 
+final class LoadingUserFavorites extends UserFavoritesState {}
+
+final class UserFavoritesLoaded extends UserFavoritesState {
+  const UserFavoritesLoaded(this.favorites);
+
+  final List<PokemonPreview> favorites;
+
+  @override
+  List<Object> get props => [favorites];
+}
+
 final class UpdatingFavoriteStatus extends UserFavoritesState {}
 
 final class FavoriteStatusUpdated extends UserFavoritesState {}
 
-final class UserFavoritesFailed extends UserFavoritesState {
-  const UserFavoritesFailed(this.errorMessage);
+final class UserFavoritesError extends UserFavoritesState {
+  const UserFavoritesError(this.errorMessage);
 
   final String errorMessage;
 

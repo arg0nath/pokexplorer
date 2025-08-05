@@ -33,8 +33,10 @@ import 'package:pokexplorer/features/type_selection/presentation/bloc/type_selec
 import 'package:pokexplorer/features/user_favorites/data/datasources/local/user_favorites_local_datasource.dart';
 import 'package:pokexplorer/features/user_favorites/data/repo/user_favorites_repo_impl.dart';
 import 'package:pokexplorer/features/user_favorites/domain/repo/user_favorites_repo.dart';
-import 'package:pokexplorer/features/user_favorites/domain/usecases/usecases.dart';
-import 'package:pokexplorer/features/user_favorites/presentation/bloc/user_favorites_bloc.dart' hide AddToFavorites, RemoveFromFavorites;
+import 'package:pokexplorer/features/user_favorites/domain/usecases/add_to_favorites.dart';
+import 'package:pokexplorer/features/user_favorites/domain/usecases/get_user_favorites.dart';
+import 'package:pokexplorer/features/user_favorites/domain/usecases/remove_from_favorites.dart';
+import 'package:pokexplorer/features/user_favorites/presentation/bloc/user_favorites_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 

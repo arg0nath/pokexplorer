@@ -48,22 +48,24 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (String message) => Center(child: Text('Error: $message')),
             loaded: (PokemonDetails pokemonDetails) {
-              return Container(
-                constraints: BoxConstraints.expand(),
-                child: Column(
-                  children: <Widget>[
-                    Text(pokemonDetails.name),
-                    if (pokemonDetails.gifUrl != null) Image.network(pokemonDetails.gifUrl!),
-                    Image.network(pokemonDetails.baseImageUrl),
-                    Image.network(pokemonDetails.hdImageUrl),
-                    Text('ID: ${pokemonDetails.id}'),
-                    Text('Height: ${pokemonDetails.height}'),
-                    Text('Weight: ${pokemonDetails.weight}'),
-                    Text('HP: ${pokemonDetails.hp}'),
-                    Text('Attack: ${pokemonDetails.attack}'),
-                    Text('Defense: ${pokemonDetails.defense}'),
-                    Text('Types: ${pokemonDetails.types.map((PokemonType type) => type.name).join(', ')}'),
-                  ],
+              return SingleChildScrollView(
+                child: Container(
+                  constraints: BoxConstraints.expand(),
+                  child: Column(
+                    children: <Widget>[
+                      Text(pokemonDetails.name),
+                      if (pokemonDetails.gifUrl != null) Image.network(pokemonDetails.gifUrl!),
+                      Image.network(pokemonDetails.baseImageUrl),
+                      Image.network(pokemonDetails.hdImageUrl),
+                      Text('ID: ${pokemonDetails.id}'),
+                      Text('Height: ${pokemonDetails.height}'),
+                      Text('Weight: ${pokemonDetails.weight}'),
+                      Text('HP: ${pokemonDetails.hp}'),
+                      Text('Attack: ${pokemonDetails.attack}'),
+                      Text('Defense: ${pokemonDetails.defense}'),
+                      Text('Types: ${pokemonDetails.types.map((PokemonType type) => type.name).join(', ')}'),
+                    ],
+                  ),
                 ),
               );
             },

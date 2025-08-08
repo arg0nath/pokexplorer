@@ -108,7 +108,7 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
                 final PokemonPreview pokemon = pokemons[index];
                 return ListTile(
                   leading: CachedNetworkImage(
-                    imageUrl: pokemon.thumbnail,
+                    imageUrl: pokemon.url,
                     placeholder: (BuildContext context, String url) => const SizedBox.shrink(),
                     errorWidget: (BuildContext context, String url, dynamic error) => const Icon(Icons.error),
                   ),

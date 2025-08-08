@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
 import 'package:pokexplorer/features/user_favorites/presentation/bloc/user_favorites_bloc.dart';
 
 class UserFavoritesPage extends StatefulWidget {
@@ -33,7 +34,7 @@ class _UserFavoritesPageState extends State<UserFavoritesPage> {
                 itemExtent: 60,
                 itemCount: state.favorites.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final favorite = state.favorites[index];
+                  final PokemonPreview favorite = state.favorites[index];
                   return ListTile(
                     title: Text(favorite.name),
                     onTap: () {

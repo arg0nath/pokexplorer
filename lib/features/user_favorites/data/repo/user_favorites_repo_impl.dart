@@ -26,7 +26,7 @@ class UserFavoritesRepoImpl implements UserFavoritesRepo {
   @override
   ResultFutureVoid addToFavorites({required PokemonPreview pokePreview}) async {
     try {
-      await _localDataSource.addToFavoritesDb(previewDto: pokePreview.toDto());
+      await _localDataSource.addToFavoritesDb(previewDto: PokemonPreviewDto.fromEntity(pokePreview));
       return const Right<Failure, void>(null);
     } on CacheException catch (e) {
       return Left<Failure, void>(CacheFailure(message: e.message, statusCode: e.statusCode));

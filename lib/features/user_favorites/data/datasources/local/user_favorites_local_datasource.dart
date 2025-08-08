@@ -26,7 +26,7 @@ class UserFavoritesLocalDataSourceImpl implements UserFavoritesLocalDataSource {
         final PokemonPreviewDto dto = PokemonPreviewDto.fromJson(map);
         // Use the id directly from the DB row if present
         final int? idFromDb = map[_idColumnName] as int?;
-        return dto.toEntity(idFromDb: idFromDb);
+        return dto.toEntity();
       }).toList();
     } catch (e) {
       throw CacheException(message: 'Failed to get favorites from database: $e');

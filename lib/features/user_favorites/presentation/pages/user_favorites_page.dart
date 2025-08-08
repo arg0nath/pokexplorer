@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pokexplorer/config/logger/my_log.dart';
+import 'package:pokexplorer/core/common/widgets/preview_list_tile.dart';
+import 'package:pokexplorer/core/routes/route_names.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
 import 'package:pokexplorer/features/user_favorites/presentation/bloc/user_favorites_bloc.dart';
 
@@ -35,10 +39,14 @@ class _UserFavoritesPageState extends State<UserFavoritesPage> {
                 itemCount: state.favorites.length,
                 itemBuilder: (BuildContext context, int index) {
                   final PokemonPreview favorite = state.favorites[index];
-                  return ListTile(
-                    title: Text(favorite.name),
+                  myLog('Favorite: ${favorite.url}');
+                  return PreviewListTile(
+                    pokemon: favorite,
                     onTap: () {
-                      // Navigate to details page or perform any action
+                      context.pushNamed(RouteName.pokemonDetailsPageName, pathParameters: {'pokemonName': favorite.name});
+                    },
+                    onHearthTap: () {
+                      // Handle favorite toggle
                     },
                   );
                 },

@@ -11,7 +11,7 @@ import 'package:pokexplorer/core/common/constants/app_const.dart';
 /// [msg] is the message to be printed in console.
 ///
 /// Returns void. Debuging purposes only.
-void myLog({int? level = AppConst.logInfo, required String msg}) {
+void myLog(String msg, {int? level = AppConst.logInfo}) {
   if (kDebugMode) {
     level ??= AppConst.logInfo;
     if (AppConst.showLog) {

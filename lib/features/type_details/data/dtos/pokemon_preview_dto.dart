@@ -18,8 +18,8 @@ abstract class PokemonPreviewDto with _$PokemonPreviewDto {
 }
 
 extension PokemonPreviewDtoX on PokemonPreviewDto {
-  PokemonPreview toEntity() {
-    final int id = extractPokemonPreviewId(url);
+  PokemonPreview toEntity({int? idFromDb}) {
+    final int id = idFromDb ?? extractPokemonPreviewId(url);
     final String thumbnail = getPokemonBaseImageById(id);
     return PokemonPreview(id: id, name: name, url: thumbnail);
   }

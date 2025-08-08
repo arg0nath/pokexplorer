@@ -1,4 +1,3 @@
-import 'package:pokexplorer/config/typedefs/typedefs.dart';
 import 'package:pokexplorer/core/common/errors/exceptions.dart';
 import 'package:pokexplorer/features/type_details/data/dtos/pokemon_preview_dto.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
@@ -23,7 +22,12 @@ class UserFavoritesLocalDataSourceImpl implements UserFavoritesLocalDataSource {
     try {
       final List<Map<String, dynamic>> dtos = await _db.query(_tableName);
 
-      return dtos.map((DataMap map) => PokemonPreviewDto.fromJson(map).toEntity()).toList();
+      return dtos.map((Map<String, dynamic> map) {
+        final PokemonPreviewDto dto = PokemonPreviewDto.fromJson(map);
+        // Use the id directly from the DB row if present
+        final int? idFromDb = map[_idColumnName] as int?;
+        return dto.toEntity(idFromDb: idFromDb);
+      }).toList();
     } catch (e) {
       throw CacheException(message: 'Failed to get favorites from database: $e');
     }

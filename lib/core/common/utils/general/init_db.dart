@@ -13,7 +13,7 @@ Future<Database> initFavoritesDatabase() async {
         CREATE TABLE favorites (
           id INTEGER PRIMARY KEY,
           name TEXT NOT NULL UNIQUE,
-          thumbnail TEXT NOT NULL
+          url TEXT NOT NULL
         )
       ''');
     },

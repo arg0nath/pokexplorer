@@ -21,7 +21,7 @@ extension PokemonPreviewDtoX on PokemonPreviewDto {
   PokemonPreview toEntity() {
     final int id = extractPokemonPreviewId(url);
     final String thumbnail = getPokemonBaseImageById(id);
-    return PokemonPreview(id: id, name: name, thumbnail: thumbnail);
+    return PokemonPreview(id: id, name: name, url: thumbnail);
   }
 }
 

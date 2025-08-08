@@ -12,7 +12,6 @@ final GetIt sl = GetIt.instance;
 Future<void> injectionInit() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final Database favoritesDb = await initFavoritesDatabase();
-  sl.registerSingleton<Database>(favoritesDb);
 
   sl
     // * Theme
@@ -68,6 +67,8 @@ Future<void> injectionInit() async {
 
     // * General Services
     ..registerLazySingleton<http.Client>(() => http.Client())
-    ..registerLazySingleton(() => prefs);
+    ..registerLazySingleton(() => prefs)
+    ..registerSingleton<Database>(favoritesDb);
+
   // ..registerLazySingleton(()=>SharedPreferences.getInstance()) // ! Cant do this becsue it ns not initialized so check the init
 }

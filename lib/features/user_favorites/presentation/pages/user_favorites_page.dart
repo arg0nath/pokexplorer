@@ -30,23 +30,21 @@ class _UserFavoritesPageState extends State<UserFavoritesPage> {
           builder: (BuildContext context, UserFavoritesState state) {
             if (state is LoadingUserFavorites) {
               return const Center(child: CircularProgressIndicator());
-            } else if (state is UserFavoritesLoaded) {
-              if (state.favorites.isEmpty) {
+            } else if (state is UserFavoritesLoaded || state is FavoriteStatusUpdated) {
+              final List<PokemonPreview> favorites = state is UserFavoritesLoaded ? state.favorites : (state as FavoriteStatusUpdated).favorites;
+              if (favorites.isEmpty) {
                 return const Center(child: Text('No favorites added yet.'));
               }
               return ListView.builder(
                 itemExtent: 60,
-                itemCount: state.favorites.length,
+                itemCount: favorites.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final PokemonPreview favorite = state.favorites[index];
+                  final PokemonPreview favorite = favorites[index];
                   myLog('Favorite: ${favorite.url}');
                   return PreviewListTile(
-                    pokemon: favorite,
+                    preview: favorite,
                     onTap: () {
                       context.pushNamed(RouteName.pokemonDetailsPageName, pathParameters: {'pokemonName': favorite.name});
-                    },
-                    onHearthTap: () {
-                      // Handle favorite toggle
                     },
                   );
                 },

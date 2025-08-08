@@ -22,7 +22,14 @@ final class UserFavoritesLoaded extends UserFavoritesState {
 
 final class UpdatingFavoriteStatus extends UserFavoritesState {}
 
-final class FavoriteStatusUpdated extends UserFavoritesState {}
+final class FavoriteStatusUpdated extends UserFavoritesState {
+  const FavoriteStatusUpdated(this.favorites);
+
+  final List<PokemonPreview> favorites;
+
+  @override
+  List<Object> get props => [favorites];
+}
 
 final class UserFavoritesError extends UserFavoritesState {
   const UserFavoritesError(this.errorMessage);

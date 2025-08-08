@@ -7,4 +7,9 @@ class PokemonPreview {
   final int id;
   final String name;
   final String url;
+
+  @override
+  String toString() {
+    return 'PokemonPreview(id: $name: $name, url: $url)';
+  }
 }

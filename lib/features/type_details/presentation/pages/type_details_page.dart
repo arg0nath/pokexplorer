@@ -107,8 +107,7 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
               itemBuilder: (BuildContext context, int index) {
                 final PokemonPreview pokemon = pokemons[index];
                 return PreviewListTile(
-                  onHearthTap: () {},
-                  pokemon: pokemon,
+                  preview: pokemon,
                   onTap: () {
                     typeDetailsBloc.add(ProceedToPokemonDetailsEvent(pokemon.name));
                   },

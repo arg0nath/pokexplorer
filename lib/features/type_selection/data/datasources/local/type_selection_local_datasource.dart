@@ -50,7 +50,7 @@ class TypeSelectionLocalDataSourceImpl implements TypeSelectionLocalDataSource {
   Future<void> selectPokemonType(String typeName) async {
     try {
       await _prefs.setString(kSelectedPokemonType, typeName);
-      myLog(msg: '$typeName saved to prefs');
+      myLog('$typeName saved to prefs');
     } catch (e) {
       throw CacheException(message: e.toString());
     }

@@ -45,7 +45,7 @@ class PokemonDetailsRemoteDataSourceImpl implements PokemonDetailsRemoteDataSour
     } on ApiException {
       rethrow;
     } catch (e) {
-      myLog(msg: 'Unexpected error: $e');
+      myLog('Unexpected error: $e');
       throw ApiException(
         message: e.toString(),
         statusCode: 500,

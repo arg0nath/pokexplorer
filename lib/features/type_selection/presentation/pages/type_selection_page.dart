@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
 import 'package:pokexplorer/core/common/widgets/message_toast.dart';
 import 'package:pokexplorer/core/common/widgets/misc_dialog.dart';
 import 'package:pokexplorer/core/routes/route_names.dart';
 import 'package:pokexplorer/features/type_selection/presentation/bloc/type_selection_bloc.dart';
-import 'package:pokexplorer/features/type_selection/presentation/widgets/type_card.dart';
+import 'package:pokexplorer/features/type_selection/presentation/widgets/types_grid_view.dart';
 
 class TypeSelectionPage extends StatefulWidget {
   const TypeSelectionPage({super.key});
@@ -24,8 +25,9 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
     final TypeSelectionBloc typeSelectionBloc = context.read<TypeSelectionBloc>();
 
     return Scaffold(
+      backgroundColor: context.theme.colorScheme.surface,
       appBar: AppBar(
-        title: const Text('Select Pokemon Type'),
+        title: const Text('Pokemon Type'),
         actions: [
           IconButton(
             icon: const Icon(Iconsax.setting_5_copy),
@@ -69,22 +71,7 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
           } else if (state is TypesLoaded) {
             final List<PokemonType> types = state.types;
             _selectedTypeName = state.selectedTypeName;
-
-            return Container(
-              constraints: const BoxConstraints.expand(),
-              child: GridView.builder(
-                  gridDelegate: _gridDelegate(),
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    // Placeholder for type items
-                    return TypeCard(
-                      type: types[index],
-                      onTap: () => typeSelectionBloc.add(SelectTypeEvent(typeName: types[index].name)),
-                      selectedTypeName: _selectedTypeName,
-                    );
-                  },
-                  itemCount: types.length),
-            );
+            return TypesGridView(types: types, selectedTypeName: _selectedTypeName);
           } else {
             return const SizedBox.shrink();
           }
@@ -92,13 +79,4 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
       ), // Example item count
     );
   }
-}
-
-SliverGridDelegateWithFixedCrossAxisCount _gridDelegate() {
-  return const SliverGridDelegateWithFixedCrossAxisCount(
-    crossAxisCount: 2,
-    childAspectRatio: 1.0,
-    mainAxisSpacing: 8.0,
-    crossAxisSpacing: 8.0,
-  );
 }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
 import 'package:pokexplorer/core/common/widgets/message_toast.dart';
+import 'package:pokexplorer/core/common/widgets/misc_dialog.dart';
 import 'package:pokexplorer/core/routes/route_names.dart';
 import 'package:pokexplorer/features/type_selection/presentation/bloc/type_selection_bloc.dart';
 import 'package:pokexplorer/features/type_selection/presentation/widgets/type_card.dart';
@@ -24,6 +26,12 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Select Pokemon Type'),
+        actions: [
+          IconButton(
+            icon: const Icon(Iconsax.setting_5_copy),
+            onPressed: () => showDialog(context: context, builder: (_) => MiscDialog()),
+          ),
+        ],
       ),
       floatingActionButton: BlocBuilder<TypeSelectionBloc, TypeSelectionState>(
         buildWhen: (TypeSelectionState previous, TypeSelectionState current) => current is! ReadyToProceedTypeDetails,

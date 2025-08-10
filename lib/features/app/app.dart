@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
         BlocProvider<ThemeBloc>(create: (BuildContext context) => sl<ThemeBloc>()),
         BlocProvider<TypeSelectionBloc>(create: (BuildContext context) => sl<TypeSelectionBloc>()),
         BlocProvider<UserFavoritesBloc>(lazy: false, create: (BuildContext context) => sl<UserFavoritesBloc>()..add(LoadUserFavoritesEvent())),
-        //TODO add user favorites
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (BuildContext context, ThemeState state) {

@@ -10,12 +10,16 @@ sealed class UserFavoritesEvent extends Equatable {
 final class LoadUserFavoritesEvent extends UserFavoritesEvent {}
 
 final class AddToFavoritesEvent extends UserFavoritesEvent {
-  const AddToFavoritesEvent(this.preview);
+  const AddToFavoritesEvent({
+    required this.id,
+    required this.name,
+  });
 
-  final PokemonPreview preview;
+  final int id;
+  final String name;
 
   @override
-  List<Object> get props => [preview];
+  List<Object> get props => [name, id];
 }
 
 final class RemoveFromFavoritesEvent extends UserFavoritesEvent {

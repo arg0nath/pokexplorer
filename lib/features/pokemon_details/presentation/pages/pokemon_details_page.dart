@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokexplorer/core/common/extensions/string_ext.dart';
 import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
+import 'package:pokexplorer/core/common/widgets/favorite_button.dart';
 import 'package:pokexplorer/core/common/widgets/message_toast.dart';
 import 'package:pokexplorer/features/pokemon_details/domain/entities/pokemon_details.dart';
 import 'package:pokexplorer/features/pokemon_details/presentation/bloc/pokemon_details_bloc.dart';
@@ -31,7 +32,24 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
     pokemonDetailsBloc = context.read<PokemonDetailsBloc>();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Results for ${widget.name.toUpperFirst()}'),
+        centerTitle: true,
+        actions: [
+          BlocBuilder<PokemonDetailsBloc, PokemonDetailsState>(
+            builder: (context, state) {
+              return state.when(
+                  initial: () => const SizedBox.shrink(),
+                  loading: () => SizedBox.shrink(),
+                  error: (String message) => SizedBox.shrink(),
+                  loaded: (PokemonDetails pokemonDetails) {
+                    return FavoriteButton(
+                      id: pokemonDetails.id,
+                      name: pokemonDetails.name,
+                    );
+                  });
+            },
+          )
+        ],
+        title: Text('${widget.name.toUpperFirst()}'),
       ),
       body: BlocConsumer<PokemonDetailsBloc, PokemonDetailsState>(
         listener: (BuildContext context, PokemonDetailsState state) {
@@ -53,7 +71,6 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
                 constraints: BoxConstraints.expand(),
                 child: Column(
                   children: <Widget>[
-                    Text(pokemonDetails.name),
                     if (pokemonDetails.gifUrl != null) Image.network(pokemonDetails.gifUrl!),
                     Image.network(pokemonDetails.baseImageUrl),
                     Image.network(pokemonDetails.hdImageUrl),

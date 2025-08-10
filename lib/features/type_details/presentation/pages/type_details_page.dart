@@ -45,7 +45,7 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Results for ${widget.typeName.toUpperFirst()}'),
+        title: Text('${widget.typeName.toUpperFirst()}'),
       ),
       body: BlocConsumer<TypeDetailsBloc, TypeDetailsState>(
         listener: (BuildContext context, TypeDetailsState state) {

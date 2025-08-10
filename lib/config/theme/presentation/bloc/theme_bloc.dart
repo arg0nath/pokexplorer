@@ -9,10 +9,10 @@ part 'theme_event.dart';
 part 'theme_state.dart';
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
-  final GetThemeUseCase getThemeUseCase;
-  final SetThemeUseCase setThemeUseCase;
-
-  ThemeBloc({required this.getThemeUseCase, required this.setThemeUseCase}) : super(ThemeState.initial()) {
+  ThemeBloc({required GetThemeUseCase getThemeUseCase, required SetThemeUseCase setThemeUseCase})
+      : _getThemeUseCase = getThemeUseCase,
+        _setThemeUseCase = setThemeUseCase,
+        super(ThemeState.initial()) {
     on<GetThemeEvent>(_onGetThemeEvent);
     on<ToggleThemeEvent>(_onToggleThemeEvent);
   }
@@ -21,24 +21,29 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     emit(state.copyWith(status: ThemeStatus.loading));
 
     try {
-      final ThemeEntity result = await getThemeUseCase();
+      final ThemeEntity result = await _getThemeUseCase();
+      print('🔧 Loaded theme from storage: ${result.themeType}');
       emit(state.copyWith(status: ThemeStatus.success, themeEntity: result));
     } catch (e) {
+      print('❌ Failed to load theme: $e');
       emit(state.copyWith(status: ThemeStatus.failure, failure: CacheFailure(message: e.toString(), statusCode: 505)));
     }
   }
 
   Future<void> _onToggleThemeEvent(ToggleThemeEvent event, Emitter<ThemeState> emit) async {
-    if (state.themeEntity != null) {
-      final ThemeType newTheme = state.themeEntity!.themeType == ThemeType.dark ? ThemeType.light : ThemeType.dark;
-      final ThemeEntity newThemeEntity = ThemeEntity(themeType: newTheme);
-
-      try {
-        await setThemeUseCase(newThemeEntity);
-        emit(state.copyWith(status: ThemeStatus.success, themeEntity: newThemeEntity));
-      } catch (e) {
-        emit(state.copyWith(status: ThemeStatus.failure, failure: CacheFailure(message: e.toString(), statusCode: 505)));
-      }
+    final ThemeType newTheme = event.isDarkMode ? ThemeType.dark : ThemeType.light;
+    final ThemeEntity newThemeEntity = ThemeEntity(themeType: newTheme);
+    try {
+      print('💾 Saving theme: ${newTheme}');
+      await _setThemeUseCase(newThemeEntity);
+      print('✅ Theme saved successfully');
+      emit(state.copyWith(status: ThemeStatus.success, themeEntity: newThemeEntity));
+    } catch (e) {
+      print('❌ Failed to save theme: $e');
+      emit(state.copyWith(status: ThemeStatus.failure, failure: CacheFailure(message: e.toString(), statusCode: 505)));
     }
   }
+
+  final GetThemeUseCase _getThemeUseCase;
+  final SetThemeUseCase _setThemeUseCase;
 }

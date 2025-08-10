@@ -1,84 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:pokexplorer/config/theme/app_palette.dart';
+import 'package:pokexplorer/config/theme/app_color_scheme.dart';
 
 class AppTheme {
-  static ThemeData getTheme(bool isDark) {
-    if (isDark) {
-      return _getDarkTheme();
-    } else {
-      return _getLightTheme();
-    }
-  }
-}
+  AppTheme._();
 
-ThemeData _getDarkTheme() {
-  return ThemeData(
-    colorScheme: _getDarkColorScheme(),
-    pageTransitionsTheme: const PageTransitionsTheme(
-      builders: <TargetPlatform, PageTransitionsBuilder>{
-        // Set the predictive back transitions for Android.
-        TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-      },
-    ),
-    brightness: Brightness.dark,
+  static final ThemeData light = ThemeData.from(colorScheme: lightColorScheme).copyWith(
     appBarTheme: AppBarTheme(
-      backgroundColor: AppPalette.black,
-      foregroundColor: AppPalette.white,
+      backgroundColor: lightColorScheme.surface,
+      foregroundColor: lightColorScheme.onSurface,
+      elevation: 0,
+      scrolledUnderElevation: 0,
     ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        foregroundColor: AppPalette.white,
-      ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: lightColorScheme.surface,
+      selectedItemColor: lightColorScheme.primary,
+      unselectedItemColor: lightColorScheme.onSurface,
     ),
-    scaffoldBackgroundColor: AppPalette.black,
+  );
+
+  static final ThemeData dark = ThemeData.from(colorScheme: darkColorScheme).copyWith(
+    appBarTheme: AppBarTheme(
+      backgroundColor: darkColorScheme.surface,
+      foregroundColor: darkColorScheme.onSurface,
+      elevation: 0,
+      scrolledUnderElevation: 0,
+    ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: darkColorScheme.surface,
+      selectedItemColor: darkColorScheme.primary,
+      unselectedItemColor: darkColorScheme.onSurface,
+    ),
   );
 }
-
-ThemeData _getLightTheme() {
-  return ThemeData(
-    colorScheme: _getLightColorScheme(),
-    pageTransitionsTheme: const PageTransitionsTheme(
-      builders: <TargetPlatform, PageTransitionsBuilder>{
-        // Set the predictive back transitions for Android.
-        TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-      },
-    ),
-    brightness: Brightness.light,
-    appBarTheme: AppBarTheme(
-      backgroundColor: AppPalette.white,
-      foregroundColor: AppPalette.black,
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        foregroundColor: AppPalette.black,
-      ),
-    ),
-    scaffoldBackgroundColor: AppPalette.white,
-  );
-}
-
-ColorScheme _getLightColorScheme() => const ColorScheme(
-      brightness: Brightness.light,
-      primary: AppColorsScheme.primaryColor,
-      onPrimary: AppColorsScheme.onPrimaryColorLight,
-      secondary: AppColorsScheme.secondaryColorLight,
-      secondaryContainer: AppColorsScheme.secondaryLightVariant,
-      onSecondary: AppColorsScheme.onSecondaryColorLight,
-      surface: AppColorsScheme.surfaceColorLight,
-      onSurface: AppColorsScheme.onSurfaceLight,
-      error: AppColorsScheme.errorColor,
-      onError: AppColorsScheme.onErrorColor,
-    );
-
-ColorScheme _getDarkColorScheme() => const ColorScheme(
-      brightness: Brightness.dark,
-      primary: AppColorsScheme.primaryColor,
-      onPrimary: AppColorsScheme.onPrimaryColorDark,
-      secondary: AppColorsScheme.secondaryColorDark,
-      onSecondary: AppColorsScheme.onSecondaryColorDark,
-      secondaryContainer: AppColorsScheme.secondaryDarkVariant,
-      surface: AppColorsScheme.surfaceColorDark,
-      onSurface: AppColorsScheme.onSurfaceDark,
-      error: AppColorsScheme.errorColor,
-      onError: AppColorsScheme.onErrorColor,
-    );

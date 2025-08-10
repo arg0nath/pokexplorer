@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pokexplorer/core/common/errors/failures.dart';
+import 'package:pokexplorer/core/common/utils/pokemon/get_poke_image_by_id.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
 import 'package:pokexplorer/features/user_favorites/domain/usecases/add_to_favorites.dart';
 import 'package:pokexplorer/features/user_favorites/domain/usecases/get_user_favorites.dart';
@@ -33,8 +34,8 @@ class UserFavoritesBloc extends Bloc<UserFavoritesEvent, UserFavoritesState> {
     on<AddToFavoritesEvent>((AddToFavoritesEvent event, Emitter<UserFavoritesState> emit) async {
       final Either<Failure, void> result = await _addToFavorites(
         AddToFavoritesParams(
-          id: event.preview.id,
-          name: event.preview.name,
+          id: event.id,
+          name: event.name,
         ),
       );
 
@@ -47,8 +48,12 @@ class UserFavoritesBloc extends Bloc<UserFavoritesEvent, UserFavoritesState> {
             );
 
             // Avoid duplicate entry
-            if (!currentFavorites.any((PokemonPreview fav) => fav.name == event.preview.name)) {
-              currentFavorites.add(event.preview);
+            if (!currentFavorites.contains((PokemonPreview fav) => fav.name == event.name)) {
+              currentFavorites.add(PokemonPreview(
+                id: event.id,
+                name: event.name,
+                thumbnail: getPokemonBaseImageById(event.id),
+              ));
             }
             emit(UpdatingFavoriteStatus(currentFavorites));
 

@@ -19,7 +19,8 @@ class PreviewListTile extends StatelessWidget {
           errorWidget: (_, __, ___) => const Icon(Icons.error),
         ),
         trailing: FavoriteButton(
-          relatedPreview: preview,
+          id: preview.id,
+          name: preview.name,
         ),
         title: Text(preview.name.toUpperFirst()),
         onTap: onTap);

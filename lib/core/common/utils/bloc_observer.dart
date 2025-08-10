@@ -24,7 +24,7 @@ class AppBlocObserver extends BlocObserver {
     super.onTransition(bloc, transition);
 
     /// With this we can specifically know, when and what changed in our Bloc
-    myLog("There was a transition from ${transition.currentState} to ${transition.nextState}");
+    // myLog("There was a transition from ${transition.currentState} to ${transition.nextState}");
   }
 
   ///We can react to errors, and we will know the error and the StackTrace

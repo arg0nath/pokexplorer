@@ -1,7 +1,7 @@
 import 'package:pokexplorer/config/logger/my_log.dart';
 import 'package:pokexplorer/core/common/constants/app_const.dart';
 import 'package:pokexplorer/core/common/errors/exceptions.dart';
-import 'package:pokexplorer/shared/dtos/pokemon_type_dto.dart';
+import 'package:pokexplorer/core/common/models/dtos/pokemon_type_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const String kSelectedPokemonType = 'selected_pokemon_type';

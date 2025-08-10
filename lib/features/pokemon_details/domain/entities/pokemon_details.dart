@@ -1,4 +1,4 @@
-import 'package:pokexplorer/shared/entities/pokemon_type.dart';
+import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
 
 class PokemonDetails {
   const PokemonDetails({

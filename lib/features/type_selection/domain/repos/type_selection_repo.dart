@@ -1,5 +1,5 @@
 import 'package:pokexplorer/config/typedefs/typedefs.dart';
-import 'package:pokexplorer/shared/entities/pokemon_type.dart';
+import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
 
 abstract interface class TypeSelectionRepository {
   const TypeSelectionRepository();

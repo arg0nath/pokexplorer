@@ -7,22 +7,27 @@ sealed class UserFavoritesState extends Equatable {
   List<Object> get props => [];
 }
 
-final class UserFavoritesInitial extends UserFavoritesState {}
-
 final class LoadingUserFavorites extends UserFavoritesState {}
 
 final class UserFavoritesLoaded extends UserFavoritesState {
-  const UserFavoritesLoaded(this.favorites);
+  UserFavoritesLoaded(this.favorites) : favoriteNames = favorites.map((e) => e.name).toSet();
 
   final List<PokemonPreview> favorites;
+  final Set<String> favoriteNames;
 
   @override
-  List<Object> get props => [favorites];
+  List<Object> get props => [favorites, favoriteNames];
 }
 
-final class UpdatingFavoriteStatus extends UserFavoritesState {}
+final class UpdatingFavoriteStatus extends UserFavoritesState {
+  UpdatingFavoriteStatus(this.favorites) : favoriteNames = favorites.map((e) => e.name).toSet();
 
-final class FavoriteStatusUpdated extends UserFavoritesState {}
+  final List<PokemonPreview> favorites;
+  final Set<String> favoriteNames;
+
+  @override
+  List<Object> get props => [favorites, favoriteNames];
+}
 
 final class UserFavoritesError extends UserFavoritesState {
   const UserFavoritesError(this.errorMessage);

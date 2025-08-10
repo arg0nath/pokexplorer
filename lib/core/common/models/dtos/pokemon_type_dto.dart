@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:pokexplorer/config/typedefs/typedefs.dart';
+import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
 import 'package:pokexplorer/core/common/utils/type/get_type_color_by_name.dart';
-import 'package:pokexplorer/shared/entities/pokemon_type.dart';
 
 class PokemonTypeDto extends PokemonType {
   const PokemonTypeDto({

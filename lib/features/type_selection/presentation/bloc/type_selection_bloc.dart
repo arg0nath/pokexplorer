@@ -3,10 +3,10 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pokexplorer/core/common/constants/app_const.dart';
 import 'package:pokexplorer/core/common/errors/failures.dart';
+import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
 import 'package:pokexplorer/features/type_selection/domain/usecases/get_pokemon_types.dart';
 import 'package:pokexplorer/features/type_selection/domain/usecases/get_selected_pokemon_type.dart';
 import 'package:pokexplorer/features/type_selection/domain/usecases/select_pokemon_types.dart';
-import 'package:pokexplorer/shared/entities/pokemon_type.dart';
 
 part 'type_selection_event.dart';
 part 'type_selection_state.dart';

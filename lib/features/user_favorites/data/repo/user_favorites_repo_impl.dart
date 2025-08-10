@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:pokexplorer/config/typedefs/typedefs.dart';
 import 'package:pokexplorer/core/common/errors/exceptions.dart';
 import 'package:pokexplorer/core/common/errors/failures.dart';
-import 'package:pokexplorer/features/type_details/data/dtos/pokemon_preview_dto.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
 import 'package:pokexplorer/features/user_favorites/data/datasources/local/user_favorites_local_datasource.dart';
 
@@ -24,9 +23,12 @@ class UserFavoritesRepoImpl implements UserFavoritesRepo {
   }
 
   @override
-  ResultFutureVoid addToFavorites({required PokemonPreview pokemon}) async {
+  ResultFutureVoid addToFavorites({required int id, required String name}) async {
     try {
-      await _localDataSource.addToFavoritesDb(previewDto: pokemon.toDto());
+      await _localDataSource.addToFavoritesDb(
+        id: id,
+        name: name,
+      );
       return const Right<Failure, void>(null);
     } on CacheException catch (e) {
       return Left<Failure, void>(CacheFailure(message: e.message, statusCode: e.statusCode));
@@ -34,9 +36,9 @@ class UserFavoritesRepoImpl implements UserFavoritesRepo {
   }
 
   @override
-  ResultFutureVoid removeFromFavorites({required int pokemonId}) async {
+  ResultFutureVoid removeFromFavorites({required String name}) async {
     try {
-      await _localDataSource.removeFromFavoritesDb(pokemonId: pokemonId);
+      await _localDataSource.removeFromFavoritesDb(name: name);
       return const Right<Failure, void>(null);
     } on CacheException catch (e) {
       return Left<Failure, void>(CacheFailure(message: e.message, statusCode: e.statusCode));

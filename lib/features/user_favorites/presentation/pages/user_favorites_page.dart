@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pokexplorer/core/common/widgets/preview_list_tile.dart';
+import 'package:pokexplorer/core/routes/route_names.dart';
+import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
 import 'package:pokexplorer/features/user_favorites/presentation/bloc/user_favorites_bloc.dart';
 
 class UserFavoritesPage extends StatefulWidget {
@@ -25,19 +29,22 @@ class _UserFavoritesPageState extends State<UserFavoritesPage> {
           builder: (BuildContext context, UserFavoritesState state) {
             if (state is LoadingUserFavorites) {
               return const Center(child: CircularProgressIndicator());
-            } else if (state is UserFavoritesLoaded) {
-              if (state.favorites.isEmpty) {
+            } else if (state is UserFavoritesLoaded || state is UpdatingFavoriteStatus) {
+              final List<PokemonPreview> favorites = (state is UserFavoritesLoaded) ? state.favorites : (state as UpdatingFavoriteStatus).favorites;
+              if (favorites.isEmpty) {
                 return const Center(child: Text('No favorites added yet.'));
               }
               return ListView.builder(
                 itemExtent: 60,
-                itemCount: state.favorites.length,
+                itemCount: favorites.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final favorite = state.favorites[index];
-                  return ListTile(
-                    title: Text(favorite.name),
+                  final PokemonPreview favorite = favorites[index];
+
+                  return PreviewListTile(
+                    preview: favorite,
+                    key: ValueKey<String>(favorite.name),
                     onTap: () {
-                      // Navigate to details page or perform any action
+                      context.pushNamed(RouteName.pokemonDetailsPageName, pathParameters: {'pokemonName': favorite.name});
                     },
                   );
                 },

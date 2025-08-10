@@ -18,14 +18,63 @@ class UserFavoritesBloc extends Bloc<UserFavoritesEvent, UserFavoritesState> {
   })  : _getUserFavorites = getUserFavorites,
         _addToFavorites = addToFavorites,
         _removeFromFavorites = removeFromFavorites,
-        super(UserFavoritesInitial()) {
-    on<LoadUserFavoritesEvent>((LoadUserFavoritesEvent event, Emitter<UserFavoritesState> emit) async {
-      emit(LoadingUserFavorites());
-      await _getUserFavorites().then(
-        (Either<Failure, List<PokemonPreview>> result) => result.fold(
-          (Failure failure) => emit(UserFavoritesError(failure.message)),
-          (List<PokemonPreview> favorites) => emit(UserFavoritesLoaded(favorites)),
+        super(LoadingUserFavorites()) {
+    on<LoadUserFavoritesEvent>(
+      (LoadUserFavoritesEvent event, Emitter<UserFavoritesState> emit) async {
+        final Either<Failure, List<PokemonPreview>> result = await _getUserFavorites();
+
+        result.fold((Failure failure) => emit(UserFavoritesError(failure.message)), (List<PokemonPreview> favorites) {
+          emit(LoadingUserFavorites());
+          emit(UserFavoritesLoaded(favorites));
+        });
+      },
+    );
+
+    on<AddToFavoritesEvent>((AddToFavoritesEvent event, Emitter<UserFavoritesState> emit) async {
+      final Either<Failure, void> result = await _addToFavorites(
+        AddToFavoritesParams(
+          id: event.preview.id,
+          name: event.preview.name,
         ),
+      );
+
+      await result.fold(
+        (Failure failure) async => emit(UserFavoritesError(failure.message)),
+        (_) async {
+          if (state is UserFavoritesLoaded) {
+            final List<PokemonPreview> currentFavorites = List<PokemonPreview>.from(
+              (state as UserFavoritesLoaded).favorites,
+            );
+
+            // Avoid duplicate entry
+            if (!currentFavorites.any((PokemonPreview fav) => fav.name == event.preview.name)) {
+              currentFavorites.add(event.preview);
+            }
+            emit(UpdatingFavoriteStatus(currentFavorites));
+
+            emit(UserFavoritesLoaded(currentFavorites));
+          }
+        },
+      );
+    });
+
+    on<RemoveFromFavoritesEvent>((RemoveFromFavoritesEvent event, Emitter<UserFavoritesState> emit) async {
+      final Either<Failure, void> result = await _removeFromFavorites(
+        RemoveFromFavoritesParams(name: event.name),
+      );
+
+      await result.fold(
+        (Failure failure) async => emit(UserFavoritesError(failure.message)),
+        (_) async {
+          if (state is UserFavoritesLoaded) {
+            final List<PokemonPreview> currentFavorites = List<PokemonPreview>.from(
+              (state as UserFavoritesLoaded).favorites,
+            )..removeWhere((PokemonPreview fav) => fav.name == event.name);
+            emit(UpdatingFavoriteStatus(currentFavorites));
+
+            emit(UserFavoritesLoaded(currentFavorites));
+          }
+        },
       );
     });
   }

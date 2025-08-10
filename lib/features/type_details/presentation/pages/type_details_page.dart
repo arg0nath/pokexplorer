@@ -1,8 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokexplorer/core/common/extensions/string_ext.dart';
 import 'package:pokexplorer/core/common/widgets/message_toast.dart';
+import 'package:pokexplorer/core/common/widgets/preview_list_tile.dart';
 import 'package:pokexplorer/core/routes/route_names.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/type_details.dart';
@@ -44,7 +45,7 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Results for ${widget.typeName}'),
+        title: Text('Results for ${widget.typeName.toUpperFirst()}'),
       ),
       body: BlocConsumer<TypeDetailsBloc, TypeDetailsState>(
         listener: (BuildContext context, TypeDetailsState state) {
@@ -106,15 +107,10 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
               itemCount: pokemons.length,
               itemBuilder: (BuildContext context, int index) {
                 final PokemonPreview pokemon = pokemons[index];
-                return ListTile(
-                  leading: CachedNetworkImage(
-                    imageUrl: pokemon.thumbnail,
-                    placeholder: (BuildContext context, String url) => const SizedBox.shrink(),
-                    errorWidget: (BuildContext context, String url, dynamic error) => const Icon(Icons.error),
-                  ),
-                  title: Text(pokemon.name),
+                return PreviewListTile(
+                  preview: pokemon,
                   onTap: () {
-                    context.read<TypeDetailsBloc>().add(ProceedToPokemonDetailsEvent(pokemon.name));
+                    typeDetailsBloc.add(ProceedToPokemonDetailsEvent(pokemon.name));
                   },
                 );
               },

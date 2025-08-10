@@ -1,7 +1,7 @@
 import 'package:pokexplorer/config/logger/my_log.dart';
 import 'package:pokexplorer/core/common/constants/app_const.dart';
 import 'package:pokexplorer/core/common/errors/exceptions.dart';
-import 'package:pokexplorer/shared/dtos/pokemon_type_dto.dart';
+import 'package:pokexplorer/core/common/models/dtos/pokemon_type_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const String kSelectedPokemonType = 'selected_pokemon_type';
@@ -50,7 +50,7 @@ class TypeSelectionLocalDataSourceImpl implements TypeSelectionLocalDataSource {
   Future<void> selectPokemonType(String typeName) async {
     try {
       await _prefs.setString(kSelectedPokemonType, typeName);
-      myLog(msg: '$typeName saved to prefs');
+      myLog('$typeName saved to prefs');
     } catch (e) {
       throw CacheException(message: e.toString());
     }

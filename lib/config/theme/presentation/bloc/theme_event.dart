@@ -8,12 +8,10 @@ sealed class ThemeEvent extends Equatable {
 }
 
 class ToggleThemeEvent extends ThemeEvent {
-  const ToggleThemeEvent(this.theme);
-
-  final ThemeEntity theme;
-
+  const ToggleThemeEvent(this.isDarkMode);
+  final bool isDarkMode;
   @override
-  List<Object> get props => [theme];
+  List<Object> get props => [isDarkMode];
 }
 
 class GetThemeEvent extends ThemeEvent {

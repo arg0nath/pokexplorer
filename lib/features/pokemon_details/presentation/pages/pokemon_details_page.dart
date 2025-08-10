@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokexplorer/core/common/extensions/string_ext.dart';
+import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
 import 'package:pokexplorer/core/common/widgets/message_toast.dart';
 import 'package:pokexplorer/features/pokemon_details/domain/entities/pokemon_details.dart';
 import 'package:pokexplorer/features/pokemon_details/presentation/bloc/pokemon_details_bloc.dart';
-import 'package:pokexplorer/shared/entities/pokemon_type.dart';
 //final String extraString = GoRouterState.of(context).extra! as String;
 
 class PokemonDetailsPage extends StatefulWidget {
@@ -30,7 +31,7 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
     pokemonDetailsBloc = context.read<PokemonDetailsBloc>();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Results for ${widget.name}'),
+        title: Text('Results for ${widget.name.toUpperFirst()}'),
       ),
       body: BlocConsumer<PokemonDetailsBloc, PokemonDetailsState>(
         listener: (BuildContext context, PokemonDetailsState state) {

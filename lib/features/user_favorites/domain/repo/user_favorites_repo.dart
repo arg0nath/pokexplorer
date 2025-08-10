@@ -5,6 +5,6 @@ abstract interface class UserFavoritesRepo {
   const UserFavoritesRepo();
 
   ResultFuture<List<PokemonPreview>> getUserFavorites();
-  ResultFutureVoid addToFavorites({required PokemonPreview pokePreview});
-  ResultFutureVoid removeFromFavorites({required int pokemonId});
+  ResultFutureVoid addToFavorites({required int id, required String name});
+  ResultFutureVoid removeFromFavorites({required String name});
 }

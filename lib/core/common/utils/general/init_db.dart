@@ -12,8 +12,7 @@ Future<Database> initFavoritesDatabase() async {
       await db.execute('''
         CREATE TABLE favorites (
           id INTEGER PRIMARY KEY,
-          name TEXT NOT NULL UNIQUE,
-          url TEXT NOT NULL
+          name TEXT NOT NULL UNIQUE
         )
       ''');
     },

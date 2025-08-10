@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pokexplorer/config/logger/my_log.dart';
 import 'package:pokexplorer/core/common/widgets/preview_list_tile.dart';
 import 'package:pokexplorer/core/routes/route_names.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
@@ -30,8 +29,8 @@ class _UserFavoritesPageState extends State<UserFavoritesPage> {
           builder: (BuildContext context, UserFavoritesState state) {
             if (state is LoadingUserFavorites) {
               return const Center(child: CircularProgressIndicator());
-            } else if (state is UserFavoritesLoaded || state is FavoriteStatusUpdated) {
-              final List<PokemonPreview> favorites = state is UserFavoritesLoaded ? state.favorites : (state as FavoriteStatusUpdated).favorites;
+            } else if (state is UserFavoritesLoaded || state is UpdatingFavoriteStatus) {
+              final List<PokemonPreview> favorites = (state is UserFavoritesLoaded) ? state.favorites : (state as UpdatingFavoriteStatus).favorites;
               if (favorites.isEmpty) {
                 return const Center(child: Text('No favorites added yet.'));
               }
@@ -40,9 +39,10 @@ class _UserFavoritesPageState extends State<UserFavoritesPage> {
                 itemCount: favorites.length,
                 itemBuilder: (BuildContext context, int index) {
                   final PokemonPreview favorite = favorites[index];
-                  myLog('Favorite: ${favorite.url}');
+
                   return PreviewListTile(
                     preview: favorite,
+                    key: ValueKey<String>(favorite.name),
                     onTap: () {
                       context.pushNamed(RouteName.pokemonDetailsPageName, pathParameters: {'pokemonName': favorite.name});
                     },

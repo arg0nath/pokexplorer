@@ -1,6 +1,5 @@
 import 'package:pokexplorer/config/typedefs/typedefs.dart';
 import 'package:pokexplorer/config/usecase/usecase.dart';
-import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
 import 'package:pokexplorer/features/user_favorites/domain/repo/user_favorites_repo.dart';
 
 class AddToFavorites extends UseCaseWithParams<void, AddToFavoritesParams> {
@@ -9,13 +8,15 @@ class AddToFavorites extends UseCaseWithParams<void, AddToFavoritesParams> {
   final UserFavoritesRepo _userFavoritesRepo;
 
   @override
-  ResultFutureVoid call(AddToFavoritesParams params) async => _userFavoritesRepo.addToFavorites(pokePreview: params.pokePreview);
+  ResultFutureVoid call(AddToFavoritesParams params) async => _userFavoritesRepo.addToFavorites(id: params.id, name: params.name);
 }
 
 class AddToFavoritesParams {
   const AddToFavoritesParams({
-    required this.pokePreview,
+    required this.id,
+    required this.name,
   });
 
-  final PokemonPreview pokePreview;
+  final int id;
+  final String name;
 }

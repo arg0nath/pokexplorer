@@ -1,9 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pokexplorer/config/typedefs/typedefs.dart';
+import 'package:pokexplorer/core/common/models/dtos/pokemon_type_dto.dart';
+import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
 import 'package:pokexplorer/core/common/utils/pokemon/get_poke_image_by_id.dart';
 import 'package:pokexplorer/features/pokemon_details/domain/entities/pokemon_details.dart';
-import 'package:pokexplorer/shared/dtos/pokemon_type_dto.dart';
-import 'package:pokexplorer/shared/entities/pokemon_type.dart';
 
 part 'pokemon_details_dto.freezed.dart';
 // part 'pokemon_details_dto.g.dart';

@@ -2,11 +2,6 @@ import 'dart:ui';
 
 import 'package:pokexplorer/config/theme/app_palette.dart';
 import 'package:pokexplorer/core/common/constants/app_const.dart';
-import 'package:pokexplorer/core/common/res/app_assets.dart';
-
-String getIconForType(String typeName) {
-  return '${AppAssets.imagesBasePath}/${typeName}_icon.png';
-}
 
 int getColorForType(String typeName) {
   // Map of type names to their associated colors

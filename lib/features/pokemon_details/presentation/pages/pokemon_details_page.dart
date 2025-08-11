@@ -8,6 +8,7 @@ import 'package:pokexplorer/core/common/widgets/appbar_background.dart';
 import 'package:pokexplorer/core/common/widgets/message_toast.dart';
 import 'package:pokexplorer/features/pokemon_details/domain/entities/pokemon_details.dart';
 import 'package:pokexplorer/features/pokemon_details/presentation/bloc/pokemon_details_bloc.dart';
+import 'package:pokexplorer/features/pokemon_details/presentation/widgets/horizontal_type_list.dart';
 import 'package:pokexplorer/features/pokemon_details/presentation/widgets/images_carousel.dart';
 import 'package:pokexplorer/features/pokemon_details/presentation/widgets/stat_container.dart';
 //final String extraString = GoRouterState.of(context).extra! as String;
@@ -90,6 +91,7 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
                           ),
                         ),
                       ),
+                      SliverToBoxAdapter(child: HorizontalTypeList(pokemonTypes: pokemonDetails.types)),
                       SliverToBoxAdapter(child: StatContainer(pokemon: pokemonDetails)),
                     ],
                   ),

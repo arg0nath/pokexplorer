@@ -71,7 +71,7 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              SelectedTypeContainer(type: selectedType),
+              SelectedTypeContainer(pokemonType: selectedType),
             ],
           ),
         ),

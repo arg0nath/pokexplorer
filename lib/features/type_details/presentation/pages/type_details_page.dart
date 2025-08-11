@@ -109,7 +109,7 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
                 final PokemonPreview pokemon = pokemons[index];
                 return PreviewListTile(
                   preview: pokemon,
-                  onTap: () {
+                  onCardTap: () {
                     typeDetailsBloc.add(ProceedToPokemonDetailsEvent(pokemon.name));
                   },
                 );

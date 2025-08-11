@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/core/common/extensions/string_ext.dart';
 import 'package:pokexplorer/core/common/widgets/action_dialog.dart';
+import 'package:pokexplorer/core/common/widgets/animated_heart.dart';
 import 'package:pokexplorer/features/user_favorites/presentation/bloc/user_favorites_bloc.dart';
 
 class FavoriteButton extends StatelessWidget {
@@ -25,28 +25,24 @@ class FavoriteButton extends StatelessWidget {
         return false;
       },
       builder: (BuildContext context, bool isFavorite) {
-        return IconButton(
-            onPressed: isFavorite
-                ? () => showDialog(
-                      context: context,
-                      builder: (BuildContext context) => PokeActionDialog(
-                        title: 'Remove Favorite',
-                        description: 'You are about to remove ${name.toUpperFirst()} from your favorites.',
-                        actionButtonTitle: 'Remove',
-                        onActionTap: () {
-                          context.read<UserFavoritesBloc>().add(RemoveFromFavoritesEvent(name));
-                        },
-                      ),
-                    )
-                : () => context.read<UserFavoritesBloc>().add(
-                      AddToFavoritesEvent(id: id, name: name),
+        return GestureDetector(
+          onTap: isFavorite
+              ? () => showDialog(
+                    context: context,
+                    builder: (BuildContext context) => PokeActionDialog(
+                      title: 'Remove Favorite',
+                      description: 'You are about to remove ${name.toUpperFirst()} from your favorites.',
+                      actionButtonTitle: 'Remove',
+                      onActionTap: () {
+                        context.read<UserFavoritesBloc>().add(RemoveFromFavoritesEvent(name));
+                      },
                     ),
-            icon: isFavorite
-                ? Icon(
-                    Icons.favorite,
-                    color: context.theme.colorScheme.primary,
                   )
-                : const Icon(Icons.favorite_border));
+              : () => context.read<UserFavoritesBloc>().add(
+                    AddToFavoritesEvent(id: id, name: name),
+                  ),
+          child: AnimatedHeart(isActive: isFavorite),
+        );
       },
     );
   }

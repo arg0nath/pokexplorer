@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:pokexplorer/core/common/constants/app_const.dart';
 import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/core/common/extensions/string_ext.dart';
 import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
@@ -19,7 +20,8 @@ class GenericTypeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final int typeColor = pokemonType.colorValue;
-    return GestureDetector(
+    return InkWell(
+      borderRadius: AppConst.mainRadius,
       onTap: onTap,
       child: Card(
         elevation: 0,

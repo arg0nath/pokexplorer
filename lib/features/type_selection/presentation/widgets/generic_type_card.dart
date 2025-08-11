@@ -25,17 +25,17 @@ class GenericTypeCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: !isSelected ? Color(typeColor).withAlpha(40) : Color(typeColor).withAlpha(190),
+          color: !isSelected ? Color(typeColor).withAlpha(50) : Color(typeColor).withAlpha(190),
           borderRadius: AppConst.mainRadius,
           border: Border.all(
-            color: !isSelected ? Colors.transparent : Color(typeColor).withRed(200),
+            color: !isSelected ? Colors.transparent : Color(typeColor),
             width: 3,
           ),
           boxShadow: [
             BoxShadow(
-              color: context.theme.shadowColor.withAlpha(50),
-              blurRadius: 10,
-              offset: const Offset(0, 2),
+              color: context.theme.shadowColor.withAlpha(10),
+              blurRadius: 5,
+              offset: const Offset(5, 5),
             ),
           ],
         ),

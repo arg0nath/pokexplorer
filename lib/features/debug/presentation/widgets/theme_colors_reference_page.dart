@@ -28,31 +28,28 @@ class ThemeColorsReferencePage extends StatelessWidget {
       MapEntry('scrim', MapEntry(colorScheme.scrim, Colors.white)),
     ];
 
-    return Scaffold(
-      appBar: AppBar(title: const Text('Theme Color Reference')),
-      body: ListView.builder(
-        itemCount: colorPairs.length,
-        itemBuilder: (BuildContext context, int index) {
-          final String name = colorPairs[index].key;
-          final Color bgColor = colorPairs[index].value.key;
-          final Color fgColor = colorPairs[index].value.value;
+    return ListView.builder(
+      itemCount: colorPairs.length,
+      itemBuilder: (BuildContext context, int index) {
+        final String name = colorPairs[index].key;
+        final Color bgColor = colorPairs[index].value.key;
+        final Color fgColor = colorPairs[index].value.value;
 
-          return ListTile(
-            tileColor: bgColor,
-            title: Text(
-              name,
-              style: TextStyle(
-                color: fgColor,
-                fontWeight: FontWeight.bold,
-              ),
+        return ListTile(
+          tileColor: bgColor,
+          title: Text(
+            name,
+            style: TextStyle(
+              color: fgColor,
+              fontWeight: FontWeight.bold,
             ),
-            subtitle: Text(
-              '#${bgColor.value.toRadixString(16).padLeft(8, '0').toUpperCase()}',
-              style: TextStyle(color: fgColor),
-            ),
-          );
-        },
-      ),
+          ),
+          subtitle: Text(
+            '#${bgColor.value.toRadixString(16).padLeft(8, '0').toUpperCase()}',
+            style: TextStyle(color: fgColor),
+          ),
+        );
+      },
     );
   }
 }

@@ -11,7 +11,6 @@ ToastificationItem showPokeToast(BuildContext context, String msg) {
         child: Text(
           msg,
           maxLines: 3,
-          style: Theme.of(context).textTheme.labelSmall,
         )),
     closeOnClick: false,
     context: context,

@@ -50,24 +50,23 @@ class PreviewListTile extends StatelessWidget {
         onLongPress: onLongPress,
         onTap: onCardTap,
         child: Card(
-            margin: EdgeInsets.symmetric(vertical: context.height * 0.01, horizontal: context.width * 0.06),
             child: Row(children: [
-              //pokemon image
-              Expanded(
-                  flex: 2,
-                  child: Container(
-                      alignment: Alignment.center, margin: const EdgeInsets.all(5), child: CustomNetworkImage(height: context.height * 0.1, width: context.height * 0.1, imageURL: preview.thumbnail))),
-              //pokemon name
-              Expanded(
-                flex: 3,
-                child: Text(preview.name.toUpperFirst(), maxLines: 3, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.titleLarge),
-              ),
-              //favorite icon
+          //pokemon image
+          Expanded(
+              flex: 2,
+              child: Container(
+                  alignment: Alignment.center, margin: const EdgeInsets.all(5), child: CustomNetworkImage(height: context.height * 0.1, width: context.height * 0.1, imageURL: preview.thumbnail))),
+          //pokemon name
+          Expanded(
+            flex: 3,
+            child: Text(preview.name.toUpperFirst(), maxLines: 3, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.titleLarge),
+          ),
+          //favorite icon
 
-              FavoriteButton(
-                id: preview.id,
-                name: preview.name,
-              ),
-            ])));
+          FavoriteButton(
+            id: preview.id,
+            name: preview.name,
+          ),
+        ])));
   }
 }

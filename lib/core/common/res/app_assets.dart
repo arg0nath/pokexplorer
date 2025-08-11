@@ -2,6 +2,7 @@ class AppAssets {
   static const String _imagesBasePath = 'assets/images';
   static const String _lottiesBasePath = 'assets/lottieFiles';
   static const String _svgsBasePath = 'assets/svgs';
+  static const String _fontsBasePath = 'assets/fonts';
 
   static const String pokedexPng = '$_imagesBasePath/pokedex.png';
   static const String pokeballPng = '$_imagesBasePath/pokeball.png';
@@ -11,6 +12,8 @@ class AppAssets {
   static const String pokemonCustomPhrase = '$_imagesBasePath/gonnasearch.png';
   static const String pokemonLogoSvg = '$_svgsBasePath/official_pokemon_logo.svg';
   static const String loadingPokeballLottie = '$_lottiesBasePath/pokeball.json';
+
+  static const String fontFamily = 'Comfortaa';
 }
 
 String getIconForType(String typeName) {

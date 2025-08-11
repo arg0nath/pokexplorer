@@ -23,10 +23,22 @@ class GenericTypeCard extends StatelessWidget {
     return InkWell(
       borderRadius: AppConst.mainRadius,
       onTap: onTap,
-      child: Card(
-        elevation: 0,
-        borderOnForeground: true,
-        color: !isSelected ? Color(typeColor).withAlpha(40) : Color(typeColor).withAlpha(190),
+      child: Container(
+        decoration: BoxDecoration(
+          color: !isSelected ? Color(typeColor).withAlpha(40) : Color(typeColor).withAlpha(190),
+          borderRadius: AppConst.mainRadius,
+          border: Border.all(
+            color: !isSelected ? Colors.transparent : Color(typeColor).withRed(200),
+            width: 3,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: context.theme.shadowColor.withAlpha(50),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Column(

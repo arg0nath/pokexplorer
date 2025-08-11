@@ -5,32 +5,6 @@ import 'package:pokexplorer/core/common/widgets/custom_network_image.dart';
 import 'package:pokexplorer/core/common/widgets/favorite_button.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
 
-/* class PreviewListTile extends StatelessWidget {
-  const PreviewListTile({super.key, required this.preview, required this.onTap});
-
-  final PokemonPreview preview;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-        contentPadding: EdgeInsets.all(12),
-        minTileHeight: 80,
-        minLeadingWidth: 70,
-        leading: CachedNetworkImage(
-          imageUrl: preview.thumbnail,
-          placeholder: (_, __) => const SizedBox.shrink(),
-          errorWidget: (_, __, ___) => const Icon(Icons.error),
-        ),
-        trailing: FavoriteButton(
-          id: preview.id,
-          name: preview.name,
-        ),
-        title: Text(preview.name.toUpperFirst()),
-        onTap: onTap);
-  }
-} */
-
 class PreviewListTile extends StatelessWidget {
   const PreviewListTile({
     super.key,

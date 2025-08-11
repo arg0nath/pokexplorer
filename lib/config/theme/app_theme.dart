@@ -90,8 +90,8 @@ class AppTheme {
   }
 }
 
-const _pageTransition = PageTransitionsTheme(
-  builders: {
+const PageTransitionsTheme _pageTransition = PageTransitionsTheme(
+  builders: <TargetPlatform, PageTransitionsBuilder>{
     TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
     TargetPlatform.iOS: FadeForwardsPageTransitionsBuilder(),
     TargetPlatform.macOS: FadeForwardsPageTransitionsBuilder(),

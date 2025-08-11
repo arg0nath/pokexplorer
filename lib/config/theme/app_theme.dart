@@ -55,6 +55,7 @@ class AppTheme {
       appBarTheme: _theme.appBarTheme.copyWith(
         backgroundColor: darkColorScheme.surface,
         foregroundColor: darkColorScheme.onSurface,
+        titleTextStyle: _theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
         elevation: 0,
         scrolledUnderElevation: 0,
       ),

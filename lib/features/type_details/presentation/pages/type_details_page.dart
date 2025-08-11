@@ -6,6 +6,7 @@ import 'package:pokexplorer/core/common/models/dtos/pokemon_type_dto.dart';
 import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
 import 'package:pokexplorer/core/common/widgets/message_toast.dart';
 import 'package:pokexplorer/core/common/widgets/preview_list_tile.dart';
+import 'package:pokexplorer/core/common/widgets/type_short_card.dart';
 import 'package:pokexplorer/core/routes/route_names.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/type_details.dart';
@@ -64,6 +65,16 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
       },
       duration: const Duration(milliseconds: 300),
       child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              SelectedTypeContainer(type: selectedType),
+            ],
+          ),
+        ),
         body: BlocConsumer<TypeDetailsBloc, TypeDetailsState>(
           listener: (BuildContext context, TypeDetailsState state) {
             state.maybeWhen(

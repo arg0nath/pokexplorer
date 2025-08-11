@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/core/common/extensions/string_ext.dart';
 import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
 
@@ -18,7 +19,7 @@ class SelectedTypeContainer extends StatelessWidget {
         spacing: 10,
         children: [
           SizedBox(height: 30, width: 30, child: Image.asset(type.icon)),
-          Text(type.name.toUpperFirst(), textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500)),
+          Text(type.name.toUpperFirst(), textAlign: TextAlign.center, style: context.theme.appBarTheme.titleTextStyle?.copyWith(fontWeight: FontWeight.w500)),
         ],
       ),
     );

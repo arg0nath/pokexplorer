@@ -5,8 +5,6 @@ import 'package:pokexplorer/core/common/constants/app_const.dart';
 import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
 import 'package:pokexplorer/core/common/widgets/appbar_background.dart';
-import 'package:pokexplorer/core/common/widgets/custom_appbar_back_button.dart';
-import 'package:pokexplorer/core/common/widgets/type_short_card.dart';
 import 'package:pokexplorer/features/type_details/presentation/bloc/type_details_bloc.dart';
 
 class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
@@ -21,39 +19,21 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     double adjustedShrinkOffset = shrinkOffset > minExtent ? minExtent : shrinkOffset;
-    double offset = (minExtent - adjustedShrinkOffset) * 0.3; //was 0.4
+    double offset = (minExtent - adjustedShrinkOffset) * 0.3;
     double topPadding = MediaQuery.paddingOf(context).top + 10;
     return BlocBuilder<TypeDetailsBloc, TypeDetailsState>(
       builder: (BuildContext context, TypeDetailsState state) {
-        final typeDetailsBloc = context.read<TypeDetailsBloc>();
+        final TypeDetailsBloc typeDetailsBloc = context.read<TypeDetailsBloc>();
         return SizedBox(
           height: AppConst.typeDetailsAppBarDelegateMaxExtend,
           child: Stack(
             children: <Widget>[
               //cool gradient background
-              AppbarGradientBackground(
-                color: selectedType.color,
-              ),
+              AppbarGradientBackground(color: selectedType.color),
 
-              //type icon + name
-              Positioned(
-                top: topPadding,
-                child: SizedBox(
-                  width: context.width,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      //TODO
-                      CustomAppbarBackButton(onPressed: () => Navigator.pop(context)),
-                      // typeDetailsBloc.add(const ExitTypeDetailsEvent())),
-                      SelectedTypeContainer(type: selectedType),
-                    ],
-                  ),
-                ),
-              ),
               //search bar
               Positioned(
-                  top: (topPadding + context.height * 0.055) + offset * 0.3,
+                  top: topPadding + offset * 0.2,
                   left: 16,
                   right: 16,
                   child: SizedBox(
@@ -64,7 +44,6 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
                       onTap: () {
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
-                      //TODO
                       child: _customTextFormField(typeDetailsBloc, context),
                     ),
                   )),
@@ -81,12 +60,12 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
       style: Theme.of(context).inputDecorationTheme.labelStyle,
       decoration:
           const InputDecoration().copyWith(suffixIcon: _customSuffixIcon(typeDetailsBloc, context), prefixIcon: textEditingController.value.text.isEmpty ? null : _customPrefixButton(typeDetailsBloc)),
-      onChanged: (value) {
+      onChanged: (String value) {
         if (value.isEmpty) {
           // typeDetailsBloc.add(const ReturnFromSearchEvent());
         }
       },
-      onTapOutside: (val) => FocusScope.of(context).unfocus(),
+      onTapOutside: (PointerDownEvent val) => FocusScope.of(context).unfocus(),
       // onFieldSubmitted: (String val) => val.isNotEmpty ? typeDetailsBloc.add(SearchPokemonEvent(value: val)) : null,
     );
   }

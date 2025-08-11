@@ -5,6 +5,7 @@ abstract class RoutePath {
   static const String pokemonDetailsPage = '/${RouteName.pokemonDetailsPageName}';
   static const String onBoardingPage = '/${RouteName.onBoardingPageName}';
   static const String userFavoritesPage = '/${RouteName.userFavoritesPageName}';
+  static const String debugPage = '/${RouteName.debugPageName}';
 }
 
 abstract class RouteName {
@@ -13,4 +14,5 @@ abstract class RouteName {
   static const String pokemonDetailsPageName = 'poke-details';
   static const String onBoardingPageName = 'on-boarding';
   static const String userFavoritesPageName = 'user-favorites';
+  static const String debugPageName = 'debug';
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokexplorer/core/common/extensions/string_ext.dart';
 import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
+import 'package:pokexplorer/core/common/widgets/debug_button.dart';
 import 'package:pokexplorer/core/common/widgets/favorite_button.dart';
 import 'package:pokexplorer/core/common/widgets/message_toast.dart';
 import 'package:pokexplorer/features/pokemon_details/domain/entities/pokemon_details.dart';
@@ -34,6 +35,7 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
       appBar: AppBar(
         centerTitle: true,
         actions: [
+          DebugButton(),
           BlocBuilder<PokemonDetailsBloc, PokemonDetailsState>(
             builder: (context, state) {
               return state.when(

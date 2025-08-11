@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokexplorer/core/common/widgets/debug_button.dart';
 import 'package:pokexplorer/core/common/widgets/preview_list_tile.dart';
 import 'package:pokexplorer/core/routes/route_names.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
@@ -23,7 +24,11 @@ class _UserFavoritesPageState extends State<UserFavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('User Favorites')),
+        extendBody: true,
+        appBar: AppBar(
+          title: const Text('User Favorites'),
+          actions: [DebugButton()],
+        ),
         body: BlocConsumer<UserFavoritesBloc, UserFavoritesState>(
           listener: (BuildContext context, UserFavoritesState state) {},
           builder: (BuildContext context, UserFavoritesState state) {

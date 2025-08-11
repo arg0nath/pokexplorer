@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokexplorer/config/theme/app_color_scheme.dart';
+import 'package:pokexplorer/config/theme/app_palette.dart';
 import 'package:pokexplorer/core/common/res/app_assets.dart';
 
 class AppTheme {
@@ -19,6 +20,7 @@ class AppTheme {
         selectedItemColor: lightColorScheme.primary,
         unselectedItemColor: lightColorScheme.onSurface.withAlpha(100),
       ),
+      shadowColor: AppPalette.shadowLight,
       dialogTheme: _theme.dialogTheme.copyWith(
         backgroundColor: lightColorScheme.surface,
         titleTextStyle: _theme.textTheme.titleLarge?.copyWith(color: lightColorScheme.onSurface),
@@ -30,7 +32,7 @@ class AppTheme {
         extendedTextStyle: _theme.textTheme.displayMedium?.copyWith(fontWeight: FontWeight.bold),
       ),
       scaffoldBackgroundColor: lightColorScheme.surface,
-      cardColor: lightColorScheme.onSecondaryContainer,
+      cardColor: AppPalette.white,
     );
   }
 
@@ -48,6 +50,7 @@ class AppTheme {
         selectedItemColor: darkColorScheme.primary,
         unselectedItemColor: darkColorScheme.onSurface.withAlpha(100),
       ),
+      shadowColor: AppPalette.shadowDark,
       dialogTheme: _theme.dialogTheme.copyWith(
         backgroundColor: darkColorScheme.surface,
         titleTextStyle: _theme.textTheme.titleLarge?.copyWith(color: darkColorScheme.onSurface),
@@ -59,7 +62,7 @@ class AppTheme {
         extendedTextStyle: _theme.textTheme.displayMedium?.copyWith(fontWeight: FontWeight.bold),
       ),
       scaffoldBackgroundColor: darkColorScheme.surface,
-      cardColor: darkColorScheme.onSecondaryContainer,
+      cardColor: AppPalette.black,
     );
   }
 }

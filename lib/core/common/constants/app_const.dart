@@ -69,6 +69,7 @@ class AppConst {
 
   static const double dialogPadding = 16;
   static BorderRadius mainRadius = BorderRadius.circular(28);
+
   static const double dialogBorderWidth = 1;
 
 //dot scoll

@@ -28,16 +28,9 @@ class GenericTypeCard extends StatelessWidget {
           color: !isSelected ? Color(typeColor).withAlpha(50) : Color(typeColor).withAlpha(190),
           borderRadius: AppConst.mainRadius,
           border: Border.all(
-            color: !isSelected ? Colors.transparent : Color(typeColor),
+            color: !isSelected ? Color(typeColor).withAlpha(10) : Color(typeColor),
             width: 3,
           ),
-          boxShadow: [
-            BoxShadow(
-              color: context.theme.shadowColor.withAlpha(10),
-              blurRadius: 5,
-              offset: const Offset(5, 5),
-            ),
-          ],
         ),
         child: Padding(
           padding: const EdgeInsets.all(12),

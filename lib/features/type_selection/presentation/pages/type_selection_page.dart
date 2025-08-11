@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
+import 'package:pokexplorer/core/common/widgets/debug_button.dart';
 import 'package:pokexplorer/core/common/widgets/message_toast.dart';
 import 'package:pokexplorer/core/common/widgets/misc_dialog.dart';
 import 'package:pokexplorer/core/routes/route_names.dart';
@@ -29,6 +30,7 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
       appBar: AppBar(
         title: const Text('Pokemon Type'),
         actions: [
+          DebugButton(),
           IconButton(
             icon: const Icon(Iconsax.setting_5_copy),
             onPressed: () => showDialog(context: context, builder: (_) => MiscDialog()),

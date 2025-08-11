@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokexplorer/core/common/widgets/debug_button.dart';
 import 'package:pokexplorer/core/routes/route_names.dart';
 import 'package:pokexplorer/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
 
@@ -24,6 +25,12 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: false,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        actions: [
+          DebugButton(),
+        ],
+      ),
       body: BlocConsumer<OnBoardingCubit, OnBoardingState>(
         listener: (BuildContext context, OnBoardingState state) {
           if (state is OnBoardingStatus && !state.isFirstTimer) {

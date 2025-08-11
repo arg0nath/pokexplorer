@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokexplorer/core/common/extensions/string_ext.dart';
+import 'package:pokexplorer/core/common/widgets/debug_button.dart';
 import 'package:pokexplorer/core/common/widgets/message_toast.dart';
 import 'package:pokexplorer/core/common/widgets/preview_list_tile.dart';
 import 'package:pokexplorer/core/routes/route_names.dart';
@@ -45,6 +46,9 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          DebugButton(),
+        ],
         title: Text('${widget.typeName.toUpperFirst()}'),
       ),
       body: BlocConsumer<TypeDetailsBloc, TypeDetailsState>(

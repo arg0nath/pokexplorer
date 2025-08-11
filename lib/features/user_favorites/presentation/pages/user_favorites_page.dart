@@ -26,7 +26,7 @@ class _UserFavoritesPageState extends State<UserFavoritesPage> {
     return Scaffold(
         extendBody: true,
         appBar: AppBar(
-          title: const Text('User Favorites'),
+          title: const Text('My Favorites'),
           actions: [DebugButton()],
         ),
         body: BlocConsumer<UserFavoritesBloc, UserFavoritesState>(
@@ -40,14 +40,11 @@ class _UserFavoritesPageState extends State<UserFavoritesPage> {
                 return const Center(child: Text('No favorites added yet.'));
               }
               return ListView.builder(
-                itemExtent: 60,
                 itemCount: favorites.length,
                 itemBuilder: (BuildContext context, int index) {
                   final PokemonPreview favorite = favorites[index];
-
                   return PreviewListTile(
                     preview: favorite,
-                    key: ValueKey<String>(favorite.name),
                     onCardTap: () {
                       context.pushNamed(RouteName.pokemonDetailsPageName, pathParameters: {'pokemonName': favorite.name});
                     },

@@ -49,13 +49,13 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return PageTransitionSwitcher(
-      layoutBuilder: (entries) {
+      layoutBuilder: (List<Widget> entries) {
         return Stack(
           alignment: Alignment.topCenter,
           children: entries,
         );
       },
-      transitionBuilder: (child, animation, secondaryAnimation) {
+      transitionBuilder: (Widget child, Animation<double> animation, Animation<double> secondaryAnimation) {
         return FadeThroughTransition(
           animation: animation,
           secondaryAnimation: secondaryAnimation,
@@ -93,33 +93,59 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
                 readyToProceedToPokemonDetails: (ProceedingStatus status) => const Center(child: Text('Proceeding...')),
                 error: (String message) => Center(child: Text('Error: $message')),
                 searching: () => const Center(child: CircularProgressIndicator()),
-                searched: (List<PokemonPreview> searchResults) => buildPokemonList(searchResults),
-                loaded: (TypeDetails typeDetails) => buildPokemonList(typeDetails.pokemons));
+                searched: (List<PokemonPreview> searchResults) => _TypeDetailsPokeList(
+                      pokemons: searchResults,
+                      selectedType: selectedType,
+                      scrollController: _typeDetailsScrollController,
+                      searchController: _searchingController,
+                    ),
+                loaded: (TypeDetails typeDetails) => _TypeDetailsPokeList(
+                      pokemons: typeDetails.pokemons,
+                      selectedType: selectedType,
+                      scrollController: _typeDetailsScrollController,
+                      searchController: _searchingController,
+                    ));
           },
         ),
       ),
     );
   }
+}
 
-  Widget buildPokemonList(List<PokemonPreview> pokemons) {
+class _TypeDetailsPokeList extends StatelessWidget {
+  const _TypeDetailsPokeList({
+    required this.pokemons,
+    required this.selectedType,
+    required this.scrollController,
+    required this.searchController,
+  });
+
+  final List<PokemonPreview> pokemons;
+  final PokemonType selectedType;
+  final ScrollController scrollController;
+  final TextEditingController searchController;
+
+  @override
+  Widget build(BuildContext context) {
+    final TypeDetailsBloc typeDetailsBloc = context.read<TypeDetailsBloc>();
+
     return RefreshIndicator(
+      color: selectedType.color,
       onRefresh: () async {
         typeDetailsBloc.add(FetchTypeDetailsEvent(selectedType.name));
       },
       child: Scrollbar(
-        controller: _typeDetailsScrollController,
+        controller: scrollController,
         child: CustomScrollView(
-          controller: _typeDetailsScrollController,
-          slivers: [
+          controller: scrollController,
+          slivers: <Widget>[
             SliverPersistentHeader(
               pinned: true,
               delegate: SliverSearchAppBar(
                 selectedType: selectedType,
-                textEditingController: _searchingController,
+                textEditingController: searchController,
               ),
             ),
-            //  onChanged: (String query) =>typeDetailsBloc.add(SearchPokemonsEvent(query))
-
             SliverList.builder(
               itemCount: pokemons.length,
               itemBuilder: (BuildContext context, int index) {
@@ -127,7 +153,9 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
                 return PreviewListTile(
                   preview: pokemon,
                   onCardTap: () {
-                    typeDetailsBloc.add(ProceedToPokemonDetailsEvent(pokemon.name));
+                    typeDetailsBloc.add(
+                      ProceedToPokemonDetailsEvent(pokemon.name),
+                    );
                   },
                 );
               },

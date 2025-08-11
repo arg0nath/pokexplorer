@@ -26,6 +26,7 @@ class FavoriteButton extends StatelessWidget {
       },
       builder: (BuildContext context, bool isFavorite) {
         return GestureDetector(
+          child: AnimatedHeart(isActive: isFavorite),
           onTap: isFavorite
               ? () => showDialog(
                     context: context,
@@ -33,15 +34,13 @@ class FavoriteButton extends StatelessWidget {
                       title: 'Remove Favorite',
                       description: 'You are about to remove ${name.toUpperFirst()} from your favorites.',
                       actionButtonTitle: 'Remove',
-                      onActionTap: () {
+                      onActionTap: () async {
                         context.read<UserFavoritesBloc>().add(RemoveFromFavoritesEvent(name));
+                        Navigator.pop(context);
                       },
                     ),
                   )
-              : () => context.read<UserFavoritesBloc>().add(
-                    AddToFavoritesEvent(id: id, name: name),
-                  ),
-          child: AnimatedHeart(isActive: isFavorite),
+              : () => context.read<UserFavoritesBloc>().add(AddToFavoritesEvent(id: id, name: name)),
         );
       },
     );

@@ -1,3 +1,5 @@
+// ignore_for_file: always_specify_types
+
 import 'package:flutter/material.dart';
 import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 
@@ -18,9 +20,8 @@ class ThemeColorsReferencePage extends StatelessWidget {
       MapEntry('tertiaryContainer', MapEntry(colorScheme.tertiaryContainer, colorScheme.onTertiaryContainer)),
       MapEntry('error', MapEntry(colorScheme.error, colorScheme.onError)),
       MapEntry('errorContainer', MapEntry(colorScheme.errorContainer, colorScheme.onErrorContainer)),
-      MapEntry('background', MapEntry(colorScheme.background, colorScheme.onBackground)),
       MapEntry('surface', MapEntry(colorScheme.surface, colorScheme.onSurface)),
-      MapEntry('surfaceVariant', MapEntry(colorScheme.surfaceVariant, colorScheme.onSurfaceVariant)),
+      MapEntry('surfaceContainerHigh', MapEntry(colorScheme.surfaceContainerHigh, colorScheme.onSecondaryContainer)),
       MapEntry('outline', MapEntry(colorScheme.outline, Colors.white)),
       MapEntry('shadow', MapEntry(colorScheme.shadow, Colors.white)),
       MapEntry('inverseSurface', MapEntry(colorScheme.inverseSurface, colorScheme.onInverseSurface)),

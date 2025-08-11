@@ -82,6 +82,8 @@ flutter:
     - assets/lottieFiles/
 
   fonts:
-    - family: Lato
+    - family: Comfortaa
       fonts:
-        - asset: assets/fonts/Lato-Regular.ttf
+        - asset: assets/fonts/Comfortaa-Regular.ttf
+        - asset: assets/fonts/Comfortaa-Bold.ttf
+          weight: 700  

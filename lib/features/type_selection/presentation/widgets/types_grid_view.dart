@@ -33,7 +33,7 @@ SliverGridDelegateWithFixedCrossAxisCount _gridDelegate() {
   return const SliverGridDelegateWithFixedCrossAxisCount(
     crossAxisCount: 2,
     childAspectRatio: 1.0,
-    mainAxisSpacing: 8.0,
-    crossAxisSpacing: 8.0,
+    mainAxisSpacing: 10,
+    crossAxisSpacing: 10,
   );
 }

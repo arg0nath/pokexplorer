@@ -14,8 +14,6 @@ class AppConst {
   static const String logWtfColor = '\u001b[36;1m';
 // #endregion
 
-  static const String mainFontFamily = 'lato';
-
   static const String appName = 'Pokéxplorer';
   static const String pokeApiUrl = 'pokeapi.co';
   static const String getTypeDetailsUrl = '/api/v2/type/:typeName';

@@ -43,7 +43,7 @@ class _UserFavoritesPageState extends State<UserFavoritesPage> {
                   return PreviewListTile(
                     preview: favorite,
                     key: ValueKey<String>(favorite.name),
-                    onTap: () {
+                    onCardTap: () {
                       context.pushNamed(RouteName.pokemonDetailsPageName, pathParameters: {'pokemonName': favorite.name});
                     },
                   );

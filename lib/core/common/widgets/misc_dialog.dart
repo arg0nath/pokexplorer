@@ -19,7 +19,7 @@ class _MiscDialogState extends State<MiscDialog> {
   @override
   Dialog build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppConst.circularRadius)),
+      shape: RoundedRectangleBorder(borderRadius: AppConst.mainRadius),
       elevation: 0.0,
       child: Container(
         width: context.width * 0.7,

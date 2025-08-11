@@ -70,7 +70,7 @@ class AppConst {
   static const String iceTypeName = 'ice';
 
   static const double dialogPadding = 16;
-  static const double circularRadius = 20;
+  static BorderRadius mainRadius = BorderRadius.circular(28);
   static const double dialogBorderWidth = 1;
 
 //dot scoll

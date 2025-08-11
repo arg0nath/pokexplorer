@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -31,64 +32,81 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
   @override
   Widget build(BuildContext context) {
     pokemonDetailsBloc = context.read<PokemonDetailsBloc>();
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        actions: [
-          DebugButton(),
-          BlocBuilder<PokemonDetailsBloc, PokemonDetailsState>(
-            builder: (context, state) {
-              return state.when(
-                  initial: () => const SizedBox.shrink(),
-                  loading: () => SizedBox.shrink(),
-                  error: (String message) => SizedBox.shrink(),
-                  loaded: (PokemonDetails pokemonDetails) {
-                    return FavoriteButton(
-                      id: pokemonDetails.id,
-                      name: pokemonDetails.name,
-                    );
-                  });
-            },
-          )
-        ],
-        title: Text('${widget.name.toUpperFirst()}'),
-      ),
-      body: BlocConsumer<PokemonDetailsBloc, PokemonDetailsState>(
-        listener: (BuildContext context, PokemonDetailsState state) {
-          state.maybeWhen(
-            error: (String message) {
-              showPokeToast(context, message);
-              context.pop();
-            },
-            orElse: () {},
-          );
-        },
-        builder: (BuildContext context, PokemonDetailsState state) {
-          return state.when(
-            initial: () => const SizedBox.shrink(),
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (String message) => Center(child: Text('Error: $message')),
-            loaded: (PokemonDetails pokemonDetails) {
-              return Container(
-                constraints: BoxConstraints.expand(),
-                child: Column(
-                  children: <Widget>[
-                    if (pokemonDetails.gifUrl != null) Image.network(pokemonDetails.gifUrl!),
-                    Image.network(pokemonDetails.baseImageUrl),
-                    Image.network(pokemonDetails.hdImageUrl),
-                    Text('ID: ${pokemonDetails.id}'),
-                    Text('Height: ${pokemonDetails.height}'),
-                    Text('Weight: ${pokemonDetails.weight}'),
-                    Text('HP: ${pokemonDetails.hp}'),
-                    Text('Attack: ${pokemonDetails.attack}'),
-                    Text('Defense: ${pokemonDetails.defense}'),
-                    Text('Types: ${pokemonDetails.types.map((PokemonType type) => type.name).join(', ')}'),
-                  ],
-                ),
-              );
-            },
-          );
-        },
+
+    return PageTransitionSwitcher(
+      layoutBuilder: (entries) {
+        return Stack(
+          alignment: Alignment.topCenter,
+          children: entries,
+        );
+      },
+      transitionBuilder: (child, animation, secondaryAnimation) {
+        return FadeThroughTransition(
+          animation: animation,
+          secondaryAnimation: secondaryAnimation,
+          child: child,
+        );
+      },
+      duration: const Duration(milliseconds: 300),
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          actions: <Widget>[
+            DebugButton(),
+            BlocBuilder<PokemonDetailsBloc, PokemonDetailsState>(
+              builder: (BuildContext context, PokemonDetailsState state) {
+                return state.when(
+                    initial: () => const SizedBox.shrink(),
+                    loading: () => SizedBox.shrink(),
+                    error: (String message) => SizedBox.shrink(),
+                    loaded: (PokemonDetails pokemonDetails) {
+                      return FavoriteButton(
+                        id: pokemonDetails.id,
+                        name: pokemonDetails.name,
+                      );
+                    });
+              },
+            )
+          ],
+          title: Text('${widget.name.toUpperFirst()}'),
+        ),
+        body: BlocConsumer<PokemonDetailsBloc, PokemonDetailsState>(
+          listener: (BuildContext context, PokemonDetailsState state) {
+            state.maybeWhen(
+              error: (String message) {
+                showPokeToast(context, message);
+                context.pop();
+              },
+              orElse: () {},
+            );
+          },
+          builder: (BuildContext context, PokemonDetailsState state) {
+            return state.when(
+              initial: () => const SizedBox.shrink(),
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (String message) => Center(child: Text('Error: $message')),
+              loaded: (PokemonDetails pokemonDetails) {
+                return Container(
+                  constraints: BoxConstraints.expand(),
+                  child: Column(
+                    children: <Widget>[
+                      if (pokemonDetails.gifUrl != null) Image.network(pokemonDetails.gifUrl!),
+                      Image.network(pokemonDetails.baseImageUrl),
+                      Image.network(pokemonDetails.hdImageUrl),
+                      Text('ID: ${pokemonDetails.id}'),
+                      Text('Height: ${pokemonDetails.height}'),
+                      Text('Weight: ${pokemonDetails.weight}'),
+                      Text('HP: ${pokemonDetails.hp}'),
+                      Text('Attack: ${pokemonDetails.attack}'),
+                      Text('Defense: ${pokemonDetails.defense}'),
+                      Text('Types: ${pokemonDetails.types.map((PokemonType type) => type.name).join(', ')}'),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

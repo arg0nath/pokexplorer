@@ -3,19 +3,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokexplorer/config/theme/app_palette.dart';
 import 'package:pokexplorer/core/common/constants/app_const.dart';
 import 'package:pokexplorer/core/common/extensions/context_ext.dart';
+import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
 import 'package:pokexplorer/core/common/widgets/appbar_background.dart';
+import 'package:pokexplorer/core/common/widgets/custom_appbar_back_button.dart';
+import 'package:pokexplorer/core/common/widgets/type_short_card.dart';
 import 'package:pokexplorer/features/type_details/presentation/bloc/type_details_bloc.dart';
 
 class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
   SliverSearchAppBar({
-    required this.typeName,
-    required this.typeColorNum,
+    required this.selectedType,
     required this.textEditingController,
   });
 
   final TextEditingController textEditingController;
-  final String typeName;
-  final int typeColorNum;
+  final PokemonType selectedType;
 
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -24,13 +25,14 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
     double topPadding = MediaQuery.paddingOf(context).top + 10;
     return BlocBuilder<TypeDetailsBloc, TypeDetailsState>(
       builder: (BuildContext context, TypeDetailsState state) {
+        final typeDetailsBloc = context.read<TypeDetailsBloc>();
         return SizedBox(
           height: AppConst.typeDetailsAppBarDelegateMaxExtend,
           child: Stack(
             children: <Widget>[
               //cool gradient background
               AppbarGradientBackground(
-                color: Color(typeColorNum),
+                color: selectedType.color,
               ),
 
               //type icon + name
@@ -42,8 +44,9 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       //TODO
-                      // CustomAppbarBackButton(onPressed: () => typeDetailsBloc.add(const ExitTypeDetailsEvent())),
-                      // SelectedTypeContainer(typeName: typeName),
+                      CustomAppbarBackButton(onPressed: () => Navigator.pop(context)),
+                      // typeDetailsBloc.add(const ExitTypeDetailsEvent())),
+                      SelectedTypeContainer(type: selectedType),
                     ],
                   ),
                 ),
@@ -62,7 +65,7 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
                       //TODO
-                      // child: _customTextFormField(typeDetailsBloc, context),
+                      child: _customTextFormField(typeDetailsBloc, context),
                     ),
                   )),
             ],
@@ -70,6 +73,44 @@ class SliverSearchAppBar extends SliverPersistentHeaderDelegate {
         );
       },
     );
+  }
+
+  TextFormField _customTextFormField(TypeDetailsBloc typeDetailsBloc, BuildContext context) {
+    return TextFormField(
+      controller: textEditingController,
+      style: Theme.of(context).inputDecorationTheme.labelStyle,
+      decoration:
+          const InputDecoration().copyWith(suffixIcon: _customSuffixIcon(typeDetailsBloc, context), prefixIcon: textEditingController.value.text.isEmpty ? null : _customPrefixButton(typeDetailsBloc)),
+      onChanged: (value) {
+        if (value.isEmpty) {
+          // typeDetailsBloc.add(const ReturnFromSearchEvent());
+        }
+      },
+      onTapOutside: (val) => FocusScope.of(context).unfocus(),
+      // onFieldSubmitted: (String val) => val.isNotEmpty ? typeDetailsBloc.add(SearchPokemonEvent(value: val)) : null,
+    );
+  }
+
+  IconButton _customSuffixIcon(TypeDetailsBloc typeDetailsBloc, BuildContext context) {
+    return IconButton(
+        icon: const Icon(Icons.search),
+        onPressed: () {
+          if (textEditingController.value.text.isNotEmpty) {
+            // typeDetailsBloc.add(SearchPokemonEvent(value: textEditingController.value.text));
+            FocusScope.of(context).unfocus();
+          }
+        });
+  }
+
+  GestureDetector _customPrefixButton(TypeDetailsBloc typeDetailsBloc) {
+    return GestureDetector(
+        onTap: () {
+          // typeDetailsBloc.add(const ReturnFromSearchEvent());
+          textEditingController.clear();
+        },
+        child: const Icon(
+          Icons.clear_rounded,
+        ));
   }
 
   @override

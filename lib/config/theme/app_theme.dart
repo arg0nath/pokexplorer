@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokexplorer/config/theme/app_color_scheme.dart';
 import 'package:pokexplorer/config/theme/app_palette.dart';
+import 'package:pokexplorer/core/common/constants/app_const.dart';
 import 'package:pokexplorer/core/common/res/app_assets.dart';
 
 class AppTheme {
@@ -9,6 +10,7 @@ class AppTheme {
   static ThemeData light() {
     final ThemeData _theme = ThemeData.from(colorScheme: lightColorScheme)..textTheme.apply(fontFamily: AppAssets.fontFamily);
     return _theme.copyWith(
+      pageTransitionsTheme: _pageTransition,
       appBarTheme: _theme.appBarTheme.copyWith(
         backgroundColor: lightColorScheme.surface,
         foregroundColor: lightColorScheme.onSurface,
@@ -26,6 +28,16 @@ class AppTheme {
         titleTextStyle: _theme.textTheme.titleLarge?.copyWith(color: lightColorScheme.onSurface),
         contentTextStyle: _theme.textTheme.bodyMedium?.copyWith(color: lightColorScheme.onSurface),
       ),
+      inputDecorationTheme: _theme.inputDecorationTheme.copyWith(
+        fillColor: AppPalette.white,
+        filled: true,
+        labelStyle: _theme.textTheme.labelMedium?.copyWith(color: AppPalette.grey),
+        hintStyle: _theme.textTheme.labelMedium?.copyWith(color: AppPalette.grey),
+        suffixIconColor: AppPalette.grey,
+        focusedBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: AppPalette.white), borderRadius: AppConst.mainRadius),
+        border: OutlineInputBorder(borderSide: BorderSide(width: 0.5, color: AppPalette.white), borderRadius: AppConst.mainRadius),
+        enabledBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: AppPalette.white), borderRadius: AppConst.mainRadius),
+      ),
       floatingActionButtonTheme: _theme.floatingActionButtonTheme.copyWith(
         backgroundColor: lightColorScheme.primary,
         foregroundColor: lightColorScheme.onPrimary,
@@ -39,6 +51,7 @@ class AppTheme {
   static ThemeData dark() {
     final ThemeData _theme = ThemeData.from(colorScheme: darkColorScheme)..textTheme.apply(fontFamily: AppAssets.fontFamily);
     return _theme.copyWith(
+      pageTransitionsTheme: _pageTransition,
       appBarTheme: _theme.appBarTheme.copyWith(
         backgroundColor: darkColorScheme.surface,
         foregroundColor: darkColorScheme.onSurface,
@@ -49,6 +62,16 @@ class AppTheme {
         backgroundColor: darkColorScheme.surface,
         selectedItemColor: darkColorScheme.primary,
         unselectedItemColor: darkColorScheme.onSurface.withAlpha(100),
+      ),
+      inputDecorationTheme: _theme.inputDecorationTheme.copyWith(
+        fillColor: AppPalette.black,
+        filled: true,
+        labelStyle: _theme.textTheme.labelMedium?.copyWith(color: AppPalette.grey),
+        hintStyle: _theme.textTheme.labelMedium?.copyWith(color: AppPalette.grey),
+        suffixIconColor: AppPalette.grey,
+        focusedBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: AppPalette.black), borderRadius: AppConst.mainRadius),
+        border: OutlineInputBorder(borderSide: BorderSide(width: 0.5, color: AppPalette.black), borderRadius: AppConst.mainRadius),
+        enabledBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: AppPalette.black), borderRadius: AppConst.mainRadius),
       ),
       shadowColor: AppPalette.shadowDark,
       dialogTheme: _theme.dialogTheme.copyWith(
@@ -66,3 +89,13 @@ class AppTheme {
     );
   }
 }
+
+const _pageTransition = PageTransitionsTheme(
+  builders: {
+    TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+    TargetPlatform.iOS: FadeForwardsPageTransitionsBuilder(),
+    TargetPlatform.macOS: FadeForwardsPageTransitionsBuilder(),
+    TargetPlatform.windows: FadeForwardsPageTransitionsBuilder(),
+    TargetPlatform.linux: FadeForwardsPageTransitionsBuilder(),
+  },
+);

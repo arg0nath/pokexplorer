@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-abstract class PokemonType extends Equatable {
+class PokemonType extends Equatable {
   const PokemonType({
     required this.name,
     required this.icon,

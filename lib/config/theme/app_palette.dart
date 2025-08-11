@@ -30,7 +30,7 @@ abstract class AppPalette {
   static const Color black = Color(0xff313132);
   static const Color grey = Color(0xFF979797);
   static const Color shadowLight = Color(0xFFB4B4B4);
-  static const Color shadowDark = Color.fromARGB(255, 90, 90, 90);
+  static const Color shadowDark = Color(0xFF404040);
 
   //gradients colors
   static const Color _turquoiseGradientFirst = Color(0xFF1CD5C6);

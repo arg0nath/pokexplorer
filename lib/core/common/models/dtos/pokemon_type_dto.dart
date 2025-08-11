@@ -35,4 +35,12 @@ class PokemonTypeDto extends PokemonType {
 
   String toJson() => jsonEncode(toMap());
   factory PokemonTypeDto.fromJson(String sourceJson) => PokemonTypeDto.fromMap(jsonDecode(sourceJson) as DataMap);
+
+  PokemonType toEntity() {
+    return PokemonType(
+      colorValue: colorValue,
+      name: name,
+      icon: icon,
+    );
+  }
 }

@@ -41,16 +41,16 @@ abstract class PokemonDetailsDto with _$PokemonDetailsDto {
     final int attack = extractStat('attack');
     final int defense = extractStat('defense');
 
-    final Map<String, dynamic> sprites = json['sprites'] as Map<String, dynamic>? ?? <String, dynamic>{};
-    final Map<String, dynamic> other = sprites['other'] as Map<String, dynamic>? ?? <String, dynamic>{};
-    final Map<String, dynamic> officialArtwork = other['official-artwork'] as Map<String, dynamic>? ?? <String, dynamic>{};
-    final Map<String, dynamic> showdown = other['showdown'] as Map<String, dynamic>? ?? <String, dynamic>{};
+    final DataMap sprites = json['sprites'] as DataMap? ?? <String, dynamic>{};
+    final DataMap other = sprites['other'] as DataMap? ?? <String, dynamic>{};
+    final DataMap officialArtwork = other['official-artwork'] as DataMap? ?? <String, dynamic>{};
+    final DataMap showdown = other['showdown'] as DataMap? ?? <String, dynamic>{};
 
     final String? gifUrl = showdown['front_default'] as String?;
     final String hdImageUrl = officialArtwork['front_default'] as String? ?? '';
     final String baseImageUrl = getPokemonBaseImageById(id);
 
-    final List<Map<String, dynamic>> types = (json['types'] as List<dynamic>).map((e) => Map<String, dynamic>.from(e as Map)).toList();
+    final List<Map<String, dynamic>> types = (json['types'] as List<dynamic>).map((e) => DataMap.from(e as Map)).toList();
 
     return PokemonDetailsDto(
       id: id,
@@ -72,12 +72,16 @@ extension PokemonDetailsDtoX on PokemonDetailsDto {
   PokemonDetails toEntity() {
     final List<PokemonType> mappedTypes = types.map((DataMap typeMap) => PokemonTypeDto.fromMap(typeMap['type'] as DataMap)).toList();
 
+    final List<String> imagesUrls = [
+      hdImageUrl,
+      baseImageUrl,
+      gifUrl ?? '',
+    ].where((String url) => url.isNotEmpty).toList();
+
     return PokemonDetails(
       id: id,
       name: name,
-      gifUrl: gifUrl,
-      baseImageUrl: baseImageUrl,
-      hdImageUrl: hdImageUrl,
+      imagesUrls: imagesUrls,
       height: height,
       weight: weight,
       hp: hp,

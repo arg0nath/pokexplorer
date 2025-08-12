@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 
-class FavAppbarActionsButton extends StatelessWidget {
-  const FavAppbarActionsButton({
+class FavoritesAppbarActionsButton extends StatelessWidget {
+  const FavoritesAppbarActionsButton({
     Key? key,
   }) : super(key: key);
 
@@ -11,10 +11,7 @@ class FavAppbarActionsButton extends StatelessWidget {
     return PopupMenuButton<int>(
       // Button icon in the app bar
       icon: const Icon(Icons.more_vert),
-      // Rounded menu shape
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+
       onSelected: (int value) {
         if (value == 0) {}
       },

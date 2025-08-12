@@ -9,14 +9,15 @@ class PreviewListTile extends StatelessWidget {
   const PreviewListTile({
     super.key,
     required this.preview,
+    required this.allowToggleFavorite,
     required this.onCardTap,
     this.onLongPress,
   });
 
   final PokemonPreview preview;
   final VoidCallback onCardTap;
-
   final VoidCallback? onLongPress;
+  final bool allowToggleFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +48,14 @@ class PreviewListTile extends StatelessWidget {
                 flex: 3,
                 child: Text(preview.name.toUpperFirst(), maxLines: 3, overflow: TextOverflow.ellipsis, style: context.textTheme.titleLarge),
               ),
-              //favorite icon
+              if (allowToggleFavorite)
+                //favorite icon
 
-              FavoriteButton(
-                id: preview.id,
-                avatarUrl: preview.thumbnail,
-                name: preview.name,
-              ),
+                FavoriteButton(
+                  id: preview.id,
+                  avatarUrl: preview.thumbnail,
+                  name: preview.name,
+                ),
             ])));
   }
 }

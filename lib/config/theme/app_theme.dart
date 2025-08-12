@@ -23,6 +23,17 @@ class AppTheme {
         elevation: 0,
         scrolledUnderElevation: 0,
       ),
+      popupMenuTheme: _theme.popupMenuTheme.copyWith(
+        color: lightColorScheme.surfaceContainerHigh,
+        labelTextStyle: WidgetStatePropertyAll<TextStyle?>(_theme.textTheme.titleSmall?.copyWith(
+          color: lightColorScheme.onSurface,
+          fontFamily: AppAssets.fontFamily,
+          fontWeight: FontWeight.bold,
+        )),
+        position: PopupMenuPosition.under,
+        elevation: 10,
+        shape: RoundedRectangleBorder(borderRadius: AppConst.mainRadius),
+      ),
       bottomNavigationBarTheme: _theme.bottomNavigationBarTheme.copyWith(
         backgroundColor: lightColorScheme.surface,
         selectedItemColor: lightColorScheme.primary,
@@ -85,6 +96,17 @@ class AppTheme {
         ),
         elevation: 0,
         scrolledUnderElevation: 0,
+      ),
+      popupMenuTheme: _theme.popupMenuTheme.copyWith(
+        color: darkColorScheme.surfaceContainerHigh,
+        labelTextStyle: WidgetStatePropertyAll<TextStyle?>(_theme.textTheme.titleSmall?.copyWith(
+          color: darkColorScheme.onSurface,
+          fontFamily: AppAssets.fontFamily,
+          fontWeight: FontWeight.bold,
+        )),
+        position: PopupMenuPosition.under,
+        elevation: 10,
+        shape: RoundedRectangleBorder(borderRadius: AppConst.mainRadius),
       ),
       bottomNavigationBarTheme: _theme.bottomNavigationBarTheme.copyWith(
         backgroundColor: darkColorScheme.surface,

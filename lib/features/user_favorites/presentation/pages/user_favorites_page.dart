@@ -28,7 +28,7 @@ class _UserFavoritesPageState extends State<UserFavoritesPage> {
         extendBody: true,
         appBar: AppBar(
           title: const Text('My Favorites'),
-          actions: [FavAppbarActionsButton(), DebugButton()],
+          actions: [FavoritesAppbarActionsButton(), DebugButton()],
         ),
         body: BlocConsumer<UserFavoritesBloc, UserFavoritesState>(
           listener: (BuildContext context, UserFavoritesState state) {},
@@ -45,6 +45,7 @@ class _UserFavoritesPageState extends State<UserFavoritesPage> {
                 itemBuilder: (BuildContext context, int index) {
                   final PokemonPreview favorite = favorites[index];
                   return PreviewListTile(
+                    allowToggleFavorite: false,
                     preview: favorite,
                     onCardTap: () {
                       context.pushNamed(RouteName.pokemonDetailsPageName, pathParameters: {'pokemonName': favorite.name});

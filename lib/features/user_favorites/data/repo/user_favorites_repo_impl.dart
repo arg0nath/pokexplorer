@@ -36,9 +36,17 @@ class UserFavoritesRepoImpl implements UserFavoritesRepo {
   }
 
   @override
-  ResultFutureVoid removeFromFavorites({required String name}) async {
+  ResultFutureVoid removeFromFavorites({required List<String> names}) async {
     try {
-      await _localDataSource.removeFromFavoritesDb(name: name);
+      if (names.isEmpty) {
+        await _localDataSource.deleteUserFavoritesFromDb();
+        return const Right<Failure, void>(null);
+      }
+
+      for (final String name in names) {
+        await _localDataSource.removeFromFavoritesDb(name: name);
+      }
+
       return const Right<Failure, void>(null);
     } on CacheException catch (e) {
       return Left<Failure, void>(CacheFailure(message: e.message, statusCode: e.statusCode));

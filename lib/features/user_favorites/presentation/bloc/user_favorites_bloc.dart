@@ -63,9 +63,9 @@ class UserFavoritesBloc extends Bloc<UserFavoritesEvent, UserFavoritesState> {
       );
     });
 
-    on<RemoveFromFavoritesEvent>((RemoveFromFavoritesEvent event, Emitter<UserFavoritesState> emit) async {
+    on<RemovePokemonFromFavoritesEvent>((RemovePokemonFromFavoritesEvent event, Emitter<UserFavoritesState> emit) async {
       final Either<Failure, void> result = await _removeFromFavorites(
-        RemoveFromFavoritesParams(name: event.name),
+        RemoveFromFavoritesParams(names: event.names),
       );
 
       await result.fold(
@@ -74,9 +74,10 @@ class UserFavoritesBloc extends Bloc<UserFavoritesEvent, UserFavoritesState> {
           if (state is UserFavoritesLoaded) {
             final List<PokemonPreview> currentFavorites = List<PokemonPreview>.from(
               (state as UserFavoritesLoaded).favorites,
-            )..removeWhere((PokemonPreview fav) => fav.name == event.name);
-            emit(UpdatingFavoriteStatus(currentFavorites));
+            );
+            currentFavorites.removeWhere((PokemonPreview fav) => event.names.contains(fav.name));
 
+            emit(UpdatingFavoriteStatus(currentFavorites));
             emit(UserFavoritesLoaded(currentFavorites));
           }
         },

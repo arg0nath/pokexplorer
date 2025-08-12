@@ -44,7 +44,7 @@ class FavoriteButton extends StatelessWidget {
                       description: 'You are about to remove ${name.toUpperFirst()} from your favorites.',
                       actionButtonTitle: 'Remove',
                       onActionTap: () async {
-                        context.read<UserFavoritesBloc>().add(RemoveFromFavoritesEvent(name));
+                        context.read<UserFavoritesBloc>().add(RemovePokemonFromFavoritesEvent([name]));
                         Navigator.pop(context);
                       },
                     ),

@@ -22,11 +22,11 @@ final class AddToFavoritesEvent extends UserFavoritesEvent {
   List<Object> get props => [name, id];
 }
 
-final class RemoveFromFavoritesEvent extends UserFavoritesEvent {
-  const RemoveFromFavoritesEvent(this.name);
+final class RemovePokemonFromFavoritesEvent extends UserFavoritesEvent {
+  const RemovePokemonFromFavoritesEvent(this.names);
 
-  final String name;
+  final List<String> names;
 
   @override
-  List<Object> get props => [name];
+  List<Object> get props => [names];
 }

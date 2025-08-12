@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class MyBottomBar extends StatefulWidget {
-  const MyBottomBar({
+class MainAppBottomBar extends StatefulWidget {
+  const MainAppBottomBar({
     required this.navigationShell,
     super.key,
   });
@@ -10,15 +10,26 @@ class MyBottomBar extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
 
   @override
-  State<MyBottomBar> createState() => _MyBottomBarState();
+  State<MainAppBottomBar> createState() => _MainAppBottomBarState();
 }
 
-class _MyBottomBarState extends State<MyBottomBar> {
+class _MainAppBottomBarState extends State<MainAppBottomBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: widget.navigationShell.currentIndex,
-      onTap: (int index) => widget.navigationShell.goBranch(index),
+      onTap: (int index) {
+        if (index == widget.navigationShell.currentIndex) {
+          // if current tab again — pop to root
+          widget.navigationShell.goBranch(
+            index,
+            initialLocation: true,
+          );
+        } else {
+          // switch to another tab
+          widget.navigationShell.goBranch(index);
+        }
+      },
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(Icons.home),

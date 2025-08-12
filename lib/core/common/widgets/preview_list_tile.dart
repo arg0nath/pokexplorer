@@ -26,7 +26,7 @@ class PreviewListTile extends StatelessWidget {
         child: Container(
             margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
             decoration: BoxDecoration(
-              color: context.theme.cardColor,
+              color: context.theme.colorScheme.onSurface.withAlpha(10),
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(

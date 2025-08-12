@@ -43,7 +43,7 @@ class GenericTypeCard extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 child: Text(
                   pokemonType.name.toUpperFirst(),
-                  style: context.theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+                  style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),

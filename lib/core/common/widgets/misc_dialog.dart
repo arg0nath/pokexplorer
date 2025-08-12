@@ -55,7 +55,7 @@ class _MiscDialogState extends State<MiscDialog> {
               style: context.textTheme.titleMedium,
               text: 'Made using Flutter by:\n',
               children: <InlineSpan>[
-                TextSpan(text: 'arg0nath', style: context.theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+                TextSpan(text: 'arg0nath', style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
               ],
             ),
           ),

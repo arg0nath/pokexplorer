@@ -58,7 +58,7 @@ class ImagesCarousel extends StatelessWidget {
                   dotHeight: 8,
                   dotWidth: 8,
                   activeDotColor: pageIndicatorColor,
-                  dotColor: context.theme.colorScheme.onSurface.withAlpha(40),
+                  dotColor: context.colorScheme.onSurface.withAlpha(40),
                 ),
               );
             },

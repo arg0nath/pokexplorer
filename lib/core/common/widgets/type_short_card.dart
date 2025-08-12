@@ -28,6 +28,7 @@ class SelectedTypeContainer extends StatelessWidget {
       return Container(
         margin: EdgeInsets.only(left: 10),
         decoration: BoxDecoration(
+          border: Border.all(color: context.theme.colorScheme.onSurface.withAlpha(40), width: .5),
           color: context.theme.colorScheme.surface,
           borderRadius: BorderRadius.circular(10),
           boxShadow: <BoxShadow>[

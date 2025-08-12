@@ -17,7 +17,7 @@ class PokeballBackground extends StatelessWidget {
           angle: 20 * math.pi / 180,
           child: Image.asset(
             width: context.width * 0.6,
-            AppAssets.pokeballOutlinedPng,
+            AppAssets.pokeballOutlined,
           ),
         ));
   }

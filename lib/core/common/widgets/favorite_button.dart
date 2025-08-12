@@ -14,9 +14,11 @@ class FavoriteButton extends StatelessWidget {
     super.key,
     required this.name,
     required this.id,
+    required this.avatarUrl,
   });
 
   final String name;
+  final String avatarUrl;
   final int id;
 
   @override
@@ -30,7 +32,10 @@ class FavoriteButton extends StatelessWidget {
       },
       builder: (BuildContext context, bool isFavorite) {
         return GestureDetector(
-          child: AnimatedHeart(isActive: isFavorite),
+          child: AnimatedPokeballCapture(
+            isActive: isFavorite,
+            pokemonAvatar: avatarUrl,
+          ),
           onTap: isFavorite
               ? () => showDialog(
                     context: context,

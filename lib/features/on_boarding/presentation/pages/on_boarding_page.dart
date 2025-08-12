@@ -50,7 +50,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   children: [
                     const Expanded(
                       flex: 3,
-                      child: LogoPlaceholder(primaryLogoImagePath: AppAssets.pokexplorerLogoPng, secondaryLogoImagePath: AppAssets.pokemonCustomPhrase),
+                      child: LogoPlaceholder(primaryLogoImagePath: AppAssets.pokexplorerLogo, secondaryLogoImagePath: AppAssets.pokemonCustomPhrase),
                     ),
                     Expanded(
                       flex: 5,

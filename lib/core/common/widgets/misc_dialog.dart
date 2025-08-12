@@ -27,7 +27,7 @@ class _MiscDialogState extends State<MiscDialog> {
         child: Column(mainAxisSize: MainAxisSize.min, spacing: context.height * 0.03, mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
           Flexible(
             flex: 8,
-            child: Image.asset(height: 80, AppAssets.pokexplorerLogoPng, fit: BoxFit.scaleDown),
+            child: Image.asset(height: 80, AppAssets.pokexplorerLogo, fit: BoxFit.scaleDown),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

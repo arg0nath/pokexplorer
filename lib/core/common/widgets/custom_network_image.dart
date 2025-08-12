@@ -71,7 +71,7 @@ class _ErrorWidget extends StatelessWidget {
       height: 150,
       decoration: BoxDecoration(border: Border.all(color: AppPalette.transparent, width: 0)),
       child: Center(
-        child: Image.asset(AppAssets.emptyPokeballPng, width: context.height * 0.05, height: context.height * 0.05),
+        child: Image.asset(AppAssets.emptyOpenedPokeballPng, width: context.height * 0.05, height: context.height * 0.05),
       ),
     );
   }

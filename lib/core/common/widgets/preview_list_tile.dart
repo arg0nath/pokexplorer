@@ -51,6 +51,7 @@ class PreviewListTile extends StatelessWidget {
 
               FavoriteButton(
                 id: preview.id,
+                avatarUrl: preview.thumbnail,
                 name: preview.name,
               ),
             ])));

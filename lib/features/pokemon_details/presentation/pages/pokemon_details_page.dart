@@ -12,7 +12,6 @@ import 'package:pokexplorer/features/pokemon_details/presentation/bloc/pokemon_d
 import 'package:pokexplorer/features/pokemon_details/presentation/widgets/horizontal_type_list.dart';
 import 'package:pokexplorer/features/pokemon_details/presentation/widgets/images_carousel.dart';
 import 'package:pokexplorer/features/pokemon_details/presentation/widgets/stat_container.dart';
-//final String extraString = GoRouterState.of(context).extra! as String;
 
 class PokemonDetailsPage extends StatefulWidget {
   const PokemonDetailsPage({super.key, required this.name});

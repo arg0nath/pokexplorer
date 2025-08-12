@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokexplorer/core/common/extensions/string_ext.dart';
 import 'package:pokexplorer/core/common/widgets/action_dialog.dart';
-import 'package:pokexplorer/core/common/widgets/animated_heart.dart';
+import 'package:pokexplorer/core/common/widgets/animated_pokeball_capture.dart';
 import 'package:pokexplorer/features/user_favorites/presentation/bloc/user_favorites_bloc.dart';
 
 /// A button that toggles the favorite status of a Pokémon.

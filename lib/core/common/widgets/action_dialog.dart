@@ -22,26 +22,26 @@ class PokeActionDialog extends StatelessWidget {
       title: Text(
         title,
         textAlign: TextAlign.center,
-        style: context.theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+        style: context.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
       ),
       //description
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        children: <Widget>[
           Text(description, textAlign: TextAlign.center),
         ],
       ),
       actionsAlignment: MainAxisAlignment.spaceBetween,
       //button
-      actions: [
+      actions: <Widget>[
         TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
         ElevatedButton(
           onPressed: onActionTap,
           child: Text(actionButtonTitle),
           style: ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll(context.theme.colorScheme.primary),
-            foregroundColor: WidgetStatePropertyAll(context.theme.colorScheme.onPrimary),
+            backgroundColor: WidgetStatePropertyAll<Color>(context.colorScheme.primary),
+            foregroundColor: WidgetStatePropertyAll<Color>(context.colorScheme.onPrimary),
           ),
         ),
       ],

@@ -8,7 +8,7 @@ class ThemeColorsReferencePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ColorScheme colorScheme = context.theme.colorScheme;
+    final ColorScheme colorScheme = context.colorScheme;
 
     // List of color names and their corresponding ColorScheme properties
     final List<MapEntry<String, MapEntry<Color, Color>>> colorPairs = <MapEntry<String, MapEntry<Color, Color>>>[

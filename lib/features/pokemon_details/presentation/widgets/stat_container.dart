@@ -25,7 +25,7 @@ class StatContainer extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text(
                     'Weight: ${pokemon.weight}',
-                    style: context.theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
+                    style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
                   ),
                 ],
               ),
@@ -35,7 +35,7 @@ class StatContainer extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text(
                     'Height: ${pokemon.height}',
-                    style: context.theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
+                    style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
                   ),
                 ],
               ),

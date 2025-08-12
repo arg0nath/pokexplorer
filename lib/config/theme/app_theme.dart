@@ -44,7 +44,8 @@ class AppTheme {
         fillColor: AppPalette.white,
         filled: true,
         labelStyle: _theme.textTheme.labelMedium?.copyWith(
-          color: AppPalette.grey,
+          color: _theme.colorScheme.onSurface,
+          fontWeight: FontWeight.bold,
           fontFamily: AppAssets.fontFamily,
         ),
         hintStyle: _theme.textTheme.labelMedium?.copyWith(
@@ -94,7 +95,8 @@ class AppTheme {
         fillColor: AppPalette.black,
         filled: true,
         labelStyle: _theme.textTheme.labelMedium?.copyWith(
-          color: AppPalette.grey,
+          color: _theme.colorScheme.onSurface,
+          fontWeight: FontWeight.bold,
           fontFamily: AppAssets.fontFamily,
         ),
         hintStyle: _theme.textTheme.labelMedium?.copyWith(

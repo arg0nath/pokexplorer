@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/core/common/extensions/string_ext.dart';
 import 'package:pokexplorer/core/common/widgets/appbar_background.dart';
+import 'package:pokexplorer/core/common/widgets/favorite_button.dart';
 import 'package:pokexplorer/core/common/widgets/message_toast.dart';
 import 'package:pokexplorer/features/pokemon_details/domain/entities/pokemon_details.dart';
 import 'package:pokexplorer/features/pokemon_details/presentation/bloc/pokemon_details_bloc.dart';
@@ -49,9 +50,26 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
       duration: const Duration(milliseconds: 300),
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: Text(widget.name.toUpperFirst()),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight),
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+            title: Text(widget.name.toUpperFirst()),
+            actions: <Widget>[
+              BlocBuilder<PokemonDetailsBloc, PokemonDetailsState>(
+                builder: (BuildContext context, PokemonDetailsState state) {
+                  return state.maybeWhen(
+                    orElse: () => const SizedBox(),
+                    loaded: (PokemonDetails pokemonDetails) => FavoriteButton(
+                      name: pokemonDetails.name,
+                      avatarUrl: pokemonDetails.imagesUrls[1],
+                      id: pokemonDetails.id,
+                    ),
+                  );
+                },
+              )
+            ],
+          ),
         ),
         body: BlocConsumer<PokemonDetailsBloc, PokemonDetailsState>(
           listener: (BuildContext context, PokemonDetailsState state) {
@@ -67,7 +85,7 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
             return state.when(
               initial: () => const SizedBox.shrink(),
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (String message) => Center(child: Text('Error: $message')),
+              error: (String message) => Center(child: Text('Oops..! $message')),
               loaded: (PokemonDetails pokemonDetails) {
                 return CustomScrollView(
                   slivers: <Widget>[
@@ -76,7 +94,7 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
                         height: context.height * 0.6, // Adjust based on your carousel size
                         child: Stack(
                           alignment: Alignment.topCenter,
-                          children: [
+                          children: <Widget>[
                             AppbarGradientBackground(color: pokemonDetails.types.first.color),
                             Positioned(
                               top: context.height * 0.1,

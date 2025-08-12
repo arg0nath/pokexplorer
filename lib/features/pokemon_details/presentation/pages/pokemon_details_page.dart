@@ -69,32 +69,29 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (String message) => Center(child: Text('Error: $message')),
               loaded: (PokemonDetails pokemonDetails) {
-                return Container(
-                  constraints: BoxConstraints.expand(),
-                  child: CustomScrollView(
-                    slivers: <Widget>[
-                      SliverToBoxAdapter(
-                        child: SizedBox(
-                          height: context.height * 0.6, // Adjust based on your carousel size
-                          child: Stack(
-                            alignment: Alignment.topCenter,
-                            children: [
-                              AppbarGradientBackground(color: pokemonDetails.types.first.color),
-                              Positioned(
-                                top: context.height * 0.1,
-                                child: ImagesCarousel(
-                                  pokemonImageList: pokemonDetails.imagesUrls,
-                                  pageIndicatorColor: pokemonDetails.types.first.color,
-                                ),
+                return CustomScrollView(
+                  slivers: <Widget>[
+                    SliverToBoxAdapter(
+                      child: Container(
+                        height: context.height * 0.6, // Adjust based on your carousel size
+                        child: Stack(
+                          alignment: Alignment.topCenter,
+                          children: [
+                            AppbarGradientBackground(color: pokemonDetails.types.first.color),
+                            Positioned(
+                              top: context.height * 0.1,
+                              child: ImagesCarousel(
+                                pokemonImageList: pokemonDetails.imagesUrls,
+                                pageIndicatorColor: pokemonDetails.types.first.color,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                      SliverToBoxAdapter(child: HorizontalTypeList(pokemonTypes: pokemonDetails.types)),
-                      SliverToBoxAdapter(child: StatContainer(pokemon: pokemonDetails)),
-                    ],
-                  ),
+                    ),
+                    SliverToBoxAdapter(child: Container(height: context.height * 0.09, child: HorizontalTypeList(pokemonTypes: pokemonDetails.types))),
+                    SliverToBoxAdapter(child: Container(height: context.height * 0.31, child: StatContainer(pokemon: pokemonDetails))),
+                  ],
                 );
               },
             );

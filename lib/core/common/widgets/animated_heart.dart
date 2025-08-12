@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pokexplorer/config/theme/app_palette.dart';
-import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 
 class AnimatedHeart extends StatelessWidget {
   final bool isActive;
@@ -19,7 +18,7 @@ class AnimatedHeart extends StatelessWidget {
         duration: _duration,
         tween: ColorTween(
           begin: AppPalette.grey,
-          end: isActive ? context.theme.primaryColor : AppPalette.grey,
+          end: isActive ? Colors.redAccent[200] : AppPalette.grey,
         ),
         builder: (BuildContext context, Color? value, Widget? child) {
           final IconData tmpIcon = isActive ? Icons.favorite_rounded : Icons.favorite_border_rounded;

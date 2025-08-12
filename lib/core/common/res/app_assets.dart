@@ -13,7 +13,7 @@ class AppAssets {
   static const String pokemonLogoSvg = '$_svgsBasePath/official_pokemon_logo.svg';
   static const String loadingPokeballLottie = '$_lottiesBasePath/pokeball.json';
 
-  static const String fontFamily = 'Comfortaa';
+  static const String comfortaa = 'Comfortaa';
 }
 
 String getIconForType(String typeName) {

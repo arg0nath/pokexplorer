@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 
 class PokeActionDialog extends StatelessWidget {
   const PokeActionDialog({
@@ -18,7 +19,11 @@ class PokeActionDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       //title
-      title: Text(title, textAlign: TextAlign.center),
+      title: Text(
+        title,
+        textAlign: TextAlign.center,
+        style: context.theme.textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+      ),
       //description
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -31,7 +36,14 @@ class PokeActionDialog extends StatelessWidget {
       //button
       actions: [
         TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
-        ElevatedButton(onPressed: onActionTap, child: Text(actionButtonTitle)),
+        ElevatedButton(
+          onPressed: onActionTap,
+          child: Text(actionButtonTitle),
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(context.theme.colorScheme.primary),
+            foregroundColor: WidgetStatePropertyAll(context.theme.colorScheme.onPrimary),
+          ),
+        ),
       ],
     );
   }

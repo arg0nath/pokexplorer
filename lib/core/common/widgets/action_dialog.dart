@@ -37,13 +37,16 @@ class PokeActionDialog extends StatelessWidget {
       actions: <Widget>[
         TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
         ElevatedButton(
-          onPressed: onActionTap,
-          child: Text(actionButtonTitle),
-          style: ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll<Color>(context.colorScheme.primary),
-            foregroundColor: WidgetStatePropertyAll<Color>(context.colorScheme.onPrimary),
-          ),
-        ),
+            onPressed: onActionTap,
+            child: Text(actionButtonTitle),
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all(context.theme.colorScheme.primary),
+              foregroundColor: WidgetStateProperty.all(context.theme.colorScheme.onPrimary),
+              shape: WidgetStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+              textStyle: WidgetStateProperty.all(
+                context.textTheme.titleSmall?.copyWith(color: context.colorScheme.onPrimary, fontWeight: FontWeight.bold),
+              ),
+            )),
       ],
     );
   }

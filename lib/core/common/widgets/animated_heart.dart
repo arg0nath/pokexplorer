@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/core/common/res/app_assets.dart';
+import 'package:pokexplorer/core/common/widgets/custom_network_image.dart';
 
 /// A highly animated Pokeball button that simulates capturing an item.
 ///
 /// When `isActive` changes from `false` to `true`, a complex animation
 /// sequence is triggered:
 /// 1. The Pokeball icon transforms into an opening Pokeball image.
-/// 2. An item (represented by a star in a blue container) appears
-///    slightly above and to the left of the Pokeball.
-/// 3. The item "falls" into the center of the Pokeball while fading out.
+/// 2. The `pokemonAvatar` appears slightly above and to the left of the Pokeball.
+/// 3. Then it "falls" into the center of the Pokeball while fading out.
 /// 4. The opening Pokeball image transforms back into the closed Pokeball image.
 ///
 /// If `isActive` is `false`, the button displays a standard Pokeball icon.
@@ -49,7 +49,7 @@ class _AnimatedPokeballCaptureState extends State<AnimatedPokeballCapture> with 
     // Initialize the animation controller with a total duration for the entire sequence.
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500), // Total animation time (1.5 seconds)
+      duration: const Duration(milliseconds: 1000), // Total animation time (1.5 seconds)
     );
 
     // Define the animation for the Pokeball opening scale.
@@ -196,24 +196,12 @@ class _AnimatedPokeballCaptureState extends State<AnimatedPokeballCapture> with 
                     // Key helps AnimatedSwitcher efficiently update the widget tree if needed,
                     // though not strictly necessary here since it's just a Container.
                     key: const ValueKey('falling_item'),
-                    width: 20,
-                    height: 20,
-                    decoration: BoxDecoration(
-                      color: Colors.lightBlueAccent, // Color of the falling item
-                      borderRadius: BorderRadius.circular(5), // Rounded corners
-                      boxShadow: <BoxShadow>[
-                        // Add a subtle shadow for depth
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          spreadRadius: 1,
-                          blurRadius: 3,
-                          offset: const Offset(1, 1),
-                        ),
-                      ],
-                    ),
-                    child: const Center(
-                      child: Icon(Icons.star, size: 15, color: Colors.white), // An icon inside the item
-                    ),
+                    width: 40,
+                    height: 40,
+                    child: Center(
+                        child: CustomNetworkImage(
+                      imageURL: widget.pokemonAvatar,
+                    )),
                   ),
                 ),
               );

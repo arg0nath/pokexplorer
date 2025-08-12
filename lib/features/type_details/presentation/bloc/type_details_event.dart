@@ -28,8 +28,8 @@ class ProceedToPokemonDetailsEvent extends TypeDetailsEvent {
 }
 
 class SearchPokemonsEvent extends TypeDetailsEvent {
+  const SearchPokemonsEvent({required this.query});
   final String query;
-  const SearchPokemonsEvent(this.query);
 
   @override
   List<Object?> get props => [query];

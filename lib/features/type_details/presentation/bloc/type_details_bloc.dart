@@ -40,9 +40,14 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
           emit(const TypeDetailsState.error('No type details loaded.'));
           return;
         }
-        final String query = event.query.toLowerCase();
-        final List<PokemonPreview> results = _currentTypeDetails!.pokemons.where((PokemonPreview p) => p.name.toLowerCase().contains(query)).toList();
-        emit(TypeDetailsState.searched(searchResults: results));
+
+        if (event.query.isEmpty) {
+          emit(TypeDetailsState.loaded(_currentTypeDetails!));
+        } else {
+          final String query = event.query.toLowerCase();
+          final List<PokemonPreview> results = _currentTypeDetails!.pokemons.where((PokemonPreview p) => p.name.toLowerCase().contains(query)).toList();
+          emit(TypeDetailsState.searched(searchResults: results));
+        }
       } catch (e) {
         emit(TypeDetailsState.error(e.toString()));
       }

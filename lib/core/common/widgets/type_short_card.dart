@@ -25,28 +25,42 @@ class SelectedTypeContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isVertical) {
-      return Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        elevation: 4,
-        margin: const EdgeInsets.all(8),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 6),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(pokemonType.icon, height: 24, width: 24),
-                  const SizedBox(width: 8),
-                  Text(
-                    pokemonType.name.toUpperFirst(),
-                    style: context.theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
+      return Container(
+        margin: EdgeInsets.only(left: 10),
+        decoration: BoxDecoration(
+          color: context.theme.colorScheme.surface,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: context.theme.shadowColor,
+              blurRadius: 2,
+              offset: const Offset(0, 2),
             ),
-          ]),
+          ],
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            final double iconHeight = constraints.maxHeight * 0.45;
+
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.center,
+                  height: iconHeight,
+                  child: Image.asset(pokemonType.icon, fit: BoxFit.contain),
+                ),
+                Text(
+                  pokemonType.name.toUpperFirst(),
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            );
+          },
         ),
       );
     }
@@ -54,13 +68,13 @@ class SelectedTypeContainer extends StatelessWidget {
     // Default horizontal layout
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
+      children: <Widget>[
         Image.asset(pokemonType.icon, height: 30, width: 30),
         const SizedBox(width: 10),
         Text(
           pokemonType.name.toUpperFirst(),
           textAlign: TextAlign.center,
-          style: context.theme.appBarTheme.titleTextStyle?.copyWith(fontWeight: FontWeight.w500),
+          style: context.theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
         ),
       ],
     );

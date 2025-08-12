@@ -24,13 +24,13 @@ class PreviewListTile extends StatelessWidget {
         onLongPress: onLongPress,
         onTap: onCardTap,
         child: Container(
-            margin: const EdgeInsets.all(8),
+            margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
             decoration: BoxDecoration(
               color: context.theme.cardColor,
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: Theme.of(context).shadowColor,
+                  color: context.theme.shadowColor.withAlpha(20),
                   blurRadius: 10,
                   offset: const Offset(0, 1),
                 ),

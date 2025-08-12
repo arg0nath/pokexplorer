@@ -4,6 +4,7 @@ import 'package:pokexplorer/core/common/constants/app_const.dart';
 import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/core/common/utils/type/get_type_color_by_name.dart';
 
+/// A widget that displays a Pokémon's stat as a percentage bar.
 class StatPercentBar extends StatelessWidget {
   const StatPercentBar({
     super.key,
@@ -21,17 +22,18 @@ class StatPercentBar extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text('$name :', style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600)),
+        Text('$name :', style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600)),
         LinearPercentIndicator(
-          width: context.width * 0.6,
-          animation: true,
           barRadius: AppConst.scrollbarRadius,
-          lineHeight: 20.0,
+          width: context.width * 0.6,
           animationDuration: 1500,
           percent: tmpPercent,
+          lineHeight: 20.0,
+          animation: true,
+          backgroundColor: context.colorScheme.onSurface.withAlpha(20),
           progressColor: Color(getColorForType(type)),
         ),
-        Text('$value', style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600)),
+        Text('$value', style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600)),
       ],
     );
   }

@@ -45,7 +45,7 @@ class PreviewListTile extends StatelessWidget {
               //pokemon name
               Expanded(
                 flex: 3,
-                child: Text(preview.name.toUpperFirst(), maxLines: 3, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.titleLarge),
+                child: Text(preview.name.toUpperFirst(), maxLines: 3, overflow: TextOverflow.ellipsis, style: context.textTheme.titleLarge),
               ),
               //favorite icon
 

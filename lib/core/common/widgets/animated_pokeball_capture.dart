@@ -48,7 +48,7 @@ class _AnimatedPokeballCaptureState extends State<AnimatedPokeballCapture> with 
   void initState() {
     super.initState();
     // Initialize the animation controller with a total duration for the entire sequence.
-    _controller = AnimationController(duration: const Duration(milliseconds: 800), vsync: this);
+    _controller = AnimationController(duration: const Duration(milliseconds: 1000), vsync: this);
 
     // Define the animation for the Pokeball opening scale.
     // It briefly scales up (1.0 to 1.1) during the first 20% of the total animation.
@@ -135,24 +135,19 @@ class _AnimatedPokeballCaptureState extends State<AnimatedPokeballCapture> with 
     // Determine which Pokeball visual to display (icon or asset image).
     Widget currentPokeballVisual;
     if (_isPokeballOpen) {
-      // If `_isPokeballOpen` is true, show the opening Pokeball image.
       currentPokeballVisual = Image.asset(AppAssets.buttonOpenPokeball, width: 25, height: 25, fit: BoxFit.contain);
     } else if (widget.isFavorite) {
-      // If `isActive` is true but `_isPokeballOpen` is false (meaning the animation finished closing),
-      // show the closed Pokeball image to signify it's "favorite".
       currentPokeballVisual = Image.asset(AppAssets.buttonPokeball, width: 25, height: 25, fit: BoxFit.contain);
     } else {
-      // If `isActive` is false, show the default Pokeball icon (not favorite).
       currentPokeballVisual = Image.asset(AppAssets.pokeballOutlined, color: context.colorScheme.onSurface.withAlpha(100), width: 25, height: 25, fit: BoxFit.contain);
     }
 
     return SizedBox(
-      width: 70, // Fixed size for the entire button area
+      width: 70,
       height: 70,
       child: Stack(
-        alignment: Alignment.center, // Centers children within the Stack
+        alignment: Alignment.center,
         children: <Widget>[
-          // The Pokeball visual (icon or image) with scaling animation
           AnimatedBuilder(
             animation: _controller,
             builder: (BuildContext context, Widget? child) {
@@ -168,7 +163,7 @@ class _AnimatedPokeballCaptureState extends State<AnimatedPokeballCapture> with 
               return Transform.scale(
                 scale: scale,
                 child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 200), // Quick cross-fade for image change
+                  duration: const Duration(milliseconds: 300), // Quick cross-fade for image change
                   transitionBuilder: (Widget child, Animation<double> animation) {
                     return FadeTransition(opacity: animation, child: child);
                   },
@@ -194,9 +189,9 @@ class _AnimatedPokeballCaptureState extends State<AnimatedPokeballCapture> with 
                   child: Container(
                     // Key helps AnimatedSwitcher efficiently update the widget tree if needed,
                     // though not strictly necessary here since it's just a Container.
-                    key: const ValueKey('falling_item'),
-                    width: 40,
-                    height: 40,
+                    key: const ValueKey<String>('falling_item'),
+                    width: 50,
+                    height: 50,
                     child: Center(
                         child: CustomNetworkImage(
                       imageURL: widget.pokemonAvatar,

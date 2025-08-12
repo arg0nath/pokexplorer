@@ -3,6 +3,9 @@ import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/features/pokemon_details/domain/entities/pokemon_details.dart';
 import 'package:pokexplorer/features/pokemon_details/presentation/widgets/stat_percent_bar.dart';
 
+/// A widget that displays the stats of a Pokémon in a container.
+///
+/// Takes the half of the screen, below the images carousel.
 class StatContainer extends StatelessWidget {
   const StatContainer({super.key, required this.pokemon});
 

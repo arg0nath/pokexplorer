@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 
 class FavAppbarActionsButton extends StatelessWidget {
   const FavAppbarActionsButton({
@@ -14,17 +15,17 @@ class FavAppbarActionsButton extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      onSelected: (value) {
+      onSelected: (int value) {
         if (value == 0) {}
       },
-      itemBuilder: (context) => [
+      itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
         PopupMenuItem<int>(
           value: 0,
           child: Row(
-            children: [
+            children: <Widget>[
               Icon(
                 Icons.delete_forever_rounded,
-                color: Theme.of(context).colorScheme.error,
+                color: context.colorScheme.error,
               ),
               const SizedBox(width: 8),
               const Text('Delete All'),

@@ -10,7 +10,7 @@ class AppTheme {
   static ThemeData light() {
     final ThemeData _theme = ThemeData.from(colorScheme: lightColorScheme);
     return _theme.copyWith(
-      textTheme: _theme.textTheme.apply(fontFamily: AppAssets.comfortaa),
+      textTheme: _theme.textTheme.apply(fontFamily: AppAssets.fontFamily),
       pageTransitionsTheme: _pageTransition,
       appBarTheme: _theme.appBarTheme.copyWith(
         backgroundColor: lightColorScheme.surface,
@@ -18,7 +18,7 @@ class AppTheme {
         titleTextStyle: _theme.textTheme.headlineSmall?.copyWith(
           fontWeight: FontWeight.bold,
           fontSize: 20,
-          fontFamily: AppAssets.comfortaa,
+          fontFamily: AppAssets.fontFamily,
         ),
         elevation: 0,
         scrolledUnderElevation: 0,
@@ -33,11 +33,11 @@ class AppTheme {
         backgroundColor: lightColorScheme.surface,
         titleTextStyle: _theme.textTheme.titleLarge?.copyWith(
           color: lightColorScheme.onSurface,
-          fontFamily: AppAssets.comfortaa,
+          fontFamily: AppAssets.fontFamily,
         ),
         contentTextStyle: _theme.textTheme.bodyMedium?.copyWith(
           color: lightColorScheme.onSurface,
-          fontFamily: AppAssets.comfortaa,
+          fontFamily: AppAssets.fontFamily,
         ),
       ),
       inputDecorationTheme: _theme.inputDecorationTheme.copyWith(
@@ -45,11 +45,11 @@ class AppTheme {
         filled: true,
         labelStyle: _theme.textTheme.labelMedium?.copyWith(
           color: AppPalette.grey,
-          fontFamily: AppAssets.comfortaa,
+          fontFamily: AppAssets.fontFamily,
         ),
         hintStyle: _theme.textTheme.labelMedium?.copyWith(
           color: AppPalette.grey,
-          fontFamily: AppAssets.comfortaa,
+          fontFamily: AppAssets.fontFamily,
         ),
         suffixIconColor: AppPalette.grey,
         focusedBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: AppPalette.white), borderRadius: AppConst.mainRadius),
@@ -61,7 +61,7 @@ class AppTheme {
         foregroundColor: lightColorScheme.onPrimary,
         extendedTextStyle: _theme.textTheme.displayMedium?.copyWith(
           fontWeight: FontWeight.bold,
-          fontFamily: AppAssets.comfortaa,
+          fontFamily: AppAssets.fontFamily,
         ),
       ),
       scaffoldBackgroundColor: lightColorScheme.surface,
@@ -72,7 +72,7 @@ class AppTheme {
   static ThemeData dark() {
     final ThemeData _theme = ThemeData.from(colorScheme: darkColorScheme);
     return _theme.copyWith(
-      textTheme: _theme.textTheme.apply(fontFamily: AppAssets.comfortaa),
+      textTheme: _theme.textTheme.apply(fontFamily: AppAssets.fontFamily),
       pageTransitionsTheme: _pageTransition,
       appBarTheme: _theme.appBarTheme.copyWith(
         backgroundColor: darkColorScheme.surface,
@@ -80,7 +80,7 @@ class AppTheme {
         titleTextStyle: _theme.textTheme.headlineSmall?.copyWith(
           fontWeight: FontWeight.bold,
           fontSize: 20,
-          fontFamily: AppAssets.comfortaa,
+          fontFamily: AppAssets.fontFamily,
         ),
         elevation: 0,
         scrolledUnderElevation: 0,
@@ -95,11 +95,11 @@ class AppTheme {
         filled: true,
         labelStyle: _theme.textTheme.labelMedium?.copyWith(
           color: AppPalette.grey,
-          fontFamily: AppAssets.comfortaa,
+          fontFamily: AppAssets.fontFamily,
         ),
         hintStyle: _theme.textTheme.labelMedium?.copyWith(
           color: AppPalette.grey,
-          fontFamily: AppAssets.comfortaa,
+          fontFamily: AppAssets.fontFamily,
         ),
         suffixIconColor: AppPalette.grey,
         focusedBorder: OutlineInputBorder(borderSide: const BorderSide(width: 0.5, color: AppPalette.black), borderRadius: AppConst.mainRadius),
@@ -111,11 +111,11 @@ class AppTheme {
         backgroundColor: darkColorScheme.surface,
         titleTextStyle: _theme.textTheme.titleLarge?.copyWith(
           color: darkColorScheme.onSurface,
-          fontFamily: AppAssets.comfortaa,
+          fontFamily: AppAssets.fontFamily,
         ),
         contentTextStyle: _theme.textTheme.bodyMedium?.copyWith(
           color: darkColorScheme.onSurface,
-          fontFamily: AppAssets.comfortaa,
+          fontFamily: AppAssets.fontFamily,
         ),
       ),
       floatingActionButtonTheme: _theme.floatingActionButtonTheme.copyWith(
@@ -123,7 +123,7 @@ class AppTheme {
         foregroundColor: darkColorScheme.onPrimary,
         extendedTextStyle: _theme.textTheme.displayMedium?.copyWith(
           fontWeight: FontWeight.bold,
-          fontFamily: AppAssets.comfortaa,
+          fontFamily: AppAssets.fontFamily,
         ),
       ),
       scaffoldBackgroundColor: darkColorScheme.surface,

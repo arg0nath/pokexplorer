@@ -5,6 +5,7 @@ import 'package:pokexplorer/core/common/widgets/bottom_bar.dart';
 import 'package:pokexplorer/core/routes/route_helper.dart';
 import 'package:pokexplorer/core/routes/route_names.dart';
 import 'package:pokexplorer/core/services/di_imports.dart';
+import 'package:pokexplorer/features/debug/presentation/pages/debug_page.dart';
 import 'package:pokexplorer/features/on_boarding/data/datasources/on_boarding_local_data_source.dart';
 import 'package:pokexplorer/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
 import 'package:pokexplorer/features/on_boarding/presentation/pages/on_boarding_page.dart';
@@ -43,10 +44,15 @@ final GoRouter router = GoRouter(
         ),
       ),
     ),
+    customGoRoute(
+      path: '${RoutePath.debugPage}',
+      name: RouteName.debugPageName,
+      builder: (BuildContext context, GoRouterState state) => DebugPage(),
+    ),
     StatefulShellRoute.indexedStack(
       builder: (BuildContext context, GoRouterState state, StatefulNavigationShell navShell) => Scaffold(
         body: navShell,
-        bottomNavigationBar: MyBottomBar(
+        bottomNavigationBar: MainAppBottomBar(
           navigationShell: navShell,
         ),
       ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:pokexplorer/config/typedefs/typedefs.dart';
 import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
+import 'package:pokexplorer/core/common/res/app_assets.dart';
 import 'package:pokexplorer/core/common/utils/type/get_type_color_by_name.dart';
 
 class PokemonTypeDto extends PokemonType {
@@ -34,4 +35,12 @@ class PokemonTypeDto extends PokemonType {
 
   String toJson() => jsonEncode(toMap());
   factory PokemonTypeDto.fromJson(String sourceJson) => PokemonTypeDto.fromMap(jsonDecode(sourceJson) as DataMap);
+
+  PokemonType toEntity() {
+    return PokemonType(
+      colorValue: colorValue,
+      name: name,
+      icon: icon,
+    );
+  }
 }

@@ -4,9 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // This class will handle the local data source for theme settings
 // It will interact with shared preferences or any local database to store and retrieve theme data
 abstract interface class ThemeLocalDataSource {
-  ThemeLocalDataSource({required this.sharedPreferences});
-
-  final SharedPreferences sharedPreferences;
+  ThemeLocalDataSource();
 
   // Example method to save theme preference
   Future<void> saveThemePreference(ThemeEntity theme);
@@ -16,21 +14,21 @@ abstract interface class ThemeLocalDataSource {
 // Example method to get theme preference
 
 class ThemeLocalDatasourceImpl implements ThemeLocalDataSource {
-  ThemeLocalDatasourceImpl(this.sharedPreferences);
+  ThemeLocalDatasourceImpl(this._sharedPreferences);
 
-  @override
-  final SharedPreferences sharedPreferences;
+  final SharedPreferences _sharedPreferences;
 
   @override
   Future<void> saveThemePreference(ThemeEntity theme) async {
     String themeValue = theme.themeType == ThemeType.light ? 'light' : 'dark';
-    await sharedPreferences.setString('theme_key', themeValue);
+    await _sharedPreferences.setString('theme_key', themeValue);
   }
 
   @override
   Future<ThemeEntity> getThemePreference() async {
-    final String? themeValue = sharedPreferences.getString('theme_key');
+    final String? themeValue = _sharedPreferences.getString('theme_key');
     if (themeValue == null) {
+      await _sharedPreferences.setString('theme_key', 'light');
       return const ThemeEntity(themeType: ThemeType.light);
     }
     return ThemeEntity(

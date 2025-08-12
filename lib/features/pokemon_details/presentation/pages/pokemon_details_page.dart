@@ -1,12 +1,16 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/core/common/extensions/string_ext.dart';
-import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
-import 'package:pokexplorer/core/common/widgets/favorite_button.dart';
+import 'package:pokexplorer/core/common/widgets/appbar_background.dart';
 import 'package:pokexplorer/core/common/widgets/message_toast.dart';
 import 'package:pokexplorer/features/pokemon_details/domain/entities/pokemon_details.dart';
 import 'package:pokexplorer/features/pokemon_details/presentation/bloc/pokemon_details_bloc.dart';
+import 'package:pokexplorer/features/pokemon_details/presentation/widgets/horizontal_type_list.dart';
+import 'package:pokexplorer/features/pokemon_details/presentation/widgets/images_carousel.dart';
+import 'package:pokexplorer/features/pokemon_details/presentation/widgets/stat_container.dart';
 //final String extraString = GoRouterState.of(context).extra! as String;
 
 class PokemonDetailsPage extends StatefulWidget {
@@ -19,7 +23,6 @@ class PokemonDetailsPage extends StatefulWidget {
 }
 
 class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
-  late PokemonDetailsBloc pokemonDetailsBloc;
   @override
   void initState() {
     super.initState();
@@ -29,64 +32,71 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    pokemonDetailsBloc = context.read<PokemonDetailsBloc>();
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        actions: [
-          BlocBuilder<PokemonDetailsBloc, PokemonDetailsState>(
-            builder: (context, state) {
-              return state.when(
-                  initial: () => const SizedBox.shrink(),
-                  loading: () => SizedBox.shrink(),
-                  error: (String message) => SizedBox.shrink(),
-                  loaded: (PokemonDetails pokemonDetails) {
-                    return FavoriteButton(
-                      id: pokemonDetails.id,
-                      name: pokemonDetails.name,
-                    );
-                  });
-            },
-          )
-        ],
-        title: Text('${widget.name.toUpperFirst()}'),
-      ),
-      body: BlocConsumer<PokemonDetailsBloc, PokemonDetailsState>(
-        listener: (BuildContext context, PokemonDetailsState state) {
-          state.maybeWhen(
-            error: (String message) {
-              showPokeToast(context, message);
-              context.pop();
-            },
-            orElse: () {},
-          );
-        },
-        builder: (BuildContext context, PokemonDetailsState state) {
-          return state.when(
-            initial: () => const SizedBox.shrink(),
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (String message) => Center(child: Text('Error: $message')),
-            loaded: (PokemonDetails pokemonDetails) {
-              return Container(
-                constraints: BoxConstraints.expand(),
-                child: Column(
-                  children: <Widget>[
-                    if (pokemonDetails.gifUrl != null) Image.network(pokemonDetails.gifUrl!),
-                    Image.network(pokemonDetails.baseImageUrl),
-                    Image.network(pokemonDetails.hdImageUrl),
-                    Text('ID: ${pokemonDetails.id}'),
-                    Text('Height: ${pokemonDetails.height}'),
-                    Text('Weight: ${pokemonDetails.weight}'),
-                    Text('HP: ${pokemonDetails.hp}'),
-                    Text('Attack: ${pokemonDetails.attack}'),
-                    Text('Defense: ${pokemonDetails.defense}'),
-                    Text('Types: ${pokemonDetails.types.map((PokemonType type) => type.name).join(', ')}'),
+    return PageTransitionSwitcher(
+      layoutBuilder: (List<Widget> entries) {
+        return Stack(
+          alignment: Alignment.topCenter,
+          children: entries,
+        );
+      },
+      transitionBuilder: (Widget child, Animation<double> animation, Animation<double> secondaryAnimation) {
+        return FadeThroughTransition(
+          animation: animation,
+          secondaryAnimation: secondaryAnimation,
+          child: child,
+        );
+      },
+      duration: const Duration(milliseconds: 300),
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: Text(widget.name.toUpperFirst()),
+        ),
+        body: BlocConsumer<PokemonDetailsBloc, PokemonDetailsState>(
+          listener: (BuildContext context, PokemonDetailsState state) {
+            state.maybeWhen(
+              error: (String message) {
+                showPokeToast(context, message);
+                context.pop();
+              },
+              orElse: () {},
+            );
+          },
+          builder: (BuildContext context, PokemonDetailsState state) {
+            return state.when(
+              initial: () => const SizedBox.shrink(),
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (String message) => Center(child: Text('Error: $message')),
+              loaded: (PokemonDetails pokemonDetails) {
+                return CustomScrollView(
+                  slivers: <Widget>[
+                    SliverToBoxAdapter(
+                      child: Container(
+                        height: context.height * 0.6, // Adjust based on your carousel size
+                        child: Stack(
+                          alignment: Alignment.topCenter,
+                          children: [
+                            AppbarGradientBackground(color: pokemonDetails.types.first.color),
+                            Positioned(
+                              top: context.height * 0.1,
+                              child: ImagesCarousel(
+                                pokemonImageList: pokemonDetails.imagesUrls,
+                                pageIndicatorColor: pokemonDetails.types.first.color,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SliverToBoxAdapter(child: Container(height: context.height * 0.09, child: HorizontalTypeList(pokemonTypes: pokemonDetails.types))),
+                    SliverToBoxAdapter(child: Container(height: context.height * 0.31, child: StatContainer(pokemon: pokemonDetails))),
                   ],
-                ),
-              );
-            },
-          );
-        },
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

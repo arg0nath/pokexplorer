@@ -6,7 +6,5 @@ class GetThemeUseCase {
 
   final ThemeRepository _themeRepository;
 
-  Future<ThemeEntity> call() async {
-    return await _themeRepository.getTheme();
-  }
+  Future<ThemeEntity> call() async => await _themeRepository.getTheme();
 }

@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/core/common/extensions/string_ext.dart';
 import 'package:pokexplorer/core/common/widgets/action_dialog.dart';
+import 'package:pokexplorer/core/common/widgets/animated_heart.dart';
 import 'package:pokexplorer/features/user_favorites/presentation/bloc/user_favorites_bloc.dart';
+
+/// A button that toggles the favorite status of a Pokémon.
+///
+/// Tightly coupled with the [UserFavoritesBloc] to handle adding and removing favorites.
 
 class FavoriteButton extends StatelessWidget {
   const FavoriteButton({
     super.key,
     required this.name,
     required this.id,
+    required this.avatarUrl,
   });
 
   final String name;
+  final String avatarUrl;
   final int id;
 
   @override
@@ -25,28 +31,26 @@ class FavoriteButton extends StatelessWidget {
         return false;
       },
       builder: (BuildContext context, bool isFavorite) {
-        return IconButton(
-            onPressed: isFavorite
-                ? () => showDialog(
-                      context: context,
-                      builder: (BuildContext context) => PokeActionDialog(
-                        title: 'Remove Favorite',
-                        description: 'You are about to remove ${name.toUpperFirst()} from your favorites.',
-                        actionButtonTitle: 'Remove',
-                        onActionTap: () {
-                          context.read<UserFavoritesBloc>().add(RemoveFromFavoritesEvent(name));
-                        },
-                      ),
-                    )
-                : () => context.read<UserFavoritesBloc>().add(
-                      AddToFavoritesEvent(id: id, name: name),
+        return GestureDetector(
+          child: AnimatedPokeballCapture(
+            isFavorite,
+            pokemonAvatar: avatarUrl,
+          ),
+          onTap: isFavorite
+              ? () => showDialog(
+                    context: context,
+                    builder: (BuildContext context) => PokeActionDialog(
+                      title: 'Remove Favorite',
+                      description: 'You are about to remove ${name.toUpperFirst()} from your favorites.',
+                      actionButtonTitle: 'Remove',
+                      onActionTap: () async {
+                        context.read<UserFavoritesBloc>().add(RemoveFromFavoritesEvent(name));
+                        Navigator.pop(context);
+                      },
                     ),
-            icon: isFavorite
-                ? Icon(
-                    Icons.favorite,
-                    color: context.theme.colorScheme.primary,
                   )
-                : const Icon(Icons.favorite_border));
+              : () => context.read<UserFavoritesBloc>().add(AddToFavoritesEvent(id: id, name: name)),
+        );
       },
     );
   }

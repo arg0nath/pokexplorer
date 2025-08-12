@@ -154,7 +154,6 @@ class _TypeDetailsPokeList extends StatelessWidget {
               pinned: true,
               delegate: SliverSearchAppBar(
                 selectedType: selectedType,
-                textEditingController: searchController,
               ),
             ),
             SliverList.builder(

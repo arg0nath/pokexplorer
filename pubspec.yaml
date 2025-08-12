@@ -83,8 +83,8 @@ flutter:
     - assets/lottieFiles/
 
   fonts:
-    - family: Comfortaa
+    - family: Quicksand
       fonts:
-        - asset: assets/fonts/Comfortaa-Regular.ttf
-        - asset: assets/fonts/Comfortaa-Bold.ttf
+        - asset: assets/fonts/Quicksand-Regular.ttf
+        - asset: assets/fonts/Quicksand-Bold.ttf
           weight: 700  

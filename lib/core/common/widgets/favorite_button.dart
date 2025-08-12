@@ -33,7 +33,7 @@ class FavoriteButton extends StatelessWidget {
       builder: (BuildContext context, bool isFavorite) {
         return GestureDetector(
           child: AnimatedPokeballCapture(
-            isActive: isFavorite,
+            isFavorite,
             pokemonAvatar: avatarUrl,
           ),
           onTap: isFavorite

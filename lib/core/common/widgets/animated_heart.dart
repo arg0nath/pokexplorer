@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokexplorer/config/logger/my_log.dart';
 import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/core/common/res/app_assets.dart';
 import 'package:pokexplorer/core/common/widgets/custom_network_image.dart';
@@ -16,10 +17,10 @@ import 'package:pokexplorer/core/common/widgets/custom_network_image.dart';
 class AnimatedPokeballCapture extends StatefulWidget {
   /// Controls the active state of the Pokeball.
   /// Set to `true` to trigger the capture animation.
-  final bool isActive;
+  final bool isFavorite;
   final String pokemonAvatar;
 
-  const AnimatedPokeballCapture({super.key, required this.isActive, required this.pokemonAvatar});
+  const AnimatedPokeballCapture(this.isFavorite, {super.key, required this.pokemonAvatar});
 
   @override
   State<AnimatedPokeballCapture> createState() => _AnimatedPokeballCaptureState();
@@ -47,10 +48,7 @@ class _AnimatedPokeballCaptureState extends State<AnimatedPokeballCapture> with 
   void initState() {
     super.initState();
     // Initialize the animation controller with a total duration for the entire sequence.
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1000), // Total animation time (1.5 seconds)
-    );
+    _controller = AnimationController(duration: const Duration(milliseconds: 800), vsync: this);
 
     // Define the animation for the Pokeball opening scale.
     // It briefly scales up (1.0 to 1.1) during the first 20% of the total animation.
@@ -58,6 +56,15 @@ class _AnimatedPokeballCaptureState extends State<AnimatedPokeballCapture> with 
       CurvedAnimation(
         parent: _controller,
         curve: const Interval(0.0, 0.2, curve: Curves.easeInOutBack), // First 20% for opening
+      ),
+    );
+
+    // Define the animation for the Pokeball closing scale.
+    // It briefly scales up (1.0 to 1.1) again during the last 20% of the total animation.
+    _pokeballCloseScaleAnimation = Tween<double>(begin: 1.0, end: 1.1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.8, 1.0, curve: Curves.easeInOut), // Last 20% for closing
       ),
     );
 
@@ -86,15 +93,6 @@ class _AnimatedPokeballCaptureState extends State<AnimatedPokeballCapture> with 
       ),
     );
 
-    // Define the animation for the Pokeball closing scale.
-    // It briefly scales up (1.0 to 1.1) again during the last 20% of the total animation.
-    _pokeballCloseScaleAnimation = Tween<double>(begin: 1.0, end: 1.1).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.8, 1.0, curve: Curves.easeInOutBack), // Last 20% for closing
-      ),
-    );
-
     // Add a listener to the animation controller to update UI states based on animation progress.
     _controller.addListener(() {
       setState(() {
@@ -111,8 +109,8 @@ class _AnimatedPokeballCaptureState extends State<AnimatedPokeballCapture> with 
   void didUpdateWidget(covariant AnimatedPokeballCapture oldWidget) {
     super.didUpdateWidget(oldWidget);
     // When the `isActive` property changes, trigger the animation.
-    if (widget.isActive != oldWidget.isActive) {
-      if (widget.isActive) {
+    if (widget.isFavorite != oldWidget.isFavorite) {
+      if (widget.isFavorite) {
         // If becoming active, start the animation from the beginning.
         _controller.forward(from: 0.0);
       } else {
@@ -133,17 +131,18 @@ class _AnimatedPokeballCaptureState extends State<AnimatedPokeballCapture> with 
 
   @override
   Widget build(BuildContext context) {
+    myLog('_pokeballOpenScaleAnimation value: ${_pokeballOpenScaleAnimation.value}');
     // Determine which Pokeball visual to display (icon or asset image).
     Widget currentPokeballVisual;
     if (_isPokeballOpen) {
       // If `_isPokeballOpen` is true, show the opening Pokeball image.
       currentPokeballVisual = Image.asset(AppAssets.buttonOpenPokeball, width: 25, height: 25, fit: BoxFit.contain);
-    } else if (widget.isActive) {
+    } else if (widget.isFavorite) {
       // If `isActive` is true but `_isPokeballOpen` is false (meaning the animation finished closing),
-      // show the closed Pokeball image to signify it's "captured".
+      // show the closed Pokeball image to signify it's "favorite".
       currentPokeballVisual = Image.asset(AppAssets.buttonPokeball, width: 25, height: 25, fit: BoxFit.contain);
     } else {
-      // If `isActive` is false, show the default Pokeball icon (not captured).
+      // If `isActive` is false, show the default Pokeball icon (not favorite).
       currentPokeballVisual = Image.asset(AppAssets.pokeballOutlined, color: context.colorScheme.onSurface.withAlpha(100), width: 25, height: 25, fit: BoxFit.contain);
     }
 
@@ -179,7 +178,7 @@ class _AnimatedPokeballCaptureState extends State<AnimatedPokeballCapture> with 
             },
           ),
 
-          // The falling item (20x20 container with a star icon)
+          // The falling item
           AnimatedBuilder(
             animation: _controller,
             builder: (BuildContext context, Widget? child) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokexplorer/core/common/constants/app_const.dart';
+import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 
 class PokeSearchBar extends StatefulWidget {
   const PokeSearchBar({super.key, required this.onSearch});
@@ -29,8 +30,9 @@ class _PokeSearchBarState extends State<PokeSearchBar> {
   Widget build(BuildContext context) {
     return TextFormField(
         controller: textEditingController,
-        style: Theme.of(context).inputDecorationTheme.labelStyle,
+        style: context.theme.inputDecorationTheme.labelStyle,
         decoration: const InputDecoration().copyWith(
+            hintText: 'Search',
             suffixIcon: IconButton(
                 icon: const Icon(Icons.search),
                 onPressed: () {

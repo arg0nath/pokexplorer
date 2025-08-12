@@ -52,7 +52,7 @@ final GoRouter router = GoRouter(
     StatefulShellRoute.indexedStack(
       builder: (BuildContext context, GoRouterState state, StatefulNavigationShell navShell) => Scaffold(
         body: navShell,
-        bottomNavigationBar: MyBottomBar(
+        bottomNavigationBar: MainAppBottomBar(
           navigationShell: navShell,
         ),
       ),

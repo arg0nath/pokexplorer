@@ -9,7 +9,7 @@
 **Developer:** arg0nath  
 **Platforms:** Android
 
-Pokéxplorer is a cross-platform mobile app that lets you browse Pokémon by type, search by name, view detailed stats, and save your favorites — powered by the [PokéAPI](https://pokeapi.co/) and built with Flutter.
+Pokéxplorer is a cross-platform mobile app that lets you browse Pokémon by type, search by name, view detailed stats, and save your favorites — powered by the [PokéAPI](https://pokeapi.co/) and built with Flutter
 
 ---
 
@@ -24,12 +24,11 @@ Pokéxplorer is a cross-platform mobile app that lets you browse Pokémon by typ
 ## ✨ Features
 
 ### 1. **Type Selection & Search**
-- Choose from popular Pokémon types: Fire, Water, Grass, Electric, Dragon, Psychic, Ghost, Dark, Steel, and Fairy.  
-- Search Pokémon by name within the selected type to quickly find favorites.
+- Choose from popular Pokémon types: Fire, Water, Grass, Electric, Dragon, Psychic, Ghost, Dark, Steel and more
+- Search Pokémon by name within the selected type to quickly find favorites
 
 ### 2. **Pokémon List Display**
-- Displays a list of Pokémon of the selected type.  
-- Initially loads the first 10 Pokémon, with the ability to load more (lazy loading).  
+- Displays a list of Pokémon of the selected type 
 
 ### 3. **Detailed Pokémon Info**
 For each Pokémon, view:
@@ -38,8 +37,8 @@ For each Pokémon, view:
 - **Stats**: Height, Weight, HP, Attack, and Defense
 
 ### 4. **Favorites (Offline Support)**
-- Save Pokémon to a local favorites list (stored offline).  
-- Access all saved Pokémon from a dedicated favorites section.
+- Save Pokémon to a local favorites list (stored offline)
+- Access all saved Pokémon from a dedicated favorites section
 
 ---
 
@@ -59,4 +58,4 @@ For each Pokémon, view:
 ---
 
 ## ❤️ Credits
-Made with ❤️ for the Flutter community.
+Made with ❤️ for the Flutter community

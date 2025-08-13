@@ -9,6 +9,7 @@ class AppAssets {
   static const String pokexplorerLogo = '$_imagesBasePath/pokexplorer_logo.png';
   static const String pokemonCustomPhrase = '$_imagesBasePath/gonnasearch.png';
   static const String pokemonLogoSvg = '$_svgsBasePath/official_pokemon_logo.svg';
+  static const String githubLogoSvg = '$_svgsBasePath/github.svg';
   //lottie
   static const String loadingPokeballLottie = '$_lottiesBasePath/pokeball.json';
 

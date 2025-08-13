@@ -89,7 +89,7 @@ class _AnimatedPokeballCaptureState extends State<AnimatedPokeballCapture> with 
     _itemFadeAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.2, 0.8, curve: Curves.linearToEaseOut), // Fades out during the last half of falling
+        curve: const Interval(0.7, 0.7, curve: Curves.easeInOut), // Fades out during the last half of falling
       ),
     );
 
@@ -100,7 +100,7 @@ class _AnimatedPokeballCaptureState extends State<AnimatedPokeballCapture> with 
         _isPokeballOpen = _controller.value > 0.0 && _controller.value <= 0.75;
 
         // Show the falling item when the animation is between 20% and 70%.
-        _isItemVisible = _controller.value >= 0.1 && _controller.value <= 0.8;
+        _isItemVisible = _controller.value >= 0.2 && _controller.value <= 0.7;
       });
     });
   }
@@ -163,7 +163,7 @@ class _AnimatedPokeballCaptureState extends State<AnimatedPokeballCapture> with 
               return Transform.scale(
                 scale: scale,
                 child: AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300), // Quick cross-fade for image change
+                  duration: const Duration(milliseconds: 200), // Quick cross-fade for image change
                   transitionBuilder: (Widget child, Animation<double> animation) {
                     return FadeTransition(opacity: animation, child: child);
                   },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void openGitHub(BuildContext context, {bool isDisclaimer = false}) async {
@@ -11,8 +12,8 @@ void openGitHub(BuildContext context, {bool isDisclaimer = false}) async {
       ..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
-          content: Text('Could not open GitHub profile'),
-          backgroundColor: Theme.of(context).colorScheme.error,
+          content: Text('Could not open GitHub'),
+          backgroundColor: context.colorScheme.error,
         ),
       );
   }

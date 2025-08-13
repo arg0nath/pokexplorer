@@ -59,4 +59,4 @@ For each Pokémon, view:
 ---
 
 ## ❤️ Credits
-Made with ❤️ for the Pokémon community.
+Made with ❤️ for the Flutter community.

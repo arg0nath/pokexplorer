@@ -6,7 +6,7 @@ import 'package:pokexplorer/config/theme/presentation/bloc/theme_bloc.dart';
 import 'package:pokexplorer/core/common/constants/app_const.dart';
 import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/core/common/res/app_assets.dart';
-import 'package:pokexplorer/core/common/utils/general/send_email.dart' as AppUtils;
+import 'package:pokexplorer/core/common/utils/general/open_github.dart';
 
 class MiscDialog extends StatefulWidget {
   const MiscDialog({super.key});
@@ -49,20 +49,21 @@ class _MiscDialogState extends State<MiscDialog> {
               const Icon(Iconsax.moon),
             ],
           ),
-          RichText(
+          Text('Developed by:', style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600)),
+          TextButton.icon(
+            icon: Icon(Iconsax.profile_circle_copy),
+            onPressed: () => openGitHubProfile(context),
+            label: Text('arg0nath', style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+          ),
+          Text.rich(
             textAlign: TextAlign.center,
-            text: TextSpan(
-              style: context.textTheme.titleMedium,
-              text: 'Made using Flutter by:\n',
-              children: <InlineSpan>[
-                TextSpan(text: 'arg0nath', style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+            TextSpan(
+              style: context.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
+              children: [
+                TextSpan(text: 'Made using Flutter\n'),
+                TextSpan(text: 'with ❤️ for the community\n2025'),
               ],
             ),
-          ),
-          OutlinedButton.icon(
-            onPressed: () async => AppUtils.sendContactEmail(),
-            label: Text('Contact me'),
-            icon: const Icon(Iconsax.user),
           ),
         ]),
       ),

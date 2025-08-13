@@ -24,7 +24,7 @@ class FavoritesAppbarActionsButton extends StatelessWidget {
               description: 'You are about to remove every Pokémon from your favorites.',
               actionButtonTitle: 'Delete All',
               onActionTap: () async {
-                context.read<UserFavoritesBloc>().add(RemovePokemonFromFavoritesEvent([])); //empty list to delete all
+                context.read<UserFavoritesBloc>().add(RemovePokemonFromFavoritesEvent(<String>[])); //empty list to delete all
                 Navigator.pop(context);
               },
             ),

@@ -22,10 +22,9 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
 
     try {
       final ThemeEntity result = await _getThemeUseCase();
-      print('🔧 Loaded theme from storage: ${result.themeType}');
+
       emit(state.copyWith(status: ThemeStatus.success, themeEntity: result));
     } catch (e) {
-      print('❌ Failed to load theme: $e');
       emit(state.copyWith(status: ThemeStatus.failure, failure: CacheFailure(message: e.toString(), statusCode: 505)));
     }
   }
@@ -34,12 +33,10 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     final ThemeType newTheme = event.isDarkMode ? ThemeType.dark : ThemeType.light;
     final ThemeEntity newThemeEntity = ThemeEntity(themeType: newTheme);
     try {
-      print('💾 Saving theme: ${newTheme}');
       await _setThemeUseCase(newThemeEntity);
-      print('✅ Theme saved successfully');
+
       emit(state.copyWith(status: ThemeStatus.success, themeEntity: newThemeEntity));
     } catch (e) {
-      print('❌ Failed to save theme: $e');
       emit(state.copyWith(status: ThemeStatus.failure, failure: CacheFailure(message: e.toString(), statusCode: 505)));
     }
   }

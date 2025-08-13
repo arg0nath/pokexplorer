@@ -10,6 +10,7 @@ abstract interface class UserFavoritesLocalDataSource {
   Future<List<PokemonPreview>> getUserFavoritesFromDb();
   Future<void> addToFavoritesDb({required String name, required int id});
   Future<void> removeFromFavoritesDb({required String name});
+  Future<List<PokemonPreview>> deleteUserFavoritesFromDb();
 }
 
 class UserFavoritesLocalDataSourceImpl implements UserFavoritesLocalDataSource {
@@ -65,6 +66,16 @@ class UserFavoritesLocalDataSourceImpl implements UserFavoritesLocalDataSource {
       );
     } catch (e) {
       throw CacheException(message: 'Failed to remove Pokémon from favorites: $e');
+    }
+  }
+
+  @override
+  Future<List<PokemonPreview>> deleteUserFavoritesFromDb() async {
+    try {
+      await _db.delete(_favsTable);
+      return <PokemonPreview>[];
+    } catch (e) {
+      throw CacheException(message: 'Failed to remove every Pokémon from favorites: $e');
     }
   }
 }

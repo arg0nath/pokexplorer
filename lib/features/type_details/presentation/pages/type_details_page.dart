@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/core/common/models/dtos/pokemon_type_dto.dart';
 import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
 import 'package:pokexplorer/core/common/widgets/message_toast.dart';
@@ -156,20 +157,30 @@ class _TypeDetailsPokeList extends StatelessWidget {
                 selectedType: selectedType,
               ),
             ),
-            SliverList.builder(
-              itemCount: pokemons.length,
-              itemBuilder: (BuildContext context, int index) {
-                final PokemonPreview pokemon = pokemons[index];
-                return PreviewListTile(
-                  preview: pokemon,
-                  onCardTap: () {
-                    typeDetailsBloc.add(
-                      ProceedToPokemonDetailsEvent(pokemon.name),
-                    );
-                  },
-                );
-              },
-            ),
+            if (pokemons.isEmpty)
+              SliverToBoxAdapter(
+                child: Center(
+                  child: Text(
+                    'No Pokémon found',
+                    style: context.textTheme.bodyLarge?.copyWith(color: context.colorScheme.onSurface),
+                  ),
+                ),
+              )
+            else
+              SliverList.builder(
+                itemCount: pokemons.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final PokemonPreview pokemon = pokemons[index];
+                  return PreviewListTile(
+                    preview: pokemon,
+                    onCardTap: () {
+                      typeDetailsBloc.add(
+                        ProceedToPokemonDetailsEvent(pokemon.name),
+                      );
+                    },
+                  );
+                },
+              ),
           ],
         ),
       ),

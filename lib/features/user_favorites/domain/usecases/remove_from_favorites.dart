@@ -9,14 +9,14 @@ class RemoveFromFavorites extends UseCaseWithParams<void, RemoveFromFavoritesPar
   final UserFavoritesRepo _userFavoritesRepo;
 
   @override
-  ResultFutureVoid call(RemoveFromFavoritesParams params) async => _userFavoritesRepo.removeFromFavorites(name: params.name);
+  ResultFutureVoid call(RemoveFromFavoritesParams params) async => _userFavoritesRepo.removeFromFavorites(names: params.names);
 }
 
 class RemoveFromFavoritesParams extends Equatable {
-  const RemoveFromFavoritesParams({required this.name});
+  const RemoveFromFavoritesParams({required this.names});
 
-  final String name;
+  final List<String> names;
 
   @override
-  List<Object?> get props => [name];
+  List<Object?> get props => [names];
 }

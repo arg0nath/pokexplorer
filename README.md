@@ -1,37 +1,62 @@
-![pokexplorer_logo](https://github.com/user-attachments/assets/79396a8f-e445-470d-bd64-8ee4be886ac2)
+![Pokéxplorer Logo](https://github.com/user-attachments/assets/79396a8f-e445-470d-bd64-8ee4be886ac2)
 
 # Pokéxplorer
 
-**Developed by**: arg0nath
+[![Flutter](https://img.shields.io/badge/Flutter-3.22-blue?logo=flutter)](https://flutter.dev/)  
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)  
+[![PokéAPI](https://img.shields.io/badge/API-PokéAPI-red?logo=pokemon)](https://pokeapi.co/)  
 
-**OS**: Android & iOS
+**Developer:** arg0nath  
+**Platforms:** Android
 
-Welcome to the **Pokéxplorer**, a mobile application that allows users to explore Pokémon from various types and learn more about their stats and details. Powered by the [PokéAPI](https://pokeapi.co/) and Flutter SDK
+Pokéxplorer is a cross-platform mobile app that lets you browse Pokémon by type, search by name, view detailed stats, and save your favorites — powered by the [PokéAPI](https://pokeapi.co/) and built with Flutter.
 
-## Features
+---
 
-### 1. **Type Selection + Search**
-- Users can select a Pokémon type from the following options:
-  - Fire, Water, Grass, Electric, Dragon, Psychic, Ghost, Dark, Steel, and Fairy
-- The app supports searching for Pokémon by name within the selected type, making it easy to find your favorite Pokémon
+## 📚 Table of Contents
+1. [✨ Features](#-features)  
+2. [🛠 Technologies](#-technologies)  
+3. [📜 Disclaimer](#-disclaimer)  
+4. [❤️ Credits](#-credits)
 
-### 2. **Display Pokémon**
-- A list of Pokémon belonging to the selected type is displayed
-- Initially, the app shows the first 10 Pokémon of the selected type
-- Users can load more Pokémon by fetching additional results from the API (lazy load) 
+---
 
-### 3. **Pokémon Details**
-- Each Pokémon in the list provides access to detailed information, including:
-  - **Name**
-  - **Images & GIFs**
-  - **Basic Stats**: HP, Attack, and Defense
+## ✨ Features
 
-### 4. **User Favorites (Locally Stored)**
-- Users can add Pokémon to their favorites, which are stored locally on the device.
-- Once added, users can view all their favorite Pokémon in a dedicated list, where they can easily access its details
+### 1. **Type Selection & Search**
+- Choose from popular Pokémon types: Fire, Water, Grass, Electric, Dragon, Psychic, Ghost, Dark, Steel, and Fairy.  
+- Search Pokémon by name within the selected type to quickly find favorites.
 
-## Technologies Used
-- **Flutter SDK** for building a cross-platform application
-- **PokéAPI** for fetching Pokémon data
-- **BLoC Architecture** for efficient state management
-- **Sqflite** for storing user favorites Pokémon locally
+### 2. **Pokémon List Display**
+- Displays a list of Pokémon of the selected type.  
+- Initially loads the first 10 Pokémon, with the ability to load more (lazy loading).  
+
+### 3. **Detailed Pokémon Info**
+For each Pokémon, view:
+- **Name**
+- **Images & GIFs**
+- **Stats**: Height, Weight, HP, Attack, and Defense
+
+### 4. **Favorites (Offline Support)**
+- Save Pokémon to a local favorites list (stored offline).  
+- Access all saved Pokémon from a dedicated favorites section.
+
+---
+
+## 🛠 Technologies
+- **Flutter SDK** — Cross-platform mobile development  
+- **PokéAPI** — Pokémon data provider  
+- **Clean Architecture + BLoC** — Scalable state management  
+- **Sqflite** — Local offline storage
+
+---
+
+## 📜 Disclaimer
+- Pokémon names, types, stats, images, and GIFs are property of **The Pokémon Company**.  
+- Pokéball icons from: [Flaticon Pokémon Icons](https://www.flaticon.com/free-icons/pokemon) — Created by Nikita Golubev, Roundicons Freebies, Shahzama Ahmad, Saepul Nahwan.  
+- The **Pokéxplorer logo** was created by me using a modified version of the official Pokémon logo.
+
+---
+
+## ❤️ Credits
+Made with ❤️ for the Pokémon community.

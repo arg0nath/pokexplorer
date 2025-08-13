@@ -79,6 +79,8 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/images/pokeballs/
+    - assets/images/poke_types/
     - assets/svgs/
     - assets/lottieFiles/
 

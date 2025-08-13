@@ -5,18 +5,47 @@ import 'package:pokexplorer/core/common/widgets/custom_network_image.dart';
 import 'package:pokexplorer/core/common/widgets/favorite_button.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
 
+///`PreviewListTile.selectable` unlocks:
+/// 1) `isSeledted` will be used to highlight the tile
+/// 2) `onLongPress` will be used to select the tile
+/// 3) `FavoriteButton` will be shown
 class PreviewListTile extends StatelessWidget {
-  const PreviewListTile({
-    super.key,
+  const PreviewListTile._({
     required this.preview,
     required this.onCardTap,
-    this.onLongPress,
+    this.onLongPress = null,
+    this.isSelected = false,
+    super.key,
   });
+
+  factory PreviewListTile({
+    required PokemonPreview preview,
+    required VoidCallback onCardTap,
+  }) {
+    return PreviewListTile._(
+      preview: preview,
+      onCardTap: onCardTap,
+    );
+  }
+
+  factory PreviewListTile.selectable({
+    required PokemonPreview preview,
+    required VoidCallback onCardTap,
+    required VoidCallback onLongPress,
+    required bool isSelected,
+  }) {
+    return PreviewListTile._(
+      preview: preview,
+      onCardTap: onCardTap,
+      onLongPress: onLongPress,
+      isSelected: isSelected,
+    );
+  }
 
   final PokemonPreview preview;
   final VoidCallback onCardTap;
-
   final VoidCallback? onLongPress;
+  final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +56,7 @@ class PreviewListTile extends StatelessWidget {
             margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
             decoration: BoxDecoration(
               color: context.theme.colorScheme.onSurface.withAlpha(10),
+              border: isSelected ? Border.all(color: context.colorScheme.primary, width: 2) : null,
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
@@ -47,13 +77,14 @@ class PreviewListTile extends StatelessWidget {
                 flex: 3,
                 child: Text(preview.name.toUpperFirst(), maxLines: 3, overflow: TextOverflow.ellipsis, style: context.textTheme.titleLarge),
               ),
-              //favorite icon
+              if (onLongPress == null)
+                //favorite icon
 
-              FavoriteButton(
-                id: preview.id,
-                avatarUrl: preview.thumbnail,
-                name: preview.name,
-              ),
+                FavoriteButton(
+                  id: preview.id,
+                  avatarUrl: preview.thumbnail,
+                  name: preview.name,
+                ),
             ])));
   }
 }

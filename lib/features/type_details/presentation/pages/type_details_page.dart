@@ -162,7 +162,6 @@ class _TypeDetailsPokeList extends StatelessWidget {
                 final PokemonPreview pokemon = pokemons[index];
                 return PreviewListTile(
                   preview: pokemon,
-                  allowToggleFavorite: true,
                   onCardTap: () {
                     typeDetailsBloc.add(
                       ProceedToPokemonDetailsEvent(pokemon.name),

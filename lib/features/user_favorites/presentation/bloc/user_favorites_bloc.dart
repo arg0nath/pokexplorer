@@ -72,13 +72,16 @@ class UserFavoritesBloc extends Bloc<UserFavoritesEvent, UserFavoritesState> {
         (Failure failure) async => emit(UserFavoritesError(failure.message)),
         (_) async {
           if (state is UserFavoritesLoaded) {
-            final List<PokemonPreview> currentFavorites = List<PokemonPreview>.from(
-              (state as UserFavoritesLoaded).favorites,
-            );
-            currentFavorites.removeWhere((PokemonPreview fav) => event.names.contains(fav.name));
-
-            emit(UpdatingFavoriteStatus(currentFavorites));
-            emit(UserFavoritesLoaded(currentFavorites));
+            if (event.names.isEmpty) {
+              emit(UpdatingFavoriteStatus([]));
+              emit(UserFavoritesLoaded([]));
+            } else {
+              final List<PokemonPreview> currentFavorites = List<PokemonPreview>.from(
+                (state as UserFavoritesLoaded).favorites,
+              )..removeWhere((PokemonPreview fav) => event.names.contains(fav.name));
+              emit(UpdatingFavoriteStatus(currentFavorites));
+              emit(UserFavoritesLoaded(currentFavorites));
+            }
           }
         },
       );

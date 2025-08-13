@@ -48,7 +48,7 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
                 onPressed: () => typeSelectionBloc.add(ProceedToTypeDetails()),
                 icon: Icon(Icons.catching_pokemon_rounded),
                 label: Text('Explore'),
-                tooltip: 'Explore Pokemon of ${_selectedTypeName.toUpperFirst()}',
+                tooltip: 'Explore Pokémon of ${_selectedTypeName.toUpperFirst()}',
               );
             } else {
               return SizedBox.shrink();

@@ -35,7 +35,7 @@ class PokemonDetailsRemoteDataSourceImpl implements PokemonDetailsRemoteDataSour
 
       if (response.statusCode != 200) {
         throw ApiException(
-          message: 'Failed to fetch Pokemon details',
+          message: 'Failed to fetch Pokémon details',
           statusCode: response.statusCode,
         );
       }

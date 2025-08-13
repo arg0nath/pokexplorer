@@ -4,15 +4,14 @@ import 'package:pokexplorer/core/common/extensions/string_ext.dart';
 import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
 
 class SelectedTypeContainer extends StatelessWidget {
-  final PokemonType pokemonType;
-
-  final bool isVertical;
-
   const SelectedTypeContainer._({
     required this.pokemonType,
     this.isVertical = false,
     super.key,
   });
+
+  final PokemonType pokemonType;
+  final bool isVertical;
 
   factory SelectedTypeContainer({required PokemonType pokemonType, Key? key}) {
     return SelectedTypeContainer._(pokemonType: pokemonType, key: key);

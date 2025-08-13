@@ -18,22 +18,25 @@ class PokemonDetailsBloc extends Bloc<PokemonDetailsEvent, PokemonDetailsState> 
   PokemonDetailsBloc({required FetchPokemonDetails fetchPokemonDetails})
       : _fetchPokemonDetails = fetchPokemonDetails,
         super(_Initial()) {
-    on<InitialPokeDetailsEvent>((InitialPokeDetailsEvent event, Emitter<PokemonDetailsState> emit) {
-      emit(const PokemonDetailsState.initial());
-    });
-
-    on<FetchPokemonDetailsEvent>((FetchPokemonDetailsEvent event, Emitter<PokemonDetailsState> emit) async {
-      emit(const PokemonDetailsState.loading());
-      try {
-        final Either<Failure, PokemonDetails> result = await _fetchPokemonDetails(FetchPokemonDetailsParams(name: event.name));
-        result.fold(
-          (Failure failure) => emit(PokemonDetailsState.error(failure.errorMessage)),
-          (PokemonDetails pokemonDetails) => emit(PokemonDetailsState.loaded(pokemonDetails)),
-        );
-      } catch (e) {
-        emit(PokemonDetailsState.error(e.toString()));
-      }
-    });
+    on<InitialPokeDetailsEvent>(_initialPokeDetailsEventHandler);
+    on<FetchPokemonDetailsEvent>(_fetchPokemonDetailsEventHandler);
   }
+
   final FetchPokemonDetails _fetchPokemonDetails;
+  void _initialPokeDetailsEventHandler(InitialPokeDetailsEvent event, Emitter<PokemonDetailsState> emit) {
+    emit(const PokemonDetailsState.initial());
+  }
+
+  void _fetchPokemonDetailsEventHandler(FetchPokemonDetailsEvent event, Emitter<PokemonDetailsState> emit) async {
+    emit(const PokemonDetailsState.loading());
+    try {
+      final Either<Failure, PokemonDetails> result = await _fetchPokemonDetails(FetchPokemonDetailsParams(name: event.name));
+      result.fold(
+        (Failure failure) => emit(PokemonDetailsState.error(failure.errorMessage)),
+        (PokemonDetails pokemonDetails) => emit(PokemonDetailsState.loaded(pokemonDetails)),
+      );
+    } catch (e) {
+      emit(PokemonDetailsState.error(e.toString()));
+    }
+  }
 }

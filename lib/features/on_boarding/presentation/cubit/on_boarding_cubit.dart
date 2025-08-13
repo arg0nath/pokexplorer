@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:pokexplorer/config/logger/my_log.dart';
 import 'package:pokexplorer/core/common/errors/failures.dart';
 import 'package:pokexplorer/features/on_boarding/domain/usecases/cache_first_timer.dart';
 import 'package:pokexplorer/features/on_boarding/domain/usecases/check_first_timer.dart';
@@ -24,7 +23,7 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
   Future<void> cacheFirstTimer() async {
     emit(const CachingFirstTimer());
     final Either<Failure, void> result = await _cacheFirstTimer();
-    log('cacheFirstTimer result: $result');
+    myLog('cacheFirstTimer result: $result');
     result.fold(
       (Failure failure) => emit(OnBoardingError(failure.errorMessage)),
       (_) => emit(const UserCached()),
@@ -35,7 +34,7 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
     emit(const CheckingIfUserFirstTimer());
 
     final Either<Failure, bool> result = await _checkFirstTimer();
-    log('checkIfUserFirstTimer result: $result');
+    myLog('checkIfUserFirstTimer result: $result');
 
     result.fold(
       (Failure failure) => emit(const OnBoardingStatus(isFirstTimer: true)),

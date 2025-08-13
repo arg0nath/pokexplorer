@@ -20,45 +20,51 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
       emit(const TypeDetailsState.initial());
     });
 
-    on<FetchTypeDetailsEvent>((FetchTypeDetailsEvent event, Emitter<TypeDetailsState> emit) async {
-      emit(const TypeDetailsState.loading());
-      try {
-        final Either<Failure, TypeDetails> result = await _fetchTypeDetails(FetchTypeDetailsParams(typeName: event.typeName));
-        result.fold((Failure failure) => emit(TypeDetailsState.error(failure.errorMessage)), (TypeDetails typeDetails) {
-          _currentTypeDetails = typeDetails;
-          emit(TypeDetailsState.loaded(typeDetails));
-        });
-      } catch (e) {
-        emit(TypeDetailsState.error(e.toString()));
-      }
-    });
-
-    on<SearchPokemonsEvent>((SearchPokemonsEvent event, Emitter<TypeDetailsState> emit) async {
-      emit(const TypeDetailsState.searching());
-      try {
-        if (_currentTypeDetails == null) {
-          emit(const TypeDetailsState.error('No type details loaded.'));
-          return;
-        }
-
-        if (event.query.isEmpty) {
-          emit(TypeDetailsState.loaded(_currentTypeDetails!));
-        } else {
-          final String query = event.query.toLowerCase();
-          final List<PokemonPreview> results = _currentTypeDetails!.pokemons.where((PokemonPreview p) => p.name.toLowerCase().contains(query)).toList();
-          emit(TypeDetailsState.searched(searchResults: results));
-        }
-      } catch (e) {
-        emit(TypeDetailsState.error(e.toString()));
-      }
-    });
-
-    on<ProceedToPokemonDetailsEvent>((ProceedToPokemonDetailsEvent event, Emitter<TypeDetailsState> emit) {
-      emit(TypeDetailsState.readyToProceedToPokemonDetails(ProceedingStatus.proceeding));
-      selectedPokemonName = event.pokemonName;
-      emit(TypeDetailsState.readyToProceedToPokemonDetails(ProceedingStatus.completed));
-    });
+    on<FetchTypeDetailsEvent>(_fetchTypeDetailsEventHandler);
+    on<SearchPokemonsEvent>(_searchPokemonsEventHandler);
+    on<ProceedToPokemonDetailsEvent>(_proceedToPokemonDetailsEventHandler);
   }
+
+  void _fetchTypeDetailsEventHandler(FetchTypeDetailsEvent event, Emitter<TypeDetailsState> emit) async {
+    emit(const TypeDetailsState.loading());
+    try {
+      final Either<Failure, TypeDetails> result = await _fetchTypeDetails(FetchTypeDetailsParams(typeName: event.typeName));
+      result.fold((Failure failure) => emit(TypeDetailsState.error(failure.errorMessage)), (TypeDetails typeDetails) {
+        _currentTypeDetails = typeDetails;
+        emit(TypeDetailsState.loaded(typeDetails));
+      });
+    } catch (e) {
+      emit(TypeDetailsState.error(e.toString()));
+    }
+    ;
+  }
+
+  void _proceedToPokemonDetailsEventHandler(ProceedToPokemonDetailsEvent event, Emitter<TypeDetailsState> emit) {
+    emit(TypeDetailsState.readyToProceedToPokemonDetails(ProceedingStatus.proceeding));
+    selectedPokemonName = event.pokemonName;
+    emit(TypeDetailsState.readyToProceedToPokemonDetails(ProceedingStatus.completed));
+  }
+
+  void _searchPokemonsEventHandler(SearchPokemonsEvent event, Emitter<TypeDetailsState> emit) async {
+    emit(const TypeDetailsState.searching());
+    try {
+      if (_currentTypeDetails == null) {
+        emit(const TypeDetailsState.error('No type details loaded.'));
+        return;
+      }
+
+      if (event.query.isEmpty) {
+        emit(TypeDetailsState.loaded(_currentTypeDetails!));
+      } else {
+        final String query = event.query.toLowerCase();
+        final List<PokemonPreview> results = _currentTypeDetails!.pokemons.where((PokemonPreview p) => p.name.toLowerCase().contains(query)).toList();
+        emit(TypeDetailsState.searched(searchResults: results));
+      }
+    } catch (e) {
+      emit(TypeDetailsState.error(e.toString()));
+    }
+  }
+
   String selectedPokemonName = AppConst.emptyString;
   final FetchTypeDetails _fetchTypeDetails;
   TypeDetails? _currentTypeDetails;

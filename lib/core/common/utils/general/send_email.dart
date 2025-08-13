@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 void sendContactEmail(BuildContext ctx) async {
   final Uri emailLaunchUri = Uri(
     scheme: 'mailto',
-    path: 'email here',
+    path: 'cv here',
     query: encodeQueryParameters(<String, String>{
       'subject': 'About pokéxplorer',
     }),

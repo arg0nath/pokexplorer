@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-void openGitHubProfile(BuildContext context) async {
-  final Uri githubUri = Uri.parse('https://github.com/arg0nath');
+void openGitHub(BuildContext context, {bool isDisclaimer = false}) async {
+  final Uri githubUri = Uri.parse(isDisclaimer ? 'https://github.com/arg0nath/pokexplorer/tree/dev?tab=readme-ov-file#-credits' : 'https://github.com/arg0nath');
 
   if (await canLaunchUrl(githubUri)) {
     await launchUrl(githubUri, mode: LaunchMode.externalApplication);

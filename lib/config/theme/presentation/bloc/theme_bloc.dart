@@ -13,11 +13,11 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
       : _getThemeUseCase = getThemeUseCase,
         _setThemeUseCase = setThemeUseCase,
         super(ThemeState.initial()) {
-    on<GetThemeEvent>(_onGetThemeEvent);
-    on<ToggleThemeEvent>(_onToggleThemeEvent);
+    on<GetThemeEvent>(_onGetThemeEventHandler);
+    on<ToggleThemeEvent>(_onToggleThemeEventHandler);
   }
 
-  Future<void> _onGetThemeEvent(GetThemeEvent event, Emitter<ThemeState> emit) async {
+  Future<void> _onGetThemeEventHandler(GetThemeEvent event, Emitter<ThemeState> emit) async {
     emit(state.copyWith(status: ThemeStatus.loading));
 
     try {
@@ -29,7 +29,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     }
   }
 
-  Future<void> _onToggleThemeEvent(ToggleThemeEvent event, Emitter<ThemeState> emit) async {
+  Future<void> _onToggleThemeEventHandler(ToggleThemeEvent event, Emitter<ThemeState> emit) async {
     final ThemeType newTheme = event.isDarkMode ? ThemeType.dark : ThemeType.light;
     final ThemeEntity newThemeEntity = ThemeEntity(themeType: newTheme);
     try {

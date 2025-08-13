@@ -1,0 +1,2 @@
+/Users/argo/Projects/pokexplorer/android/app/.cxx/Debug/432a2p1n/x86/CMakeFiles/edit_cache.dir
+/Users/argo/Projects/pokexplorer/android/app/.cxx/Debug/432a2p1n/x86/CMakeFiles/rebuild_cache.dir

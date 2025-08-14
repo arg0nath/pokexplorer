@@ -1,4 +1,4 @@
-package com.example.pokexplorer
+package com.pokexplorer.app
 
 import io.flutter.embedding.android.FlutterActivity
 

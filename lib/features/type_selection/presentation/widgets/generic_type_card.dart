@@ -36,7 +36,7 @@ class GenericTypeCard extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           child: Column(
             spacing: 10,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(

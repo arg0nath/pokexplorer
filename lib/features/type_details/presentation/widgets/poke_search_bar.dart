@@ -54,10 +54,11 @@ class _PokeSearchBarState extends State<PokeSearchBar> {
             return widget.onSearch(AppConst.emptyString);
           }
         },
+        onSaved: (String? newValue) => widget.onSearch(newValue),
         onTapOutside: (PointerDownEvent val) => FocusScope.of(context).unfocus(),
         onFieldSubmitted: (String val) {
           if (val.isNotEmpty) {
-            return widget.onSearch(AppConst.emptyString);
+            return widget.onSearch(val);
           } else {
             null;
           }

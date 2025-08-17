@@ -24,7 +24,6 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
   @override
   Widget build(BuildContext context) {
     final TypeSelectionBloc typeSelectionBloc = context.read<TypeSelectionBloc>();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pick a Type'),

@@ -17,28 +17,17 @@ class _MainAppBottomBarState extends State<MainAppBottomBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: widget.navigationShell.currentIndex,
       onTap: (int index) {
         if (index == widget.navigationShell.currentIndex) {
-          // if current tab again — pop to root
-          widget.navigationShell.goBranch(
-            index,
-            initialLocation: true,
-          );
+          widget.navigationShell.goBranch(index, initialLocation: true);
         } else {
-          // switch to another tab
           widget.navigationShell.goBranch(index);
         }
       },
+      currentIndex: widget.navigationShell.currentIndex,
       items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.catching_pokemon_rounded),
-          label: 'Explore',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.favorite),
-          label: 'Favorites',
-        ),
+        BottomNavigationBarItem(icon: Icon(Icons.catching_pokemon_rounded), label: 'Explore'),
+        BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorites'),
       ],
     );
   }

@@ -20,7 +20,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 final SharedPreferences prefs = sl<SharedPreferences>();
 final bool isFirstTimer = prefs.getBool(kFirstTimerKey) ?? true;
-
 final GoRouter router = GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: isFirstTimer ? RoutePath.onBoardingPage : RoutePath.typeSelectionPage,
@@ -49,12 +48,21 @@ final GoRouter router = GoRouter(
       name: RouteName.debugPageName,
       builder: (BuildContext context, GoRouterState state) => DebugPage(),
     ),
+    customGoRoute(
+      path: '${RoutePath.typeDetailsPage}/:typeName',
+      name: RouteName.typeDetailsPageName,
+      builder: (BuildContext context, GoRouterState state) => BlocProvider<TypeDetailsBloc>(
+        create: (BuildContext context) => sl<TypeDetailsBloc>(),
+        child: TypeDetailsPage(
+          typeName: state.pathParameters['typeName']!,
+        ),
+      ),
+    ),
     StatefulShellRoute.indexedStack(
+      parentNavigatorKey: _rootNavigatorKey,
       builder: (BuildContext context, GoRouterState state, StatefulNavigationShell navShell) => Scaffold(
         body: navShell,
-        bottomNavigationBar: MainAppBottomBar(
-          navigationShell: navShell,
-        ),
+        bottomNavigationBar: MainAppBottomBar(navigationShell: navShell),
       ),
       branches: <StatefulShellBranch>[
         StatefulShellBranch(
@@ -63,18 +71,6 @@ final GoRouter router = GoRouter(
               path: RoutePath.typeSelectionPage,
               name: RouteName.typeSelectionPageName,
               builder: (BuildContext context, GoRouterState state) => const TypeSelectionPage(),
-              routes: <GoRoute>[
-                customGoRoute(
-                  path: '${RoutePath.typeDetailsPage}/:typeName',
-                  name: RouteName.typeDetailsPageName,
-                  builder: (BuildContext context, GoRouterState state) => BlocProvider<TypeDetailsBloc>(
-                    create: (BuildContext context) => sl<TypeDetailsBloc>(),
-                    child: TypeDetailsPage(
-                      typeName: state.pathParameters['typeName']!,
-                    ),
-                  ),
-                ),
-              ],
             ),
           ],
         ),

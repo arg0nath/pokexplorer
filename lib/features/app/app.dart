@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokexplorer/config/logger/my_log.dart';
 import 'package:pokexplorer/config/theme/app_theme.dart';
 import 'package:pokexplorer/config/theme/domain/entity/theme_entity.dart';
 import 'package:pokexplorer/config/theme/presentation/bloc/theme_bloc.dart';
@@ -29,11 +28,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> _initializeTheme() async {
-    _themeBloc = sl<ThemeBloc>(); // Manually get ThemeBloc from DI (get_it)
-
-    // Dispatch the event to load the stored theme from cache (or default)
+    _themeBloc = sl<ThemeBloc>();
     _themeBloc!.add(const GetThemeEvent());
-
     // Wait until the theme is loaded (success or failure) before proceeding
     // This prevents the app from rendering with the wrong theme initially
     await _themeBloc!.stream.firstWhere(
@@ -75,24 +71,14 @@ class _MyAppState extends State<MyApp> {
         // Since we manually created ThemeBloc and triggered GetThemeEvent,
         // we must use `.value` to inject the existing instance (not create a new one)
         BlocProvider<ThemeBloc>.value(value: _themeBloc!),
-
         // These blocs can be created lazily as usual
-        BlocProvider<TypeSelectionBloc>(
-          create: (BuildContext context) => sl<TypeSelectionBloc>(),
-        ),
-        BlocProvider<UserFavoritesBloc>(
-          lazy: false,
-          create: (BuildContext context) => sl<UserFavoritesBloc>()..add(LoadUserFavoritesEvent()),
-        ),
+        BlocProvider<TypeSelectionBloc>(create: (BuildContext context) => sl<TypeSelectionBloc>()),
+        BlocProvider<UserFavoritesBloc>(lazy: false, create: (BuildContext context) => sl<UserFavoritesBloc>()..add(LoadUserFavoritesEvent())),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (BuildContext context, ThemeState state) {
-          myLog('Current theme: ${state.themeEntity?.themeType}');
-          myLog('Theme status: ${state.status}');
-
           // Determine the current theme based on the bloc's state
           final isDark = state.themeEntity?.themeType == ThemeType.dark;
-
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             theme: AppTheme.light(),

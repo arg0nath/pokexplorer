@@ -32,8 +32,8 @@ class _MainAppBottomBarState extends State<MainAppBottomBar> {
       },
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
+          icon: Icon(Icons.catching_pokemon_rounded),
+          label: 'Explore',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.favorite),

@@ -46,7 +46,7 @@ For each Pokémon, view:
 ---
 
 ## ❤️ Credits
-Developed by **arg0nath**
+Developed & Designed by **arg0nath**
 
 Made with ❤️ for the Flutter community
 

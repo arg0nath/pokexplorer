@@ -45,10 +45,6 @@ class ThemeColorsReferencePage extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          subtitle: Text(
-            '#${bgColor.value.toRadixString(16).padLeft(8, '0').toUpperCase()}',
-            style: TextStyle(color: fgColor),
-          ),
         );
       },
     );

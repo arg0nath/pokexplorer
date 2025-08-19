@@ -16,7 +16,7 @@ class WelcomeBottomBar extends StatelessWidget {
       color: AppPalette.transparent,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: [
+        children: <Widget>[
           FilledButton(
             child: Text("Start", style: context.textTheme.titleMedium?.copyWith(color: context.colorScheme.onPrimary, fontWeight: FontWeight.w600)),
             onPressed: () {

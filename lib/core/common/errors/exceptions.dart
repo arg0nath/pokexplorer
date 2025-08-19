@@ -7,7 +7,7 @@ class ApiException extends Equatable implements Exception {
   final int statusCode;
 
   @override
-  List<Object?> get props => [message, statusCode];
+  List<Object?> get props => <Object?>[message, statusCode];
 }
 
 class CacheException extends Equatable implements Exception {
@@ -17,5 +17,5 @@ class CacheException extends Equatable implements Exception {
   final int statusCode;
 
   @override
-  List<Object?> get props => [message, statusCode];
+  List<Object?> get props => <Object?>[message, statusCode];
 }

@@ -4,7 +4,7 @@ abstract class TypeDetailsEvent extends Equatable {
   const TypeDetailsEvent();
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => <Object?>[];
 }
 
 class InitialTypeEvent extends TypeDetailsEvent {
@@ -16,7 +16,7 @@ class FetchTypeDetailsEvent extends TypeDetailsEvent {
   const FetchTypeDetailsEvent(this.typeName);
 
   @override
-  List<Object?> get props => [typeName];
+  List<Object?> get props => <Object?>[typeName];
 }
 
 class ProceedToPokemonDetailsEvent extends TypeDetailsEvent {
@@ -24,7 +24,7 @@ class ProceedToPokemonDetailsEvent extends TypeDetailsEvent {
   const ProceedToPokemonDetailsEvent(this.pokemonName);
 
   @override
-  List<Object?> get props => [pokemonName];
+  List<Object?> get props => <Object?>[pokemonName];
 }
 
 class SearchPokemonsEvent extends TypeDetailsEvent {
@@ -32,5 +32,5 @@ class SearchPokemonsEvent extends TypeDetailsEvent {
   final String query;
 
   @override
-  List<Object?> get props => [query];
+  List<Object?> get props => <Object?>[query];
 }

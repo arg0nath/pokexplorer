@@ -11,7 +11,7 @@ class PokemonPreviewWithFavoriteModel extends Equatable {
   });
 
   @override
-  List<Object?> get props => [pokemon, isFavorite];
+  List<Object?> get props => <Object?>[pokemon, isFavorite];
 
   PokemonPreviewWithFavoriteModel copyWith({
     PokemonPreview? pokemon,

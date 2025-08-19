@@ -15,7 +15,7 @@ class IconTitleHolder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsets.only(top: context.height * 0.05),
-        child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        child: Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
           Padding(padding: EdgeInsets.only(left: context.width * 0.1, right: context.width * 0.05), child: Icon(iconData)),
           Flexible(child: Text(message, style: context.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600)))
         ]));

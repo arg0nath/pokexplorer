@@ -27,7 +27,7 @@ class PokemonTypeDto extends PokemonType {
           colorValue: getColorForType(map['name'] as String),
         );
 
-  DataMap toMap() => {
+  DataMap toMap() => <String, dynamic>{
         'name': name,
         'icon': icon,
         'colorValue': colorValue,

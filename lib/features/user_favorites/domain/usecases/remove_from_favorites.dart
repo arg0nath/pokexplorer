@@ -18,5 +18,5 @@ class RemoveFromFavoritesParams extends Equatable {
   final List<String> names;
 
   @override
-  List<Object?> get props => [names];
+  List<Object?> get props => <Object?>[names];
 }

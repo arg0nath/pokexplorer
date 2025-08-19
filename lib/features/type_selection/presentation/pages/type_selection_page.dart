@@ -27,7 +27,7 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pick a Type'),
-        actions: [
+        actions: <Widget>[
           DebugButton(),
           IconButton(
             icon: const Icon(Iconsax.setting_5_copy),

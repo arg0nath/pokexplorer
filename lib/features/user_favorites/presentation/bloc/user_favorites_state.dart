@@ -4,29 +4,29 @@ sealed class UserFavoritesState extends Equatable {
   const UserFavoritesState();
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => <Object>[];
 }
 
 final class LoadingUserFavorites extends UserFavoritesState {}
 
 final class UserFavoritesLoaded extends UserFavoritesState {
-  UserFavoritesLoaded(this.favorites) : favoriteNames = favorites.map((e) => e.name).toSet();
+  UserFavoritesLoaded(this.favorites) : favoriteNames = favorites.map((PokemonPreview e) => e.name).toSet();
 
   final List<PokemonPreview> favorites;
   final Set<String> favoriteNames;
 
   @override
-  List<Object> get props => [favorites, favoriteNames];
+  List<Object> get props => <Object>[favorites, favoriteNames];
 }
 
 final class UpdatingFavoriteStatus extends UserFavoritesState {
-  UpdatingFavoriteStatus(this.favorites) : favoriteNames = favorites.map((e) => e.name).toSet();
+  UpdatingFavoriteStatus(this.favorites) : favoriteNames = favorites.map((PokemonPreview e) => e.name).toSet();
 
   final List<PokemonPreview> favorites;
   final Set<String> favoriteNames;
 
   @override
-  List<Object> get props => [favorites, favoriteNames];
+  List<Object> get props => <Object>[favorites, favoriteNames];
 }
 
 final class UserFavoritesError extends UserFavoritesState {
@@ -35,5 +35,5 @@ final class UserFavoritesError extends UserFavoritesState {
   final String errorMessage;
 
   @override
-  List<Object> get props => [errorMessage];
+  List<Object> get props => <Object>[errorMessage];
 }

@@ -4,7 +4,7 @@ abstract class PokemonDetailsEvent extends Equatable {
   const PokemonDetailsEvent();
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => <Object?>[];
 }
 
 class InitialPokeDetailsEvent extends PokemonDetailsEvent {
@@ -16,5 +16,5 @@ class FetchPokemonDetailsEvent extends PokemonDetailsEvent {
   const FetchPokemonDetailsEvent(this.name);
 
   @override
-  List<Object?> get props => [name];
+  List<Object?> get props => <Object?>[name];
 }

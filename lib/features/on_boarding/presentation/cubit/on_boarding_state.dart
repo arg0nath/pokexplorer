@@ -4,7 +4,7 @@ sealed class OnBoardingState extends Equatable {
   const OnBoardingState();
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => <Object>[];
 }
 
 final class OnBoardingInitial extends OnBoardingState {
@@ -29,7 +29,7 @@ class OnBoardingStatus extends OnBoardingState {
   final bool isFirstTimer;
 
   @override
-  List<Object> get props => [isFirstTimer];
+  List<Object> get props => <Object>[isFirstTimer];
 }
 
 class OnBoardingError extends OnBoardingState {
@@ -38,5 +38,5 @@ class OnBoardingError extends OnBoardingState {
   final String message;
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => <Object>[message];
 }

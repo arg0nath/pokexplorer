@@ -4,19 +4,19 @@ sealed class ThemeEvent extends Equatable {
   const ThemeEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => <Object>[];
 }
 
 class ToggleThemeEvent extends ThemeEvent {
   const ToggleThemeEvent(this.isDarkMode);
   final bool isDarkMode;
   @override
-  List<Object> get props => [isDarkMode];
+  List<Object> get props => <Object>[isDarkMode];
 }
 
 class GetThemeEvent extends ThemeEvent {
   const GetThemeEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => <Object>[];
 }

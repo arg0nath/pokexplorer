@@ -38,7 +38,7 @@ class GenericTypeCard extends StatelessWidget {
             spacing: 10,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               Container(
                 padding: const EdgeInsets.all(10),
                 child: Text(
@@ -51,7 +51,7 @@ class GenericTypeCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
+                children: <Widget>[
                   Image.asset(
                     pokemonType.icon,
                     height: 100,

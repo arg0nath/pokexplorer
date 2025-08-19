@@ -2,9 +2,9 @@ import 'package:dartz/dartz.dart';
 import 'package:pokexplorer/config/typedefs/typedefs.dart';
 import 'package:pokexplorer/core/common/errors/exceptions.dart';
 import 'package:pokexplorer/core/common/errors/failures.dart';
+import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
 import 'package:pokexplorer/features/type_selection/data/datasources/local/type_selection_local_datasource.dart';
 import 'package:pokexplorer/features/type_selection/domain/repos/type_selection_repo.dart';
-import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
 
 class TypeSelectionRepositoryImpl implements TypeSelectionRepository {
   const TypeSelectionRepositoryImpl(this._localDataSource);
@@ -25,8 +25,7 @@ class TypeSelectionRepositoryImpl implements TypeSelectionRepository {
   @override
   ResultFutureVoid selectPokemonType(String typeName) async {
     try {
-      final result = await _localDataSource.selectPokemonType(typeName);
-
+      await _localDataSource.selectPokemonType(typeName);
       return Right(null);
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message, statusCode: e.statusCode));

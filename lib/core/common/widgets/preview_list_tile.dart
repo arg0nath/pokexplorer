@@ -15,7 +15,6 @@ class PreviewListTile extends StatelessWidget {
     required this.onCardTap,
     this.onLongPress = null,
     this.isSelected = false,
-    super.key,
   });
 
   factory PreviewListTile({
@@ -55,10 +54,10 @@ class PreviewListTile extends StatelessWidget {
         child: Container(
             margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
             decoration: BoxDecoration(
-              color: context.theme.colorScheme.onSurface.withAlpha(10),
+              color: context.colorScheme.onSurface.withAlpha(10),
               border: isSelected ? Border.all(color: context.colorScheme.primary, width: 2) : null,
               borderRadius: BorderRadius.circular(12),
-              boxShadow: [
+              boxShadow: <BoxShadow>[
                 BoxShadow(
                   color: context.theme.shadowColor.withAlpha(20),
                   blurRadius: 10,
@@ -66,7 +65,7 @@ class PreviewListTile extends StatelessWidget {
                 ),
               ],
             ),
-            child: Row(children: [
+            child: Row(children: <Widget>[
               //pokemon image
               Expanded(
                   flex: 2,

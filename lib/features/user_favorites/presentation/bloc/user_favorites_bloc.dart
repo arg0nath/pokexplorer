@@ -73,8 +73,8 @@ class UserFavoritesBloc extends Bloc<UserFavoritesEvent, UserFavoritesState> {
         (_) async {
           if (state is UserFavoritesLoaded) {
             if (event.names.isEmpty) {
-              emit(UpdatingFavoriteStatus([]));
-              emit(UserFavoritesLoaded([]));
+              emit(UpdatingFavoriteStatus(<PokemonPreview>[]));
+              emit(UserFavoritesLoaded(<PokemonPreview>[]));
             } else {
               final List<PokemonPreview> currentFavorites = List<PokemonPreview>.from(
                 (state as UserFavoritesLoaded).favorites,

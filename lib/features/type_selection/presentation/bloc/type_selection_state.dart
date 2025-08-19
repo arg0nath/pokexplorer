@@ -23,7 +23,7 @@ final class TypesLoaded extends TypeSelectionState {
   final String selectedTypeName;
 
   @override
-  List<Object> get props => [...types.map((PokemonType type) => type.name), selectedTypeName];
+  List<Object> get props => <Object>[...types.map((PokemonType type) => type.name), selectedTypeName];
 }
 
 final class TypeSelectionError extends TypeSelectionState {

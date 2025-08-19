@@ -22,7 +22,7 @@ class TypeSelectionLocalDataSourceImpl implements TypeSelectionLocalDataSource {
   @override
   Future<List<PokemonTypeDto>> getPokemonTypes() async {
     // Simulate fetching data from local storage
-    final types = [
+    final List<PokemonTypeDto> types = <PokemonTypeDto>[
       PokemonTypeDto.fromTypeName('fire'),
       PokemonTypeDto.fromTypeName('water'),
       PokemonTypeDto.fromTypeName('grass'),
@@ -42,7 +42,7 @@ class TypeSelectionLocalDataSourceImpl implements TypeSelectionLocalDataSource {
       PokemonTypeDto.fromTypeName('bug'),
       PokemonTypeDto.fromTypeName('ice'),
     ];
-    final List<PokemonTypeDto> result = types.map((type) => PokemonTypeDto.fromJson(type.toJson())).toList();
+    final List<PokemonTypeDto> result = types.map((PokemonTypeDto type) => PokemonTypeDto.fromJson(type.toJson())).toList();
     return Future<List<PokemonTypeDto>>.value(result);
   }
 

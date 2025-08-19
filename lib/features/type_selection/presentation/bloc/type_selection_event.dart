@@ -4,14 +4,14 @@ sealed class TypeSelectionEvent extends Equatable {
   const TypeSelectionEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => <Object>[];
 }
 
 final class GetTypesEvent extends TypeSelectionEvent {
   const GetTypesEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => <Object>[];
 }
 
 final class SelectTypeEvent extends TypeSelectionEvent {
@@ -19,12 +19,12 @@ final class SelectTypeEvent extends TypeSelectionEvent {
 
   final String typeName;
   @override
-  List<Object> get props => [typeName];
+  List<Object> get props => <Object>[typeName];
 }
 
 final class ProceedToTypeDetails extends TypeSelectionEvent {
   const ProceedToTypeDetails();
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => <Object>[];
 }

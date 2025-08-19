@@ -19,5 +19,5 @@ class FetchTypeDetailsParams extends Equatable {
   final String typeName;
 
   @override
-  List<Object?> get props => [typeName];
+  List<Object?> get props => <Object?>[typeName];
 }

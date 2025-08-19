@@ -45,7 +45,7 @@ class UserFavoritesLocalDataSourceImpl implements UserFavoritesLocalDataSource {
     try {
       await _db.insert(
         _favsTable,
-        {
+        <String, Object?>{
           _idColumnName: id,
           _nameColumnName: name,
         },

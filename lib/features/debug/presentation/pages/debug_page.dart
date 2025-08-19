@@ -13,13 +13,13 @@ class DebugPage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Debug'),
           bottom: const TabBar(
-            tabs: [
+            tabs: <Widget>[
               Tab(text: 'Theme Colors'),
             ],
           ),
         ),
         body: const TabBarView(
-          children: [
+          children: <Widget>[
             ThemeColorsReferencePage(),
           ],
         ),

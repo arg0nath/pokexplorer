@@ -39,7 +39,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       child: Scaffold(
         extendBody: true,
         body: Stack(
-          children: [
+          children: <Widget>[
             //background
             const Positioned(left: -20, bottom: -50, child: PokeballBackground()),
             //logo + text
@@ -47,7 +47,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 padding: EdgeInsets.symmetric(vertical: context.height * 0.1, horizontal: context.width * 0.1),
                 width: context.width,
                 child: Column(
-                  children: [
+                  children: <Widget>[
                     const Expanded(
                       flex: 3,
                       child: LogoPlaceholder(primaryLogoImagePath: AppAssets.pokexplorerLogo, secondaryLogoImagePath: AppAssets.pokemonCustomPhrase),
@@ -56,7 +56,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                       flex: 5,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
+                        children: <Widget>[
                           IntroTextHolder(text: 'Welcome, explorer!').animate(delay: 500.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad),
                           IntroTextHolder(text: 'A new Poké-search journey is about to begin...').animate(delay: 600.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad),
                           IntroTextHolder(text: 'Hooray!').animate(delay: 700.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad),

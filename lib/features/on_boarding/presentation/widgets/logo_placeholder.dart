@@ -19,7 +19,7 @@ class LogoPlaceholder extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+          children: <Widget>[
             Image.asset(primaryLogoImagePath).animate(delay: 200.ms).fade(duration: 100.ms, curve: Curves.easeOutQuad),
             if (secondaryLogoImagePath != null) Flexible(child: Image.asset(secondaryLogoImagePath!)).animate(delay: 300.ms).fade(duration: 1700.ms, curve: Curves.easeOutQuad),
           ],

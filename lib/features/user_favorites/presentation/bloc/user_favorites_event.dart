@@ -4,7 +4,7 @@ sealed class UserFavoritesEvent extends Equatable {
   const UserFavoritesEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => <Object>[];
 }
 
 final class LoadUserFavoritesEvent extends UserFavoritesEvent {}
@@ -19,7 +19,7 @@ final class AddToFavoritesEvent extends UserFavoritesEvent {
   final String name;
 
   @override
-  List<Object> get props => [name, id];
+  List<Object> get props => <Object>[name, id];
 }
 
 final class RemovePokemonFromFavoritesEvent extends UserFavoritesEvent {
@@ -28,5 +28,5 @@ final class RemovePokemonFromFavoritesEvent extends UserFavoritesEvent {
   final List<String> names;
 
   @override
-  List<Object> get props => [names];
+  List<Object> get props => <Object>[names];
 }

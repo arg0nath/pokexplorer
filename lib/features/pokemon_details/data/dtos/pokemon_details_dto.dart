@@ -25,14 +25,14 @@ abstract class PokemonDetailsDto with _$PokemonDetailsDto {
   }) = _PokemonDetailsDto;
 
   /// You must define this manually if you're doing custom logic
-  factory PokemonDetailsDto.fromJson(Map<String, dynamic> json) {
+  factory PokemonDetailsDto.fromJson(DataMap json) {
     final int id = json['id'] as int;
     final String name = json['name'] as String;
 
     final int height = json['height'] as int;
     final int weight = json['weight'] as int;
 
-    final List stats = json['stats'] as List<dynamic>;
+    final List<dynamic> stats = json['stats'] as List<dynamic>;
     int extractStat(String statName) {
       return stats.firstWhere((s) => s['stat']['name'] == statName)['base_stat'] as int;
     }
@@ -50,7 +50,7 @@ abstract class PokemonDetailsDto with _$PokemonDetailsDto {
     final String hdImageUrl = officialArtwork['front_default'] as String? ?? '';
     final String baseImageUrl = getPokemonBaseImageById(id);
 
-    final List<Map<String, dynamic>> types = (json['types'] as List<dynamic>).map((e) => DataMap.from(e as Map)).toList();
+    final List<DataMap> types = (json['types'] as List<dynamic>).map((e) => DataMap.from(e as Map)).toList();
 
     return PokemonDetailsDto(
       id: id,
@@ -72,7 +72,7 @@ extension PokemonDetailsDtoX on PokemonDetailsDto {
   PokemonDetails toEntity() {
     final List<PokemonType> mappedTypes = types.map((DataMap typeMap) => PokemonTypeDto.fromMap(typeMap['type'] as DataMap)).toList();
 
-    final List<String> imagesUrls = [
+    final List<String> imagesUrls = <String>[
       hdImageUrl,
       baseImageUrl,
       gifUrl ?? '',

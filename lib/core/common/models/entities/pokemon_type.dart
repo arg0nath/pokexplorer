@@ -14,7 +14,7 @@ class PokemonType extends Equatable {
   Color get color => Color(colorValue);
 
   @override
-  List<Object?> get props => [name, icon, colorValue];
+  List<Object?> get props => <Object?>[name, icon, colorValue];
 
   @override
   String toString() {

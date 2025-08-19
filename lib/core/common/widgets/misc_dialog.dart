@@ -29,7 +29,7 @@ class _MiscDialogState extends State<MiscDialog> {
           Flexible(
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: [
+              children: <Widget>[
                 Image.asset(height: 80, AppAssets.pokexplorerLogo, fit: BoxFit.scaleDown),
                 Image.asset(height: 40, AppAssets.pokemonCustomPhrase, fit: BoxFit.scaleDown),
               ],
@@ -62,15 +62,15 @@ class _MiscDialogState extends State<MiscDialog> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 spacing: 15,
-                children: [
+                children: <Widget>[
                   Text('Developed & Designed  by:', textAlign: TextAlign.center, style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     spacing: 10,
-                    children: [
-                      SvgPicture.asset(AppAssets.githubLogoSvg, height: 20, width: 20, color: context.theme.colorScheme.onSurface),
+                    children: <Widget>[
+                      SvgPicture.asset(AppAssets.githubLogoSvg, height: 20, width: 20, colorFilter: ColorFilter.mode(context.colorScheme.onSurface, BlendMode.srcIn)),
                       Text('arg0nath', style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
                     ],
                   ),
@@ -82,7 +82,7 @@ class _MiscDialogState extends State<MiscDialog> {
             textAlign: TextAlign.center,
             TextSpan(
               style: context.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
-              children: [
+              children: <InlineSpan>[
                 TextSpan(text: 'Made using Flutter\n'),
                 TextSpan(text: 'with ❤️ for the community\n'),
               ],
@@ -91,7 +91,7 @@ class _MiscDialogState extends State<MiscDialog> {
           GestureDetector(
             onTap: () => openGitHub(context, isDisclaimer: true),
             child: Column(
-              children: [
+              children: <Widget>[
                 Text('Disclaimer Info', style: context.textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600)),
               ],
             ),

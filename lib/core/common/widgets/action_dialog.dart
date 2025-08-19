@@ -40,8 +40,8 @@ class PokeActionDialog extends StatelessWidget {
             onPressed: onActionTap,
             child: Text(actionButtonTitle),
             style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(context.theme.colorScheme.primary),
-              foregroundColor: WidgetStateProperty.all(context.theme.colorScheme.onPrimary),
+              backgroundColor: WidgetStateProperty.all(context.colorScheme.primary),
+              foregroundColor: WidgetStateProperty.all(context.colorScheme.onPrimary),
               shape: WidgetStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
               textStyle: WidgetStateProperty.all(
                 context.textTheme.titleSmall?.copyWith(color: context.colorScheme.onPrimary, fontWeight: FontWeight.bold),

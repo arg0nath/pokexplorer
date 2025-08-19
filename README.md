@@ -1,7 +1,7 @@
 <img width="1024" height="500" alt="feature_image" src="https://github.com/user-attachments/assets/622aa7a8-2f22-4f14-9464-79b4f10caba5" />
 
 
-[![Flutter](https://img.shields.io/badge/Flutter-3.22-blue?logo=flutter)](https://flutter.dev/)  [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)  [![PokéAPI](https://img.shields.io/badge/API-PokéAPI-red?logo=pokemon)](https://pokeapi.co/)  
+[![Flutter](https://img.shields.io/badge/Flutter-3.35.1-blue?logo=flutter)](https://flutter.dev/)  [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)  [![PokéAPI](https://img.shields.io/badge/API-PokéAPI-red?logo=pokemon)](https://pokeapi.co/)  
 
 **Platforms:** Android, iOS 
 

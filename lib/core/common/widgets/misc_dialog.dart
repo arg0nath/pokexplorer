@@ -61,9 +61,9 @@ class _MiscDialogState extends State<MiscDialog> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: 10,
+                spacing: 15,
                 children: [
-                  Text('Developed & Designed  by:', style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600)),
+                  Text('Developed & Designed  by:', textAlign: TextAlign.center, style: context.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

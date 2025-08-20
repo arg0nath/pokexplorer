@@ -74,7 +74,7 @@ class SelectedTypeContainer extends StatelessWidget {
         Text(
           pokemonType.name.toUpperFirst(),
           textAlign: TextAlign.center,
-          style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
+          style: context.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
       ],
     );

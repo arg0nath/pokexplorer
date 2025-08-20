@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/core/common/res/app_assets.dart';
 import 'package:toastification/toastification.dart';
 
@@ -7,7 +8,7 @@ ToastificationItem showPokeToast(BuildContext context, String msg) {
   return toastification.show(
     icon: Image.asset(AppAssets.pokeballPng, width: 20, height: 20),
     title: SizedBox(
-        width: MediaQuery.sizeOf(context).width * 0.9,
+        width: context.width * 0.9,
         child: Text(
           msg,
           maxLines: 3,

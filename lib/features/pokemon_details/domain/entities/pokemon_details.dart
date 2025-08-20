@@ -11,6 +11,7 @@ class PokemonDetails {
     required this.attack,
     required this.defense,
     required this.types,
+    this.cryUrl,
   });
 
   final int id;
@@ -21,5 +22,6 @@ class PokemonDetails {
   final int hp;
   final int attack;
   final int defense;
+  final String? cryUrl;
   final List<PokemonType> types;
 }

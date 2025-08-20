@@ -46,6 +46,7 @@ dependencies:
   bloc_lint: ^0.2.1
   bloc_concurrency: ^0.3.0
   smooth_page_indicator: ^1.2.1
+  audioplayers: ^6.5.0
 
 
 dev_dependencies:

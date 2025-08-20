@@ -9,6 +9,7 @@ import 'package:pokexplorer/core/common/widgets/favorite_button.dart';
 import 'package:pokexplorer/core/common/widgets/message_toast.dart';
 import 'package:pokexplorer/features/pokemon_details/domain/entities/pokemon_details.dart';
 import 'package:pokexplorer/features/pokemon_details/presentation/bloc/pokemon_details_bloc.dart';
+import 'package:pokexplorer/features/pokemon_details/presentation/widgets/cry_playback_button.dart';
 import 'package:pokexplorer/features/pokemon_details/presentation/widgets/horizontal_type_list.dart';
 import 'package:pokexplorer/features/pokemon_details/presentation/widgets/images_carousel.dart';
 import 'package:pokexplorer/features/pokemon_details/presentation/widgets/stat_container.dart';
@@ -106,6 +107,15 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
                         ),
                       ),
                     ),
+                    if (pokemonDetails.cryUrl != null && pokemonDetails.cryUrl!.isNotEmpty)
+                      SliverToBoxAdapter(
+                        child: Center(
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(minWidth: 200, maxWidth: context.width * 0.5),
+                            child: CryPlaybackButton(url: pokemonDetails.cryUrl!, backgroudColor: pokemonDetails.types.first.color),
+                          ),
+                        ),
+                      ),
                     SliverToBoxAdapter(child: Container(height: context.height * 0.09, child: HorizontalTypeList(pokemonTypes: pokemonDetails.types))),
                     SliverToBoxAdapter(child: Container(height: context.height * 0.31, child: StatContainer(pokemon: pokemonDetails))),
                   ],

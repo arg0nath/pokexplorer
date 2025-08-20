@@ -21,6 +21,7 @@ abstract class PokemonDetailsDto with _$PokemonDetailsDto {
     required int hp,
     required int attack,
     required int defense,
+    required String? cryUrl,
     required List<DataMap> types,
   }) = _PokemonDetailsDto;
 
@@ -28,6 +29,7 @@ abstract class PokemonDetailsDto with _$PokemonDetailsDto {
   factory PokemonDetailsDto.fromJson(DataMap json) {
     final int id = json['id'] as int;
     final String name = json['name'] as String;
+    final String? cryUrl = json['cries']['latest'] as String?;
 
     final int height = json['height'] as int;
     final int weight = json['weight'] as int;
@@ -61,6 +63,7 @@ abstract class PokemonDetailsDto with _$PokemonDetailsDto {
       height: height,
       weight: weight,
       hp: hp,
+      cryUrl: cryUrl,
       attack: attack,
       defense: defense,
       types: types,
@@ -85,6 +88,7 @@ extension PokemonDetailsDtoX on PokemonDetailsDto {
       height: height,
       weight: weight,
       hp: hp,
+      cryUrl: cryUrl,
       attack: attack,
       defense: defense,
       types: mappedTypes,

@@ -1,7 +1,7 @@
 import 'package:pokexplorer/config/typedefs/typedefs.dart';
 import 'package:pokexplorer/core/common/errors/exceptions.dart';
 import 'package:pokexplorer/core/common/utils/pokemon/generate_preview_url.dart';
-import 'package:pokexplorer/core/common/utils/pokemon/get_poke_image_by_id.dart';
+import 'package:pokexplorer/core/common/utils/pokemon/get_sprites.dart';
 import 'package:pokexplorer/features/type_details/data/dtos/pokemon_preview_dto.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
 import 'package:sqflite/sqflite.dart';
@@ -31,7 +31,7 @@ class UserFavoritesLocalDataSourceImpl implements UserFavoritesLocalDataSource {
         final PokemonPreviewDto dto = PokemonPreviewDto(
           url: getPokemonPreviewUrl(map[_idColumnName] as int),
           name: map[_nameColumnName] as String,
-          thumbnail: getPokemonBaseImageById(map[_idColumnName] as int),
+          thumbnail: getPokeBaseImageById(map[_idColumnName] as int),
         );
         return dto.toEntity();
       }).toList();

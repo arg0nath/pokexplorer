@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pokexplorer/core/common/errors/failures.dart';
-import 'package:pokexplorer/core/common/utils/pokemon/get_poke_image_by_id.dart';
+import 'package:pokexplorer/core/common/utils/pokemon/get_sprites.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
 import 'package:pokexplorer/features/user_favorites/domain/usecases/add_to_favorites.dart';
 import 'package:pokexplorer/features/user_favorites/domain/usecases/get_user_favorites.dart';
@@ -52,7 +52,7 @@ class UserFavoritesBloc extends Bloc<UserFavoritesEvent, UserFavoritesState> {
               currentFavorites.add(PokemonPreview(
                 id: event.id,
                 name: event.name,
-                thumbnail: getPokemonBaseImageById(event.id),
+                thumbnail: getPokeBaseImageById(event.id),
               ));
             }
             emit(UpdatingFavoriteStatus(currentFavorites));

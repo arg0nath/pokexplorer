@@ -3,7 +3,7 @@ import 'package:pokexplorer/config/typedefs/typedefs.dart';
 import 'package:pokexplorer/core/common/constants/app_const.dart';
 import 'package:pokexplorer/core/common/utils/pokemon/extract_poke_preview_id.dart';
 import 'package:pokexplorer/core/common/utils/pokemon/generate_preview_url.dart';
-import 'package:pokexplorer/core/common/utils/pokemon/get_poke_image_by_id.dart';
+import 'package:pokexplorer/core/common/utils/pokemon/get_sprites.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
 
 part 'pokemon_preview_dto.freezed.dart';
@@ -28,7 +28,7 @@ abstract class PokemonPreviewDto extends PokemonPreview with _$PokemonPreviewDto
 
   PokemonPreview toEntity() {
     final int id = extractPokemonPreviewId(url);
-    final String thumbnail = getPokemonBaseImageById(id);
+    final String thumbnail = getPokeBaseImageById(id);
 
     return PokemonPreview(
       id: id,

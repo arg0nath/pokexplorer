@@ -2,8 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pokexplorer/config/typedefs/typedefs.dart';
 import 'package:pokexplorer/core/common/models/dtos/pokemon_type_dto.dart';
 import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
-import 'package:pokexplorer/core/common/utils/pokemon/get_poke_image_by_id.dart';
-import 'package:pokexplorer/core/common/utils/pokemon/get_pokemon_svg_by_id.dart';
+import 'package:pokexplorer/core/common/utils/pokemon/get_sprites.dart';
 import 'package:pokexplorer/features/pokemon_details/domain/entities/pokemon_details.dart';
 
 part 'pokemon_details_dto.freezed.dart';
@@ -18,6 +17,7 @@ abstract class PokemonDetailsDto with _$PokemonDetailsDto {
     required String baseImageUrl,
     required String hdImageUrl,
     required String? svgUrl,
+    required String? secondBaseImageUrl,
     required int height,
     required int weight,
     required int hp,
@@ -52,8 +52,9 @@ abstract class PokemonDetailsDto with _$PokemonDetailsDto {
 
     final String? gifUrl = showdown['front_default'] as String?;
     final String hdImageUrl = officialArtwork['front_default'] as String? ?? '';
-    final String baseImageUrl = getPokemonBaseImageById(id);
-    final String? svgUrl = getPokemonSvgById(id);
+    final String baseImageUrl = getPokeBaseImageById(id);
+    final String? svgUrl = getPokeSvgById(id);
+    final String? secondBaseImageUrl = getPokeBaseSecondImageById(id);
 
     final List<DataMap> types = (json['types'] as List<dynamic>).map((e) => DataMap.from(e as Map)).toList();
 
@@ -63,6 +64,7 @@ abstract class PokemonDetailsDto with _$PokemonDetailsDto {
       gifUrl: gifUrl,
       baseImageUrl: baseImageUrl,
       svgUrl: svgUrl,
+      secondBaseImageUrl: secondBaseImageUrl,
       hdImageUrl: hdImageUrl,
       height: height,
       weight: weight,
@@ -81,8 +83,9 @@ extension PokemonDetailsDtoX on PokemonDetailsDto {
 
     final List<String> imagesUrls = <String>[
       hdImageUrl,
-      baseImageUrl,
       svgUrl ?? '',
+      secondBaseImageUrl ?? '',
+      baseImageUrl,
       gifUrl ?? '',
     ].where((String url) => url.isNotEmpty).toList();
 

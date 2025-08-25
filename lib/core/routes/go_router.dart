@@ -11,6 +11,7 @@ import 'package:pokexplorer/features/on_boarding/presentation/cubit/on_boarding_
 import 'package:pokexplorer/features/on_boarding/presentation/pages/on_boarding_page.dart';
 import 'package:pokexplorer/features/pokemon_details/presentation/bloc/pokemon_details_bloc.dart';
 import 'package:pokexplorer/features/pokemon_details/presentation/pages/pokemon_details_page.dart';
+import 'package:pokexplorer/features/settings/presentation/pages/settings_page.dart';
 import 'package:pokexplorer/features/type_details/presentation/bloc/type_details_bloc.dart';
 import 'package:pokexplorer/features/type_details/presentation/pages/type_details_page.dart';
 import 'package:pokexplorer/features/type_selection/presentation/pages/type_selection_page.dart';
@@ -80,6 +81,15 @@ final GoRouter router = GoRouter(
               path: RoutePath.userFavoritesPage,
               name: RouteName.userFavoritesPageName,
               builder: (BuildContext context, GoRouterState state) => const UserFavoritesPage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: <RouteBase>[
+            customGoRoute(
+              path: RoutePath.settingsPage,
+              name: RouteName.settingsPageName,
+              builder: (BuildContext context, GoRouterState state) => const SettingsPage(),
             ),
           ],
         ),

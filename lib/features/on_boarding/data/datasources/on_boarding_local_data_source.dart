@@ -1,3 +1,4 @@
+import 'package:pokexplorer/core/common/constants/app_const.dart';
 import 'package:pokexplorer/core/common/errors/exceptions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,8 +9,6 @@ abstract class OnBoardingLocalDataSource {
   Future<bool> checkFirstTimer();
 }
 
-const String kFirstTimerKey = 'first_timer';
-
 class OnBoardingLocalDataSourceImpl implements OnBoardingLocalDataSource {
   OnBoardingLocalDataSourceImpl(this._prefs);
 
@@ -18,7 +17,7 @@ class OnBoardingLocalDataSourceImpl implements OnBoardingLocalDataSource {
   @override
   Future<void> cacheFirstTimer() async {
     try {
-      await _prefs.setBool(kFirstTimerKey, false);
+      await _prefs.setBool(AppConst.kFirstTimerKey, false);
     } catch (e) {
       throw CacheException(message: e.toString());
     }
@@ -27,7 +26,7 @@ class OnBoardingLocalDataSourceImpl implements OnBoardingLocalDataSource {
   @override
   Future<bool> checkFirstTimer() async {
     try {
-      return _prefs.getBool(kFirstTimerKey) ?? true;
+      return _prefs.getBool(AppConst.kFirstTimerKey) ?? true;
     } catch (e) {
       throw CacheException(message: e.toString());
     }

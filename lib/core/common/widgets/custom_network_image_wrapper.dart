@@ -18,8 +18,8 @@ class CustomNetworkImageWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<SettingsBloc, SettingsState, bool>(
-      selector: (state) => state is SettingsLoaded ? state.showCopyrightedContent : false,
-      builder: (context, isCopyrightedVisible) {
+      selector: (SettingsState state) => state is SettingsLoaded ? state.showCopyrightedContent : false,
+      builder: (BuildContext context, bool isCopyrightedVisible) {
         return CustomNetworkImage(
           imageURL: imageURL,
           width: width,

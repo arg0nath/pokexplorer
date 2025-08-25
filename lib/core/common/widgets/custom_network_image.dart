@@ -40,8 +40,8 @@ class CustomNetworkImage extends StatelessWidget {
         width: width,
         height: height,
         color: isCopyrightedVisible ? null : AppPalette.grey,
-        errorBuilder: (context, error, stackTrace) => const _ErrorWidget(),
-        loadingBuilder: (context, child, loadingProgress) {
+        errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) => const _ErrorWidget(),
+        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
           if (loadingProgress == null) return child;
           return const _PlaceHolderWidget();
         },

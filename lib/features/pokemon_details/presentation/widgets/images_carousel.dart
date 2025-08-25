@@ -44,7 +44,9 @@ class ImagesCarousel extends StatelessWidget {
             itemCount: pokemonImageList.length,
             itemBuilder: (BuildContext context, int index, int realIndex) {
               final String imageUrl = pokemonImageList[index];
-              return CustomNetworkImage(imageURL: imageUrl);
+              return CustomNetworkImage(
+                imageURL: imageUrl,
+              );
             },
           ),
           const SizedBox(height: 16),

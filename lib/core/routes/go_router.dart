@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokexplorer/core/common/constants/app_const.dart';
 import 'package:pokexplorer/core/common/widgets/bottom_bar.dart';
 import 'package:pokexplorer/core/routes/route_helper.dart';
 import 'package:pokexplorer/core/routes/route_names.dart';
 import 'package:pokexplorer/core/services/di_imports.dart';
 import 'package:pokexplorer/features/debug/presentation/pages/debug_page.dart';
-import 'package:pokexplorer/features/on_boarding/data/datasources/on_boarding_local_data_source.dart';
 import 'package:pokexplorer/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
 import 'package:pokexplorer/features/on_boarding/presentation/pages/on_boarding_page.dart';
 import 'package:pokexplorer/features/pokemon_details/presentation/bloc/pokemon_details_bloc.dart';
 import 'package:pokexplorer/features/pokemon_details/presentation/pages/pokemon_details_page.dart';
+import 'package:pokexplorer/features/settings/presentation/pages/settings_page.dart';
 import 'package:pokexplorer/features/type_details/presentation/bloc/type_details_bloc.dart';
 import 'package:pokexplorer/features/type_details/presentation/pages/type_details_page.dart';
 import 'package:pokexplorer/features/type_selection/presentation/pages/type_selection_page.dart';
@@ -19,10 +20,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 final SharedPreferences prefs = sl<SharedPreferences>();
-final bool isFirstTimer = prefs.getBool(kFirstTimerKey) ?? true;
+
+bool _shouldShowOnboarding() {
+  final bool isFirstTimer = prefs.getBool(AppConst.kFirstTimerKey) ?? true;
+  final bool termsAccepted = prefs.getBool(AppConst.kAcceptedTermsKey) ?? false;
+  // Show onboarding if it's first time OR if terms haven't been accepted
+  return isFirstTimer || !termsAccepted;
+}
+
 final GoRouter router = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: isFirstTimer ? RoutePath.onBoardingPage : RoutePath.typeSelectionPage,
+  initialLocation: _shouldShowOnboarding() ? RoutePath.onBoardingPage : RoutePath.typeSelectionPage,
   redirect: (BuildContext context, GoRouterState state) => state.matchedLocation == RoutePath.rootPage ? RoutePath.typeSelectionPage : null,
   routes: <RouteBase>[
     customGoRoute(
@@ -80,6 +88,15 @@ final GoRouter router = GoRouter(
               path: RoutePath.userFavoritesPage,
               name: RouteName.userFavoritesPageName,
               builder: (BuildContext context, GoRouterState state) => const UserFavoritesPage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: <RouteBase>[
+            customGoRoute(
+              path: RoutePath.settingsPage,
+              name: RouteName.settingsPageName,
+              builder: (BuildContext context, GoRouterState state) => const SettingsPage(),
             ),
           ],
         ),

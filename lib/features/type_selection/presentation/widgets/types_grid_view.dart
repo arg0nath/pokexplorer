@@ -6,7 +6,6 @@ import 'package:pokexplorer/features/type_selection/presentation/widgets/generic
 
 class TypesGridView extends StatelessWidget {
   const TypesGridView({
-    super.key,
     required this.types,
     required this.selectedTypeName,
   });
@@ -15,17 +14,20 @@ class TypesGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-        gridDelegate: _gridDelegate(),
-        itemBuilder: (BuildContext context, int index) {
-          // Placeholder for type items
-          return GenericTypeCard(
-            pokemonType: types[index],
-            onTap: () => context.read<TypeSelectionBloc>().add(SelectTypeEvent(typeName: types[index].name)),
-            isSelected: types[index].name == selectedTypeName,
-          );
-        },
-        itemCount: types.length);
+    return Scrollbar(
+      child: GridView.builder(
+          padding: EdgeInsets.all(10),
+          gridDelegate: _gridDelegate(),
+          itemBuilder: (BuildContext context, int index) {
+            // Placeholder for type items
+            return GenericTypeCard(
+              pokemonType: types[index],
+              onTap: () => context.read<TypeSelectionBloc>().add(SelectTypeEvent(typeName: types[index].name)),
+              isSelected: types[index].name == selectedTypeName,
+            );
+          },
+          itemCount: types.length),
+    );
   }
 }
 

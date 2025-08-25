@@ -1,4 +1,4 @@
-import 'package:pokexplorer/config/theme/data/source/local/theme_local_datasource.dart';
+import 'package:pokexplorer/config/theme/data/datasource/local/theme_local_datasource.dart';
 import 'package:pokexplorer/config/theme/domain/entity/theme_entity.dart';
 import 'package:pokexplorer/config/theme/domain/repository/theme_repo.dart';
 

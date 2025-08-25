@@ -47,6 +47,7 @@ dependencies:
   bloc_concurrency: ^0.3.0
   smooth_page_indicator: ^1.2.1
   audioplayers: ^6.5.0
+  fluentui_system_icons: ^1.1.273
 
 
 dev_dependencies:

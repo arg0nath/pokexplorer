@@ -6,15 +6,15 @@ import 'package:pokexplorer/features/type_details/data/dtos/pokemon_preview_dto.
 import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
 import 'package:sqflite/sqflite.dart';
 
-abstract interface class UserFavoritesLocalDataSource {
+abstract interface class UserFavoritesLocalDatasource {
   Future<List<PokemonPreview>> getUserFavoritesFromDb();
   Future<void> addToFavoritesDb({required String name, required int id});
   Future<void> removeFromFavoritesDb({required String name});
   Future<List<PokemonPreview>> deleteUserFavoritesFromDb();
 }
 
-class UserFavoritesLocalDataSourceImpl implements UserFavoritesLocalDataSource {
-  const UserFavoritesLocalDataSourceImpl(this._db);
+class UserFavoritesLocalDatasourceImpl implements UserFavoritesLocalDatasource {
+  const UserFavoritesLocalDatasourceImpl(this._db);
 
   final Database _db;
 

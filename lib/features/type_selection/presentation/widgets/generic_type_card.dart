@@ -37,6 +37,7 @@ class _GenericTypeCardState extends State<GenericTypeCard> with SingleTickerProv
     );
     _animation = CurvedAnimation(
       parent: _controller,
+      reverseCurve: Curves.fastOutSlowIn.flipped,
       curve: Curves.fastOutSlowIn,
     );
     if (widget.isSelected) _controller.forward();
@@ -70,16 +71,12 @@ class _GenericTypeCardState extends State<GenericTypeCard> with SingleTickerProv
         painter: BorderAnimationPainter(
           animation: _animation,
           color: Color(typeColor),
-          borderRadius: 28,
+          borderRadius: 28, //
         ),
         child: Container(
           decoration: BoxDecoration(
             color: !widget.isSelected ? Color(typeColor).withAlpha(50) : Color(typeColor).withAlpha(190),
             borderRadius: AppConst.mainRadius,
-            border: Border.all(
-              color: !widget.isSelected ? Color(typeColor).withAlpha(10) : Color(typeColor),
-              width: 3,
-            ),
           ),
           child: Padding(
             padding: const EdgeInsets.all(12),
@@ -141,16 +138,8 @@ class BorderAnimationPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
       ..color = color
-      ..strokeWidth = 2
+      ..strokeWidth = 3
       ..style = PaintingStyle.stroke;
-/* 
-    final Path fullPath = Path()
-      ..addRRect(
-        RRect.fromRectAndRadius(
-          Rect.fromLTWH(0, 0, size.width, size.height),
-          Radius.circular(borderRadius),
-        ),
-      ); */
 
     final Path fullPath = Path();
 
@@ -178,7 +167,7 @@ class BorderAnimationPainter extends CustomPainter {
     final Path path = Path();
 
     for (final PathMetric metric in metrics) {
-      final extractLength = metric.length * animation.value;
+      final double extractLength = metric.length * animation.value;
       path.addPath(metric.extractPath(0, extractLength), Offset.zero);
     }
 

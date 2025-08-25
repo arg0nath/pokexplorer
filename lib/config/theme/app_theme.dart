@@ -78,6 +78,16 @@ class AppTheme {
       ),
       scaffoldBackgroundColor: lightColorScheme.surface,
       cardColor: AppPalette.white,
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: lightColorScheme.primary,
+          foregroundColor: lightColorScheme.onPrimary,
+          textStyle: _theme.textTheme.labelLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+            fontFamily: AppAssets.fontFamily,
+          ),
+        ),
+      ),
     );
   }
 
@@ -140,6 +150,16 @@ class AppTheme {
         contentTextStyle: _theme.textTheme.bodyMedium?.copyWith(
           color: darkColorScheme.onSurface,
           fontFamily: AppAssets.fontFamily,
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: darkColorScheme.primary,
+          foregroundColor: darkColorScheme.onPrimary,
+          textStyle: _theme.textTheme.labelLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+            fontFamily: AppAssets.fontFamily,
+          ),
         ),
       ),
       floatingActionButtonTheme: _theme.floatingActionButtonTheme.copyWith(

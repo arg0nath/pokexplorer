@@ -39,9 +39,7 @@ Future<void> injectionInit() async {
     ..registerLazySingleton<TypeSelectionLocalDataSource>(() => TypeSelectionLocalDataSourceImpl(sl()))
 
     // * Type Details
-    ..registerFactory(() => TypeDetailsBloc(
-          fetchTypeDetails: sl(),
-        ))
+    ..registerFactory(() => TypeDetailsBloc(fetchTypeDetails: sl()))
     ..registerLazySingleton(() => FetchTypeDetails(sl()))
     ..registerLazySingleton<TypeDetailsRepository>(() => TypeDetailsRepoImpl(sl()))
     ..registerLazySingleton<TypeDetailsRemoteDataSource>(() => TypeDetailsRemoteDataSourceImpl(sl()))
@@ -63,7 +61,15 @@ Future<void> injectionInit() async {
     ..registerLazySingleton(() => AddToFavorites(sl()))
     ..registerLazySingleton(() => RemoveFromFavorites(sl()))
     ..registerLazySingleton<UserFavoritesRepo>(() => UserFavoritesRepoImpl(sl()))
-    ..registerLazySingleton<UserFavoritesLocalDataSource>(() => UserFavoritesLocalDataSourceImpl(sl()))
+    ..registerLazySingleton<UserFavoritesLocalDatasource>(() => UserFavoritesLocalDatasourceImpl(sl()))
+    // * Settings
+    ..registerFactory(() => SettingsBloc(getCopyrightOption: sl(), setCopyrightOption: sl(), getTermsOption: sl(), setTermsOption: sl()))
+    ..registerLazySingleton(() => GetCopyrightOption(sl()))
+    ..registerLazySingleton(() => SetCopyrightOption(sl()))
+    ..registerLazySingleton(() => GetTermsOption(sl()))
+    ..registerLazySingleton(() => SetTermsOption(sl()))
+    ..registerLazySingleton<SettingsRepo>(() => SettingsRepoImpl(sl()))
+    ..registerLazySingleton<SettingsLocalDatasource>(() => SettingsLocalDatasourceImpl(sl()))
 
     // * General Services
     ..registerLazySingleton<http.Client>(() => http.Client())

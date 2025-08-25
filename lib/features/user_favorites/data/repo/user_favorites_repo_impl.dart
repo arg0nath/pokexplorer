@@ -10,7 +10,7 @@ import '../../domain/repo/user_favorites_repo.dart';
 class UserFavoritesRepoImpl implements UserFavoritesRepo {
   const UserFavoritesRepoImpl(this._localDataSource);
 
-  final UserFavoritesLocalDataSource _localDataSource;
+  final UserFavoritesLocalDatasource _localDataSource;
 
   @override
   ResultFuture<List<PokemonPreview>> getUserFavorites() async {

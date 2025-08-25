@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pokexplorer/core/common/extensions/context_ext.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokexplorer/config/theme/domain/entity/theme_entity.dart';
+import 'package:pokexplorer/config/theme/presentation/bloc/theme_bloc.dart';
+import 'package:pokexplorer/features/settings/presentation/widgets/about_list_tile.dart';
 import 'package:pokexplorer/features/settings/presentation/widgets/legal_bottom_sheet.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -14,23 +17,27 @@ class SettingsPage extends StatelessWidget {
       body: SafeArea(
           child: ListView(
         children: [
-          ListTile(title: Text('Dark Mode')),
           ListTile(
-            title: Text('Content & Copyright Notice'),
-            onTap: () => showModalBottomSheet<void>(
-              context: context,
-              backgroundColor: context.colorScheme.surface,
-              isScrollControlled: true,
-              useSafeArea: true,
-              isDismissible: false,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
-              ),
-              builder: (BuildContext context) {
-                return const LegalBottomSheet();
+            leading: const Icon(Icons.dark_mode_rounded),
+            title: Text('Dark Theme'),
+            trailing: BlocBuilder<ThemeBloc, ThemeState>(
+              builder: (BuildContext context, ThemeState state) {
+                final bool isDarkMode = state.themeEntity?.themeType == ThemeType.dark;
+                return Switch(
+                  value: isDarkMode, // true = dark mode, false = light mode
+                  onChanged: (bool value) {
+                    context.read<ThemeBloc>().add(ToggleThemeEvent(value));
+                  },
+                );
               },
             ),
-          )
+          ),
+          ListTile(
+            leading: const Icon(Icons.balance_rounded),
+            title: Text('Content & Copyright Notice'),
+            onTap: () => showLegalBottomSheet(context),
+          ),
+          AboutTile(),
         ],
       )),
     );

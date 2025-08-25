@@ -4,50 +4,33 @@ import 'package:pokexplorer/config/theme/app_palette.dart';
 import 'package:pokexplorer/core/common/constants/app_const.dart';
 import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/core/common/res/app_assets.dart';
-import 'package:pokexplorer/core/services/di_imports.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomNetworkImage extends StatelessWidget {
   const CustomNetworkImage({
     super.key,
     required this.imageURL,
+    required this.isCopyrightedVisible,
     this.width,
     this.height,
   });
 
   final String imageURL;
+  final bool isCopyrightedVisible;
   final double? width;
   final double? height;
 
-  // Cached value to avoid SharedPreferences calls on every build
-  static bool? _cachedCopyrightVisible;
-
-  // Get copyright visibility, cache it on first access
-  static bool get _isCopyrightedVisible {
-    if (_cachedCopyrightVisible == null) {
-      final SharedPreferences prefs = sl<SharedPreferences>();
-      _cachedCopyrightVisible = prefs.getBool(AppConst.kShowCopyrighted) ?? false;
-    }
-    return _cachedCopyrightVisible!;
-  }
-
-  // Method to update the cache when settings change
-  static void updateCopyrightVisibility(bool value) {
-    _cachedCopyrightVisible = value;
-  }
+  bool get isSvg => imageURL.toLowerCase().endsWith('.svg');
 
   @override
   Widget build(BuildContext context) {
-    final bool isCopyrightedVisible = _isCopyrightedVisible;
-
-    if (imageURL.contains('.svg')) {
+    if (isSvg) {
       return CachedNetworkSVGImage(
         imageURL,
-        placeholder: _PlaceHolderWidget(),
-        errorWidget: _ErrorWidget(),
+        placeholder: const _PlaceHolderWidget(),
+        errorWidget: const _ErrorWidget(),
         width: width,
         height: height,
-        colorFilter: isCopyrightedVisible ? null : ColorFilter.mode(AppPalette.grey, BlendMode.srcATop),
+        colorFilter: isCopyrightedVisible ? null : const ColorFilter.mode(AppPalette.grey, BlendMode.srcATop),
         fadeDuration: const Duration(milliseconds: 200),
       );
     } else {
@@ -55,12 +38,12 @@ class CustomNetworkImage extends StatelessWidget {
         imageURL,
         scale: 0.3,
         width: width,
-        color: isCopyrightedVisible ? null : AppPalette.grey,
         height: height,
-        errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) => _ErrorWidget(),
-        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+        color: isCopyrightedVisible ? null : AppPalette.grey,
+        errorBuilder: (context, error, stackTrace) => const _ErrorWidget(),
+        loadingBuilder: (context, child, loadingProgress) {
           if (loadingProgress == null) return child;
-          return _PlaceHolderWidget();
+          return const _PlaceHolderWidget();
         },
       );
     }

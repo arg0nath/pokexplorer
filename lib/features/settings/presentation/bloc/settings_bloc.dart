@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pokexplorer/core/common/widgets/custom_network_image.dart';
 import 'package:pokexplorer/features/settings/domain/usecases/get_copyright_option.dart';
 import 'package:pokexplorer/features/settings/domain/usecases/get_terms_option.dart';
 import 'package:pokexplorer/features/settings/domain/usecases/set_copyright_option.dart';
@@ -24,9 +23,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       final bool showCopyrightContent = await _getCopyrightOption();
       final bool acceptedTerms = await _getTermsOption();
 
-      // Update the cache in CustomNetworkImage
-      CustomNetworkImage.updateCopyrightVisibility(showCopyrightContent);
-
       emit(SettingsLoaded(
         showCopyrightedContent: showCopyrightContent,
         termsAccepted: acceptedTerms,
@@ -43,10 +39,6 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     on<ToggleCopyrightedContentEvent>((ToggleCopyrightedContentEvent event, Emitter<SettingsState> emit) async {
       if (state is SettingsLoaded) {
         await _setCopyrightOption(event.show);
-
-        // Update the cache in CustomNetworkImage
-        CustomNetworkImage.updateCopyrightVisibility(event.show);
-
         emit((state as SettingsLoaded).copyWith(showCopyrightedContent: event.show));
       }
     });

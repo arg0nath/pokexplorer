@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:pokexplorer/core/common/extensions/context_ext.dart';
-import 'package:pokexplorer/core/common/widgets/custom_network_image.dart';
+import 'package:pokexplorer/core/common/widgets/custom_network_image_wrapper.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class ImagesCarousel extends StatelessWidget {
@@ -44,7 +44,7 @@ class ImagesCarousel extends StatelessWidget {
             itemCount: pokemonImageList.length,
             itemBuilder: (BuildContext context, int index, int realIndex) {
               final String imageUrl = pokemonImageList[index];
-              return CustomNetworkImage(
+              return CustomNetworkImageWrapper(
                 imageURL: imageUrl,
               );
             },

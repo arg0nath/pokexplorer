@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokexplorer/config/logger/my_log.dart';
 import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/core/common/res/app_assets.dart';
-import 'package:pokexplorer/core/common/widgets/custom_network_image.dart';
+import 'package:pokexplorer/core/common/widgets/custom_network_image_wrapper.dart';
 
 /// A highly animated Pokeball button that simulates capturing an item.
 ///
@@ -193,7 +193,7 @@ class _AnimatedPokeballCaptureState extends State<AnimatedPokeballCapture> with 
                     width: 50,
                     height: 50,
                     child: Center(
-                        child: CustomNetworkImage(
+                        child: CustomNetworkImageWrapper(
                       imageURL: widget.pokemonAvatar,
                     )),
                   ),

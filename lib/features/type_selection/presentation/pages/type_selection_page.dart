@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:pokexplorer/core/common/extensions/string_ext.dart';
 import 'package:pokexplorer/core/common/models/entities/pokemon_type.dart';
 import 'package:pokexplorer/core/common/widgets/debug_button.dart';
 import 'package:pokexplorer/core/common/widgets/message_toast.dart';
-import 'package:pokexplorer/core/common/widgets/misc_dialog.dart';
 import 'package:pokexplorer/core/routes/route_names.dart';
 import 'package:pokexplorer/features/type_selection/presentation/bloc/type_selection_bloc.dart';
 import 'package:pokexplorer/features/type_selection/presentation/widgets/types_grid_view.dart';
@@ -29,10 +27,6 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
         title: const Text('Pick a Type'),
         actions: <Widget>[
           DebugButton(),
-          IconButton(
-            icon: const Icon(Iconsax.setting_5_copy),
-            onPressed: () => showDialog(context: context, builder: (_) => MiscDialog()),
-          ),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

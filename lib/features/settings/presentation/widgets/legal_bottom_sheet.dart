@@ -1,22 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pokexplorer/core/common/extensions/context_ext.dart';
+import 'package:pokexplorer/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
+import 'package:pokexplorer/features/settings/presentation/bloc/settings_bloc.dart';
 
-void showLegalBottomSheet(BuildContext context) => showModalBottomSheet(
-      context: context,
+void showLegalBottomSheet(
+  BuildContext context, {
+  bool isFirstTime = false,
+  OnBoardingCubit? onBoardingCubit,
+}) =>
+    showModalBottomSheet(
+      context: context, showDragHandle: true,
       backgroundColor: context.colorScheme.surface,
       isScrollControlled: true,
       useSafeArea: true,
-      isDismissible: false,
-      shape: RoundedRectangleBorder(
+      isDismissible: !isFirstTime, // Can't dismiss during first time onboarding
+      enableDrag: !isFirstTime,
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
       ),
       builder: (BuildContext context) {
-        return const LegalBottomSheet();
+        return LegalBottomSheet(
+          isFirstTime: isFirstTime,
+          onBoardingCubit: onBoardingCubit,
+        );
       },
     );
 
 class LegalBottomSheet extends StatefulWidget {
-  const LegalBottomSheet({Key? key}) : super(key: key);
+  const LegalBottomSheet({
+    Key? key,
+    this.isFirstTime = false,
+    this.onBoardingCubit,
+  }) : super(key: key);
+
+  final bool isFirstTime;
+  final OnBoardingCubit? onBoardingCubit;
 
   @override
   State<LegalBottomSheet> createState() => _LegalBottomSheetState();
@@ -24,17 +43,29 @@ class LegalBottomSheet extends StatefulWidget {
 
 class _LegalBottomSheetState extends State<LegalBottomSheet> {
   bool _accepted = false;
-  bool _showCopyrighetContent = false;
+  bool _showCopyrightContent = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Load current settings if not first time
+    if (!widget.isFirstTime) {
+      final SettingsState settingsState = context.read<SettingsBloc>().state;
+      if (settingsState is SettingsLoaded) {
+        _accepted = settingsState.termsAccepted;
+        _showCopyrightContent = settingsState.showCopyrightedContent;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsGeometry.all(12),
+      padding: const EdgeInsets.all(12),
       child: Column(
-        // spacing: 12,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(16),
             child: Text(
@@ -65,29 +96,51 @@ Pokémon © 1995–2025 Nintendo / Creatures Inc. / GAME FREAK Inc.
           CheckboxListTile(
             title: Text('I have read and agree to the above terms.', style: context.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold)),
             value: _accepted,
-            onChanged: (bool? value) {
-              setState(() {
-                _accepted = value ?? false;
-              });
-            },
+            onChanged: widget.isFirstTime
+                ? (bool? value) {
+                    setState(() {
+                      _accepted = value ?? false;
+                    });
+                  }
+                : null, // Disabled if not first time
             controlAffinity: ListTileControlAffinity.leading,
           ),
           CheckboxListTile(
-            title: Text('I want to see copyrighted content.(Pokémon images, sprites, etc.)', style: context.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold)),
-            value: _showCopyrighetContent,
+            title: Text('I want to see copyrighted content (Pokémon images, sprites, etc.)', style: context.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold)),
+            value: _showCopyrightContent,
             onChanged: (bool? value) {
               setState(() {
-                _showCopyrighetContent = value ?? false;
+                _showCopyrightContent = value ?? false;
               });
             },
             controlAffinity: ListTileControlAffinity.leading,
           ),
-          ElevatedButton(
-            onPressed: _accepted ? () => Navigator.of(context).pop() : null, // Disabled if not accepted
-            child: const Text('Let\'s Go!'),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: (_accepted || !widget.isFirstTime) ? () => _handleAcceptance() : null,
+                child: Text(widget.isFirstTime ? 'I Understand' : 'Save Settings'),
+              ),
+            ),
           ),
         ],
       ),
     );
+  }
+
+  void _handleAcceptance() {
+    if (widget.isFirstTime) {
+      // First time onboarding flow
+      context.read<SettingsBloc>().add(AcceptTermsEvent(true));
+      context.read<SettingsBloc>().add(ToggleCopyrightedContentEvent(_showCopyrightContent));
+      // Use the passed cubit instead of trying to read from context
+      widget.onBoardingCubit?.cacheFirstTimer();
+    } else {
+      // Settings update flow - only update copyright preference
+      context.read<SettingsBloc>().add(ToggleCopyrightedContentEvent(_showCopyrightContent));
+    }
+    Navigator.of(context).pop();
   }
 }

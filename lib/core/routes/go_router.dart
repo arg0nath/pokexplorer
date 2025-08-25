@@ -20,10 +20,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 final SharedPreferences prefs = sl<SharedPreferences>();
-final bool isFirstTimer = prefs.getBool(AppConst.kFirstTimerKey) ?? true;
+
+bool _shouldShowOnboarding() {
+  final bool isFirstTimer = prefs.getBool(AppConst.kFirstTimerKey) ?? true;
+  final bool termsAccepted = prefs.getBool(AppConst.kAcceptedTermsKey) ?? false;
+  // Show onboarding if it's first time OR if terms haven't been accepted
+  return isFirstTimer || !termsAccepted;
+}
+
 final GoRouter router = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: isFirstTimer ? RoutePath.onBoardingPage : RoutePath.typeSelectionPage,
+  initialLocation: _shouldShowOnboarding() ? RoutePath.onBoardingPage : RoutePath.typeSelectionPage,
   redirect: (BuildContext context, GoRouterState state) => state.matchedLocation == RoutePath.rootPage ? RoutePath.typeSelectionPage : null,
   routes: <RouteBase>[
     customGoRoute(

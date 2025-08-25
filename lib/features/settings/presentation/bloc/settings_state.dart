@@ -4,7 +4,7 @@ sealed class SettingsState extends Equatable {
   const SettingsState();
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => <Object>[];
 }
 
 final class SettingsInitial extends SettingsState {}
@@ -21,7 +21,7 @@ final class SettingsLoaded extends SettingsState {
   final bool showCopyrightedContent;
 
   @override
-  List<Object> get props => [termsAccepted, showCopyrightedContent];
+  List<Object> get props => <Object>[termsAccepted, showCopyrightedContent];
 
   SettingsLoaded copyWith({
     bool? termsAccepted,

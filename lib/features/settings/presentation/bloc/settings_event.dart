@@ -4,7 +4,7 @@ sealed class SettingsEvent extends Equatable {
   const SettingsEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => <Object>[];
 }
 
 final class LoadSettingsEvent extends SettingsEvent {}
@@ -15,7 +15,7 @@ final class AcceptTermsEvent extends SettingsEvent {
   final bool accepted;
 
   @override
-  List<Object> get props => [accepted];
+  List<Object> get props => <Object>[accepted];
 }
 
 final class ToggleCopyrightedContentEvent extends SettingsEvent {
@@ -24,5 +24,5 @@ final class ToggleCopyrightedContentEvent extends SettingsEvent {
   final bool show;
 
   @override
-  List<Object> get props => [show];
+  List<Object> get props => <Object>[show];
 }

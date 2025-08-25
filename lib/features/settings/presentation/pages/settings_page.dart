@@ -15,31 +15,32 @@ class SettingsPage extends StatelessWidget {
         title: const Text('Settings'),
       ),
       body: SafeArea(
-          child: ListView(
-        children: [
-          ListTile(
-            leading: const Icon(Icons.dark_mode_rounded),
-            title: Text('Dark Theme'),
-            trailing: BlocBuilder<ThemeBloc, ThemeState>(
-              builder: (BuildContext context, ThemeState state) {
-                final bool isDarkMode = state.themeEntity?.themeType == ThemeType.dark;
-                return Switch(
-                  value: isDarkMode, // true = dark mode, false = light mode
-                  onChanged: (bool value) {
-                    context.read<ThemeBloc>().add(ToggleThemeEvent(value));
-                  },
-                );
-              },
+        child: ListView(
+          children: <Widget>[
+            ListTile(
+              leading: const Icon(Icons.dark_mode_rounded),
+              title: Text('Dark Theme'),
+              trailing: BlocBuilder<ThemeBloc, ThemeState>(
+                builder: (BuildContext context, ThemeState state) {
+                  final bool isDarkMode = state.themeEntity?.themeType == ThemeType.dark;
+                  return Switch(
+                    value: isDarkMode, // true = dark mode, false = light mode
+                    onChanged: (bool value) {
+                      context.read<ThemeBloc>().add(ToggleThemeEvent(value));
+                    },
+                  );
+                },
+              ),
             ),
-          ),
-          ListTile(
-            leading: const Icon(Icons.balance_rounded),
-            title: Text('Content & Copyright Notice'),
-            onTap: () => showLegalBottomSheet(context),
-          ),
-          AboutTile(),
-        ],
-      )),
+            ListTile(
+              leading: const Icon(Icons.balance_rounded),
+              title: Text('Content & Copyright Notice'),
+              onTap: () => showLegalBottomSheet(context, isFirstTime: false),
+            ),
+            AboutTile(),
+          ],
+        ),
+      ),
     );
   }
 }

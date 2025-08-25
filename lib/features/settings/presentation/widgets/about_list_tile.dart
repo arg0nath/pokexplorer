@@ -13,12 +13,12 @@ class AboutTile extends StatelessWidget {
       applicationName: 'Pokéxplorer',
       applicationIcon: Column(
         mainAxisSize: MainAxisSize.min,
-        children: [
+        children: <Widget>[
           Image.asset(height: 25, AppAssets.pokexplorerLogo, fit: BoxFit.scaleDown),
           Image.asset(height: 15, AppAssets.pokemonCustomPhrase, fit: BoxFit.scaleDown),
         ],
       ),
-      aboutBoxChildren: [
+      aboutBoxChildren: <Widget>[
         GestureDetector(
           onTap: () => openGitHub(context),
           child: Container(

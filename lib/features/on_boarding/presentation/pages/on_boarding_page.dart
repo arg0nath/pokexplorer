@@ -77,8 +77,3 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     );
   }
 }
-   
-   
-   
-   
-    //  onPressed: () => context.read<OnBoardingCubit>().cacheFirstTimer(),

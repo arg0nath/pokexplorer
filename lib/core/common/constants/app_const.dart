@@ -17,6 +17,7 @@ class AppConst {
   static const String kFirstTimerKey = 'first_timer';
   static const String kAcceptedTermsKey = 'accepted_terms';
   static const String kShowCopyrighted = 'show_copyrighted';
+  static const String kIsFirstTimeUser = 'is_first_time_user';
 
   static const String appName = 'Pokéxplorer';
   static const String pokeApiUrl = 'pokeapi.co';

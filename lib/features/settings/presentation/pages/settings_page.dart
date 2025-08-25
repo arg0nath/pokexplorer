@@ -18,12 +18,13 @@ class SettingsPage extends StatelessWidget {
         child: ListView(
           children: <Widget>[
             ListTile(
-              leading: const Icon(Icons.dark_mode_rounded),
-              title: Text('Dark Theme'),
+              leading: const Icon(Icons.palette_outlined),
+              title: Text('Appereance'),
               trailing: BlocBuilder<ThemeBloc, ThemeState>(
                 builder: (BuildContext context, ThemeState state) {
                   final bool isDarkMode = state.themeEntity?.themeType == ThemeType.dark;
-                  return Switch(
+                  return Switch.adaptive(
+                    thumbIcon: WidgetStatePropertyAll(Icon(isDarkMode ? Icons.dark_mode_rounded : Icons.light_mode_rounded)),
                     value: isDarkMode, // true = dark mode, false = light mode
                     onChanged: (bool value) {
                       context.read<ThemeBloc>().add(ToggleThemeEvent(value));
@@ -35,6 +36,7 @@ class SettingsPage extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.balance_rounded),
               title: Text('Content & Copyright Notice'),
+              trailing: const Icon(Icons.chevron_right_rounded),
               onTap: () => showLegalBottomSheet(context, isFirstTime: false),
             ),
             AboutTile(),

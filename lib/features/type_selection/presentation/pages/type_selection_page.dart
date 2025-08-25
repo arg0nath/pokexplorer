@@ -57,31 +57,28 @@ class _TypeSelectionPageState extends State<TypeSelectionPage> {
           }
         },
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: BlocConsumer<TypeSelectionBloc, TypeSelectionState>(
-          listener: (BuildContext context, TypeSelectionState state) {
-            if (state is ReadyToProceedTypeDetails && state.proceedingStatus == ProceedingStatus.completed) {
-              context.pushNamed(RouteName.typeDetailsPageName, pathParameters: <String, String>{'typeName': _selectedTypeName});
-            } else if (state is TypeSelectionError) {
-              showPokeToast(context, state.message);
-            }
-          },
-          buildWhen: (TypeSelectionState previous, TypeSelectionState current) => current is! ReadyToProceedTypeDetails,
-          builder: (BuildContext context, TypeSelectionState state) {
-            if (state is LoadingTypes) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is TypeSelectionError) {
-              return Center(child: Text(state.message));
-            } else if (state is TypesLoaded) {
-              final List<PokemonType> types = state.types;
-              _selectedTypeName = state.selectedTypeName;
-              return TypesGridView(types: types, selectedTypeName: _selectedTypeName);
-            } else {
-              return const SizedBox.shrink();
-            }
-          },
-        ),
+      body: BlocConsumer<TypeSelectionBloc, TypeSelectionState>(
+        listener: (BuildContext context, TypeSelectionState state) {
+          if (state is ReadyToProceedTypeDetails && state.proceedingStatus == ProceedingStatus.completed) {
+            context.pushNamed(RouteName.typeDetailsPageName, pathParameters: <String, String>{'typeName': _selectedTypeName});
+          } else if (state is TypeSelectionError) {
+            showPokeToast(context, state.message);
+          }
+        },
+        buildWhen: (TypeSelectionState previous, TypeSelectionState current) => current is! ReadyToProceedTypeDetails,
+        builder: (BuildContext context, TypeSelectionState state) {
+          if (state is LoadingTypes) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is TypeSelectionError) {
+            return Center(child: Text(state.message));
+          } else if (state is TypesLoaded) {
+            final List<PokemonType> types = state.types;
+            _selectedTypeName = state.selectedTypeName;
+            return TypesGridView(types: types, selectedTypeName: _selectedTypeName);
+          } else {
+            return const SizedBox.shrink();
+          }
+        },
       ), // Example item count
     );
   }

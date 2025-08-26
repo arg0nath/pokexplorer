@@ -27,7 +27,6 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
   @override
   void initState() {
     super.initState();
-
     context.read<PokemonDetailsBloc>().add(FetchPokemonDetailsEvent(widget.name));
   }
 
@@ -74,6 +73,7 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
         body: BlocConsumer<PokemonDetailsBloc, PokemonDetailsState>(
           listener: (BuildContext context, PokemonDetailsState state) {
             state.maybeWhen(
+              copyrightWarning: () => showPokeToast(context, 'Hidden images? Enable copyrighted images in Settings to view them.'),
               error: (String message) {
                 showPokeToast(context, message);
                 context.pop();
@@ -82,7 +82,8 @@ class _PokemonDetailsPageState extends State<PokemonDetailsPage> {
             );
           },
           builder: (BuildContext context, PokemonDetailsState state) {
-            return state.when(
+            return state.maybeWhen(
+              orElse: () => const SizedBox.shrink(),
               initial: () => const SizedBox.shrink(),
               loading: () => const Center(child: CircularProgressIndicator()),
               error: (String message) => Center(child: Text('Oops..! $message')),

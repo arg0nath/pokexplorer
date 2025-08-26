@@ -6,4 +6,5 @@ class PokemonDetailsState with _$PokemonDetailsState {
   const factory PokemonDetailsState.loading() = _Loading;
   const factory PokemonDetailsState.loaded(PokemonDetails pokemonDetails) = _Loaded;
   const factory PokemonDetailsState.error(String message) = _Error;
+  const factory PokemonDetailsState.copyrightWarning() = _CopyrightWarning;
 }

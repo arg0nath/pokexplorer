@@ -6,8 +6,8 @@ import 'package:pokexplorer/features/type_selection/presentation/widgets/generic
 
 class TypesGridView extends StatelessWidget {
   const TypesGridView({
-    required this.types,
     required this.selectedTypeName,
+    required this.types,
   });
   final String selectedTypeName;
   final List<PokemonType> types;

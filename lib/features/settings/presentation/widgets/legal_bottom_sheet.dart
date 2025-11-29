@@ -4,11 +4,7 @@ import 'package:pokexplorer/core/common/extensions/context_ext.dart';
 import 'package:pokexplorer/features/on_boarding/presentation/cubit/on_boarding_cubit.dart';
 import 'package:pokexplorer/features/settings/presentation/bloc/settings_bloc.dart';
 
-void showLegalBottomSheet(
-  BuildContext context, {
-  bool isFirstTime = false,
-  OnBoardingCubit? onBoardingCubit,
-}) {
+void showLegalBottomSheet(BuildContext context, {bool isFirstTime = false, OnBoardingCubit? onBoardingCubit}) {
   showModalBottomSheet(
     context: context,
     showDragHandle: true,
@@ -17,22 +13,13 @@ void showLegalBottomSheet(
     useSafeArea: true,
     isDismissible: !isFirstTime,
     enableDrag: !isFirstTime,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
-    ),
-    builder: (_) => LegalBottomSheet(
-      isFirstTime: isFirstTime,
-      onBoardingCubit: onBoardingCubit,
-    ),
+    shape: const RoundedRectangleBorder(borderRadius: .vertical(top: Radius.circular(28))),
+    builder: (_) => LegalBottomSheet(isFirstTime: isFirstTime, onBoardingCubit: onBoardingCubit),
   );
 }
 
 class LegalBottomSheet extends StatefulWidget {
-  const LegalBottomSheet({
-    super.key,
-    this.isFirstTime = false,
-    this.onBoardingCubit,
-  });
+  const LegalBottomSheet({super.key, this.isFirstTime = false, this.onBoardingCubit});
 
   final bool isFirstTime;
   final OnBoardingCubit? onBoardingCubit;
@@ -62,52 +49,38 @@ class _LegalBottomSheetState extends State<LegalBottomSheet> {
     final TextTheme textTheme = context.textTheme;
 
     return Padding(
-      padding: const EdgeInsets.all(12),
+      padding: const .all(12),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(
-              'Content & Copyright Notice',
-              style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-            ),
+            padding: const .all(16),
+            child: Text('Content & Copyright Notice', style: textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
           ),
           Expanded(
-            child: SingleChildScrollView(
-              child: Text(_legalNotice, style: textTheme.bodyMedium),
-            ),
+            child: SingleChildScrollView(child: Text(_legalNotice, style: textTheme.bodyMedium)),
           ),
           CheckboxListTile(
-            title: Text(
-              'I have read and agree to the above terms.',
-              style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
-            ),
+            title: Text('I have read and agree to the above terms.', style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold)),
             value: _accepted,
             onChanged: _getAcceptanceHandler(),
-            controlAffinity: ListTileControlAffinity.leading,
+            controlAffinity: .leading,
           ),
           CheckboxListTile(
-            title: Text(
-              'I want to see copyrighted content (Pokémon images, sprites, etc.)',
-              style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),
-            ),
+            title: Text('I want to see copyrighted content (Pokémon images, sprites, etc.)', style: textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold)),
             value: _showCopyrightContent,
             onChanged: (bool? value) {
               setState(() {
                 _showCopyrightContent = value ?? false;
               });
             },
-            controlAffinity: ListTileControlAffinity.leading,
+            controlAffinity: .leading,
           ),
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const .all(16),
             child: SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                onPressed: (_accepted || !widget.isFirstTime) ? _handleAcceptance : null,
-                child: Text(widget.isFirstTime ? 'I Understand' : 'Save Settings'),
-              ),
+              child: ElevatedButton(onPressed: (_accepted || !widget.isFirstTime) ? _handleAcceptance : null, child: Text(widget.isFirstTime ? 'I Understand' : 'Save Settings')),
             ),
           ),
         ],

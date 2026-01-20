@@ -30,9 +30,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   Widget build(BuildContext context) {
     return BlocListener<OnBoardingCubit, OnBoardingState>(
       listener: (BuildContext context, OnBoardingState state) {
-        if (state is OnBoardingStatus && !state.isFirstTimer) {
-          context.goNamed(RouteName.typeSelectionPageName);
-        } else if (state is UserCached) {
+        if ((state is OnBoardingStatus && !state.isFirstTimer) || (state is UserCached)) {
           context.goNamed(RouteName.typeSelectionPageName);
         }
       },
@@ -44,35 +42,38 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             const Positioned(left: -20, bottom: -50, child: PokeballBackground()),
             //logo + text
             Container(
-                padding: EdgeInsets.symmetric(vertical: context.height * 0.1, horizontal: context.width * 0.1),
-                width: context.width,
-                child: Column(
-                  children: <Widget>[
-                    const Expanded(
-                      flex: 3,
-                      child: LogoPlaceholder(primaryLogoImagePath: AppAssets.pokexplorerLogo, secondaryLogoImagePath: AppAssets.pokemonCustomPhrase),
+              padding: EdgeInsets.symmetric(vertical: context.height * 0.1, horizontal: context.width * 0.1),
+              width: context.width,
+              child: Column(
+                children: <Widget>[
+                  const Expanded(
+                    flex: 3,
+                    child: LogoPlaceholder(primaryLogoImagePath: AppAssets.pokexplorerLogo, secondaryLogoImagePath: AppAssets.pokemonCustomPhrase),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        IntroTextHolder(text: 'Welcome, explorer!').animate(delay: 500.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad),
+                        IntroTextHolder(text: 'A new Poké-search journey is about to begin...').animate(delay: 600.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad),
+                        IntroTextHolder(text: 'Hooray!').animate(delay: 700.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad),
+                        IconTitleHolder(iconData: Icons.catching_pokemon_outlined, message: 'Pick a type to explore').animate(delay: 800.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad),
+                        IconTitleHolder(iconData: Icons.search_outlined, message: 'Search through Pokémon').animate(delay: 900.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad),
+                        IconTitleHolder(iconData: Icons.info_outline_rounded, message: 'View stats of any Pokémon').animate(delay: 1000.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad),
+                      ],
                     ),
-                    Expanded(
-                      flex: 5,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          IntroTextHolder(text: 'Welcome, explorer!').animate(delay: 500.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad),
-                          IntroTextHolder(text: 'A new Poké-search journey is about to begin...').animate(delay: 600.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad),
-                          IntroTextHolder(text: 'Hooray!').animate(delay: 700.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad),
-                          IconTitleHolder(iconData: Icons.catching_pokemon_outlined, message: 'Pick a type to explore').animate(delay: 800.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad),
-                          IconTitleHolder(iconData: Icons.search_outlined, message: 'Search through Pokémon').animate(delay: 900.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad),
-                          IconTitleHolder(iconData: Icons.info_outline_rounded, message: 'View stats of any Pokémon').animate(delay: 1000.ms).fade(duration: 1000.ms, curve: Curves.easeOutQuad),
-                        ],
-                      ),
-                    ),
-                  ],
-                )),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
-        bottomNavigationBar: BlocBuilder<OnBoardingCubit, OnBoardingState>(builder: (BuildContext context, OnBoardingState state) {
-          return WelcomeBottomBar().animate(delay: 1000.ms).fade(duration: 1700.ms, curve: Curves.easeOutQuad);
-        }),
+        bottomNavigationBar: BlocBuilder<OnBoardingCubit, OnBoardingState>(
+          builder: (BuildContext context, OnBoardingState state) {
+            return WelcomeBottomBar().animate(delay: 1000.ms).fade(duration: 1700.ms, curve: Curves.easeOutQuad);
+          },
+        ),
       ),
     );
   }

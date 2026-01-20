@@ -36,34 +36,23 @@ final GoRouter router = GoRouter(
     customGoRoute(
       path: RoutePath.onBoardingPage,
       name: RouteName.onBoardingPageName,
-      builder: (BuildContext context, GoRouterState state) => BlocProvider<OnBoardingCubit>(
-        create: (BuildContext context) => sl<OnBoardingCubit>(),
-        child: const OnBoardingPage(),
-      ),
+      builder: (BuildContext context, GoRouterState state) => BlocProvider<OnBoardingCubit>(create: (BuildContext context) => sl<OnBoardingCubit>(), child: const OnBoardingPage()),
     ),
     customGoRoute(
       path: '${RoutePath.pokemonDetailsPage}/:pokemonName',
       name: RouteName.pokemonDetailsPageName,
       builder: (BuildContext context, GoRouterState state) => BlocProvider<PokemonDetailsBloc>(
         create: (BuildContext context) => sl<PokemonDetailsBloc>(),
-        child: PokemonDetailsPage(
-          name: state.pathParameters['pokemonName']!,
-        ),
+        child: PokemonDetailsPage(name: state.pathParameters['pokemonName']!),
       ),
     ),
-    customGoRoute(
-      path: '${RoutePath.debugPage}',
-      name: RouteName.debugPageName,
-      builder: (BuildContext context, GoRouterState state) => DebugPage(),
-    ),
+    customGoRoute(path: '${RoutePath.debugPage}', name: RouteName.debugPageName, builder: (BuildContext context, GoRouterState state) => DebugPage()),
     customGoRoute(
       path: '${RoutePath.typeDetailsPage}/:typeName',
       name: RouteName.typeDetailsPageName,
       builder: (BuildContext context, GoRouterState state) => BlocProvider<TypeDetailsBloc>(
         create: (BuildContext context) => sl<TypeDetailsBloc>(),
-        child: TypeDetailsPage(
-          typeName: state.pathParameters['typeName']!,
-        ),
+        child: TypeDetailsPage(typeName: state.pathParameters['typeName']!),
       ),
     ),
     StatefulShellRoute.indexedStack(
@@ -75,30 +64,16 @@ final GoRouter router = GoRouter(
       branches: <StatefulShellBranch>[
         StatefulShellBranch(
           routes: <RouteBase>[
-            customGoRoute(
-              path: RoutePath.typeSelectionPage,
-              name: RouteName.typeSelectionPageName,
-              builder: (BuildContext context, GoRouterState state) => const TypeSelectionPage(),
-            ),
+            customGoRoute(path: RoutePath.typeSelectionPage, name: RouteName.typeSelectionPageName, builder: (BuildContext context, GoRouterState state) => const TypeSelectionPage()),
           ],
         ),
         StatefulShellBranch(
           routes: <RouteBase>[
-            customGoRoute(
-              path: RoutePath.userFavoritesPage,
-              name: RouteName.userFavoritesPageName,
-              builder: (BuildContext context, GoRouterState state) => const UserFavoritesPage(),
-            ),
+            customGoRoute(path: RoutePath.userFavoritesPage, name: RouteName.userFavoritesPageName, builder: (BuildContext context, GoRouterState state) => const UserFavoritesPage()),
           ],
         ),
         StatefulShellBranch(
-          routes: <RouteBase>[
-            customGoRoute(
-              path: RoutePath.settingsPage,
-              name: RouteName.settingsPageName,
-              builder: (BuildContext context, GoRouterState state) => const SettingsPage(),
-            ),
-          ],
+          routes: <RouteBase>[customGoRoute(path: RoutePath.settingsPage, name: RouteName.settingsPageName, builder: (BuildContext context, GoRouterState state) => const SettingsPage())],
         ),
       ],
     ),

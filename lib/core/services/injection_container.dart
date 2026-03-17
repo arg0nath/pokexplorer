@@ -15,11 +15,7 @@ Future<void> injectionInit() async {
 
   sl
     // * Theme
-    ..registerFactory(() => ThemeBloc(getThemeUseCase: sl(), setThemeUseCase: sl()))
-    ..registerLazySingleton(() => GetThemeUseCase(sl()))
-    ..registerLazySingleton(() => SetThemeUseCase(sl()))
-    ..registerLazySingleton<ThemeRepository>(() => ThemeRepositoryImpl(themeLocalDatasource: sl()))
-    ..registerLazySingleton<ThemeLocalDataSource>(() => ThemeLocalDatasourceImpl(sl()))
+    ..registerLazySingleton(() => ThemeCubit())
     // * On boarding
     ..registerFactory(() => OnBoardingCubit(cacheFirstTimer: sl(), checkFirstTimer: sl()))
     ..registerLazySingleton(() => CacheFirstTimer(sl()))
@@ -27,36 +23,24 @@ Future<void> injectionInit() async {
     ..registerLazySingleton<OnBoardingRepository>(() => OnBoardingRepoImpl(sl()))
     ..registerLazySingleton<OnBoardingLocalDataSource>(() => OnBoardingLocalDataSourceImpl(sl()))
     // * Type selection
-    ..registerFactory(() => TypeSelectionBloc(
-          getPokemonTypes: sl(),
-          selectPokemonType: sl(),
-          getSelectedPokemonType: sl(),
-        ))
+    ..registerFactory(() => TypeSelectionBloc(getPokemonTypes: sl(), selectPokemonType: sl(), getSelectedPokemonType: sl()))
     ..registerLazySingleton(() => GetPokemonTypes(sl()))
     ..registerLazySingleton(() => SelectPokemonType(sl()))
     ..registerLazySingleton(() => GetSelectedPokemonType(sl()))
     ..registerLazySingleton<TypeSelectionRepository>(() => TypeSelectionRepositoryImpl(sl()))
     ..registerLazySingleton<TypeSelectionLocalDataSource>(() => TypeSelectionLocalDataSourceImpl(sl()))
-
     // * Type Details
     ..registerFactory(() => TypeDetailsBloc(fetchTypeDetails: sl()))
     ..registerLazySingleton(() => FetchTypeDetails(sl()))
     ..registerLazySingleton<TypeDetailsRepository>(() => TypeDetailsRepoImpl(sl()))
     ..registerLazySingleton<TypeDetailsRemoteDataSource>(() => TypeDetailsRemoteDataSourceImpl(sl()))
     // * Pokemon Details
-    ..registerFactory(() => PokemonDetailsBloc(
-          fetchPokemonDetails: sl(),
-        ))
+    ..registerFactory(() => PokemonDetailsBloc(fetchPokemonDetails: sl()))
     ..registerLazySingleton(() => FetchPokemonDetails(sl()))
     ..registerLazySingleton<PokemonDetailsRepository>(() => PokemonDetailsRepoImpl(sl()))
     ..registerLazySingleton<PokemonDetailsRemoteDataSource>(() => PokemonDetailsRemoteDataSourceImpl(sl()))
-
     // * Uzer Favorites
-    ..registerFactory(() => UserFavoritesBloc(
-          getUserFavorites: sl(),
-          addToFavorites: sl(),
-          removeFromFavorites: sl(),
-        ))
+    ..registerFactory(() => UserFavoritesBloc(getUserFavorites: sl(), addToFavorites: sl(), removeFromFavorites: sl()))
     ..registerLazySingleton(() => GetUserFavorites(sl()))
     ..registerLazySingleton(() => AddToFavorites(sl()))
     ..registerLazySingleton(() => RemoveFromFavorites(sl()))
@@ -70,7 +54,6 @@ Future<void> injectionInit() async {
     ..registerLazySingleton(() => SetTermsOption(sl()))
     ..registerLazySingleton<SettingsRepo>(() => SettingsRepoImpl(sl()))
     ..registerLazySingleton<SettingsLocalDatasource>(() => SettingsLocalDatasourceImpl(sl()))
-
     // * General Services
     ..registerLazySingleton<http.Client>(() => http.Client())
     ..registerLazySingleton(() => prefs)

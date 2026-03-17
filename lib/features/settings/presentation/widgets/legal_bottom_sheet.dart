@@ -115,7 +115,7 @@ class _LegalBottomSheetState extends State<LegalBottomSheet> {
     bloc.add(ToggleCopyrightedContentEvent(_showCopyrightContent));
 
     if (widget.isFirstTime) {
-      widget.onBoardingCubit?.cacheFirstTimer();
+      widget.onBoardingCubit?.completeOnboarding();
     }
 
     Navigator.of(context).pop();

@@ -7,21 +7,23 @@ import 'package:pokexplorer/core/common/errors/failures.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/type_details.dart';
 import 'package:pokexplorer/features/type_details/domain/usecases/fetch_type_details.dart';
+import 'package:stream_transform/stream_transform.dart';
 
 part 'type_details_bloc.freezed.dart';
 part 'type_details_event.dart';
 part 'type_details_state.dart';
 
 class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
-  TypeDetailsBloc({required FetchTypeDetails fetchTypeDetails})
-      : _fetchTypeDetails = fetchTypeDetails,
-        super(_Initial()) {
+  TypeDetailsBloc({required FetchTypeDetails fetchTypeDetails}) : _fetchTypeDetails = fetchTypeDetails, super(_Loading()) {
     on<InitialTypeEvent>((InitialTypeEvent event, Emitter<TypeDetailsState> emit) {
-      emit(const TypeDetailsState.initial());
+      emit(const TypeDetailsState.loading());
     });
 
     on<FetchTypeDetailsEvent>(_fetchTypeDetailsEventHandler);
-    on<SearchPokemonsEvent>(_searchPokemonsEventHandler);
+    on<SearchPokemonsEvent>(
+      _searchPokemonsEventHandler,
+      transformer: (Stream<SearchPokemonsEvent> events, mapper) => events.debounce(const Duration(milliseconds: 500)).switchMap(mapper), //debounce for search input
+    );
     on<ProceedToPokemonDetailsEvent>(_proceedToPokemonDetailsEventHandler);
   }
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pokexplorer/core/common/constants/app_const.dart';
 import 'package:pokexplorer/core/common/widgets/bottom_bar.dart';
 import 'package:pokexplorer/core/routes/route_helper.dart';
 import 'package:pokexplorer/core/routes/route_names.dart';
@@ -14,24 +13,27 @@ import 'package:pokexplorer/features/pokemon_details/presentation/pages/pokemon_
 import 'package:pokexplorer/features/settings/presentation/pages/settings_page.dart';
 import 'package:pokexplorer/features/type_details/presentation/bloc/type_details_bloc.dart';
 import 'package:pokexplorer/features/type_details/presentation/pages/type_details_page.dart';
+import 'package:pokexplorer/features/type_selection/presentation/bloc/type_selection_bloc.dart';
 import 'package:pokexplorer/features/type_selection/presentation/pages/type_selection_page.dart';
 import 'package:pokexplorer/features/user_favorites/presentation/pages/user_favorites_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
-final SharedPreferences prefs = sl<SharedPreferences>();
-
-bool _shouldShowOnboarding() {
-  final bool isFirstTimer = prefs.getBool(AppConst.kFirstTimerKey) ?? true;
-  final bool termsAccepted = prefs.getBool(AppConst.kAcceptedTermsKey) ?? false;
-  // Show onboarding if it's first time OR if terms haven't been accepted
-  return isFirstTimer || !termsAccepted;
-}
 
 final GoRouter router = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: _shouldShowOnboarding() ? RoutePath.onBoardingPage : RoutePath.typeSelectionPage,
-  redirect: (BuildContext context, GoRouterState state) => state.matchedLocation == RoutePath.rootPage ? RoutePath.typeSelectionPage : null,
+  initialLocation: RoutePath.typeSelectionPage,
+  redirect: (BuildContext context, GoRouterState state) {
+    final bool isFirstTimer = sl<OnBoardingCubit>().state;
+    // Redirect to onboarding if first timer and not already there
+    if (isFirstTimer && state.matchedLocation != RoutePath.onBoardingPage) {
+      return RoutePath.onBoardingPage;
+    }
+    // Redirect root to type selection
+    if (state.matchedLocation == RoutePath.rootPage) {
+      return RoutePath.typeSelectionPage;
+    }
+    return null;
+  },
   routes: <RouteBase>[
     customGoRoute(
       path: RoutePath.onBoardingPage,
@@ -64,7 +66,11 @@ final GoRouter router = GoRouter(
       branches: <StatefulShellBranch>[
         StatefulShellBranch(
           routes: <RouteBase>[
-            customGoRoute(path: RoutePath.typeSelectionPage, name: RouteName.typeSelectionPageName, builder: (BuildContext context, GoRouterState state) => const TypeSelectionPage()),
+            customGoRoute(
+              path: RoutePath.typeSelectionPage,
+              name: RouteName.typeSelectionPageName,
+              builder: (BuildContext context, GoRouterState state) => BlocProvider<TypeSelectionBloc>(create: (_) => sl<TypeSelectionBloc>(), child: const TypeSelectionPage()),
+            ),
           ],
         ),
         StatefulShellBranch(

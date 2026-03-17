@@ -24,7 +24,7 @@ class TypeDetailsPage extends StatefulWidget {
 
 class _TypeDetailsPageState extends State<TypeDetailsPage> {
   late PokemonType selectedType;
-  late TypeDetailsBloc typeDetailsBloc;
+
   late TextEditingController _searchingController;
   late ScrollController _typeDetailsScrollController;
 
@@ -33,7 +33,7 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
     super.initState();
     selectedType = PokemonTypeDto.fromTypeName(widget.typeName).toEntity();
     context.read<TypeDetailsBloc>().add(FetchTypeDetailsEvent(selectedType.name));
-    typeDetailsBloc = context.read<TypeDetailsBloc>();
+
     _searchingController = TextEditingController();
     _typeDetailsScrollController = ScrollController();
   }
@@ -53,9 +53,7 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
         backgroundColor: Colors.transparent,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SelectedTypeContainer(pokemonType: selectedType),
-          ],
+          children: <Widget>[SelectedTypeContainer(pokemonType: selectedType)],
         ),
       ),
       body: BlocConsumer<TypeDetailsBloc, TypeDetailsState>(
@@ -63,12 +61,7 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
           state.maybeWhen(
             readyToProceedToPokemonDetails: (ProceedingStatus value) {
               if (value == ProceedingStatus.completed) {
-                context.pushNamed(
-                  RouteName.pokemonDetailsPageName,
-                  pathParameters: <String, String>{
-                    'pokemonName': typeDetailsBloc.selectedPokemonName,
-                  },
-                );
+                context.pushNamed(RouteName.pokemonDetailsPageName, pathParameters: <String, String>{'pokemonName': context.read<TypeDetailsBloc>().selectedPokemonName});
               }
             },
             error: (String message) {
@@ -82,23 +75,15 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
             current != TypeDetailsState.readyToProceedToPokemonDetails(ProceedingStatus.completed) && current != TypeDetailsState.readyToProceedToPokemonDetails(ProceedingStatus.proceeding),
         builder: (BuildContext context, TypeDetailsState state) {
           return state.when(
-              initial: () => const SizedBox.shrink(),
-              loading: () => const Center(child: CircularProgressIndicator()),
-              readyToProceedToPokemonDetails: (ProceedingStatus status) => const Center(child: Text('Proceeding...')),
-              error: (String message) => Center(child: Text('Error: $message')),
-              searching: () => const Center(child: CircularProgressIndicator()),
-              searched: (List<PokemonPreview> searchResults) => _TypeDetailsPokeList(
-                    pokemons: searchResults,
-                    selectedType: selectedType,
-                    scrollController: _typeDetailsScrollController,
-                    searchController: _searchingController,
-                  ),
-              loaded: (TypeDetails typeDetails) => _TypeDetailsPokeList(
-                    pokemons: typeDetails.pokemons,
-                    selectedType: selectedType,
-                    scrollController: _typeDetailsScrollController,
-                    searchController: _searchingController,
-                  ));
+            loading: () => const Center(child: CircularProgressIndicator()),
+            readyToProceedToPokemonDetails: (ProceedingStatus status) => const Center(child: Text('Proceeding...')),
+            error: (String message) => Center(child: Text('Error: $message')),
+            searching: () => const Center(child: CircularProgressIndicator()),
+            searched: (List<PokemonPreview> searchResults) =>
+                _TypeDetailsPokeList(pokemons: searchResults, selectedType: selectedType, scrollController: _typeDetailsScrollController, searchController: _searchingController),
+            loaded: (TypeDetails typeDetails) =>
+                _TypeDetailsPokeList(pokemons: typeDetails.pokemons, selectedType: selectedType, scrollController: _typeDetailsScrollController, searchController: _searchingController),
+          );
         },
       ),
     );
@@ -106,12 +91,7 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
 }
 
 class _TypeDetailsPokeList extends StatelessWidget {
-  const _TypeDetailsPokeList({
-    required this.pokemons,
-    required this.selectedType,
-    required this.scrollController,
-    required this.searchController,
-  });
+  const _TypeDetailsPokeList({required this.pokemons, required this.selectedType, required this.scrollController, required this.searchController});
 
   final List<PokemonPreview> pokemons;
   final PokemonType selectedType;
@@ -132,19 +112,11 @@ class _TypeDetailsPokeList extends StatelessWidget {
         child: CustomScrollView(
           controller: scrollController,
           slivers: <Widget>[
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: SliverSearchAppBar(
-                selectedType: selectedType,
-              ),
-            ),
+            SliverPersistentHeader(pinned: true, delegate: SliverSearchAppBar(selectedType: selectedType)),
             if (pokemons.isEmpty)
               SliverToBoxAdapter(
                 child: Center(
-                  child: Text(
-                    'No Pokémon found',
-                    style: context.textTheme.bodyLarge?.copyWith(color: context.colorScheme.onSurface),
-                  ),
+                  child: Text('No Pokémon found', style: context.textTheme.bodyLarge?.copyWith(color: context.colorScheme.onSurface)),
                 ),
               )
             else
@@ -155,9 +127,7 @@ class _TypeDetailsPokeList extends StatelessWidget {
                   return PreviewListTile(
                     preview: pokemon,
                     onCardTap: () {
-                      typeDetailsBloc.add(
-                        ProceedToPokemonDetailsEvent(pokemon.name),
-                      );
+                      typeDetailsBloc.add(ProceedToPokemonDetailsEvent(pokemon.name));
                     },
                   );
                 },

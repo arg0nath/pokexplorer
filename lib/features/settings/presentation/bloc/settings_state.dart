@@ -7,15 +7,10 @@ sealed class SettingsState extends Equatable {
   List<Object> get props => <Object>[];
 }
 
-final class SettingsInitial extends SettingsState {}
-
 final class SettingsLoading extends SettingsState {}
 
 final class SettingsLoaded extends SettingsState {
-  const SettingsLoaded({
-    required this.termsAccepted,
-    required this.showCopyrightedContent,
-  });
+  const SettingsLoaded({required this.termsAccepted, required this.showCopyrightedContent});
 
   final bool termsAccepted;
   final bool showCopyrightedContent;
@@ -23,13 +18,7 @@ final class SettingsLoaded extends SettingsState {
   @override
   List<Object> get props => <Object>[termsAccepted, showCopyrightedContent];
 
-  SettingsLoaded copyWith({
-    bool? termsAccepted,
-    bool? showCopyrightedContent,
-  }) {
-    return SettingsLoaded(
-      termsAccepted: termsAccepted ?? this.termsAccepted,
-      showCopyrightedContent: showCopyrightedContent ?? this.showCopyrightedContent,
-    );
+  SettingsLoaded copyWith({bool? termsAccepted, bool? showCopyrightedContent}) {
+    return SettingsLoaded(termsAccepted: termsAccepted ?? this.termsAccepted, showCopyrightedContent: showCopyrightedContent ?? this.showCopyrightedContent);
   }
 }

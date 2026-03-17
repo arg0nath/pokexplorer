@@ -12,12 +12,10 @@ class AppConst {
   static const String logErrorColor = '\u001b[31m';
   static const String logWarningColor = '\u001b[32m';
   static const String logWtfColor = '\u001b[36;1m';
-// #endregion
+  // #endregion
 
-  static const String kFirstTimerKey = 'first_timer';
   static const String kAcceptedTermsKey = 'accepted_terms';
   static const String kShowCopyrighted = 'show_copyrighted';
-  static const String kIsFirstTimeUser = 'is_first_time_user';
 
   static const String appName = 'Pokéxplorer';
   static const String pokeApiUrl = 'pokeapi.co';
@@ -31,27 +29,27 @@ class AppConst {
   static const String emptyGuid = '00000000-0000-0000-0000-000000000000';
   static const String emptyString = '';
 
-//appbar delegate stuff
+  //appbar delegate stuff
   static const double typeDetailsAppBarDelegateMaxExtend = 330;
   static const double typeDetailsAppBarDelegateMinExtend = 180;
   static const double pokemonDetailsAppBarDelegateMaxExtend = 280;
   static const double pokemonDetailsAppBarDelegateMinExtend = 200;
 
-//* SCROLLBAR CONSTANTS
+  //* SCROLLBAR CONSTANTS
   static const Radius scrollbarRadius = Radius.circular(10);
   static const double scrollbarThickness = 3.0;
   static const Color scrollbarColor = Color(0xFFC5C5C5);
 
-//customNetworkImage customization
+  //customNetworkImage customization
   static const double networkImageBorderRadius = 80.0;
   static const double networkImageNoBorderRadius = 0.0;
   static const double networkImagePlaceholderWidth = 1.0;
 
-//welcome
+  //welcome
   static const double welcomeScreenCarouselBlurRadius = 7;
   static const double welcomeScreenCarouselSpreadRadius = 6;
 
-//lazy load stuff
+  //lazy load stuff
   static const int typeDetailsPokemonPageSize = 10;
   static const String fireTypeName = 'fire';
   static const String waterTypeName = 'water';
@@ -77,17 +75,26 @@ class AppConst {
 
   static const double dialogBorderWidth = 1;
 
-//dot scoll
+  //dot scoll
 
   static const int userFavoritesPopMenuClearAllValue = 0;
 
   static const double expandedBarHeight = 200;
   static const double collapsedBarHeight = 130;
 
-// #region // * App Preferences
+  // #region // * App Preferences
   static const String prefsSelectedTypeName = 'selected_type_name';
   static const String prefsSelectedLocale = 'selected_locale';
   static const String prefsInitBoot = 'init_boot';
   static const String prefsIsDarkMode = 'is_dark_mode';
-// #endregion
+  // #endregion
+
+  // #region // * Theme Keys
+  static const String darkThemeKey = 'dark';
+  static const String lightThemeKey = 'light';
+  // #endregion
+
+  // #region // * OnBoarding Keys
+  static const String isFirstTimerKey = 'is_first_timer';
+  // #endregion
 }

@@ -17,11 +17,7 @@ Future<void> injectionInit() async {
     // * Theme
     ..registerLazySingleton(() => ThemeCubit())
     // * On boarding
-    ..registerFactory(() => OnBoardingCubit(cacheFirstTimer: sl(), checkFirstTimer: sl()))
-    ..registerLazySingleton(() => CacheFirstTimer(sl()))
-    ..registerLazySingleton(() => CheckFirstTimer(sl()))
-    ..registerLazySingleton<OnBoardingRepository>(() => OnBoardingRepoImpl(sl()))
-    ..registerLazySingleton<OnBoardingLocalDataSource>(() => OnBoardingLocalDataSourceImpl(sl()))
+    ..registerLazySingleton(() => OnBoardingCubit())
     // * Type selection
     ..registerFactory(() => TypeSelectionBloc(getPokemonTypes: sl(), selectPokemonType: sl(), getSelectedPokemonType: sl()))
     ..registerLazySingleton(() => GetPokemonTypes(sl()))

@@ -12,28 +12,18 @@ import 'package:pokexplorer/features/on_boarding/presentation/widgets/intro_text
 import 'package:pokexplorer/features/on_boarding/presentation/widgets/logo_placeholder.dart';
 import 'package:pokexplorer/features/on_boarding/presentation/widgets/on_boarding_bottom_bar.dart';
 
-class OnBoardingPage extends StatefulWidget {
+class OnBoardingPage extends StatelessWidget {
   const OnBoardingPage({super.key});
 
   @override
-  State<OnBoardingPage> createState() => _OnBoardingPageState();
-}
-
-class _OnBoardingPageState extends State<OnBoardingPage> {
-  @override
-  void initState() {
-    context.read<OnBoardingCubit>().checkIfUserFirstTimer();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocListener<OnBoardingCubit, OnBoardingState>(
-      listener: (BuildContext context, OnBoardingState state) {
-        if ((state is OnBoardingStatus && !state.isFirstTimer) || (state is UserCached)) {
+    return BlocListener<OnBoardingCubit, bool>(
+      listener: (BuildContext context, bool isFirstTimer) {
+        if (!isFirstTimer) {
           context.goNamed(RouteName.typeSelectionPageName);
         }
       },
+      listenWhen: (previous, current) => previous != current,
       child: Scaffold(
         extendBody: true,
         body: Stack(
@@ -69,11 +59,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             ),
           ],
         ),
-        bottomNavigationBar: BlocBuilder<OnBoardingCubit, OnBoardingState>(
-          builder: (BuildContext context, OnBoardingState state) {
-            return WelcomeBottomBar().animate(delay: 1000.ms).fade(duration: 1700.ms, curve: Curves.easeOutQuad);
-          },
-        ),
+        bottomNavigationBar: WelcomeBottomBar().animate(delay: 1000.ms).fade(duration: 1700.ms, curve: Curves.easeOutQuad),
       ),
     );
   }

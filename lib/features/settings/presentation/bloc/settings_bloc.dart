@@ -9,24 +9,17 @@ part 'settings_event.dart';
 part 'settings_state.dart';
 
 class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
-  SettingsBloc({
-    required GetCopyrightOption getCopyrightOption,
-    required SetCopyrightOption setCopyrightOption,
-    required GetTermsOption getTermsOption,
-    required SetTermsOption setTermsOption,
-  })  : _getCopyrightOption = getCopyrightOption,
-        _setCopyrightOption = setCopyrightOption,
-        _getTermsOption = getTermsOption,
-        _setTermsOption = setTermsOption,
-        super(SettingsInitial()) {
+  SettingsBloc({required GetCopyrightOption getCopyrightOption, required SetCopyrightOption setCopyrightOption, required GetTermsOption getTermsOption, required SetTermsOption setTermsOption})
+    : _getCopyrightOption = getCopyrightOption,
+      _setCopyrightOption = setCopyrightOption,
+      _getTermsOption = getTermsOption,
+      _setTermsOption = setTermsOption,
+      super(SettingsLoading()) {
     on<LoadSettingsEvent>((LoadSettingsEvent event, Emitter<SettingsState> emit) async {
       final bool showCopyrightContent = await _getCopyrightOption();
       final bool acceptedTerms = await _getTermsOption();
 
-      emit(SettingsLoaded(
-        showCopyrightedContent: showCopyrightContent,
-        termsAccepted: acceptedTerms,
-      ));
+      emit(SettingsLoaded(showCopyrightedContent: showCopyrightContent, termsAccepted: acceptedTerms));
     });
 
     on<AcceptTermsEvent>((AcceptTermsEvent event, Emitter<SettingsState> emit) async {

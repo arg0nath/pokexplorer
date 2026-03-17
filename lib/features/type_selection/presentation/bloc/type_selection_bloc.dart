@@ -12,14 +12,11 @@ part 'type_selection_event.dart';
 part 'type_selection_state.dart';
 
 class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
-  TypeSelectionBloc({
-    required GetPokemonTypes getPokemonTypes,
-    required SelectPokemonType selectPokemonType,
-    required GetSelectedPokemonType getSelectedPokemonType,
-  })  : _getPokemonTypes = getPokemonTypes,
-        _selectPokemonType = selectPokemonType,
-        _getSelectedPokemonType = getSelectedPokemonType,
-        super(TypeSelectionInitial()) {
+  TypeSelectionBloc({required GetPokemonTypes getPokemonTypes, required SelectPokemonType selectPokemonType, required GetSelectedPokemonType getSelectedPokemonType})
+    : _getPokemonTypes = getPokemonTypes,
+      _selectPokemonType = selectPokemonType,
+      _getSelectedPokemonType = getSelectedPokemonType,
+      super(LoadingTypes()) {
     // on<TypeSelectionEvent>((TypeSelectionEvent event, Emitter<TypeSelectionState> emit) {});
     on<GetTypesEvent>(_onGetPokemonTypesHandler);
     on<SelectTypeEvent>(_onSelectTypeHandler);
@@ -40,18 +37,16 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
 
     final Either<Failure, String> tmpResult = await _getSelectedPokemonType();
     tmpResult.fold(
-      (Failure failure) => (Failure failure) => emit(TypeSelectionError(failure.errorMessage)),
+      (Failure failure) =>
+          (Failure failure) => emit(TypeSelectionError(failure.errorMessage)),
       (String name) => _selectedTypeName = name,
     );
 
-    result.fold(
-      (Failure failure) => emit(TypeSelectionError(failure.errorMessage)),
-      (List<PokemonType> types) async {
-        _loadedTypes = types;
+    result.fold((Failure failure) => emit(TypeSelectionError(failure.errorMessage)), (List<PokemonType> types) async {
+      _loadedTypes = types;
 
-        emit(TypesLoaded(types, selectedTypeName: _selectedTypeName));
-      },
-    );
+      emit(TypesLoaded(types, selectedTypeName: _selectedTypeName));
+    });
   }
 
   Future<void> _onSelectTypeHandler(SelectTypeEvent event, Emitter<TypeSelectionState> emit) async {
@@ -59,13 +54,10 @@ class TypeSelectionBloc extends Bloc<TypeSelectionEvent, TypeSelectionState> {
 
     Either<Failure, void> result = await _selectPokemonType(SelectedPokemonTypeParams(typeName: newTypeName));
 
-    result.fold(
-      (Failure failure) => emit(TypeSelectionError(failure.errorMessage)),
-      (_) {
-        _selectedTypeName = newTypeName;
-        emit(TypesLoaded(_loadedTypes, selectedTypeName: _selectedTypeName));
-      },
-    );
+    result.fold((Failure failure) => emit(TypeSelectionError(failure.errorMessage)), (_) {
+      _selectedTypeName = newTypeName;
+      emit(TypesLoaded(_loadedTypes, selectedTypeName: _selectedTypeName));
+    });
   }
 
   Future<void> _onProceedToTypeDetailsHandler(ProceedToTypeDetails event, Emitter<TypeSelectionState> emit) async {

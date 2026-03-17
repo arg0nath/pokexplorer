@@ -95,4 +95,8 @@ class AppConst {
   static const String darkThemeKey = 'dark';
   static const String lightThemeKey = 'light';
   // #endregion
+
+  // #region // * OnBoarding Keys
+  static const String isFirstTimerKey = 'is_first_timer';
+  // #endregion
 }

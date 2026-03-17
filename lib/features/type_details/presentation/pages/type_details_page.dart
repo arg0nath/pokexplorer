@@ -24,7 +24,7 @@ class TypeDetailsPage extends StatefulWidget {
 
 class _TypeDetailsPageState extends State<TypeDetailsPage> {
   late PokemonType selectedType;
-  late TypeDetailsBloc typeDetailsBloc;
+
   late TextEditingController _searchingController;
   late ScrollController _typeDetailsScrollController;
 
@@ -33,7 +33,7 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
     super.initState();
     selectedType = PokemonTypeDto.fromTypeName(widget.typeName).toEntity();
     context.read<TypeDetailsBloc>().add(FetchTypeDetailsEvent(selectedType.name));
-    typeDetailsBloc = context.read<TypeDetailsBloc>();
+
     _searchingController = TextEditingController();
     _typeDetailsScrollController = ScrollController();
   }
@@ -61,7 +61,7 @@ class _TypeDetailsPageState extends State<TypeDetailsPage> {
           state.maybeWhen(
             readyToProceedToPokemonDetails: (ProceedingStatus value) {
               if (value == ProceedingStatus.completed) {
-                context.pushNamed(RouteName.pokemonDetailsPageName, pathParameters: <String, String>{'pokemonName': typeDetailsBloc.selectedPokemonName});
+                context.pushNamed(RouteName.pokemonDetailsPageName, pathParameters: <String, String>{'pokemonName': context.read<TypeDetailsBloc>().selectedPokemonName});
               }
             },
             error: (String message) {

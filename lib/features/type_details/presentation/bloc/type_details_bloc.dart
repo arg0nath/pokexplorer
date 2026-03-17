@@ -7,6 +7,7 @@ import 'package:pokexplorer/core/common/errors/failures.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/pokemon_preview.dart';
 import 'package:pokexplorer/features/type_details/domain/entities/type_details.dart';
 import 'package:pokexplorer/features/type_details/domain/usecases/fetch_type_details.dart';
+import 'package:stream_transform/stream_transform.dart';
 
 part 'type_details_bloc.freezed.dart';
 part 'type_details_event.dart';
@@ -19,7 +20,10 @@ class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
     });
 
     on<FetchTypeDetailsEvent>(_fetchTypeDetailsEventHandler);
-    on<SearchPokemonsEvent>(_searchPokemonsEventHandler);
+    on<SearchPokemonsEvent>(
+      _searchPokemonsEventHandler,
+      transformer: (Stream<SearchPokemonsEvent> events, mapper) => events.debounce(const Duration(milliseconds: 500)).switchMap(mapper), //debounce for search input
+    );
     on<ProceedToPokemonDetailsEvent>(_proceedToPokemonDetailsEventHandler);
   }
 

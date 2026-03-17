@@ -50,6 +50,7 @@ dependencies:
   fluentui_system_icons: ^1.1.273
   hydrated_bloc: ^10.1.1
   path_provider: ^2.1.5
+  stream_transform: ^2.1.1
 
 
 dev_dependencies:

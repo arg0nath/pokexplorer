@@ -13,11 +13,9 @@ part 'type_details_event.dart';
 part 'type_details_state.dart';
 
 class TypeDetailsBloc extends Bloc<TypeDetailsEvent, TypeDetailsState> {
-  TypeDetailsBloc({required FetchTypeDetails fetchTypeDetails})
-      : _fetchTypeDetails = fetchTypeDetails,
-        super(_Initial()) {
+  TypeDetailsBloc({required FetchTypeDetails fetchTypeDetails}) : _fetchTypeDetails = fetchTypeDetails, super(_Loading()) {
     on<InitialTypeEvent>((InitialTypeEvent event, Emitter<TypeDetailsState> emit) {
-      emit(const TypeDetailsState.initial());
+      emit(const TypeDetailsState.loading());
     });
 
     on<FetchTypeDetailsEvent>(_fetchTypeDetailsEventHandler);

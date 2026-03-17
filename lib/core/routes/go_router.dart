@@ -13,6 +13,7 @@ import 'package:pokexplorer/features/pokemon_details/presentation/pages/pokemon_
 import 'package:pokexplorer/features/settings/presentation/pages/settings_page.dart';
 import 'package:pokexplorer/features/type_details/presentation/bloc/type_details_bloc.dart';
 import 'package:pokexplorer/features/type_details/presentation/pages/type_details_page.dart';
+import 'package:pokexplorer/features/type_selection/presentation/bloc/type_selection_bloc.dart';
 import 'package:pokexplorer/features/type_selection/presentation/pages/type_selection_page.dart';
 import 'package:pokexplorer/features/user_favorites/presentation/pages/user_favorites_page.dart';
 
@@ -65,7 +66,11 @@ final GoRouter router = GoRouter(
       branches: <StatefulShellBranch>[
         StatefulShellBranch(
           routes: <RouteBase>[
-            customGoRoute(path: RoutePath.typeSelectionPage, name: RouteName.typeSelectionPageName, builder: (BuildContext context, GoRouterState state) => const TypeSelectionPage()),
+            customGoRoute(
+              path: RoutePath.typeSelectionPage,
+              name: RouteName.typeSelectionPageName,
+              builder: (BuildContext context, GoRouterState state) => BlocProvider<TypeSelectionBloc>(create: (_) => sl<TypeSelectionBloc>(), child: const TypeSelectionPage()),
+            ),
           ],
         ),
         StatefulShellBranch(
